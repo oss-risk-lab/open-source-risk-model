@@ -1,1 +1,7 @@
 PyGithub
+matplotlib
+requests
+
+[pytest]
+testpaths = tests
+pythonpath = src

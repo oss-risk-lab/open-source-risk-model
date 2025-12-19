@@ -1,3 +1,13 @@
+# -----------------------------------------------------------------------------
+# github_api_hello.py
+#
+# Minimal "hello world" script for GitHub API connectivity.
+# Sends a simple request (e.g. GET /user or GET /repos) using github_client.py
+# to ensure authentication, headers, and connectivity are working correctly.
+#
+# Intended for quick sanity checks before running full sampling scripts.
+# -----------------------------------------------------------------------------
+
 from github import Github
 
 def main():
@@ -19,7 +29,7 @@ def main():
     print("Default branch:", repo.default_branch)
 
     print("\n=== Maintainers (Top 10) ===")
-    # print(dir(repo)) to get all possible repo directories
+    print(dir(repo))
     contributors = repo.get_contributors()[:10]
     for user in contributors:
         print("-", user.login) 

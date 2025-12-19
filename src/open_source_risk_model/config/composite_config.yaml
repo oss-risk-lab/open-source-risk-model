@@ -1,0 +1,36 @@
+maintenance_composite:
+  feature_weights:
+    days_since_last_push: 0.19
+    days_since_last_release: 0.19
+
+    fraction_issues_closed_12mo: 0.15
+    fraction_open_issues_stale_180d: 0.0 #removed for now
+
+    issues_per_contributor: 0.11    
+    contributors_last_12mo: 0.12
+    top_contributor_fraction_12mo: 0.11
+
+    archived: 0.08                 
+    stars_count: 0.05                 
+
+  bands:
+    - name: low
+      max: 0.25
+    - name: medium
+      max: 0.50
+    - name: high
+      max: 0.75
+    - name: critical
+      max: 1.00
+
+license_composite:
+  bands:
+    - name: low
+      max: 0.25
+    - name: medium
+      max: 0.50
+    - name: high
+      max: 0.75
+    - name: critical
+      max: 1.00
+
