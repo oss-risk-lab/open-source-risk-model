@@ -131,6 +131,59 @@ FEATURE_MAPPINGS = {
             (0.90, 1.00),
         ],
     },
+    "avg_time_to_first_maintainer_response_days": {
+        "type": "option_a",
+        # days; higher = riskier
+        "anchors": [
+            (0.0,  0.00),
+            (1.0,  0.15),
+            (3.0,  0.35),
+            (7.0,  0.60),
+            (14.0, 0.80),
+            (30.0, 1.00),
+        ],
+    },
+
+    "fraction_unanswered_30d": {
+        "type": "option_a",
+        # 0..1; higher = riskier
+        "anchors": [
+            (0.00, 0.00),
+            (0.05, 0.15),
+            (0.10, 0.30),
+            (0.20, 0.55),
+            (0.35, 0.75),
+            (0.50, 0.90),
+            (1.00, 1.00),
+        ],
+    },
+
+    "median_time_to_close_days": {
+        "type": "option_a",
+        # days; higher = riskier
+        "anchors": [
+            (0.0,  0.00),
+            (3.0,  0.20),
+            (7.0,  0.40),
+            (14.0, 0.60),
+            (30.0, 0.80),
+            (90.0, 1.00),
+        ],
+    },
+
+    "open_issue_age_p90_days": {
+        "type": "option_a",
+        # days; higher = riskier
+        "anchors": [
+            (0.0,   0.00),
+            (30.0,  0.25),
+            (90.0,  0.50),
+            (180.0, 0.70),
+            (365.0, 0.85),
+            (730.0, 1.00),
+        ],
+    },
+
 
     "license_risk": {
       "type": "license_table",
