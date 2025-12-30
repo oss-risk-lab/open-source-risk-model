@@ -11,7 +11,13 @@ maintenance_composite:
     top_contributor_fraction_12mo: 0.11
 
     archived: 0.08                 
-    stars_count: 0.05                 
+    stars_count: 0.05 
+
+    avg_time_to_first_maintainer_response_days: 0.04
+    fraction_unanswered_30d: 0.05
+    median_time_to_close_days: 0.04
+    open_issue_age_p90_days: 0.04
+                
 
   bands:
     - name: low
