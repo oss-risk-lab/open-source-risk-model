@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 776,
+    "contributors_last_12mo": 16,
+    "days_since_last_push": 1.8234875691666665,
+    "days_since_last_release": 177.98749569651622,
+    "fraction_issues_closed_12mo": 0.8290598290598291,
+    "fraction_open_issues_stale_180d": 0.9504950495049505,
+    "issues_per_contributor": 0.42010309278350516,
+    "license_spdx_id": "Apache-2.0",
+    "open_issues_count": 326,
+    "stargazers_count": 53734,
+    "top_contributor_fraction_12mo": 0.42424242424242425
+  },
+  "fetched_at": "2026-02-12T20:15:29.393026+00:00",
+  "full_name": "psf/requests"
+}

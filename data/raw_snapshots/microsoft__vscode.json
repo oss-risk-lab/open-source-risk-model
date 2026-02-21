@@ -1,0 +1,96 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 3590,
+        "compact_stats": {
+          "comments": {
+            "dropped": 2042,
+            "kept": 8532,
+            "path": "data/issues/microsoft__vscode/comments.jsonl",
+            "rows_before": 10574
+          },
+          "issues": {
+            "dropped": 339,
+            "kept": 2180,
+            "path": "data/issues/microsoft__vscode/issues.jsonl",
+            "rows_before": 2519
+          }
+        },
+        "days_back": 365,
+        "errors": [
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1C4:133210E:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1771690296,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/microsoft/vscode/issues/296426/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1DC:133215F:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1771690296,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/microsoft/vscode/issues/296425/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1F4:13321C2:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1771690296,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/microsoft/vscode/issues/283624/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D214:1332253:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1771690296,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/microsoft/vscode/issues"
+          }
+        ],
+        "issues_written_last_run": 612,
+        "last_fetch_utc": "2026-02-21T15:45:59.235634+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 8,
+        "per_page": 100,
+        "status": "partial",
+        "truncated": false,
+        "updated_at_utc": "2026-02-20T22:25:04.688693+00:00"
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "avg_time_to_first_maintainer_response_days": 8.34654175685425,
+    "contributors_count": 2928,
+    "contributors_last_12mo": 33,
+    "days_since_last_push": 0.12161132640046297,
+    "days_since_last_release": 1.6409088564351852,
+    "fraction_issues_closed_12mo": 0.8357773492997768,
+    "fraction_open_issues_stale_180d": 0.6166226092365107,
+    "fraction_unanswered_after_30d": 0.4489795918367347,
+    "issues_per_contributor": 4.79474043715847,
+    "license_spdx_id": "MIT",
+    "median_time_to_close_days": 5.0277314814814815,
+    "open_issue_age_p90_days": 38.33535165560185,
+    "open_issues_count": 14039,
+    "stargazers_count": 181954,
+    "stars_count": 181954,
+    "top_contributor_fraction_12mo": 0.1137807904133632
+  },
+  "fetched_at": "2026-02-21T15:45:59.403249+00:00",
+  "full_name": "microsoft/vscode"
+}

@@ -40,6 +40,18 @@ def evaluate_gold_standard_repos(refresh: bool = False) -> List[Dict[str, Any]]:
             repo_features = fetch_repo_features(full_name, session=session)
             raw = repo_features.as_raw_dict()
 
+            meta = raw.get("__meta__", {}) or {}
+            fs = meta.get("feature_status", {}) or {}
+
+            print(
+                f"DEBUG {full_name} raw issues_per_contributor="
+                f"{raw.get('issues_per_contributor')} "
+                f"(status={fs.get('issues_per_contributor')}) "
+                f"contributors_count={raw.get('contributors_count')} "
+                f"(status={fs.get('contributors_count')})"
+            )
+
+
             snap = RepoSnapshot(
                 full_name=full_name,
                 fetched_at=datetime.now(timezone.utc),
@@ -67,20 +79,42 @@ def evaluate_gold_standard_repos(refresh: bool = False) -> List[Dict[str, Any]]:
             "top_contributor_fraction_12mo",
         ]
 
+        # --- NEW: respect feature_status when determining missing ---
+        meta = raw.get("__meta__", {}) or {}
+        feature_status = meta.get("feature_status", {}) or {}
+
         missing_raw = [
             k for k in EXPECTED_RAW_FEATURES
-            if k not in raw or raw.get(k) is None
+            if (k not in raw or raw.get(k) is None)
+            and feature_status.get(k) != "not_applicable"
         ]
 
+        excluded_raw = [
+            k for k in EXPECTED_RAW_FEATURES
+            if feature_status.get(k) == "not_applicable"
+        ]
+
+        if excluded_raw:
+            print(f"NOTE {full_name}: excluded (not_applicable) RAW features: {excluded_raw}")
+
         if missing_raw:
-            print(f"NOTE {full_name}: missing RAW features: {missing_raw}")
+            missing_with_status = [(k, feature_status.get(k, "missing")) for k in missing_raw]
+            print(f"NOTE {full_name}: missing RAW features: {missing_with_status}")
 
-        # --- raw data coverage summary ---
-        covered_raw = len(EXPECTED_RAW_FEATURES) - len(missing_raw)
-        total_raw = len(EXPECTED_RAW_FEATURES)
-        coverage_frac = covered_raw / total_raw if total_raw > 0 else 0.0
+        # --- raw data coverage summary (exclude not_applicable from denominator) ---
+        effective_total_raw = len(EXPECTED_RAW_FEATURES) - len(excluded_raw)
+        effective_covered_raw = effective_total_raw - len(missing_raw)
+        coverage_frac = (
+            effective_covered_raw / effective_total_raw
+            if effective_total_raw > 0
+            else 0.0
+        )
 
-        print(f"  data_coverage    = {covered_raw}/{total_raw} raw features ({coverage_frac:.0%})")
+        print(
+            f"  data_coverage    = "
+            f"{effective_covered_raw}/{effective_total_raw} raw features "
+            f"({coverage_frac:.0%})"
+        )
 
         # DEBUG: inspect raw license value from GitHub
         if full_name in ("numpy/numpy", "pytorch/pytorch", "matplotlib/matplotlib", "torvalds/linux"):
@@ -99,7 +133,12 @@ def evaluate_gold_standard_repos(refresh: bool = False) -> List[Dict[str, Any]]:
 
 
         # license_risk just comes from the feature_risks dict
-        license_risk = feature_risks.get("license_risk", 0.0)
+        license_risk = feature_risks.get("license_risk", None)
+        license_str = (
+            f"{license_risk:.3f}"
+            if isinstance(license_risk, (int, float))
+            else "n/a"
+        )
         license_label = classify_license_risk(license_risk)
 
         print("\nRISK BREAKDOWN:")
@@ -111,7 +150,7 @@ def evaluate_gold_standard_repos(refresh: bool = False) -> List[Dict[str, Any]]:
             )
         else:
             print(f"  maint_risk_unc    = {maintenance_risk_unc:.3f}")
-        print(f"  license_risk      = {license_risk:.3f} ({license_label})")
+        print(f"  license_risk      = {license_str} ({license_label})")
         print()
 
 
@@ -119,10 +158,13 @@ def evaluate_gold_standard_repos(refresh: bool = False) -> List[Dict[str, Any]]:
         if True:
             print(f"DEBUG {full_name}")
             print(f"  maintenance_risk  = {maintenance_risk:.3f} ({maintenance_label})")
-            print(f"  license_risk      = {license_risk:.3f} ({license_label})")
+            print(f"  license_risk      = {license_str} ({license_label})")
             print("  feature_risks:")
             for name, risk in feature_risks.items():
-                print(f"    {name:22s} -> {risk:.3f}")
+                if isinstance(risk, (int, float)):
+                    print(f"    {name:22s} -> {risk:.3f}")
+                else:
+                    print(f"    {name:22s} -> n/a")
 
             if missing_weight:
                 top_missing = sorted(missing_weight.items(), key=lambda kv: kv[1], reverse=True)[:5]
@@ -162,18 +204,36 @@ if __name__ == "__main__":
     rows = evaluate_gold_standard_repos(refresh=args.refresh)
 
 
-    # Sort by maintenance_risk (ascending)
-    rows_sorted = sorted(rows, key=lambda r: r["maintenance_risk"])
+    # Sort by uncertainty-aware maintenance risk (ascending)
+    rows_sorted = sorted(rows, key=lambda r: r.get("maintenance_risk_unc", r["maintenance_risk"]))
 
-    print("\nGold standard repos by increasing MAINTENANCE risk:")
+
+    print("\nGold standard repos by increasing MAINTENANCE risk (uncertainty-aware):")
     for r in rows_sorted:
+        cov = r.get("maintenance_coverage")
+        unc = r.get("maintenance_risk_unc", r["maintenance_risk"])
+
+        # If we don't have enough coverage, label as unknown regardless of the base score.
+        if cov is None:
+            label = r["maintenance_label"]
+        elif cov < 0.80:
+            label = "unknown"
+        else:
+            label = r["maintenance_label"]
+
+        cov_str = f"{cov:.0%}" if cov is not None else "n/a"
+
+        lic = r.get("license_risk")
+        lic_str = f"{lic:.3f}" if isinstance(lic, (int, float)) else "n/a"
+        
         print(
             f"{r['repo']:35s} "
             f"maint={r['maintenance_risk']:.3f} {r['maintenance_label']}, "
-            f"unc={r.get('maintenance_risk_unc', r['maintenance_risk']):.3f} "
-            f"(cov={ (r.get('maintenance_coverage') or 0):.0%}), "
-            f"license={r['license_risk']:.3f} {r['license_label']}"
+            f"unc={unc:.3f} "
+            f"(cov={cov_str}, display={label}), "
+            f"license={lic_str} {r['license_label']}"
         )
+
 
     # Write CSV for analysis
     try:

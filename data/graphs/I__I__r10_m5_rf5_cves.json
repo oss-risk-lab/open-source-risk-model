@@ -1,0 +1,35 @@
+{
+  "cache_metadata": {
+    "repo": "I/I",
+    "cached_at": "2026-02-20T19:34:53.680380+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-20T20:34:53.680380+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:I/I",
+        "type": "repo",
+        "label": "I/I",
+        "metadata": {
+          "url": "https://github.com/I/I",
+          "maintenance_risk": 2.2250738585072014e-308
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-20T19:34:53.660925+00:00",
+          "data_confidence": 1.0
+        }
+      }
+    ],
+    "edges": [],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-20T19:34:53.661210+00:00",
+      "data_sources": [
+        "github_api"
+      ],
+      "warnings": []
+    }
+  }
+}

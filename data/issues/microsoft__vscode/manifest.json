@@ -1,0 +1,56 @@
+{
+  "comments_written_last_run": 3590,
+  "compact_stats": {
+    "comments": {
+      "dropped": 2042,
+      "kept": 8532,
+      "path": "data/issues/microsoft__vscode/comments.jsonl",
+      "rows_before": 10574
+    },
+    "issues": {
+      "dropped": 339,
+      "kept": 2180,
+      "path": "data/issues/microsoft__vscode/issues.jsonl",
+      "rows_before": 2519
+    }
+  },
+  "days_back": 365,
+  "errors": [
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1C4:133210E:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771690296,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/microsoft/vscode/issues/296426/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1DC:133215F:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771690296,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/microsoft/vscode/issues/296425/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D1F4:13321C2:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771690296,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/microsoft/vscode/issues/283624/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID DB7B:1C9855:45D214:1332253:6999D336 and timestamp 2026-02-21 15:45:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771690296,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/microsoft/vscode/issues"
+    }
+  ],
+  "issues_written_last_run": 612,
+  "last_fetch_utc": "2026-02-21T15:45:59.235634+00:00",
+  "max_pages": 25,
+  "pages_fetched_last_run": 8,
+  "per_page": 100,
+  "status": "partial",
+  "truncated": false,
+  "updated_at_utc": "2026-02-21T15:45:59.235722+00:00"
+}

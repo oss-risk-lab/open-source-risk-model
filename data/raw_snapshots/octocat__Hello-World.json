@@ -1,0 +1,65 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 106,
+        "compact_stats": {
+          "comments": {
+            "dropped": 106,
+            "kept": 106,
+            "path": "data/issues/octocat__Hello-World/comments.jsonl",
+            "rows_before": 212
+          },
+          "issues": {
+            "dropped": 2314,
+            "kept": 2315,
+            "path": "data/issues/octocat__Hello-World/issues.jsonl",
+            "rows_before": 4629
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 2314,
+        "last_fetch_utc": "2026-02-21T15:42:42.486859+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 25,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": true,
+        "updated_at_utc": "2026-02-21T15:29:52.293749+00:00"
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 3,
+    "contributors_last_12mo": 0,
+    "days_since_last_push": 549.6580847148844,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.3965702036441586,
+    "fraction_open_issues_stale_180d": 0.4439461883408072,
+    "fraction_unanswered_after_30d": 1.0,
+    "issues_per_contributor": 1182.6666666666667,
+    "license_spdx_id": null,
+    "median_time_to_close_days": 1.1574074074074073e-05,
+    "open_issue_age_p90_days": 71.0636402437037,
+    "open_issues_count": 3548,
+    "stargazers_count": 3505,
+    "stars_count": 3505,
+    "top_contributor_fraction_12mo": null
+  },
+  "fetched_at": "2026-02-21T15:42:42.524226+00:00",
+  "full_name": "octocat/Hello-World"
+}

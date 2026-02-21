@@ -1,0 +1,66 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 6535,
+        "compact_stats": {
+          "comments": {
+            "dropped": 0,
+            "kept": 6535,
+            "path": "data/issues/facebook__react/comments.jsonl",
+            "rows_before": 6535
+          },
+          "issues": {
+            "dropped": 0,
+            "kept": 970,
+            "path": "data/issues/facebook__react/issues.jsonl",
+            "rows_before": 970
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 970,
+        "last_fetch_utc": "2026-02-20T22:19:32.664566+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 25,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": true
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "avg_time_to_first_maintainer_response_days": 18.61595781619386,
+    "contributors_count": 1968,
+    "contributors_last_12mo": 27,
+    "days_since_last_push": 0.013526318993055555,
+    "days_since_last_release": 25.156710735532407,
+    "fraction_issues_closed_12mo": 0.7364066193853428,
+    "fraction_open_issues_stale_180d": 0.8051787916152897,
+    "fraction_unanswered_after_30d": 0.6842105263157895,
+    "issues_per_contributor": 0.5762195121951219,
+    "license_spdx_id": "MIT",
+    "median_time_to_close_days": 1.1706712962962964,
+    "open_issue_age_p90_days": 274.271582806956,
+    "open_issues_count": 1134,
+    "stargazers_count": 243244,
+    "stars_count": 243244,
+    "top_contributor_fraction_12mo": 0.2993396918561996
+  },
+  "fetched_at": "2026-02-20T22:19:32.764821+00:00",
+  "full_name": "facebook/react"
+}

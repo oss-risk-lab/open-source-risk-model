@@ -52,9 +52,12 @@ def compute_feature_risk(name: str, value, *, population=None):
 
     if t == "license_table":
         table = cfg.get("table", {})
-        # value is expected to be the SPDX string (or None)
-        default_risk = float(table.get("__DEFAULT__", 1.0))
-        return float(table.get(value, default_risk))
+
+        # Treat "unknown" license as unknown (None), not an automatic penalty.
+        if value in (None, "", "NOASSERTION"):
+            return table.get("__DEFAULT__", None)
+
+        return table.get(value, table.get("__DEFAULT__", None))
 
     if t == "option_a":
         from .option_a import apply_option_a

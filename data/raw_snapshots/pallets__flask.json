@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "not_applicable",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 862,
+    "contributors_last_12mo": 18,
+    "days_since_last_push": 5.95302829787037,
+    "days_since_last_release": 176.96657341829862,
+    "fraction_issues_closed_12mo": 1.0,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 0.002320185614849188,
+    "license_spdx_id": "BSD-3-Clause",
+    "open_issues_count": 2,
+    "stargazers_count": 71151,
+    "top_contributor_fraction_12mo": 0.8392857142857143
+  },
+  "fetched_at": "2026-02-12T20:15:25.932885+00:00",
+  "full_name": "pallets/flask"
+}

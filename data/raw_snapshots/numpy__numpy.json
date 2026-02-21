@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 2039,
+    "contributors_last_12mo": 34,
+    "days_since_last_push": 0.31358633349537035,
+    "days_since_last_release": 18.20201397857639,
+    "fraction_issues_closed_12mo": 0.6739130434782609,
+    "fraction_open_issues_stale_180d": 0.9530876017233126,
+    "issues_per_contributor": 1.1329082883766552,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 2310,
+    "stargazers_count": 31474,
+    "stars_count": 31474,
+    "top_contributor_fraction_12mo": 0.32598920863309355
+  },
+  "fetched_at": "2026-02-19T21:10:48.031862+00:00",
+  "full_name": "numpy/numpy"
+}

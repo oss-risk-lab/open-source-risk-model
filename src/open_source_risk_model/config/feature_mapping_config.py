@@ -54,7 +54,7 @@ FEATURE_MAPPINGS = {
     "contributors_count": {
         "type": "option_b",
         "min_value": 1.0,       # 1 contributor = worst
-        "max_value": 500.0,      # 10 contributors = best
+        "max_value": 5000.0,      # 5000+ contributors = best
         "higher_is_riskier": False,
     },
     "archived": {
@@ -67,10 +67,17 @@ FEATURE_MAPPINGS = {
     },
     
     "issues_per_contributor": {
-        "type": "option_b",
-        "min_value": 0.0,
-        "max_value": 100.0,     # tweak after you see some real distributions
-        "higher_is_riskier": True,
+        "type": "option_a",
+        "anchors": [
+            (0.00, 0.00),
+            (0.05, 0.05),
+            (0.25, 0.20),
+            (0.50, 0.35),
+            (1.00, 0.55),
+            (2.00, 0.75),
+            (4.00, 0.90),
+            (8.00, 1.00),
+        ],
     },
     
     "open_issues_count": {
@@ -144,7 +151,7 @@ FEATURE_MAPPINGS = {
         ],
     },
 
-    "fraction_unanswered_30d": {
+    "fraction_unanswered_after_30d": {
         "type": "option_a",
         # 0..1; higher = riskier
         "anchors": [
@@ -162,12 +169,13 @@ FEATURE_MAPPINGS = {
         "type": "option_a",
         # days; higher = riskier
         "anchors": [
-            (0.0,  0.00),
-            (3.0,  0.20),
-            (7.0,  0.40),
-            (14.0, 0.60),
-            (30.0, 0.80),
-            (90.0, 1.00),
+            (0.0,   0.00),
+            (7.0,   0.15),
+            (14.0,  0.30),
+            (30.0,  0.50),
+            (60.0,  0.65),
+            (120.0, 0.80),
+            (365.0, 1.00),
         ],
     },
 
@@ -176,11 +184,13 @@ FEATURE_MAPPINGS = {
         # days; higher = riskier
         "anchors": [
             (0.0,   0.00),
-            (30.0,  0.25),
-            (90.0,  0.50),
-            (180.0, 0.70),
-            (365.0, 0.85),
-            (730.0, 1.00),
+            (30.0,  0.20),
+            (90.0,  0.40),
+            (180.0, 0.60),
+            (365.0, 0.75),
+            (730.0, 0.85),
+            (1460.0, 0.95),
+            (2190.0, 1.00),
         ],
     },
 
@@ -219,13 +229,62 @@ FEATURE_MAPPINGS = {
           "AGPL-3.0-or-later":0.8,
 
           # GitHub “we don’t know” value
-          "NOASSERTION":      0.8,
+          "NOASSERTION":      None,
 
           # fallback for anything unknown or missing
-          "__DEFAULT__":      0.8,
+          "__DEFAULT__":      None,
       },
     },
 }
+
+
+
+# -----------------------------------------------------------------------------
+# Composite config validation
+# -----------------------------------------------------------------------------
+
+def _validate_and_normalize_composite_config(cfg: dict) -> dict:
+    """
+    Structural validation for composite_config.yaml.
+
+    - Ensures feature_weights are numeric and non-negative.
+    - Normalizes weights to sum to 1.0 for interpretability.
+      (Scoring is scale-invariant, so this will not change the score.)
+    - Stores the original sum under __weights_sum__ in each section.
+    """
+    if not isinstance(cfg, dict):
+        return cfg
+
+    for section_name in ("composite", "maintenance_composite"):
+        section = cfg.get(section_name)
+        if not isinstance(section, dict):
+            continue
+
+        weights = section.get("feature_weights")
+        if weights is None:
+            continue
+        if not isinstance(weights, dict):
+            raise ValueError(f"{section_name}.feature_weights must be a mapping")
+
+        cleaned: dict[str, float] = {}
+        for k, v in weights.items():
+            try:
+                fv = float(v)
+            except Exception as e:
+                raise ValueError(f"{section_name}.feature_weights[{k!r}] must be numeric") from e
+            if fv < 0:
+                raise ValueError(f"{section_name}.feature_weights[{k!r}] must be >= 0")
+            cleaned[k] = fv
+
+        total = sum(cleaned.values())
+        section["__weights_sum__"] = total
+
+        if total > 0:
+            section["feature_weights"] = {k: (v / total) for k, v in cleaned.items()}
+        else:
+            section["feature_weights"] = cleaned
+
+    return cfg
 
 def get_composite_config():
     """
@@ -241,5 +300,10 @@ def get_composite_config():
         )
 
     with open(yaml_path, "r") as f:
-        return yaml.safe_load(f)
+        cfg = yaml.safe_load(f)
+
+    # Validate + normalize weights for composite sections (structural correctness)
+    cfg = _validate_and_normalize_composite_config(cfg)
+
+    return cfg
 

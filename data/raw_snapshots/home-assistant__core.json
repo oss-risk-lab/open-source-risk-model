@@ -1,0 +1,40 @@
+{
+  "fetched_at": "2026-02-10T20:42:22.471154+00:00",
+  "cache_status": "miss",
+  "features": {
+    "days_since_last_push": 0.0940400634375,
+    "days_since_last_release": 3.9565179034027778,
+    "stargazers_count": 84746,
+    "contributors_count": 5159,
+    "open_issues_count": 3346,
+    "issues_per_contributor": 0.6485753052917232,
+    "fraction_issues_closed_12mo": 0.7758275302871316,
+    "fraction_open_issues_stale_180d": 0.2530887308124298,
+    "contributors_last_12mo": 81,
+    "top_contributor_fraction_12mo": 0.11456341618865519,
+    "archived": false,
+    "license_spdx_id": "Apache-2.0",
+    "__meta__": {
+      "has_issues": true,
+      "feature_status": {
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "contributors_count": "ok",
+        "issues_per_contributor": "ok"
+      }
+    },
+    "stars_count": 84746
+  },
+  "__meta__": {
+    "has_issues": true,
+    "feature_status": {
+      "days_since_last_release": "ok",
+      "fraction_issues_closed_12mo": "ok",
+      "fraction_open_issues_stale_180d": "ok",
+      "contributors_count": "ok",
+      "issues_per_contributor": "ok"
+    }
+  },
+  "issues_meta": {}
+}

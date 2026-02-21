@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 3473,
+    "contributors_last_12mo": 55,
+    "days_since_last_push": 0.30103043940972224,
+    "days_since_last_release": 64.28004817310185,
+    "fraction_issues_closed_12mo": 0.7124773960216998,
+    "fraction_open_issues_stale_180d": 0.9433249370277078,
+    "issues_per_contributor": 0.6133026202130722,
+    "license_spdx_id": "BSD-3-Clause",
+    "open_issues_count": 2130,
+    "stargazers_count": 65011,
+    "top_contributor_fraction_12mo": 0.1292418772563177
+  },
+  "fetched_at": "2026-02-12T20:15:22.326780+00:00",
+  "full_name": "scikit-learn/scikit-learn"
+}

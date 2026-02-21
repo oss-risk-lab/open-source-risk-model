@@ -1,0 +1,40 @@
+{
+  "fetched_at": "2026-02-10T21:19:32.316821+00:00",
+  "cache_status": "miss",
+  "features": {
+    "days_since_last_push": 0.1497651313888889,
+    "days_since_last_release": 15.178391391886572,
+    "stargazers_count": 96355,
+    "contributors_count": 1400,
+    "open_issues_count": 2060,
+    "issues_per_contributor": 1.4714285714285715,
+    "fraction_issues_closed_12mo": 0.7387005649717514,
+    "fraction_open_issues_stale_180d": 0.8961194029850746,
+    "contributors_last_12mo": 37,
+    "top_contributor_fraction_12mo": 0.3806600153491942,
+    "archived": false,
+    "license_spdx_id": "NOASSERTION",
+    "__meta__": {
+      "has_issues": true,
+      "feature_status": {
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "contributors_count": "ok",
+        "issues_per_contributor": "ok"
+      }
+    },
+    "stars_count": 96355
+  },
+  "__meta__": {
+    "has_issues": true,
+    "feature_status": {
+      "days_since_last_release": "ok",
+      "fraction_issues_closed_12mo": "ok",
+      "fraction_open_issues_stale_180d": "ok",
+      "contributors_count": "ok",
+      "issues_per_contributor": "ok"
+    }
+  },
+  "issues_meta": {}
+}

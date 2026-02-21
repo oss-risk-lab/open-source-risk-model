@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 1086,
+    "contributors_last_12mo": 29,
+    "days_since_last_push": 1.0089011067476852,
+    "days_since_last_release": 67.94815239569445,
+    "fraction_issues_closed_12mo": 0.6254681647940075,
+    "fraction_open_issues_stale_180d": 0.9356321839080459,
+    "issues_per_contributor": 0.9116022099447514,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 990,
+    "stargazers_count": 13557,
+    "top_contributor_fraction_12mo": 0.40923076923076923
+  },
+  "fetched_at": "2026-02-12T20:16:40.355619+00:00",
+  "full_name": "pytest-dev/pytest"
+}

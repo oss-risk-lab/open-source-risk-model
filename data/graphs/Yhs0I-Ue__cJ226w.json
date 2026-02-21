@@ -1,0 +1,30 @@
+{
+  "cache_metadata": {
+    "repo": "Yhs0I-Ue/cJ226w",
+    "cached_at": "2026-02-18T20:01:26.834975+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-18T21:01:26.834975+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:\ud938\udde3@oNx}d~",
+        "type": "repo",
+        "label": "\ud835\udc13\ud835\udc21\ud835\udc1e \ud835\udc2a\ud835\udc2e\ud835\udc22\ud835\udc1c\ud835\udc24 \ud835\udc1b\ud835\udc2b\ud835\udc28\ud835\udc30\ud835\udc27 \ud835\udc1f\ud835\udc28\ud835\udc31 \ud835\udc23\ud835\udc2e\ud835\udc26\ud835\udc29\ud835\udc2c \ud835\udc28\ud835\udc2f\ud835\udc1e\ud835\udc2b \ud835\udc2d\ud835\udc21\ud835\udc1e \ud835\udc25\ud835\udc1a\ud835\udc33\ud835\udc32 \ud835\udc1d\ud835\udc28\ud835\udc20",
+        "metadata": {},
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-13T10:00:00Z",
+          "data_confidence": 0.9
+        }
+      }
+    ],
+    "edges": [],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T10:00:00Z",
+      "repo": "\u00dd\\N\u00c3\ud84e\uddbdxO}\u00e9\u0099\u00e7",
+      "warnings": []
+    }
+  }
+}

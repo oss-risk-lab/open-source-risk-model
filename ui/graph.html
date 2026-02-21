@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deep Signal — Supply Chain Graph</title>
+  
+  <!-- vis.js from CDN -->
+  <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+  
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --panel: #0f172a;
+      --card: #111827;
+      --border: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --muted2: rgba(255,255,255,.45);
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 
+"Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 
+Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(99,102,241,.35), 
+transparent 60%),
+        radial-gradient(900px 600px at 90% 0%, rgba(16,185,129,.25), 
+transparent 55%),
+        radial-gradient(900px 600px at 70% 120%, rgba(239,68,68,.18), 
+transparent 55%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .wrap{
+      max-width: 1600px;
+      margin: 20px auto;
+      padding: 0 18px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .title{
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), 
+rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="text"]{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+    input[type="text"]::placeholder{ color: rgba(255,255,255,.35); }
+
+    .btn{
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, background .15s ease;
+      user-select:none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    .btn:hover{ background: rgba(255,255,255,.12); }
+    .btn:active{ transform: translateY(1px); }
+    .btn:disabled{ opacity: .5; cursor: not-allowed; }
+
+    .main-container{
+      display: flex;
+      gap: 14px;
+      height: calc(100vh - 200px);
+      min-height: 600px;
+    }
+
+    .graph-section{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .filters-panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), 
+rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .filter-group{
+      margin-bottom: 14px;
+    }
+
+    .filter-group h4{
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .filter-checks{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-check{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .filter-check input[type="checkbox"]{
+      cursor: pointer;
+    }
+
+    .node-badge{
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+
+    .slider-group{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-label{
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    input[type="range"]{
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+    }
+
+    input[type="range"]::-moz-range-thumb{
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      cursor: pointer;
+      border: 2px solid var(--bg);
+    }
+
+    #graph-container{
+      flex: 1;
+      min-height: 500px; /* Ensure minimum height */
+      background: linear-gradient(180deg, rgba(255,255,255,.05), 
+rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    /* Ensure vis.js canvas is visible */
+    #graph-container canvas {
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .details-panel{
+      width: 350px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), 
+rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .details-panel h3{
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .detail-section{
+      margin-bottom: 16px;
+    }
+
+    .detail-section h4{
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .detail-item{
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      margin-bottom: 6px;
+    }
+
+    .detail-item .label{
+      font-size: 11px;
+      color: var(--muted2);
+      margin-bottom: 4px;
+    }
+
+    .detail-item .value{
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .confidence-badge{
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .confidence-high{
+      background: rgba(34, 197, 94, .2);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, .3);
+    }
+
+    .confidence-medium{
+      background: rgba(234, 179, 8, .2);
+      color: #eab308;
+      border: 1px solid rgba(234, 179, 8, .3);
+    }
+
+    .confidence-low{
+      background: rgba(239, 68, 68, .2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, .3);
+    }
+
+    .empty-state{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-state-icon{
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: .5;
+    }
+
+    .err{
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(239,68,68,.45);
+      background: rgba(239,68,68,.10);
+      color: rgba(255,255,255,.88);
+      font-size: 13px;
+      display:none;
+      white-space: pre-wrap;
+    }
+
+    .stats{
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .stat{
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      text-align: center;
+    }
+
+    .stat .num{
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat .label{
+      font-size: 11px;
+      color: var(--muted2);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .export-buttons{
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .export-btn{
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s ease;
+      text-align: center;
+    }
+
+    .export-btn:hover{
+      background: rgba(255,255,255,.10);
+    }
+
+    /* Explanation Panel Styles */
+    .explanation-panel{
+      margin-bottom: 14px;
+    }
+
+    .explanation-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      padding: 4px 0;
+    }
+
+    .explanation-title{
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .explanation-toggle{
+      font-size: 12px;
+      color: var(--muted);
+      transition: transform .2s ease;
+    }
+
+    .explanation-toggle.open{
+      transform: rotate(180deg);
+    }
+
+    .explanation-content{
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+
+    .explanation-content.open{
+      max-height: 1000px;
+      margin-top: 14px;
+    }
+
+    .explanation-section{
+      margin-bottom: 18px;
+    }
+
+    .explanation-section h4{
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .explanation-section p{
+      margin: 0 0 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .explanation-list{
+      margin: 0;
+      padding-left: 20px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .explanation-list li{
+      margin-bottom: 6px;
+    }
+
+    .explanation-list code{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0,0,0,.3);
+      color: rgba(255,255,255,.85);
+    }
+
+    .explanation-list strong{
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .provenance-toggle{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      font-size: 12px;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 12px;
+    }
+
+    .provenance-toggle input{
+      cursor: pointer;
+    }
+
+    @media (max-width: 1200px){
+      .main-container{
+        flex-direction: column;
+        height: auto;
+      }
+      .details-panel{
+        width: 100%;
+        max-height: 400px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">Deep Signal — Supply Chain Graph</div>
+        <div class="subtitle">
+          Visualize repository supply chain relationships: releases, maintainers, vulnerabilities, and risk factors.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="controls">
+        <input id="repoInput" type="text" placeholder="e.g. numpy/numpy or https://github.com/numpy/numpy" />
+        <button id="loadBtn" class="btn">Load Graph</button>
+        <button id="refreshBtn" class="btn">Force Refresh</button>
+      </div>
+      <div id="err" class="err"></div>
+    </div>
+
+    <!-- Explanation Panel -->
+    <div class="panel explanation-panel">
+      <div class="explanation-header" onclick="toggleExplanation()">
+        <span class="explanation-title">💡 What This Graph Means</span>
+        <span class="explanation-toggle" id="explanationToggle">▼</span>
+      </div>
+      <div class="explanation-content" id="explanationContent">
+        <div class="explanation-section">
+          <h4>Understanding the Graph</h4>
+          <p>This visualization shows the supply chain relationships for a repository. Each node represents an entity (repository, release, maintainer, vulnerability, etc.), and edges show how they're connected.</p>
+        </div>
+
+        <div class="explanation-section">
+          <h4>Node Types</h4>
+          <ul class="explanation-list">
+            <li><span class="node-badge" style="background:#2563eb;"></span> <strong>Repository</strong> — The analyzed project (center node)</li>
+            <li><span class="node-badge" style="background:#16a34a;"></span> <strong>Release</strong> — Published versions/tags</li>
+            <li><span class="node-badge" style="background:#9333ea;"></span> <strong>Maintainer</strong> — Key contributors</li>
+            <li><span class="node-badge" style="background:#dc2626;"></span> <strong>CVE</strong> — Known security vulnerabilities</li>
+            <li><span class="node-badge" style="background:#ea580c;"></span> <strong>Registry</strong> — Package distribution channels (PyPI, npm, etc.)</li>
+            <li><span class="node-badge" style="background:#ca8a04;"></span> <strong>Risk Factor</strong> — Metrics driving the risk score</li>
+          </ul>
+        </div>
+
+        <div class="explanation-section">
+          <h4>Provenance & Confidence</h4>
+          <p><strong>Provenance</strong> tells you where each data point came from:</p>
+          <ul class="explanation-list">
+            <li><code>github_api</code> — Authoritative data from GitHub (confidence: 0.9-1.0)</li>
+            <li><code>github_advisory</code> / <code>osv</code> — CVE data from security databases (confidence: 0.95)</li>
+            <li><code>heuristic</code> — Detected from file analysis (confidence: 0.7-0.8)</li>
+            <li><code>score_model</code> — Calculated risk metrics (confidence: varies)</li>
+          </ul>
+          <p><strong>Confidence scores</strong> (0.0-1.0) indicate data reliability. Lower confidence means more uncertainty.</p>
+        </div>
+
+        <div class="explanation-section">
+          <h4>How CVE Matching Works</h4>
+          <p>CVEs are linked to releases using version range matching from vulnerability databases. This is heuristic-based and may have false positives/negatives. Check the <code>match_confidence</code> field for reliability.</p>
+        </div>
+
+        <div class="explanation-section">
+          <h4>Limitations</h4>
+          <ul class="explanation-list">
+            <li>Registry detection is file-based (not API-verified)</li>
+            <li>CVE-to-version matching uses heuristics</li>
+            <li>Maintainer data reflects GitHub's contribution tracking</li>
+            <li>Cached data may be up to 1 hour old</li>
+          </ul>
+        </div>
+
+        <div class="explanation-section">
+          <h4>Interpreting Risk</h4>
+          <p>Risk factors show which metrics contribute most to the overall maintenance risk score. Higher contribution = bigger impact on risk. Click nodes to see detailed metadata and provenance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="graph-section">
+        <div class="filters-panel">
+          <div class="filter-group">
+            <h4>Node Types</h4>
+            <div class="filter-checks" id="nodeTypeFilters"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Confidence Filter</h4>
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Minimum Confidence</span>
+                <span id="confidenceValue">0.0</span>
+              </div>
+              <input type="range" id="confidenceSlider" min="0" max="100" value="0" step="5" />
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h4>CVE Severity Filter</h4>
+            <select id="cveSeverityFilter" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: rgba(0,0,0,.18); color: var(--text); font-size: 13px;">
+              <option value="all">All CVEs</option>
+              <option value="high-critical">High & Critical Only</option>
+              <option value="critical">Critical Only</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <h4>Search</h4>
+            <input type="text" id="searchInput" placeholder="Search nodes by label..." />
+          </div>
+        </div>
+
+        <div id="graph-container">
+          <div class="empty-state">
+            <div class="empty-state-icon">📊</div>
+            <div>Enter a repository and click "Load Graph" to visualize the supply chain</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="details-panel">
+        <h3>Node Details</h3>
+        
+        <div class="stats" id="graphStats" style="display:none;">
+          <div class="stat">
+            <div class="num" id="nodeCount">0</div>
+            <div class="label">Nodes</div>
+          </div>
+          <div class="stat">
+            <div class="num" id="edgeCount">0</div>
+            <div class="label">Edges</div>
+          </div>
+        </div>
+
+        <label class="provenance-toggle" id="provenanceToggle" style="display:none;">
+          <input type="checkbox" id="showProvenance" />
+          <span>Show Provenance</span>
+        </label>
+
+        <div class="export-buttons" id="exportButtons" style="display:none;">
+          <button class="export-btn" id="exportJson">Export JSON</button>
+          <button class="export-btn" id="exportPng">Export PNG</button>
+        </div>
+
+        <div id="nodeDetails">
+          <div class="empty-state" style="height: auto; padding: 20px;">
+            <div class="empty-state-icon" style="font-size: 32px;">👆</div>
+            <div>Click a node to see details</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="graph-viz.js"></script>
+  <script>
+    // Toggle explanation panel
+    function toggleExplanation() {
+      const content = document.getElementById('explanationContent');
+      const toggle = document.getElementById('explanationToggle');
+      
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        toggle.classList.remove('open');
+      } else {
+        content.classList.add('open');
+        toggle.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "cache_metadata": {
+    "repo": "3/km",
+    "cached_at": "2026-02-18T20:01:26.746230+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-18T21:01:26.746230+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:\u0084\u009ad\u00fe\udbbf\udd0d%\ub42c$\u00d5\u00d6%\u0091\u00d6\u00f56,\t\ud92a\ude5e\u00d8\udaa3\udff8c\u00c8\udb77\ude5dh\ud898\udfcb\ud85c\udc04\u001b\u00b4\udaad\udcf4c\u00e6\u00f7L)K\u00a1",
+        "type": "repo",
+        "label": "\u00d7\u00d7\u00d1{\udb5e\ude65\udb22\udf27\uda5a\udfdd\u0017\udb0b\udffa\udb7b\udc55\ud823\udd57\u009f",
+        "metadata": {},
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-13T10:00:00Z",
+          "data_confidence": 0.9
+        }
+      }
+    ],
+    "edges": [],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T10:00:00Z",
+      "repo": "N\udad1\udddcR\ud865\udd97\u00c6\u0084",
+      "warnings": []
+    }
+  }
+}

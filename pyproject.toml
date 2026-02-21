@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-source-risk-model"
+version = "0.1.0"
+description = "A modular risk-scoring engine for evaluating open-source software repositories"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Colin Hadden", email = "colin.d.hadden@gmail.com"}
+]
+dependencies = [
+    "requests",
+    "fastapi",
+    "uvicorn",
+    "pyyaml",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+test = [
+    "PyGithub",
+]
+plotting = [
+    "matplotlib",
+]
+
+[project.urls]
+Homepage = "https://github.com/oss-risk-lab/open-source-risk-model"
+Repository = "https://github.com/oss-risk-lab/open-source-risk-model"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]

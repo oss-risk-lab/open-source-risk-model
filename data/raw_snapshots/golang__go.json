@@ -1,0 +1,66 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 34137,
+        "compact_stats": {
+          "comments": {
+            "dropped": 1,
+            "kept": 34136,
+            "path": "data/issues/golang__go/comments.jsonl",
+            "rows_before": 34137
+          },
+          "issues": {
+            "dropped": 1,
+            "kept": 2362,
+            "path": "data/issues/golang__go/issues.jsonl",
+            "rows_before": 2363
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 2363,
+        "last_fetch_utc": "2026-02-21T15:29:25.648959+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 25,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": true
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "avg_time_to_first_maintainer_response_days": 12.517819885717694,
+    "contributors_count": 2868,
+    "contributors_last_12mo": 79,
+    "days_since_last_push": 0.30146913122685187,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.6880103137086377,
+    "fraction_open_issues_stale_180d": 0.9112238427393786,
+    "fraction_unanswered_after_30d": 0.4304461942257218,
+    "issues_per_contributor": 3.4341004184100417,
+    "license_spdx_id": "BSD-3-Clause",
+    "median_time_to_close_days": 1.9505092592592592,
+    "open_issue_age_p90_days": 262.55294820530094,
+    "open_issues_count": 9849,
+    "stargazers_count": 132667,
+    "stars_count": 132667,
+    "top_contributor_fraction_12mo": 0.0721326164874552
+  },
+  "fetched_at": "2026-02-21T15:29:26.808067+00:00",
+  "full_name": "golang/go"
+}

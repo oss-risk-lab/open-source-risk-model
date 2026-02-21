@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 6228,
+    "contributors_last_12mo": 81,
+    "days_since_last_push": 0.005593885081018518,
+    "days_since_last_release": 22.132703943703703,
+    "fraction_issues_closed_12mo": 0.59312680295999,
+    "fraction_open_issues_stale_180d": 0.8933532673020619,
+    "issues_per_contributor": 2.888567758509955,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 17990,
+    "stargazers_count": 97373,
+    "top_contributor_fraction_12mo": 0.16415073241641506
+  },
+  "fetched_at": "2026-02-12T20:16:26.090575+00:00",
+  "full_name": "pytorch/pytorch"
+}

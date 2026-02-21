@@ -1,0 +1,27 @@
+{
+  "comments_written_last_run": 34137,
+  "compact_stats": {
+    "comments": {
+      "dropped": 1,
+      "kept": 34136,
+      "path": "data/issues/golang__go/comments.jsonl",
+      "rows_before": 34137
+    },
+    "issues": {
+      "dropped": 1,
+      "kept": 2362,
+      "path": "data/issues/golang__go/issues.jsonl",
+      "rows_before": 2363
+    }
+  },
+  "days_back": 365,
+  "errors": [],
+  "issues_written_last_run": 2363,
+  "last_fetch_utc": "2026-02-21T15:29:25.648959+00:00",
+  "max_pages": 25,
+  "pages_fetched_last_run": 25,
+  "per_page": 100,
+  "status": "ok",
+  "truncated": true,
+  "updated_at_utc": "2026-02-21T15:29:25.649047+00:00"
+}

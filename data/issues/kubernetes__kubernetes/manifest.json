@@ -1,0 +1,77 @@
+{
+  "comments_written_last_run": 11611,
+  "compact_stats": {
+    "comments": {
+      "dropped": 0,
+      "kept": 11611,
+      "path": "data/issues/kubernetes__kubernetes/comments.jsonl",
+      "rows_before": 11611
+    },
+    "issues": {
+      "dropped": 0,
+      "kept": 765,
+      "path": "data/issues/kubernetes__kubernetes/issues.jsonl",
+      "rows_before": 765
+    }
+  },
+  "days_back": 365,
+  "errors": [
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2246F84:96755CA:6998DF3E and timestamp 2026-02-20 22:25:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/136188/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2246FB6:9675690:6998DF3E and timestamp 2026-02-20 22:25:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/135809/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2246FE4:9675751:6998DF3E and timestamp 2026-02-20 22:25:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/135430/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2247017:9675831:6998DF3E and timestamp 2026-02-20 22:25:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/134135/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2247040:96758B6:6998DF3E and timestamp 2026-02-20 22:25:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/133675/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2247067:9675966:6998DF3F and timestamp 2026-02-20 22:25:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues/135639/comments"
+    },
+    {
+      "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D783:209773:2247097:9675A39:6998DF3F and timestamp 2026-02-20 22:25:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+      "remaining": 0,
+      "reset_epoch": 1771628147,
+      "status_code": 403,
+      "url": "https://api.github.com/repos/kubernetes/kubernetes/issues"
+    }
+  ],
+  "issues_written_last_run": 765,
+  "last_fetch_utc": "2026-02-20T22:25:04.310926+00:00",
+  "max_pages": 25,
+  "pages_fetched_last_run": 22,
+  "per_page": 100,
+  "status": "partial",
+  "truncated": false,
+  "updated_at_utc": "2026-02-20T22:25:04.310986+00:00"
+}

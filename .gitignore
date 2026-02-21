@@ -211,3 +211,8 @@ __marimo__/
 
 # R / RStudio
 .Rhistory
+
+# Multi-repo persistent graph database
+data/graphs.db
+data/graphs.db-shm
+data/graphs.db-wal

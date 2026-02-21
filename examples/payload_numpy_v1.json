@@ -1,0 +1,299 @@
+{
+  "repo": {
+    "full_name": "numpy/numpy",
+    "url": "https://github.com/numpy/numpy"
+  },
+  "meta": {
+    "fetched_at": "2026-02-03T21:20:18.087825+00:00",
+    "cache_status": "hit",
+    "schema_version": "1.0"
+  },
+  "overall": {
+    "maintenance_risk": 0.19879910280393515,
+    "maintenance_label": "low",
+    "coverage": 0.6923076923076923,
+    "confidence": "low"
+  },
+  "top_drivers": [
+    {
+      "key": "issues_per_contributor",
+      "contribution": 0.06328645066273933
+    },
+    {
+      "key": "fraction_issues_closed_12mo",
+      "contribution": 0.05844827586206895
+    },
+    {
+      "key": "top_contributor_fraction_12mo",
+      "contribution": 0.013741324921135644
+    },
+    {
+      "key": "contributors_last_12mo",
+      "contribution": 0.00864
+    },
+    {
+      "key": "stars_count",
+      "contribution": 0.0031296875000000005
+    }
+  ],
+  "features": [
+    {
+      "key": "issues_per_contributor",
+      "label": "Issues Per Contributor",
+      "category": "Issues",
+      "raw_value": 1.1266568483063328,
+      "unit": "issues/contributor",
+      "status": "ok",
+      "risk_score": 0.5753313696612666,
+      "risk_label": "medium",
+      "weight": 0.11,
+      "contribution": 0.06328645066273933,
+      "explanation": "Approximates maintainer load. Higher load per contributor increases risk.",
+      "interpretation": null
+    },
+    {
+      "key": "fraction_issues_closed_12mo",
+      "label": "Fraction Issues Closed 12Mo",
+      "category": "Issues",
+      "raw_value": 0.6752873563218391,
+      "unit": "ratio",
+      "status": "ok",
+      "risk_score": 0.38965517241379305,
+      "risk_label": "medium",
+      "weight": 0.15,
+      "contribution": 0.05844827586206895,
+      "explanation": "Issue throughput signal. Lower closure fraction increases risk.",
+      "interpretation": {
+        "direction": "lower_is_worse",
+        "bands": [
+          {
+            "label": "risky",
+            "max": 0.3
+          },
+          {
+            "label": "ok",
+            "max": 0.6
+          },
+          {
+            "label": "good",
+            "max": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "key": "top_contributor_fraction_12mo",
+      "label": "Top Contributor Fraction 12Mo",
+      "category": "Contributors",
+      "raw_value": 0.3249211356466877,
+      "unit": "ratio",
+      "status": "ok",
+      "risk_score": 0.12492113564668768,
+      "risk_label": "low",
+      "weight": 0.11,
+      "contribution": 0.013741324921135644,
+      "explanation": "Bus factor proxy. Higher contribution concentration increases risk.",
+      "interpretation": {
+        "direction": "higher_is_worse",
+        "bands": [
+          {
+            "label": "good",
+            "max": 0.2
+          },
+          {
+            "label": "ok",
+            "max": 0.35
+          },
+          {
+            "label": "risky",
+            "max": null
+          }
+        ]
+      }
+    },
+    {
+      "key": "contributors_last_12mo",
+      "label": "Contributors Last 12Mo",
+      "category": "Contributors",
+      "raw_value": 32,
+      "unit": "count",
+      "status": "ok",
+      "risk_score": 0.07200000000000001,
+      "risk_label": "low",
+      "weight": 0.12,
+      "contribution": 0.00864,
+      "explanation": "Number of contributors in the last 12 months. Fewer contributors increases risk.",
+      "interpretation": null
+    },
+    {
+      "key": "stars_count",
+      "label": "Stars Count",
+      "category": "Popularity",
+      "raw_value": null,
+      "unit": "count",
+      "status": "missing",
+      "risk_score": 0.06259375,
+      "risk_label": "low",
+      "weight": 0.05,
+      "contribution": 0.0031296875000000005,
+      "explanation": "Stars are a weak proxy for adoption or community interest. Lower stars can increase risk slightly.",
+      "interpretation": null
+    },
+    {
+      "key": "days_since_last_push",
+      "label": "Days Since Last Push",
+      "category": "Activity",
+      "raw_value": 0.2577949402662037,
+      "unit": "days",
+      "status": "ok",
+      "risk_score": 0.007365569721891534,
+      "risk_label": "low",
+      "weight": 0.19,
+      "contribution": 0.0013994582471593916,
+      "explanation": "How recently the repository was updated. Longer gaps increase risk.",
+      "interpretation": {
+        "direction": "higher_is_worse",
+        "bands": [
+          {
+            "label": "good",
+            "max": 7
+          },
+          {
+            "label": "ok",
+            "max": 30
+          },
+          {
+            "label": "risky",
+            "max": null
+          }
+        ]
+      }
+    },
+    {
+      "key": "days_since_last_release",
+      "label": "Days Since Last Release",
+      "category": "Release",
+      "raw_value": 2.208606665162037,
+      "unit": "days",
+      "status": "ok",
+      "risk_score": 0.01472404443441358,
+      "risk_label": "low",
+      "weight": 0.08,
+      "contribution": 0.0011779235547530863,
+      "explanation": "Time since the last tagged release. Long gaps can indicate slower delivery.",
+      "interpretation": {
+        "direction": "higher_is_worse",
+        "bands": [
+          {
+            "label": "good",
+            "max": 30
+          },
+          {
+            "label": "ok",
+            "max": 120
+          },
+          {
+            "label": "risky",
+            "max": null
+          }
+        ]
+      }
+    },
+    {
+      "key": "fraction_open_issues_stale_180d",
+      "label": "Fraction Open Issues Stale 180D",
+      "category": "Issues",
+      "raw_value": 0.9553314121037464,
+      "unit": "ratio",
+      "status": "ok",
+      "risk_score": 0.9329971181556196,
+      "risk_label": "high",
+      "weight": 0.0,
+      "contribution": 0.0,
+      "explanation": "Backlog staleness signal. Higher stale fraction increases risk.",
+      "interpretation": null
+    },
+    {
+      "key": "archived",
+      "label": "Archived",
+      "category": "Governance",
+      "raw_value": false,
+      "unit": "boolean",
+      "status": "ok",
+      "risk_score": 0.0,
+      "risk_label": "low",
+      "weight": 0.08,
+      "contribution": 0.0,
+      "explanation": "Archived repositories are higher risk for ongoing maintenance.",
+      "interpretation": {
+        "direction": "boolean",
+        "bands": [
+          {
+            "label": "good",
+            "max": false
+          },
+          {
+            "label": "risky",
+            "max": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "avg_time_to_first_maintainer_response_days",
+      "label": "Avg Time To First Maintainer Response Days",
+      "category": "Issues",
+      "raw_value": null,
+      "unit": "days",
+      "status": "missing",
+      "risk_score": null,
+      "risk_label": null,
+      "weight": 0.02,
+      "contribution": null,
+      "explanation": "Responsiveness signal from issues. Slower first response increases risk.",
+      "interpretation": null
+    },
+    {
+      "key": "fraction_unanswered_after_30d",
+      "label": "Fraction Unanswered After 30D",
+      "category": "Issues",
+      "raw_value": null,
+      "unit": "ratio",
+      "status": "missing",
+      "risk_score": null,
+      "risk_label": null,
+      "weight": 0.03,
+      "contribution": null,
+      "explanation": "Share of issues with no maintainer response after 30 days. Higher fraction increases risk.",
+      "interpretation": null
+    },
+    {
+      "key": "median_time_to_close_days",
+      "label": "Median Time To Close Days",
+      "category": "Issues",
+      "raw_value": null,
+      "unit": "days",
+      "status": "missing",
+      "risk_score": null,
+      "risk_label": null,
+      "weight": 0.02,
+      "contribution": null,
+      "explanation": "Time to resolve issues. Longer closure times increase risk.",
+      "interpretation": null
+    },
+    {
+      "key": "open_issue_age_p90_days",
+      "label": "Open Issue Age P90 Days",
+      "category": "Issues",
+      "raw_value": null,
+      "unit": "days",
+      "status": "missing",
+      "risk_score": null,
+      "risk_label": null,
+      "weight": 0.02,
+      "contribution": null,
+      "explanation": "Age of older open issues (p90). Higher values indicate a stale backlog.",
+      "interpretation": null
+    }
+  ]
+}

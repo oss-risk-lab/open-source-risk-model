@@ -1,0 +1,35 @@
+{
+  "cache_metadata": {
+    "repo": "0/0",
+    "cached_at": "2026-02-20T19:34:53.432574+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-20T20:34:53.432574+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:0/0",
+        "type": "repo",
+        "label": "0/0",
+        "metadata": {
+          "url": "https://github.com/0/0",
+          "maintenance_risk": 0.0
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-20T19:34:53.418955+00:00",
+          "data_confidence": 1.0
+        }
+      }
+    ],
+    "edges": [],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-20T19:34:53.419469+00:00",
+      "data_sources": [
+        "github_api"
+      ],
+      "warnings": []
+    }
+  }
+}

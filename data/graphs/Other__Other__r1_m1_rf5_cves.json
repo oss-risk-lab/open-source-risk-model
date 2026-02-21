@@ -1,0 +1,58 @@
+{
+  "cache_metadata": {
+    "repo": "Other/Other",
+    "cached_at": "2026-02-20T19:35:01.217597+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-20T20:35:01.217597+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:Other/Other",
+        "type": "repo",
+        "label": "Other/Other",
+        "metadata": {
+          "url": "https://github.com/Other/Other",
+          "maintenance_risk": 0.7217208192028371
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-20T19:35:01.094447+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:Other/Other:v1.0.0",
+        "type": "release",
+        "label": "v1.0.0",
+        "metadata": {
+          "tag_name": "v1.0.0"
+        },
+        "provenance": {
+          "source": "github_api",
+          "data_confidence": 1.0
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "repo:Other/Other",
+        "target": "release:Other/Other:v1.0.0",
+        "relationship_type": "has_release",
+        "metadata": {},
+        "provenance": {
+          "source": "github_api",
+          "confidence": 1.0
+        }
+      }
+    ],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-20T19:35:01.094874+00:00",
+      "data_sources": [
+        "github_api"
+      ],
+      "warnings": []
+    }
+  }
+}

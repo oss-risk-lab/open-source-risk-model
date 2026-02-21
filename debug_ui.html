@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Graph Rendering</title>
+  <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+  <style>
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+  </style>
+</head>
+<body>
+  <h1>Debug: Simple vis.js Test</h1>
+  <div id="mynetwork"></div>
+  
+  <script>
+    // Simple test to verify vis.js works
+    const nodes = new vis.DataSet([
+      { id: 1, label: "Node 1", color: "#2563eb" },
+      { id: 2, label: "Node 2", color: "#16a34a" },
+      { id: 3, label: "Node 3", color: "#dc2626" }
+    ]);
+    
+    const edges = new vis.DataSet([
+      { from: 1, to: 2 },
+      { from: 1, to: 3 }
+    ]);
+    
+    const container = document.getElementById("mynetwork");
+    const data = { nodes, edges };
+    const options = {
+      physics: { enabled: false }
+    };
+    
+    const network = new vis.Network(container, data, options);
+    console.log("Network created:", network);
+  </script>
+</body>
+</html>

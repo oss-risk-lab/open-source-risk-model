@@ -1,7 +1,7 @@
 maintenance_composite:
   feature_weights:
     days_since_last_push: 0.19
-    days_since_last_release: 0.19
+    days_since_last_release: 0.08
 
     fraction_issues_closed_12mo: 0.15
     fraction_open_issues_stale_180d: 0.0 #removed for now
@@ -13,10 +13,10 @@ maintenance_composite:
     archived: 0.08                 
     stars_count: 0.05 
 
-    avg_time_to_first_maintainer_response_days: 0.04
-    fraction_unanswered_30d: 0.05
-    median_time_to_close_days: 0.04
-    open_issue_age_p90_days: 0.04
+    avg_time_to_first_maintainer_response_days: 0.02
+    fraction_unanswered_after_30d: 0.03
+    median_time_to_close_days: 0.02
+    open_issue_age_p90_days: 0.02
                 
 
   bands:

@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 178,
+    "contributors_last_12mo": 20,
+    "days_since_last_push": 0.5116284496759259,
+    "days_since_last_release": 6.171492712766203,
+    "fraction_issues_closed_12mo": 0.7258064516129032,
+    "fraction_open_issues_stale_180d": 0.8205128205128205,
+    "issues_per_contributor": 1.3089887640449438,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 233,
+    "stargazers_count": 5719,
+    "top_contributor_fraction_12mo": 0.685
+  },
+  "fetched_at": "2026-02-12T20:16:45.265652+00:00",
+  "full_name": "redis/lettuce"
+}

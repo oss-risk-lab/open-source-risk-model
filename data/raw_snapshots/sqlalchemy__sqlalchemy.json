@@ -1,0 +1,28 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "archived": false,
+    "contributors_count": 811,
+    "contributors_last_12mo": 28,
+    "days_since_last_push": 3.2414403694097222,
+    "days_since_last_release": 22.09213840162037,
+    "fraction_issues_closed_12mo": 0.9011627906976745,
+    "fraction_open_issues_stale_180d": 0.9526315789473684,
+    "issues_per_contributor": 0.25524044389642414,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 207,
+    "stargazers_count": 11502,
+    "top_contributor_fraction_12mo": 0.7504587155963303
+  },
+  "fetched_at": "2026-02-12T20:16:35.748218+00:00",
+  "full_name": "sqlalchemy/sqlalchemy"
+}

@@ -1,0 +1,67 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 6077,
+        "compact_stats": {
+          "comments": {
+            "dropped": 6077,
+            "kept": 6079,
+            "path": "data/issues/python__cpython/comments.jsonl",
+            "rows_before": 12156
+          },
+          "issues": {
+            "dropped": 1026,
+            "kept": 1027,
+            "path": "data/issues/python__cpython/issues.jsonl",
+            "rows_before": 2053
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 1026,
+        "last_fetch_utc": "2026-02-21T15:34:02.392734+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 25,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": true,
+        "updated_at_utc": "2026-02-21T15:16:27.641540+00:00"
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "avg_time_to_first_maintainer_response_days": 7.205394551917995,
+    "contributors_count": 3689,
+    "contributors_last_12mo": 69,
+    "days_since_last_push": 0.016775138715277776,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.7318875119161106,
+    "fraction_open_issues_stale_180d": 0.9136630343671417,
+    "fraction_unanswered_after_30d": 0.24864864864864866,
+    "issues_per_contributor": 2.5088099756031443,
+    "license_spdx_id": "NOASSERTION",
+    "median_time_to_close_days": 4.848796296296296,
+    "open_issue_age_p90_days": 221.0407694786574,
+    "open_issues_count": 9255,
+    "stargazers_count": 71650,
+    "stars_count": 71650,
+    "top_contributor_fraction_12mo": 0.11218464841653247
+  },
+  "fetched_at": "2026-02-21T15:34:02.495208+00:00",
+  "full_name": "python/cpython"
+}

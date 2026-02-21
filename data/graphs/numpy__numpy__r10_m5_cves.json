@@ -1,0 +1,771 @@
+{
+  "cache_metadata": {
+    "repo": "numpy/numpy",
+    "cached_at": "2026-02-19T19:37:05.838811+00:00",
+    "ttl_hours": 1,
+    "expires_at": "2026-02-19T20:37:05.838811+00:00"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "repo:numpy/numpy",
+        "type": "repo",
+        "label": "numpy/numpy",
+        "metadata": {
+          "url": "https://github.com/numpy/numpy",
+          "maintenance_risk": 0.20694052566646942,
+          "maintenance_label": "low",
+          "coverage": 0.9081632653061225,
+          "confidence": "medium"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.241452+00:00",
+          "data_confidence": 0.9724489795918367
+        }
+      },
+      {
+        "id": "risk:numpy/numpy:issues_per_contributor",
+        "type": "risk_factor",
+        "label": "Issues Per Contributor",
+        "metadata": {
+          "key": "issues_per_contributor",
+          "raw_value": 1.1329082883766552,
+          "risk_score": 0.5765816576753311,
+          "contribution": 0.0647183493309045,
+          "weight": 0.11224489795918367,
+          "category": "Issues"
+        },
+        "provenance": {
+          "source": "score_model",
+          "fetched_at": "2026-02-19T19:37:05.241472+00:00",
+          "data_confidence": 0.9724489795918367
+        }
+      },
+      {
+        "id": "risk:numpy/numpy:fraction_issues_closed_12mo",
+        "type": "risk_factor",
+        "label": "Fraction Issues Closed 12Mo",
+        "metadata": {
+          "key": "fraction_issues_closed_12mo",
+          "raw_value": 0.6739130434782609,
+          "risk_score": 0.3913043478260869,
+          "contribution": 0.059893522626441875,
+          "weight": 0.15306122448979592,
+          "category": "Issues"
+        },
+        "provenance": {
+          "source": "score_model",
+          "fetched_at": "2026-02-19T19:37:05.241487+00:00",
+          "data_confidence": 0.9724489795918367
+        }
+      },
+      {
+        "id": "maintainer:numpy/numpy:charris",
+        "type": "maintainer",
+        "label": "charris",
+        "metadata": {
+          "username": "charris",
+          "contribution_fraction": 0.42977392977392975,
+          "commit_count": 7148,
+          "type": "individual"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.242140+00:00",
+          "data_confidence": 0.9
+        }
+      },
+      {
+        "id": "maintainer:numpy/numpy:mattip",
+        "type": "maintainer",
+        "label": "mattip",
+        "metadata": {
+          "username": "mattip",
+          "contribution_fraction": 0.1774891774891775,
+          "commit_count": 2952,
+          "type": "individual"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.242163+00:00",
+          "data_confidence": 0.9
+        }
+      },
+      {
+        "id": "maintainer:numpy/numpy:seberg",
+        "type": "maintainer",
+        "label": "seberg",
+        "metadata": {
+          "username": "seberg",
+          "contribution_fraction": 0.1768879268879269,
+          "commit_count": 2942,
+          "type": "individual"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.242184+00:00",
+          "data_confidence": 0.9
+        }
+      },
+      {
+        "id": "maintainer:numpy/numpy:teoliphant",
+        "type": "maintainer",
+        "label": "teoliphant",
+        "metadata": {
+          "username": "teoliphant",
+          "contribution_fraction": 0.12415824915824916,
+          "commit_count": 2065,
+          "type": "individual"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.242198+00:00",
+          "data_confidence": 0.9
+        }
+      },
+      {
+        "id": "maintainer:numpy/numpy:cournape",
+        "type": "maintainer",
+        "label": "cournape",
+        "metadata": {
+          "username": "cournape",
+          "contribution_fraction": 0.0916907166907167,
+          "commit_count": 1525,
+          "type": "individual"
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.242212+00:00",
+          "data_confidence": 0.9
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.4.2",
+        "type": "release",
+        "label": "v2.4.2",
+        "metadata": {
+          "tag_name": "v2.4.2",
+          "name": "2.4.2 (Feb 1, 2026)",
+          "published_at": "2026-02-01T16:19:50Z",
+          "days_ago": 18,
+          "is_latest": true,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249755+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.4.1",
+        "type": "release",
+        "label": "v2.4.1",
+        "metadata": {
+          "tag_name": "v2.4.1",
+          "name": "2.4.1 (Jan 10, 2026)",
+          "published_at": "2026-01-10T18:01:49Z",
+          "days_ago": 40,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249784+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.4.0",
+        "type": "release",
+        "label": "v2.4.0",
+        "metadata": {
+          "tag_name": "v2.4.0",
+          "name": "2.4.0 (Dec 20, 2025)",
+          "published_at": "2025-12-20T18:20:29Z",
+          "days_ago": 61,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249797+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.4.0rc1",
+        "type": "release",
+        "label": "v2.4.0rc1",
+        "metadata": {
+          "tag_name": "v2.4.0rc1",
+          "name": "2.4.0rc1 (Dec 3, 2025)",
+          "published_at": "2025-12-03T16:00:55Z",
+          "days_ago": 78,
+          "is_latest": false,
+          "is_prerelease": true
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249809+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.5",
+        "type": "release",
+        "label": "v2.3.5",
+        "metadata": {
+          "tag_name": "v2.3.5",
+          "name": "2.3.5 (Nov 16, 2025)",
+          "published_at": "2025-11-16T23:15:13Z",
+          "days_ago": 94,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249820+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.4",
+        "type": "release",
+        "label": "v2.3.4",
+        "metadata": {
+          "tag_name": "v2.3.4",
+          "name": "v2.3.4 (Oct 15,  2025)",
+          "published_at": "2025-10-15T23:15:52Z",
+          "days_ago": 126,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249829+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.3",
+        "type": "release",
+        "label": "v2.3.3",
+        "metadata": {
+          "tag_name": "v2.3.3",
+          "name": "2.3.3 (Sep 9, 2025)",
+          "published_at": "2025-09-09T17:37:44Z",
+          "days_ago": 163,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249838+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.2",
+        "type": "release",
+        "label": "v2.3.2",
+        "metadata": {
+          "tag_name": "v2.3.2",
+          "name": "v2.3.2 (Jul 24,  2025)",
+          "published_at": "2025-07-24T21:44:51Z",
+          "days_ago": 209,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249847+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.1",
+        "type": "release",
+        "label": "v2.3.1",
+        "metadata": {
+          "tag_name": "v2.3.1",
+          "name": "v2.3.1 (Jun 21,  2025)",
+          "published_at": "2025-06-21T13:02:28Z",
+          "days_ago": 243,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249856+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "release:numpy/numpy:v2.3.0",
+        "type": "release",
+        "label": "v2.3.0",
+        "metadata": {
+          "tag_name": "v2.3.0",
+          "name": "v2.3.0 (June 7, 2025)",
+          "published_at": "2025-06-07T15:08:03Z",
+          "days_ago": 257,
+          "is_latest": false,
+          "is_prerelease": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "fetched_at": "2026-02-19T19:37:05.249866+00:00",
+          "data_confidence": 1.0
+        }
+      },
+      {
+        "id": "registry:pypi:numpy",
+        "type": "registry",
+        "label": "pypi: numpy",
+        "metadata": {
+          "registry_type": "pypi",
+          "package_name": "numpy",
+          "detected_from": "pyproject.toml",
+          "latest_version": null,
+          "download_count": null
+        },
+        "provenance": {
+          "source": "heuristic",
+          "fetched_at": "2026-02-19T19:37:05.622580+00:00",
+          "match_confidence": 0.9,
+          "data_confidence": 0.8
+        }
+      },
+      {
+        "id": "cve:GHSA-9fq2-x9r6-wfmf",
+        "type": "cve",
+        "label": "GHSA-9fq2-x9r6-wfmf",
+        "metadata": {
+          "cve_id": "GHSA-9fq2-x9r6-wfmf",
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cvss_score": null,
+          "summary": "Numpy Deserialization of Untrusted Data",
+          "published": "2022-05-24T22:00:57Z",
+          "fixed_in": null,
+          "source": "github_advisory"
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "fetched_at": "2026-02-19T19:37:05.835304+00:00",
+          "data_confidence": 0.95
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "repo:numpy/numpy",
+        "target": "risk:numpy/numpy:issues_per_contributor",
+        "relationship_type": "has_risk_factor",
+        "metadata": {
+          "contribution": 0.0647183493309045
+        },
+        "provenance": {
+          "source": "score_model",
+          "established_at": "2026-02-19T19:37:05.241479+00:00",
+          "confidence": 0.9724489795918367
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "risk:numpy/numpy:fraction_issues_closed_12mo",
+        "relationship_type": "has_risk_factor",
+        "metadata": {
+          "contribution": 0.059893522626441875
+        },
+        "provenance": {
+          "source": "score_model",
+          "established_at": "2026-02-19T19:37:05.241491+00:00",
+          "confidence": 0.9724489795918367
+        }
+      },
+      {
+        "source": "maintainer:numpy/numpy:charris",
+        "target": "repo:numpy/numpy",
+        "relationship_type": "maintained_by",
+        "metadata": {
+          "contribution_fraction": 0.42977392977392975,
+          "commit_count": 7148
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.242154+00:00",
+          "confidence": 0.9
+        }
+      },
+      {
+        "source": "maintainer:numpy/numpy:mattip",
+        "target": "repo:numpy/numpy",
+        "relationship_type": "maintained_by",
+        "metadata": {
+          "contribution_fraction": 0.1774891774891775,
+          "commit_count": 2952
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.242176+00:00",
+          "confidence": 0.9
+        }
+      },
+      {
+        "source": "maintainer:numpy/numpy:seberg",
+        "target": "repo:numpy/numpy",
+        "relationship_type": "maintained_by",
+        "metadata": {
+          "contribution_fraction": 0.1768879268879269,
+          "commit_count": 2942
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.242190+00:00",
+          "confidence": 0.9
+        }
+      },
+      {
+        "source": "maintainer:numpy/numpy:teoliphant",
+        "target": "repo:numpy/numpy",
+        "relationship_type": "maintained_by",
+        "metadata": {
+          "contribution_fraction": 0.12415824915824916,
+          "commit_count": 2065
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.242205+00:00",
+          "confidence": 0.9
+        }
+      },
+      {
+        "source": "maintainer:numpy/numpy:cournape",
+        "target": "repo:numpy/numpy",
+        "relationship_type": "maintained_by",
+        "metadata": {
+          "contribution_fraction": 0.0916907166907167,
+          "commit_count": 1525
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.242219+00:00",
+          "confidence": 0.9
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.4.2",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 18,
+          "is_latest": true
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249772+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.4.1",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 40,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249789+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.4.0",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 61,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249801+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.4.0rc1",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 78,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249814+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.5",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 94,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249823+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.4",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 126,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249832+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.3",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 163,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249841+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.2",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 209,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249851+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.1",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 243,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249860+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "release:numpy/numpy:v2.3.0",
+        "relationship_type": "has_release",
+        "metadata": {
+          "days_ago": 257,
+          "is_latest": false
+        },
+        "provenance": {
+          "source": "github_api",
+          "established_at": "2026-02-19T19:37:05.249870+00:00",
+          "confidence": 1.0
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "registry:pypi:numpy",
+        "relationship_type": "published_as",
+        "metadata": {
+          "package_name": "numpy",
+          "latest_version": null
+        },
+        "provenance": {
+          "source": "heuristic",
+          "established_at": "2026-02-19T19:37:05.622611+00:00",
+          "match_confidence": 0.9,
+          "confidence": 0.8
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.4.2",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835345+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.4.1",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835363+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.4.0",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835374+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.4.0rc1",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835384+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.5",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835394+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.4",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835403+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.3",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835412+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.2",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835421+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.1",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835429+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      },
+      {
+        "source": "release:numpy/numpy:v2.3.0",
+        "target": "cve:GHSA-9fq2-x9r6-wfmf",
+        "relationship_type": "has_cve",
+        "metadata": {
+          "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "fixed_in": null
+        },
+        "provenance": {
+          "source": "github_advisory",
+          "established_at": "2026-02-19T19:37:05.835438+00:00",
+          "match_confidence": 0.85,
+          "confidence": 0.85
+        }
+      }
+    ],
+    "metadata": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-19T19:37:05.241175+00:00",
+      "repo": "numpy/numpy",
+      "warnings": []
+    }
+  }
+}
