@@ -19,6 +19,7 @@ from .parsers import (
 )
 from .manifest_cache import ManifestCache
 from .rate_limiter import RateLimitTracker, DependencyIngestionConfig
+from .package_resolver import PackageResolver, PackageResolution
 
 __all__ = [
     "ManifestDiscovery",
@@ -31,4 +32,6 @@ __all__ = [
     "ManifestCache",
     "RateLimitTracker",
     "DependencyIngestionConfig",
+    "PackageResolver",
+    "PackageResolution",
 ]
