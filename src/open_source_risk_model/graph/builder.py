@@ -114,6 +114,8 @@ class GraphBuilder:
         # Parse and store dependencies if enabled
         if self.config.parse_dependencies:
             self._safe_add_nodes("dependency_parsing", self._parse_and_store_dependencies)
+            # Add dependency nodes and resolution edges to graph (Phase C)
+            self._safe_add_nodes("dependency_graph_nodes", self._add_dependency_nodes_and_edges)
         
         # Validate before returning
         errors = self.graph.validate()
@@ -933,6 +935,144 @@ class GraphBuilder:
         except Exception as e:
             logger.error(f"Error fetching {manifest_path}: {e}")
             return None
+
+    def _add_dependency_nodes_and_edges(self) -> None:
+        """
+        Add dependency nodes and resolution edges to the graph (Phase C).
+
+        This method:
+        1. Retrieves dependencies from database
+        2. Creates PACKAGE nodes for each dependency
+        3. Creates DEPENDS_ON edges from repo to packages
+        4. Resolves packages to repositories
+        5. Creates RESOLVES_TO edges from packages to repos
+        6. Caches resolutions for future use
+        """
+        if not self.dependency_repo:
+            logger.warning("Dependency repository not initialized")
+            return
+
+        try:
+            # Get dependencies from database
+            from ..persistence.dependency_repo import DependencyRepository
+            dep_repo = DependencyRepository()
+
+            dependencies = dep_repo.get_dependencies(
+                repo_full_name=self.full_name,
+                include_dev=True,  # Include all for now
+                include_optional=True
+            )
+
+            if not dependencies:
+                logger.info(f"No dependencies found in database for {self.full_name}")
+                return
+
+            logger.info(f"Adding {len(dependencies)} dependency nodes to graph")
+
+            # Initialize package resolver
+            from ..dependencies import PackageResolver
+            from ..persistence.dependency_repo import PackageMappingRepository
+
+            resolver = PackageResolver(timeout_seconds=self.config.cve_timeout_seconds)
+            mapping_repo = PackageMappingRepository()
+
+            resolved_count = 0
+
+            for dep in dependencies:
+                package_name = dep['package_name']
+                registry_type = dep['registry_type']
+
+                # Create package node ID
+                package_id = f"package:{registry_type}:{package_name}"
+
+                # Create PACKAGE node
+                package_node = Node(
+                    id=package_id,
+                    type=NodeType.PACKAGE,
+                    label=f"{package_name} ({registry_type})",
+                    metadata={
+                        "package_name": package_name,
+                        "registry_type": registry_type,
+                        "specifier": dep.get('specifier', ''),
+                        "dependency_group": dep.get('dependency_group', 'prod'),
+                        "is_optional": dep.get('is_optional', False),
+                    },
+                    provenance={
+                        "source": "dependency_parser",
+                        "fetched_at": dep.get('created_at'),
+                        "data_confidence": dep.get('confidence', 0.9),
+                    }
+                )
+                self.graph.add_node(package_node)
+
+                # Create DEPENDS_ON edge from repo to package
+                depends_edge = Edge(
+                    source=f"repo:{self.full_name}",
+                    target=package_id,
+                    relationship_type=EdgeType.DEPENDS_ON,
+                    metadata={
+                        "specifier": dep.get('specifier', ''),
+                        "dependency_group": dep.get('dependency_group', 'prod'),
+                        "manifest_path": dep.get('manifest_path', ''),
+                    },
+                    provenance={
+                        "source": "dependency_parser",
+                        "established_at": dep.get('created_at'),
+                        "confidence": dep.get('confidence', 0.9),
+                    }
+                )
+                self.graph.add_edge(depends_edge)
+
+                # Try to resolve package to repository
+                # Check cache first
+                cached_mapping = mapping_repo.get_mapping(package_name, registry_type)
+
+                if cached_mapping:
+                    resolution = cached_mapping
+                    logger.debug(f"Using cached resolution for {package_name}")
+                else:
+                    # Resolve package
+                    resolution = resolver.resolve(package_name, registry_type)
+
+                    if resolution:
+                        # Cache the resolution
+                        mapping_repo.save_mapping(resolution)
+                        self.rate_limiter.record_registry_call()
+
+                # If resolved, create RESOLVES_TO edge
+                if resolution and resolution.get('repo_full_name'):
+                    resolved_repo = resolution['repo_full_name']
+
+                    # Create RESOLVES_TO edge from package to repo
+                    resolves_edge = Edge(
+                        source=package_id,
+                        target=f"repo:{resolved_repo}",
+                        relationship_type=EdgeType.RESOLVES_TO,
+                        metadata={
+                            "resolution_method": resolution.get('resolution_method', 'unknown'),
+                            "resolution_confidence": resolution.get('confidence', 0.0),
+                        },
+                        provenance={
+                            "source": "package_resolver",
+                            "established_at": resolution.get('updated_at'),
+                            "confidence": resolution.get('confidence', 0.0),
+                        }
+                    )
+                    self.graph.add_edge(resolves_edge)
+                    resolved_count += 1
+
+                    logger.debug(f"Resolved {package_name} -> {resolved_repo}")
+
+            # Add metadata to graph
+            self.graph.metadata["dependencies_in_graph"] = len(dependencies)
+            self.graph.metadata["dependencies_resolved"] = resolved_count
+
+            logger.info(f"Added {len(dependencies)} dependency nodes, resolved {resolved_count} to repos")
+
+        except Exception as e:
+            logger.error(f"Failed to add dependency nodes for {self.full_name}: {e}")
+            raise
+
 
 
 

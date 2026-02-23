@@ -90,6 +90,7 @@ class NodeType(str, Enum):
     CVE = "cve"
     REGISTRY = "registry"
     RISK_FACTOR = "risk_factor"
+    PACKAGE = "package"  # Package node (Phase C)
     DEPLOYMENT = "deployment"  # placeholder for future
 
 
@@ -103,6 +104,8 @@ class EdgeType(str, Enum):
     HAS_RISK_FACTOR = "has_risk_factor"
     USED_IN = "used_in"
     DEPLOYED_TO = "deployed_to"
+    DEPENDS_ON = "depends_on"  # Repo/Package -> Package dependency
+    RESOLVES_TO = "resolves_to"  # Package -> Repo resolution (Phase C)
 
 
 @dataclass

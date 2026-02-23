@@ -313,19 +313,23 @@ class PackageMappingRepository:
     
     def save_mapping(
         self,
-        package_name: str,
-        registry_type: str,
-        repo_full_name: Optional[str],
-        resolution_method: str,
-        confidence: float,
-        metadata: Dict[str, Any]
+        package_name_or_resolution,
+        registry_type: Optional[str] = None,
+        repo_full_name: Optional[str] = None,
+        resolution_method: Optional[str] = None,
+        confidence: Optional[float] = None,
+        metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """
         Save package-to-repo mapping.
         
+        Can be called with either:
+        1. A PackageResolution object
+        2. Individual parameters
+        
         Args:
-            package_name: Package name
-            registry_type: Registry type
+            package_name_or_resolution: Package name or PackageResolution object
+            registry_type: Registry type (if not using PackageResolution)
             repo_full_name: Resolved repository (None if unresolved)
             resolution_method: How package was resolved
             confidence: Resolution confidence (0.0-1.0)
@@ -334,6 +338,27 @@ class PackageMappingRepository:
         Raises:
             DatabaseError: If save fails
         """
+        # Handle PackageResolution object
+        if hasattr(package_name_or_resolution, 'to_dict'):
+            resolution_dict = package_name_or_resolution.to_dict()
+            package_name = resolution_dict['package_name']
+            registry_type = resolution_dict['registry_type']
+            repo_full_name = resolution_dict['repo_full_name']
+            resolution_method = resolution_dict['resolution_method']
+            confidence = resolution_dict['confidence']
+            metadata = resolution_dict['metadata']
+        elif isinstance(package_name_or_resolution, dict):
+            # Handle dict
+            package_name = package_name_or_resolution['package_name']
+            registry_type = package_name_or_resolution['registry_type']
+            repo_full_name = package_name_or_resolution.get('repo_full_name')
+            resolution_method = package_name_or_resolution['resolution_method']
+            confidence = package_name_or_resolution['confidence']
+            metadata = package_name_or_resolution.get('metadata', {})
+        else:
+            # Handle individual parameters
+            package_name = package_name_or_resolution
+        
         conn = get_connection(self.db_path)
         
         try:
