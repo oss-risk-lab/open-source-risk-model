@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 # Database schema version
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2  # Updated for dependency graph support
 
 
 def init_database(db_path: str = "data/graphs.db") -> None:
@@ -108,6 +108,38 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 FOREIGN KEY (repo_full_name) REFERENCES repo_graphs(repo_full_name) ON DELETE CASCADE
             );
             
+            -- Dependency edges table (NEW for Step 2)
+            CREATE TABLE IF NOT EXISTS repo_dependencies (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repo_full_name TEXT NOT NULL,
+                package_name TEXT NOT NULL,
+                registry_type TEXT NOT NULL,
+                specifier TEXT,
+                extras TEXT,
+                markers TEXT,
+                dependency_group TEXT DEFAULT 'prod',
+                is_direct BOOLEAN NOT NULL DEFAULT 1,
+                is_optional BOOLEAN NOT NULL DEFAULT 0,
+                manifest_path TEXT NOT NULL,
+                confidence REAL NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (repo_full_name) REFERENCES repo_graphs(repo_full_name) ON DELETE CASCADE,
+                UNIQUE(repo_full_name, package_name, manifest_path)
+            );
+            
+            -- Package-to-repo mappings cache (NEW for Step 2)
+            CREATE TABLE IF NOT EXISTS package_mappings (
+                package_name TEXT NOT NULL,
+                registry_type TEXT NOT NULL,
+                repo_full_name TEXT,
+                resolution_method TEXT NOT NULL,
+                confidence REAL NOT NULL,
+                metadata TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                PRIMARY KEY (package_name, registry_type)
+            );
+            
             -- Indexes for performance
             CREATE INDEX IF NOT EXISTS idx_repo_graphs_updated_at 
                 ON repo_graphs(updated_at);
@@ -129,6 +161,25 @@ def init_database(db_path: str = "data/graphs.db") -> None:
             
             CREATE INDEX IF NOT EXISTS idx_repo_registries_package 
                 ON repo_registries(registry_type, package_name);
+            
+            -- Dependency indexes (NEW for Step 2)
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_repo 
+                ON repo_dependencies(repo_full_name);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_package 
+                ON repo_dependencies(package_name, registry_type);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_direct 
+                ON repo_dependencies(is_direct);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_group 
+                ON repo_dependencies(dependency_group);
+            
+            CREATE INDEX IF NOT EXISTS idx_package_mappings_repo 
+                ON package_mappings(repo_full_name);
+            
+            CREATE INDEX IF NOT EXISTS idx_package_mappings_confidence 
+                ON package_mappings(confidence);
         """)
         
         # Insert schema version (idempotent with INSERT OR IGNORE)

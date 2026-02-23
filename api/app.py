@@ -1477,3 +1477,167 @@ async def delete_repo(repo_full_name: str):
                 }
             }
         )
+
+
+# ============================================================================
+# Dependency API Endpoints (Step 2: Dependency Graph)
+# ============================================================================
+
+# Initialize dependency repository (will be set in startup event)
+dependency_repo = None
+
+@app.on_event("startup")
+async def init_dependency_repo():
+    """Initialize dependency repository on startup."""
+    global dependency_repo
+    
+    db_enabled = os.getenv("GRAPH_DB_ENABLED", "true").lower() == "true"
+    
+    if db_enabled:
+        try:
+            from open_source_risk_model.persistence.dependency_repo import DependencyRepository
+            db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+            dependency_repo = DependencyRepository(db_path=db_path)
+            logger.info("Dependency repository initialized")
+        except Exception as e:
+            logger.error(f"Failed to initialize dependency repository: {e}")
+
+
+@app.get("/api/repos/{owner}/{repo}/dependencies")
+def get_repo_dependencies(
+    owner: str,
+    repo: str,
+    include_dev: bool = Query(True, description="Include development dependencies"),
+    include_optional: bool = Query(True, description="Include optional dependencies")
+):
+    """
+    Get dependencies for a repository.
+    
+    Returns direct dependencies parsed from manifest files.
+    
+    Args:
+        owner: Repository owner
+        repo: Repository name
+        include_dev: Include development dependencies
+        include_optional: Include optional dependencies
+    
+    Returns:
+        JSON response with dependencies list
+    
+    Raises:
+        HTTPException: 503 if service unavailable, 404 if repo not found
+    """
+    if dependency_repo is None:
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "error": {
+                    "code": "SERVICE_UNAVAILABLE",
+                    "message": "Dependency service not available",
+                    "details": {
+                        "reason": "Database persistence is disabled or failed to initialize"
+                    }
+                }
+            }
+        )
+    
+    repo_full_name = f"{owner}/{repo}"
+    
+    try:
+        dependencies = dependency_repo.get_dependencies(
+            repo_full_name,
+            include_dev=include_dev,
+            include_optional=include_optional
+        )
+        
+        return {
+            "repo": repo_full_name,
+            "dependencies": dependencies,
+            "total": len(dependencies),
+            "metadata": {
+                "include_dev": include_dev,
+                "include_optional": include_optional,
+                "transitive": False
+            }
+        }
+    
+    except Exception as e:
+        logger.error(f"Failed to get dependencies for {repo_full_name}: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "Failed to retrieve dependencies",
+                    "details": {
+                        "error": str(e)
+                    }
+                }
+            }
+        )
+
+
+@app.get("/api/packages/{package}/dependents")
+def get_package_dependents(
+    package: str,
+    registry: str = Query(..., description="Registry type (pypi, npm, maven, etc.)"),
+    limit: int = Query(100, ge=1, le=1000, description="Maximum results"),
+    offset: int = Query(0, ge=0, description="Pagination offset")
+):
+    """
+    Get repositories that depend on a package.
+    
+    Args:
+        package: Package name
+        registry: Registry type (pypi, npm, maven, etc.)
+        limit: Maximum results
+        offset: Pagination offset
+    
+    Returns:
+        JSON response with dependents list
+    
+    Raises:
+        HTTPException: 503 if service unavailable
+    """
+    if dependency_repo is None:
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "error": {
+                    "code": "SERVICE_UNAVAILABLE",
+                    "message": "Dependency service not available",
+                    "details": {
+                        "reason": "Database persistence is disabled or failed to initialize"
+                    }
+                }
+            }
+        )
+    
+    try:
+        result = dependency_repo.get_dependents(
+            package_name=package,
+            registry_type=registry,
+            limit=limit,
+            offset=offset
+        )
+        
+        return {
+            "package_name": package,
+            "registry_type": registry,
+            **result
+        }
+    
+    except Exception as e:
+        logger.error(f"Failed to get dependents for {package} ({registry}): {e}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "Failed to retrieve dependents",
+                    "details": {
+                        "error": str(e)
+                    }
+                }
+            }
+        )

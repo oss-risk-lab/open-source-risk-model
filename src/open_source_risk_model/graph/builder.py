@@ -4,6 +4,7 @@ Graph builder - constructs supply chain graph from repository data.
 
 from __future__ import annotations
 
+import os
 import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
@@ -56,6 +57,32 @@ class GraphBuilder:
         
         # Initialize registry detector for package registry detection
         self.registry_detector = RegistryDetector(github_session=self.github_client.session)
+        
+        # Initialize dependency parsing components (opt-in via config)
+        if self.config.parse_dependencies:
+            from ..dependencies import (
+                ManifestDiscovery,
+                DependencyParserRegistry,
+                ManifestCache,
+                RateLimitTracker,
+                DependencyIngestionConfig,
+            )
+            from ..persistence.dependency_repo import DependencyRepository
+            
+            github_token = os.environ.get("GITHUB_TOKEN")
+            self.manifest_discovery = ManifestDiscovery(github_token=github_token)
+            self.parser_registry = DependencyParserRegistry()
+            self.manifest_cache = ManifestCache()
+            self.rate_limiter = RateLimitTracker(github_token=github_token)
+            self.dependency_config = DependencyIngestionConfig()
+            self.dependency_repo = DependencyRepository()
+        else:
+            self.manifest_discovery = None
+            self.parser_registry = None
+            self.manifest_cache = None
+            self.rate_limiter = None
+            self.dependency_config = None
+            self.dependency_repo = None
     
     def build(self) -> Graph:
         """
@@ -83,6 +110,10 @@ class GraphBuilder:
         # Add CVE nodes if enabled
         if self.config.include_cves:
             self._safe_add_nodes("cve_nodes", self._add_cve_nodes)
+        
+        # Parse and store dependencies if enabled
+        if self.config.parse_dependencies:
+            self._safe_add_nodes("dependency_parsing", self._parse_and_store_dependencies)
         
         # Validate before returning
         errors = self.graph.validate()
@@ -769,6 +800,140 @@ class GraphBuilder:
             # Log error and let _safe_add_nodes handle it
             logger.warning(f"Failed to add registry nodes for {self.full_name}: {e}")
             raise
+
+    def _parse_and_store_dependencies(self) -> None:
+        """
+        Parse dependencies from manifests and store in database.
+
+        This method:
+        1. Discovers manifest files in the repository
+        2. Fetches manifest content (with caching)
+        3. Parses dependencies using appropriate parsers
+        4. Stores dependencies in database
+
+        Note: This does NOT add dependency nodes to the graph yet.
+        That will be Phase C (Package Resolution).
+        """
+        if not self.manifest_discovery or not self.parser_registry:
+            logger.warning("Dependency parsing not initialized")
+            return
+
+        # Check rate limit budget
+        if not self.rate_limiter.check_github_budget(self.dependency_config):
+            logger.warning(f"GitHub API budget exhausted, skipping dependency parsing for {self.full_name}")
+            return
+
+        try:
+            # Discover manifests
+            manifest_paths = self.manifest_discovery.discover_manifests(
+                repo_full_name=self.full_name,
+                max_depth=self.dependency_config.max_manifest_depth,
+                max_files=self.dependency_config.max_manifests_per_repo
+            )
+
+            if not manifest_paths:
+                logger.info(f"No manifests found for {self.full_name}")
+                return
+
+            logger.info(f"Found {len(manifest_paths)} manifests for {self.full_name}")
+
+            # Fetch and parse each manifest
+            all_dependencies = []
+
+            for manifest_path in manifest_paths:
+                # Check cache first
+                cached_content = self.manifest_cache.get(
+                    repo_full_name=self.full_name,
+                    manifest_path=manifest_path,
+                    ttl_hours=self.dependency_config.manifest_cache_ttl_hours
+                )
+
+                if cached_content:
+                    content = cached_content
+                    logger.debug(f"Using cached manifest: {manifest_path}")
+                else:
+                    # Fetch from GitHub
+                    content = self._fetch_manifest_content(manifest_path)
+                    if not content:
+                        logger.warning(f"Failed to fetch manifest: {manifest_path}")
+                        continue
+
+                    # Cache for future use
+                    self.manifest_cache.set(
+                        repo_full_name=self.full_name,
+                        manifest_path=manifest_path,
+                        content=content
+                    )
+
+                    # Record API call
+                    self.rate_limiter.record_github_call()
+
+                # Parse dependencies
+                dependencies = self.parser_registry.parse_file(manifest_path, content)
+
+                if dependencies:
+                    # Infer registry type
+                    registry_type = self.parser_registry.infer_registry_type(manifest_path)
+
+                    # Set registry type on each dependency
+                    for dep in dependencies:
+                        dep.manifest_path = manifest_path
+
+                    all_dependencies.extend(dependencies)
+                    logger.info(f"Parsed {len(dependencies)} dependencies from {manifest_path}")
+
+            if not all_dependencies:
+                logger.info(f"No dependencies parsed for {self.full_name}")
+                return
+
+            # Store dependencies in database
+            self.dependency_repo.save_dependencies(
+                repo_full_name=self.full_name,
+                dependencies=all_dependencies
+            )
+
+            logger.info(f"Stored {len(all_dependencies)} dependencies for {self.full_name}")
+
+            # Add metadata to graph
+            self.graph.metadata["dependencies_parsed"] = len(all_dependencies)
+            self.graph.metadata["manifests_found"] = len(manifest_paths)
+
+        except Exception as e:
+            logger.error(f"Failed to parse dependencies for {self.full_name}: {e}")
+            raise
+
+    def _fetch_manifest_content(self, manifest_path: str) -> Optional[str]:
+        """
+        Fetch manifest file content from GitHub.
+
+        Args:
+            manifest_path: Path to manifest file in repository
+
+        Returns:
+            File content or None if fetch fails
+        """
+        try:
+            parts = self.full_name.split("/")
+            if len(parts) != 2:
+                return None
+
+            owner, repo = parts
+
+            url = f"https://api.github.com/repos/{owner}/{repo}/contents/{manifest_path}"
+            response = self.github_client.session.get(url, timeout=10)
+
+            if response.status_code != 200:
+                logger.warning(f"Failed to fetch {manifest_path}: {response.status_code}")
+                return None
+
+            import base64
+            content = base64.b64decode(response.json()["content"]).decode("utf-8")
+            return content
+
+        except Exception as e:
+            logger.error(f"Error fetching {manifest_path}: {e}")
+            return None
+
 
 
 def build_graph(full_name: str, score_data: Dict[str, Any], config: Optional[GraphConfig] = None) -> Graph:

@@ -61,8 +61,11 @@ class IngestionWorker:
                 )
                 
                 if pending_jobs:
-                    job = pending_jobs[0]
-                    await self._process_job(job)
+                    # Get full job details (list_jobs doesn't include repo_list/config)
+                    job_id = pending_jobs[0]["job_id"]
+                    job = self.job_repo.get_job(job_id)
+                    if job:
+                        await self._process_job(job)
                 else:
                     # No pending jobs, wait before polling again
                     await asyncio.sleep(self.poll_interval)

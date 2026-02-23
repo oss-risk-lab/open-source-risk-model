@@ -35,6 +35,7 @@ class GraphConfig:
     max_risk_factors: int = 5
     cve_timeout_seconds: int = 5
     cache_ttl_hours: int = 24
+    parse_dependencies: bool = False  # NEW: Enable dependency parsing (Phase B)
     
     @classmethod
     def from_env(cls) -> GraphConfig:
@@ -76,6 +77,7 @@ class GraphConfig:
             max_risk_factors=get_int("GRAPH_MAX_RISK_FACTORS", 5),
             cve_timeout_seconds=get_int("GRAPH_CVE_TIMEOUT_SECONDS", 5),
             cache_ttl_hours=get_int("GRAPH_CACHE_TTL_HOURS", 24),
+            parse_dependencies=get_bool("GRAPH_PARSE_DEPENDENCIES", False),
         )
 
 

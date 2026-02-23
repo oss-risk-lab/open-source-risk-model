@@ -18,6 +18,8 @@ dependencies = [
     "uvicorn",
     "pyyaml",
     "python-dotenv",
+    "packaging",  # For parsing Python dependency specifiers
+    "tomli; python_version < '3.11'",  # For parsing pyproject.toml (built-in in 3.11+)
 ]
 
 [project.optional-dependencies]
