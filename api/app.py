@@ -1649,6 +1649,7 @@ def get_package_dependents(
 
 from pydantic import BaseModel, Field
 from open_source_risk_model.query.intent_executor import IntentExecutor
+from open_source_risk_model.query.intent_classifier import IntentClassifier
 
 
 class QueryRequest(BaseModel):
@@ -1670,8 +1671,9 @@ class QueryResponse(BaseModel):
     metadata: Optional[Dict] = None
 
 
-# Initialize intent executor
+# Initialize intent executor and classifier
 intent_executor = IntentExecutor(db_path="data/graphs.db")
+intent_classifier = None  # Lazy initialization (requires API key)
 
 
 @app.post("/api/query", response_model=QueryResponse, tags=["query"])
@@ -1751,26 +1753,77 @@ async def query_dependencies(
                 }
             )
         
-        # Production mode: LLM classification (not yet implemented)
+        # Production mode: LLM classification
         else:
-            raise HTTPException(
-                status_code=501,
-                detail={
-                    "error": {
-                        "code": "NOT_IMPLEMENTED",
-                        "message": "LLM intent classifier not yet implemented",
-                        "details": {
-                            "suggestion": "Use dev mode by providing 'intent' and 'parameters' explicitly",
-                            "example": {
-                                "query": "List dependencies",
-                                "intent": "list_dependencies",
-                                "parameters": {"repo_full_name": "django/django"},
-                                "max_results": 10
+            # Lazy initialize classifier
+            global intent_classifier
+            if intent_classifier is None:
+                try:
+                    intent_classifier = IntentClassifier()
+                except Exception as e:
+                    logger.error(f"Failed to initialize intent classifier: {e}")
+                    raise HTTPException(
+                        status_code=503,
+                        detail={
+                            "error": {
+                                "code": "SERVICE_UNAVAILABLE",
+                                "message": "Intent classifier not available",
+                                "details": {
+                                    "reason": str(e),
+                                    "suggestion": "Ensure OPENAI_API_KEY is set in environment"
+                                }
+                            }
+                        }
+                    )
+            
+            # Classify query
+            try:
+                classification = intent_classifier.classify(request.query)
+                
+                if classification.intent == "unknown":
+                    raise HTTPException(
+                        status_code=400,
+                        detail={
+                            "error": {
+                                "code": "UNKNOWN_INTENT",
+                                "message": "Could not classify query intent",
+                                "details": {
+                                    "query": request.query,
+                                    "confidence": classification.confidence,
+                                    "reasoning": classification.reasoning,
+                                    "suggestion": "Try rephrasing your query or use one of the supported intents"
+                                }
+                            }
+                        }
+                    )
+                
+                intent = classification.intent
+                parameters = classification.parameters
+                confidence = classification.confidence
+                
+                logger.info(
+                    "Query classified",
+                    extra={
+                        "query": request.query,
+                        "intent": intent,
+                        "confidence": confidence
+                    }
+                )
+            
+            except ValueError as e:
+                raise HTTPException(
+                    status_code=400,
+                    detail={
+                        "error": {
+                            "code": "CLASSIFICATION_FAILED",
+                            "message": "Failed to classify query",
+                            "details": {
+                                "error": str(e),
+                                "query": request.query
                             }
                         }
                     }
-                }
-            )
+                )
         
         # Execute intent
         result = intent_executor.execute(

@@ -139,19 +139,18 @@ class TestQueryEndpointValidation:
         
         assert response.status_code == 422  # Validation error
     
-    def test_natural_language_not_implemented(self, client):
-        """Test that natural language queries return not implemented."""
+    def test_natural_language_requires_api_key(self, client):
+        """Test that natural language queries require API key."""
         response = client.post("/api/query", json={
             "query": "What are the dependencies of django/django?",
             "max_results": 10
         })
         
-        assert response.status_code == 501
+        # Should return 503 if no API key, or 400 if classification fails
+        assert response.status_code in [400, 503]
         data = response.json()
         assert "detail" in data
         assert "error" in data["detail"]
-        assert data["detail"]["error"]["code"] == "NOT_IMPLEMENTED"
-        assert "LLM" in data["detail"]["error"]["message"]
 
 
 class TestQueryEndpointSecurity:
