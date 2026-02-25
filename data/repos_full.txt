@@ -1,0 +1,81 @@
+# Full Dataset (50 repos) - Optimized for dependency overlap and ecosystem coverage
+# Selection optimizes for:
+# 1. Dependency overlap (repos that depend on each other)
+# 2. Manifest coverage (multiple file types)
+# 3. Ecosystem representation (Python, JavaScript, mixed)
+# 4. Real-world supply chain relationships
+
+# === PYTHON ECOSYSTEM (28 repos) ===
+
+# Web Frameworks & HTTP (high overlap cluster)
+pallets/flask
+django/django
+fastapi/fastapi
+psf/requests
+encode/httpx
+aio-libs/aiohttp
+pallets/werkzeug
+pallets/jinja
+
+# Data Science & Numerical (high overlap cluster)
+numpy/numpy
+pandas-dev/pandas
+scikit-learn/scikit-learn
+matplotlib/matplotlib
+scipy/scipy
+statsmodels/statsmodels
+
+# Testing & Development Tools (high overlap cluster)
+pytest-dev/pytest
+tox-dev/tox
+pypa/pip
+pypa/setuptools
+python-poetry/poetry
+
+# CLI & Utilities (high overlap cluster)
+pallets/click
+Textualize/rich
+tiangolo/typer
+yaml/pyyaml
+psf/black
+PyCQA/pylint
+
+# Async & Concurrency
+python-trio/trio
+aio-libs/aiodns
+encode/uvicorn
+
+# === JAVASCRIPT ECOSYSTEM (22 repos) ===
+
+# Frontend Frameworks (high overlap cluster)
+facebook/react
+vuejs/core
+angular/angular
+sveltejs/svelte
+vercel/next.js
+
+# Backend Frameworks (high overlap cluster)
+expressjs/express
+koajs/koa
+fastify/fastify
+nestjs/nest
+
+# Build Tools & Bundlers (high overlap cluster)
+webpack/webpack
+vitejs/vite
+rollup/rollup
+evanw/esbuild
+parcel-bundler/parcel
+
+# Testing (high overlap cluster)
+jestjs/jest
+mochajs/mocha
+cypress-io/cypress
+microsoft/playwright
+
+# Utilities (high overlap cluster)
+lodash/lodash
+axios/axios
+moment/moment
+date-fns/date-fns
+ramda/ramda
