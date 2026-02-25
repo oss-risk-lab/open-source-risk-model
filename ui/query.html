@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Supply Chain Query Interface</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --panel: #0f172a;
+      --border: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .query-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.3);
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(99,102,241,.2);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    button:hover {
+      background: rgba(99,102,241,.3);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .mode-toggle {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .examples {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .example-btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .example-btn:hover {
+      background: rgba(255,255,255,.1);
+      color: var(--text);
+    }
+
+    .results {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .results h2 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    td {
+      padding: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    tr:hover {
+      background: rgba(255,255,255,.03);
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px;
+    }
+
+    .error {
+      background: rgba(239,68,68,.1);
+      border: 1px solid rgba(239,68,68,.3);
+      border-radius: 12px;
+      padding: 12px;
+      color: rgba(255,255,255,.9);
+      margin-top: 12px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.1);
+      border-top-color: var(--text);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    code {
+      font-family: var(--mono);
+      background: rgba(0,0,0,.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Supply Chain Query Interface</h1>
+    <p class="subtitle">Ask questions about your dependency graph data</p>
+
+    <div class="query-box">
+      <div class="input-row">
+        <input 
+          type="text" 
+          id="queryInput" 
+          placeholder="e.g., 'Show me dataset stats' or 'List dependencies for pallets/flask'"
+        />
+        <button id="queryBtn">Query</button>
+      </div>
+
+      <div class="mode-toggle">
+        <label>
+          <input type="checkbox" id="devMode" checked />
+          Dev Mode (no API key needed)
+        </label>
+      </div>
+
+      <div class="examples">
+        <span style="color: var(--muted); font-size: 13px;">Examples:</span>
+        <button class="example-btn" data-query="dataset_stats" data-params="{}">Dataset Stats</button>
+        <button class="example-btn" data-query="list_dependencies" data-params='{"repo_full_name":"pallets/flask"}'>Flask Dependencies</button>
+        <button class="example-btn" data-query="find_dependents" data-params='{"package_name":"requests","registry_type":"pypi"}'>Who uses requests?</button>
+        <button class="example-btn" data-query="search_repos" data-params='{"pattern":"%django%"}'>Search Django</button>
+        <button class="example-btn" data-query="search_packages" data-params='{"pattern":"pytest%","registry_type":"pypi"}'>Search pytest*</button>
+      </div>
+    </div>
+
+    <div class="results">
+      <div id="resultsContent" class="empty">
+        Enter a query above to get started
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:8000";
+
+    const queryInput = document.getElementById("queryInput");
+    const queryBtn = document.getElementById("queryBtn");
+    const devMode = document.getElementById("devMode");
+    const resultsContent = document.getElementById("resultsContent");
+
+    // Example button handlers
+    document.querySelectorAll(".example-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const intent = btn.dataset.query;
+        const params = JSON.parse(btn.dataset.params);
+        executeQuery(intent, params);
+      });
+    });
+
+    // Query button handler
+    queryBtn.addEventListener("click", () => {
+      const query = queryInput.value.trim();
+      if (!query) return;
+
+      if (devMode.checked) {
+        // In dev mode, user needs to specify intent
+        // For now, show error - in production, you'd parse the query
+        showError("Dev mode: Please use example buttons or implement intent parsing");
+      } else {
+        // Natural language mode (requires OpenAI API key)
+        executeNaturalLanguageQuery(query);
+      }
+    });
+
+    queryInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") queryBtn.click();
+    });
+
+    async function executeQuery(intent, parameters) {
+      showLoading();
+
+      try {
+        const response = await fetch(`${API_BASE}/api/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `Query: ${intent}`,
+            intent: intent,
+            parameters: parameters,
+            max_results: 100
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`HTTP ${response.status}: ${error}`);
+        }
+
+        const data = await response.json();
+        renderResults(data);
+      } catch (error) {
+        showError(error.message);
+      }
+    }
+
+    async function executeNaturalLanguageQuery(query) {
+      showLoading();
+
+      try {
+        const response = await fetch(`${API_BASE}/api/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: query,
+            max_results: 100
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`HTTP ${response.status}: ${error}`);
+        }
+
+        const data = await response.json();
+        renderResults(data);
+      } catch (error) {
+        showError(error.message);
+      }
+    }
+
+    function showLoading() {
+      resultsContent.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Executing query...</p>
+        </div>
+      `;
+    }
+
+    function showError(message) {
+      resultsContent.innerHTML = `
+        <div class="error">
+          <strong>Error:</strong> ${message}
+        </div>
+      `;
+    }
+
+    function renderResults(data) {
+      const { intent, parameters, confidence, results, result_count, execution_time_ms, metadata } = data;
+
+      let html = `
+        <h2>
+          <span>Results: ${intent}</span>
+          <span class="meta">${result_count} results • ${execution_time_ms}ms</span>
+        </h2>
+      `;
+
+      if (results.length === 0) {
+        html += `<div class="empty">No results found</div>`;
+      } else {
+        html += renderTable(results);
+      }
+
+      resultsContent.innerHTML = html;
+    }
+
+    function renderTable(results) {
+      if (results.length === 0) return "";
+
+      // Get all unique keys from results
+      const keys = [...new Set(results.flatMap(Object.keys))];
+
+      let html = "<table><thead><tr>";
+      keys.forEach(key => {
+        html += `<th>${key.replace(/_/g, " ")}</th>`;
+      });
+      html += "</tr></thead><tbody>";
+
+      results.forEach(row => {
+        html += "<tr>";
+        keys.forEach(key => {
+          const value = row[key];
+          const display = value === null || value === undefined 
+            ? "—" 
+            : typeof value === "object" 
+              ? JSON.stringify(value) 
+              : String(value);
+          html += `<td>${display}</td>`;
+        });
+        html += "</tr>";
+      });
+
+      html += "</tbody></table>";
+      return html;
+    }
+  </script>
+</body>
+</html>
