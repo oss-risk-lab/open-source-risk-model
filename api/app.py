@@ -1641,3 +1641,199 @@ def get_package_dependents(
                 }
             }
         )
+
+
+# ============================================================================
+# Query API - Intent-Based Natural Language Queries
+# ============================================================================
+
+from pydantic import BaseModel, Field
+from open_source_risk_model.query.intent_executor import IntentExecutor
+
+
+class QueryRequest(BaseModel):
+    """Request for natural language query."""
+    query: str = Field(..., description="Natural language query or explicit intent")
+    intent: Optional[str] = Field(None, description="Explicit intent (dev mode)")
+    parameters: Optional[Dict] = Field(None, description="Explicit parameters (dev mode)")
+    max_results: int = Field(100, ge=1, le=1000, description="Maximum results to return")
+
+
+class QueryResponse(BaseModel):
+    """Response from query execution."""
+    intent: str
+    parameters: Dict
+    confidence: Optional[float] = None
+    results: list
+    result_count: int
+    execution_time_ms: float
+    metadata: Optional[Dict] = None
+
+
+# Initialize intent executor
+intent_executor = IntentExecutor(db_path="data/graphs.db")
+
+
+@app.post("/api/query", response_model=QueryResponse, tags=["query"])
+async def query_dependencies(
+    request: QueryRequest,
+    request_obj: Request
+) -> QueryResponse:
+    """
+    Execute natural language query against dependency graph.
+    
+    This endpoint supports two modes:
+    
+    1. **Dev Mode** (explicit intent): Provide `intent` and `parameters` directly
+       ```json
+       {
+         "query": "List dependencies",
+         "intent": "list_dependencies",
+         "parameters": {"repo_full_name": "django/django"},
+         "max_results": 10
+       }
+       ```
+    
+    2. **Production Mode** (LLM classification): Provide natural language `query`
+       ```json
+       {
+         "query": "What are the dependencies of django/django?",
+         "max_results": 10
+       }
+       ```
+       (LLM classifier not yet implemented - returns error)
+    
+    **Available Intents:**
+    - `list_dependencies`: List direct dependencies of a repo
+    - `find_dependents`: Find repos that depend on a package
+    - `get_dependency_tree`: Get dependency tree (BFS, max depth 5)
+    - `check_resolution`: Check if package resolves to GitHub repo
+    - `list_unresolved`: List unresolved dependencies
+    - `list_manifests`: List manifest files for a repo
+    - `count_by_manifest_type`: Count manifests by type
+    - `repo_stats`: Get repository statistics
+    - `dataset_stats`: Get overall dataset statistics
+    - `search_repos`: Search repositories by name
+    - `search_packages`: Search packages by name
+    
+    **Security:**
+    - No SQL generation from user input
+    - Strict intent allowlist
+    - Parameterized queries only
+    - No network calls in query execution
+    
+    Args:
+        request: Query request with natural language or explicit intent
+        request_obj: FastAPI request object for logging
+    
+    Returns:
+        QueryResponse with results and metadata
+    
+    Raises:
+        HTTPException: 400 for invalid requests, 500 for execution errors
+    """
+    request_id = generate_request_id()
+    set_request_id(request_id)
+    
+    try:
+        # Dev mode: Explicit intent provided
+        if request.intent and request.parameters is not None:
+            intent = request.intent
+            parameters = request.parameters
+            confidence = 1.0  # Explicit intent has 100% confidence
+            
+            logger.info(
+                "Query (dev mode)",
+                extra={
+                    "intent": intent,
+                    "parameters": parameters,
+                    "query": request.query
+                }
+            )
+        
+        # Production mode: LLM classification (not yet implemented)
+        else:
+            raise HTTPException(
+                status_code=501,
+                detail={
+                    "error": {
+                        "code": "NOT_IMPLEMENTED",
+                        "message": "LLM intent classifier not yet implemented",
+                        "details": {
+                            "suggestion": "Use dev mode by providing 'intent' and 'parameters' explicitly",
+                            "example": {
+                                "query": "List dependencies",
+                                "intent": "list_dependencies",
+                                "parameters": {"repo_full_name": "django/django"},
+                                "max_results": 10
+                            }
+                        }
+                    }
+                }
+            )
+        
+        # Execute intent
+        result = intent_executor.execute(
+            intent=intent,
+            parameters=parameters,
+            max_results=request.max_results
+        )
+        
+        logger.info(
+            "Query executed",
+            extra={
+                "intent": result.intent,
+                "result_count": result.result_count,
+                "execution_time_ms": result.execution_time_ms
+            }
+        )
+        
+        return QueryResponse(
+            intent=result.intent,
+            parameters=result.parameters,
+            confidence=confidence,
+            results=result.results,
+            result_count=result.result_count,
+            execution_time_ms=result.execution_time_ms,
+            metadata=result.metadata
+        )
+    
+    except HTTPException:
+        # Re-raise HTTP exceptions (don't catch them)
+        raise
+    
+    except ValueError as e:
+        # Invalid intent or parameters
+        logger.warning(f"Invalid query: {e}")
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": {
+                    "code": "INVALID_QUERY",
+                    "message": str(e),
+                    "details": {
+                        "query": request.query,
+                        "intent": request.intent if request.intent else "not provided"
+                    }
+                }
+            }
+        )
+    
+    except Exception as e:
+        # Unexpected error
+        logger.error(f"Query execution failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": {
+                    "code": "EXECUTION_ERROR",
+                    "message": "Query execution failed",
+                    "details": {
+                        "error": str(e)
+                    }
+                }
+            }
+        )
+    
+    finally:
+        clear_request_id()
