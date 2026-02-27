@@ -1107,3 +1107,400 @@ The response format is identical to the original `/api/graph` endpoint, with add
 - `created_at` (string): ISO timestamp when graph was first stored
 - `updated_at` (string): ISO timestamp when graph was last updated
 
+---
+
+## Dependency Graph API
+
+The following endpoints provide supply chain dependency analysis, enabling you to discover what packages a repository depends on and which repositories depend on specific packages.
+
+### Get Repository Dependencies
+
+Get all dependencies for a repository.
+
+**Endpoint:** `GET /api/repos/{owner}/{repo}/dependencies`
+
+**Path Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner` | string | Yes | Repository owner |
+| `repo` | string | Yes | Repository name |
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `include_dev` | boolean | No | `false` | Include development dependencies |
+
+**Example Requests:**
+
+```bash
+# Get production dependencies
+curl "http://localhost:8000/api/repos/pallets/flask/dependencies"
+
+# Include development dependencies
+curl "http://localhost:8000/api/repos/pallets/flask/dependencies?include_dev=true"
+```
+
+**Success Response (200):**
+
+```json
+{
+  "repo": "pallets/flask",
+  "dependencies": [
+    {
+      "package_name": "werkzeug",
+      "registry_type": "pypi",
+      "specifier": ">=3.0.0",
+      "is_direct": true,
+      "is_dev": false,
+      "is_optional": false,
+      "dependency_group": "prod",
+      "manifest_path": "requirements/requirements.txt",
+      "resolved_repo": "pallets/werkzeug",
+      "resolution_confidence": 0.95,
+      "resolution_method": "pypi_project_urls"
+    },
+    {
+      "package_name": "jinja2",
+      "registry_type": "pypi",
+      "specifier": ">=3.1.2",
+      "is_direct": true,
+      "is_dev": false,
+      "is_optional": false,
+      "dependency_group": "prod",
+      "manifest_path": "requirements/requirements.txt",
+      "resolved_repo": "pallets/jinja",
+      "resolution_confidence": 0.95,
+      "resolution_method": "pypi_project_urls"
+    },
+    {
+      "package_name": "pytest",
+      "registry_type": "pypi",
+      "specifier": ">=7.0.0",
+      "is_direct": true,
+      "is_dev": true,
+      "is_optional": false,
+      "dependency_group": "dev",
+      "manifest_path": "requirements/requirements-dev.txt",
+      "resolved_repo": "pytest-dev/pytest",
+      "resolution_confidence": 0.95,
+      "resolution_method": "pypi_project_urls"
+    }
+  ],
+  "total": 3,
+  "metadata": {
+    "include_dev": true,
+    "manifest_files": ["requirements/requirements.txt", "requirements/requirements-dev.txt"],
+    "parsed_at": "2026-02-23T10:00:00Z"
+  }
+}
+```
+
+**Dependency Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `package_name` | string | Package name in registry |
+| `registry_type` | string | Registry type (pypi, npm, maven, etc.) |
+| `specifier` | string | Version constraint (e.g., ">=3.0.0", "^18.2.0") |
+| `is_direct` | boolean | True if direct dependency (not transitive) |
+| `is_dev` | boolean | True if development dependency |
+| `is_optional` | boolean | True if optional dependency |
+| `dependency_group` | string | Dependency group (prod, dev, test, docs, optional) |
+| `manifest_path` | string | Path to manifest file in repository |
+| `resolved_repo` | string | Source repository (if resolved) |
+| `resolution_confidence` | float | Confidence score (0.0-1.0) |
+| `resolution_method` | string | Resolution method used |
+
+**Resolution Confidence:**
+
+| Confidence | Method | Description |
+|-----------|--------|-------------|
+| 0.95 | pypi_project_urls | Explicit Source/Repository link in PyPI |
+| 0.90 | npm_repository | Explicit repository field in package.json |
+| 0.75 | pypi_home_page | Homepage field (might be docs site) |
+| 0.70 | npm_homepage | Homepage field (might be docs site) |
+| 0.00 | unresolved | Could not resolve to repository |
+
+**Error Responses:**
+
+**404 Not Found** - Repository not found or no dependencies:
+```json
+{
+  "detail": "No dependencies found for repository: pallets/flask"
+}
+```
+
+---
+
+### Get Package Dependents
+
+Get all repositories that depend on a specific package.
+
+**Endpoint:** `GET /api/packages/{package}/dependents`
+
+**Path Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `package` | string | Yes | Package name |
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `registry` | string | Yes | - | Registry type (pypi, npm, maven, etc.) |
+| `limit` | integer | No | `100` | Maximum number of results |
+| `offset` | integer | No | `0` | Pagination offset |
+
+**Example Requests:**
+
+```bash
+# Get dependents for PyPI package
+curl "http://localhost:8000/api/packages/requests/dependents?registry=pypi"
+
+# Get dependents for npm package with pagination
+curl "http://localhost:8000/api/packages/react/dependents?registry=npm&limit=50&offset=0"
+```
+
+**Success Response (200):**
+
+```json
+{
+  "package_name": "requests",
+  "registry_type": "pypi",
+  "resolved_repo": "psf/requests",
+  "resolution_confidence": 0.95,
+  "dependents": [
+    {
+      "repo_full_name": "pallets/flask",
+      "specifier": ">=2.31.0",
+      "is_direct": true,
+      "is_dev": false,
+      "dependency_group": "prod",
+      "manifest_path": "requirements.txt",
+      "confidence": 0.9
+    },
+    {
+      "repo_full_name": "django/django",
+      "specifier": ">=2.25.0",
+      "is_direct": true,
+      "is_dev": false,
+      "dependency_group": "prod",
+      "manifest_path": "requirements/base.txt",
+      "confidence": 0.9
+    }
+  ],
+  "total": 2,
+  "limit": 100,
+  "offset": 0
+}
+```
+
+**Error Responses:**
+
+**404 Not Found** - Package not found:
+```json
+{
+  "detail": "Package not found: pypi/unknown-package"
+}
+```
+
+**400 Bad Request** - Missing registry parameter:
+```json
+{
+  "detail": "registry parameter is required"
+}
+```
+
+---
+
+### Dependency Graph Configuration
+
+Configure dependency parsing using environment variables:
+
+```bash
+# Enable/disable dependency parsing
+GRAPH_PARSE_DEPENDENCIES=true
+
+# Maximum dependencies to parse per repository
+GRAPH_MAX_DEPENDENCIES=100
+
+# Include development dependencies
+GRAPH_INCLUDE_DEV_DEPENDENCIES=false
+
+# Enable package resolution
+GRAPH_RESOLVE_PACKAGES=true
+
+# Manifest cache TTL (hours)
+MANIFEST_CACHE_TTL_HOURS=24
+
+# Package resolution cache TTL (hours)
+PACKAGE_RESOLUTION_CACHE_TTL_HOURS=168
+
+# API rate limits
+MANIFEST_DISCOVERY_MAX_API_CALLS=10
+MANIFEST_FETCH_MAX_API_CALLS=20
+```
+
+**Supported Ecosystems:**
+
+| Ecosystem | Manifest Files | Status |
+|-----------|---------------|--------|
+| Python | requirements.txt, pyproject.toml | ✅ Supported |
+| JavaScript | package.json | ✅ Supported |
+| Java | pom.xml | 🔄 Planned |
+| Go | go.mod | 🔄 Planned |
+| Ruby | Gemfile | 🔄 Planned |
+| Rust | Cargo.toml | 🔄 Planned |
+
+**See Also:**
+- [Dependency Graph User Guide](DEPENDENCY_GRAPH_GUIDE.md) - Complete documentation
+- [Quick Reference](DEPENDENCY_QUICK_REFERENCE.md) - Quick reference card
+
+
+
+---
+
+### Query API
+
+Execute structured queries against the dependency graph database.
+
+**Endpoint:** `POST /api/query`
+
+**Request Body:**
+
+```json
+{
+  "query": "Natural language query or description",
+  "intent": "intent_name",  // Optional in natural language mode, required in dev mode
+  "parameters": {},          // Intent-specific parameters
+  "max_results": 100         // Optional, default: 100
+}
+```
+
+**Modes:**
+
+1. **Dev Mode** (no API key needed): Specify `intent` and `parameters` explicitly
+2. **Natural Language Mode** (requires OPENAI_API_KEY): Omit `intent`, LLM classifies automatically
+
+**Available Intents:**
+
+| Intent | Parameters | Description |
+|--------|-----------|-------------|
+| `dataset_stats` | none | Overall dataset statistics |
+| `list_dependencies` | `repo_full_name` (required), `dependency_group` (optional) | List direct dependencies |
+| `find_dependents` | `package_name` (required), `registry_type` (optional) | Find who depends on a package |
+| `get_dependency_tree` | `repo_full_name` (required), `max_depth` (optional, default: 3) | Get dependency tree |
+| `check_resolution` | `package_name` (required), `registry_type` (required) | Check package-to-repo resolution |
+| `list_unresolved` | `repo_full_name` (optional) | List unresolved dependencies |
+| `list_manifests` | `repo_full_name` (required) | List manifest files |
+| `count_by_manifest_type` | none | Count manifests by type |
+| `repo_stats` | `repo_full_name` (required) | Repository statistics |
+| `search_repos` | `pattern` (required) | Search repositories by name |
+| `search_packages` | `pattern` (required), `registry_type` (optional) | Search packages by name |
+
+**Example Requests:**
+
+```bash
+# Dev Mode: Dataset statistics
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Show dataset stats",
+    "intent": "dataset_stats",
+    "parameters": {}
+  }'
+
+# Dev Mode: List dependencies
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "List dependencies",
+    "intent": "list_dependencies",
+    "parameters": {"repo_full_name": "pallets/flask"},
+    "max_results": 10
+  }'
+
+# Dev Mode: Find dependents
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Who uses requests?",
+    "intent": "find_dependents",
+    "parameters": {"package_name": "requests", "registry_type": "pypi"}
+  }'
+
+# Natural Language Mode (requires OPENAI_API_KEY)
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What are the dependencies of Flask?",
+    "max_results": 20
+  }'
+```
+
+**Response Format:**
+
+```json
+{
+  "intent": "list_dependencies",
+  "parameters": {"repo_full_name": "pallets/flask"},
+  "confidence": 1.0,
+  "results": [
+    {
+      "package_name": "click",
+      "registry_type": "pypi",
+      "specifier": ">=8.1.3",
+      "dependency_group": "prod",
+      "manifest_path": "pyproject.toml",
+      "resolved_repo": "pallets/click",
+      "resolution_confidence": 0.95,
+      "is_optional": 0
+    }
+  ],
+  "result_count": 35,
+  "execution_time_ms": 4.75,
+  "metadata": {
+    "repo_full_name": "pallets/flask",
+    "dependency_group": null,
+    "direct_only": true
+  }
+}
+```
+
+**Error Responses:**
+
+```json
+// Invalid intent
+{
+  "detail": "Unknown intent: invalid_intent"
+}
+
+// Missing required parameter
+{
+  "detail": "repo_full_name is required"
+}
+
+// Natural language mode without API key
+{
+  "detail": "Natural language queries require OPENAI_API_KEY"
+}
+```
+
+**Performance:**
+- Dev mode queries: < 100ms
+- Natural language mode: 1-3s (LLM classification + query execution)
+- All queries use parameterized SQL (SQL injection protected)
+- Results cached in database (no network calls during queries)
+
+**Security:**
+- LLM never generates SQL (only classifies intent)
+- Intent allowlist enforced (11 predefined intents)
+- Parameterized queries prevent SQL injection
+- Confidence threshold (0.7) for LLM classifications
+
+**See Also:**
+- `QUERY_API_QUICK_START.md` - Quick start guide with examples
+- `WEEK_2_PROGRESS.md` - Implementation details and architecture
