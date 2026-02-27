@@ -17,6 +17,95 @@ logger = logging.getLogger(__name__)
 SCHEMA_VERSION = 2  # Updated for dependency graph support
 
 
+def _migrate_schema(conn: sqlite3.Connection, target_version: int) -> None:
+    """
+    Apply schema migrations for existing databases.
+    
+    This function is idempotent - it checks which columns exist and only
+    adds missing ones. This allows existing databases to be upgraded without
+    manual intervention.
+    
+    Args:
+        conn: Database connection
+        target_version: Target schema version
+    """
+    # Check if repo_dependencies table exists
+    cursor = conn.execute("""
+        SELECT name FROM sqlite_master 
+        WHERE type='table' AND name='repo_dependencies'
+    """)
+    
+    if cursor.fetchone():
+        # Table exists, check which columns exist
+        cursor = conn.execute("PRAGMA table_info(repo_dependencies)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+        
+        # Migration: Add resolution columns if missing
+        resolution_columns = {
+            'resolved_repo': 'TEXT',
+            'resolution_confidence': 'REAL',
+            'resolution_method': 'TEXT'
+        }
+        
+        for column_name, column_type in resolution_columns.items():
+            if column_name not in existing_columns:
+                logger.info(f"Adding column {column_name} to repo_dependencies")
+                conn.execute(f"""
+                    ALTER TABLE repo_dependencies 
+                    ADD COLUMN {column_name} {column_type}
+                """)
+        
+        # Add index for resolved_repo if it doesn't exist
+        cursor = conn.execute("""
+            SELECT name FROM sqlite_master 
+            WHERE type='index' AND name='idx_repo_dependencies_resolved'
+        """)
+        
+        if not cursor.fetchone():
+            logger.info("Creating index idx_repo_dependencies_resolved")
+            conn.execute("""
+                CREATE INDEX idx_repo_dependencies_resolved 
+                ON repo_dependencies(resolved_repo)
+            """)
+    
+    # Check if repo_cves table exists before migrating it
+    cursor = conn.execute("""
+        SELECT name FROM sqlite_master 
+        WHERE type='table' AND name='repo_cves'
+    """)
+    
+    if cursor.fetchone():
+        # Check which columns exist in repo_cves
+        cursor = conn.execute("PRAGMA table_info(repo_cves)")
+        cve_columns = {row[1] for row in cursor.fetchall()}
+        
+        cve_new_columns = {
+            'ghsa_id': 'TEXT',
+            'cve_aliases': 'TEXT'
+        }
+        
+        for column_name, column_type in cve_new_columns.items():
+            if column_name not in cve_columns:
+                logger.info(f"Adding column {column_name} to repo_cves")
+                conn.execute(f"""
+                    ALTER TABLE repo_cves 
+                    ADD COLUMN {column_name} {column_type}
+                """)
+        
+        # Add index for ghsa_id if it doesn't exist
+        cursor = conn.execute("""
+            SELECT name FROM sqlite_master 
+            WHERE type='index' AND name='idx_repo_cves_ghsa'
+        """)
+        
+        if not cursor.fetchone():
+            logger.info("Creating index idx_repo_cves_ghsa")
+            conn.execute("""
+                CREATE INDEX idx_repo_cves_ghsa 
+                ON repo_cves(ghsa_id)
+            """)
+
+
 def init_database(db_path: str = "data/graphs.db") -> None:
     """
     Initialize the database with schema.
@@ -38,6 +127,9 @@ def init_database(db_path: str = "data/graphs.db") -> None:
         db_file.parent.mkdir(parents=True, exist_ok=True)
         
         conn = get_connection(db_path)
+        
+        # Run schema migrations FIRST for existing databases
+        _migrate_schema(conn, SCHEMA_VERSION)
         
         # Create schema
         conn.executescript("""
@@ -77,6 +169,22 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 config TEXT
             );
             
+            -- Repo ingestion runs table (for tracking individual repo ingestion)
+            CREATE TABLE IF NOT EXISTS repo_ingestion_runs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repo_full_name TEXT NOT NULL,
+                run_id TEXT NOT NULL,
+                status TEXT NOT NULL,
+                started_at TEXT NOT NULL,
+                completed_at TEXT,
+                dependencies_found INTEGER DEFAULT 0,
+                dependencies_resolved INTEGER DEFAULT 0,
+                manifests_discovered INTEGER DEFAULT 0,
+                error_message TEXT,
+                duration_seconds REAL,
+                UNIQUE(repo_full_name, run_id)
+            );
+            
             -- Maintainer index table
             CREATE TABLE IF NOT EXISTS repo_maintainers (
                 repo_full_name TEXT NOT NULL,
@@ -109,6 +217,7 @@ def init_database(db_path: str = "data/graphs.db") -> None:
             );
             
             -- Dependency edges table (NEW for Step 2)
+            -- Note: No foreign key constraint to allow dependency-only ingestion
             CREATE TABLE IF NOT EXISTS repo_dependencies (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 repo_full_name TEXT NOT NULL,
@@ -123,7 +232,9 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 manifest_path TEXT NOT NULL,
                 confidence REAL NOT NULL,
                 created_at TEXT NOT NULL,
-                FOREIGN KEY (repo_full_name) REFERENCES repo_graphs(repo_full_name) ON DELETE CASCADE,
+                resolved_repo TEXT,
+                resolution_confidence REAL,
+                resolution_method TEXT,
                 UNIQUE(repo_full_name, package_name, manifest_path)
             );
             
@@ -150,6 +261,15 @@ def init_database(db_path: str = "data/graphs.db") -> None:
             CREATE INDEX IF NOT EXISTS idx_ingestion_jobs_created_at 
                 ON ingestion_jobs(created_at);
             
+            CREATE INDEX IF NOT EXISTS idx_repo_ingestion_runs_repo 
+                ON repo_ingestion_runs(repo_full_name);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_ingestion_runs_run_id 
+                ON repo_ingestion_runs(run_id);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_ingestion_runs_status 
+                ON repo_ingestion_runs(status);
+            
             CREATE INDEX IF NOT EXISTS idx_repo_maintainers_username 
                 ON repo_maintainers(maintainer_username);
             
@@ -174,6 +294,9 @@ def init_database(db_path: str = "data/graphs.db") -> None:
             
             CREATE INDEX IF NOT EXISTS idx_repo_dependencies_group 
                 ON repo_dependencies(dependency_group);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_resolved 
+                ON repo_dependencies(resolved_repo);
             
             CREATE INDEX IF NOT EXISTS idx_package_mappings_repo 
                 ON package_mappings(repo_full_name);
