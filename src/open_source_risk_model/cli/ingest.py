@@ -476,6 +476,19 @@ def ingest_single_repo(
 
 def main():
     """Main entry point for batch ingestion CLI."""
+    # Load environment variables from .env file
+    from pathlib import Path
+    env_file = Path('.env')
+    if env_file.exists():
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    # Remove quotes if present
+                    value = value.strip('"').strip("'")
+                    os.environ[key] = value
+    
     parser = argparse.ArgumentParser(
         description='Batch ingestion of repository dependencies',
         formatter_class=argparse.RawDescriptionHelpFormatter,
