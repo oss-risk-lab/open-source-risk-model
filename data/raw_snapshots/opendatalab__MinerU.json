@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 96,
+    "contributors_last_12mo": 2,
+    "days_since_last_push": 0.07834315868055555,
+    "days_since_last_release": 0.07901587443287036,
+    "fraction_issues_closed_12mo": 0.8511576626240352,
+    "fraction_open_issues_stale_180d": 0.42105263157894735,
+    "issues_per_contributor": 1.5833333333333333,
+    "license_spdx_id": "AGPL-3.0",
+    "open_issues_count": 152,
+    "stargazers_count": 57592,
+    "stars_count": 57592,
+    "top_contributor_fraction_12mo": 0.99
+  },
+  "fetched_at": "2026-03-30T19:45:23.073955+00:00",
+  "full_name": "opendatalab/MinerU"
+}

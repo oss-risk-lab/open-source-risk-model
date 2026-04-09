@@ -7,6 +7,11 @@ This guide covers deploying and operating the multi-repo persistent graph system
 1. [Prerequisites](#prerequisites)
 2. [Database Setup](#database-setup)
 3. [Environment Configuration](#environment-configuration)
+   - [Required Environment Variables](#required-environment-variables)
+   - [Optional Environment Variables](#optional-environment-variables)
+   - [Startup Validation Behavior](#startup-validation-behavior)
+   - [Frontend API_BASE Configuration via config.js](#frontend-api_base-configuration-via-configjs)
+   - [CORS Configuration for Production](#cors-configuration-for-production)
 4. [Deployment Options](#deployment-options)
 5. [Backup and Restore](#backup-and-restore)
 6. [Monitoring and Maintenance](#monitoring-and-maintenance)
@@ -135,30 +140,61 @@ PRAGMA busy_timeout=5000;       -- Wait up to 5 seconds for locks
 
 ### Required Environment Variables
 
+These variables **must** be set for the application to function correctly in production.
+
+| Variable | Description | Example |
+|---|---|---|
+| `GITHUB_TOKEN` | GitHub personal access token for API access. Without it the backend starts in **degraded mode** with anonymous rate limits (60 req/hr) and logs a startup warning. | `ghp_abc123…` |
+| `OPENAI_API_KEY` | OpenAI API key used by the LLM abstraction layer for natural-language query classification and AI-powered features. | `sk-…` |
+| `GRAPH_DB_PATH` | Path to the SQLite database file. Use an absolute path on a persistent volume in production. | `data/graphs.db` |
+| `GRAPH_DB_ENABLED` | Enable (`true`) or disable (`false`) the persistence layer. Must be `true` for production. | `true` |
+
+### Optional Environment Variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `CORS_ALLOWED_ORIGINS` | Comma-separated list of origins allowed to make cross-origin requests. When unset, defaults to `["*"]` (allow all — suitable for development only). | `*` |
+| `DS_API_BASE` | Base URL of the backend API, used when injecting the frontend configuration at deploy time (see [Frontend Configuration](#frontend-api_base-configuration-via-configjs)). | `""` (same-origin) |
+| `GRAPH_TTL_HOURS` | Cache TTL in hours for stored graph data. | `24` |
+| `GRAPH_AUTO_REFRESH_STALE` | Auto-regenerate stale data when TTL exceeded. | `false` |
+| `GRAPH_WORKER_ENABLED` | Enable background ingestion worker. | `true` |
+| `GRAPH_WORKER_POLL_INTERVAL` | Seconds between job queue polls. | `5` |
+| `API_HOST` | Bind address for uvicorn. | `0.0.0.0` |
+| `API_PORT` | Port number for uvicorn. | `8000` |
+| `API_WORKERS` | Number of uvicorn worker processes. | `4` |
+| `LOG_LEVEL` | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`). | `INFO` |
+| `LOG_FILE` | Log file path. | `logs/app.log` |
+
+### Full `.env` Example
+
 Create a `.env` file or set environment variables:
 
 ```bash
-# GitHub API Authentication (REQUIRED)
+# === Required ===
 GITHUB_TOKEN=ghp_your_personal_access_token_here
+OPENAI_API_KEY=sk-your_openai_api_key_here
+GRAPH_DB_PATH=data/graphs.db
+GRAPH_DB_ENABLED=true
 
-# Database Configuration
-GRAPH_DB_PATH=data/graphs.db              # Path to SQLite database
-GRAPH_DB_ENABLED=true                     # Enable persistence layer
-GRAPH_TTL_HOURS=24                        # Cache TTL in hours
-GRAPH_AUTO_REFRESH_STALE=false            # Auto-regenerate stale data
+# === Optional ===
+CORS_ALLOWED_ORIGINS=https://deepsignal.example.com,https://www.deepsignal.example.com
 
-# Worker Configuration
-GRAPH_WORKER_ENABLED=true                 # Enable background worker
-GRAPH_WORKER_POLL_INTERVAL=5              # Seconds between job polls
+# Database / Cache
+GRAPH_TTL_HOURS=24
+GRAPH_AUTO_REFRESH_STALE=false
 
-# API Configuration (optional)
-API_HOST=0.0.0.0                          # Bind address
-API_PORT=8000                             # Port number
-API_WORKERS=4                             # Number of worker processes
+# Worker
+GRAPH_WORKER_ENABLED=true
+GRAPH_WORKER_POLL_INTERVAL=5
 
-# Logging (optional)
-LOG_LEVEL=INFO                            # DEBUG, INFO, WARNING, ERROR
-LOG_FILE=logs/app.log                     # Log file path
+# API
+API_HOST=0.0.0.0
+API_PORT=8000
+API_WORKERS=4
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FILE=logs/app.log
 ```
 
 ### GitHub Token Setup
@@ -176,26 +212,90 @@ LOG_FILE=logs/app.log                     # Log file path
 - Rotate tokens periodically
 - Use minimal required scopes
 
+### Startup Validation Behavior
+
+On startup the FastAPI backend performs the following checks:
+
+1. **`GITHUB_TOKEN` check** — If the variable is not set, the backend logs a warning:
+   ```
+   GITHUB_TOKEN is not set — running in degraded mode with rate-limited GitHub API access
+   ```
+   The server **continues to run** in degraded mode (anonymous GitHub rate limit of 60 requests/hour). All endpoints remain available, but graph generation and ingestion will be slower and may hit rate limits.
+
+2. **Database initialization** — If `GRAPH_DB_ENABLED=true`, the backend opens (or creates) the SQLite database at `GRAPH_DB_PATH`, initializes the schema, and starts the background ingestion worker (if `GRAPH_WORKER_ENABLED=true`). If the database cannot be opened, the backend falls back to dynamic graph generation only.
+
+### Frontend `API_BASE` Configuration via `config.js`
+
+All frontend HTML pages (`index.html`, `insights.html`, `graph.html`, `dependency-tree.html`) import a shared `ui/config.js` file:
+
+```javascript
+// ui/config.js
+window.DS_API_BASE = window.DS_API_BASE || "";
+```
+
+This controls where the frontend sends API requests.
+
+**Same-origin deployment (recommended):** When the frontend and backend are served from the same origin (e.g., behind a reverse proxy), leave `DS_API_BASE` as `""`. Relative URLs like `/api/stats` resolve to the same host automatically.
+
+**Split deployment:** If the frontend is served from a different domain than the backend, inject the backend URL before `config.js` loads:
+
+```html
+<!-- In your deployment template or server-side include -->
+<script>window.DS_API_BASE = "https://api.deepsignal.example.com";</script>
+<script src="config.js"></script>
+```
+
+Alternatively, use a build step or server-side templating to replace the value in `config.js` at deploy time.
+
+### CORS Configuration for Production
+
+The backend reads `CORS_ALLOWED_ORIGINS` from the environment. The value is a **comma-separated** list of allowed origins:
+
+```bash
+# Single origin
+CORS_ALLOWED_ORIGINS=https://deepsignal.example.com
+
+# Multiple origins
+CORS_ALLOWED_ORIGINS=https://deepsignal.example.com,https://www.deepsignal.example.com
+```
+
+When the variable is **not set or empty**, the backend defaults to `["*"]` (allow all origins), which is convenient for local development but **should not be used in production**.
+
+For production, always set `CORS_ALLOWED_ORIGINS` to the exact origin(s) of your frontend deployment. The backend applies these origins via FastAPI's `CORSMiddleware`:
+
+```python
+# Effective behavior in api/app.py
+allow_origins=["https://deepsignal.example.com"],
+allow_credentials=False,
+allow_methods=["*"],
+allow_headers=["*"],
+```
+
 ### Configuration Profiles
 
 **Development:**
 ```bash
+GITHUB_TOKEN=ghp_…
 GRAPH_DB_PATH=data/graphs.db
 GRAPH_DB_ENABLED=true
 GRAPH_TTL_HOURS=1
 GRAPH_AUTO_REFRESH_STALE=true
 GRAPH_WORKER_ENABLED=true
+# CORS_ALLOWED_ORIGINS not set → defaults to ["*"]
 LOG_LEVEL=DEBUG
 ```
 
 **Production:**
 ```bash
+GITHUB_TOKEN=ghp_…
+OPENAI_API_KEY=sk-…
 GRAPH_DB_PATH=/var/lib/open-source-risk-model/graphs.db
 GRAPH_DB_ENABLED=true
 GRAPH_TTL_HOURS=24
 GRAPH_AUTO_REFRESH_STALE=false
 GRAPH_WORKER_ENABLED=true
 GRAPH_WORKER_POLL_INTERVAL=10
+CORS_ALLOWED_ORIGINS=https://deepsignal.example.com
 LOG_LEVEL=INFO
 LOG_FILE=/var/log/open-source-risk-model/app.log
 API_WORKERS=4
@@ -229,6 +329,7 @@ GRAPH_WORKER_POLL_INTERVAL=5
 │  │   Uvicorn (API Server)   │  │
 │  │   - Multiple workers     │  │
 │  │   - Background worker    │  │
+│  │   - Serves /ui/ static   │  │
 │  └──────────────────────────┘  │
 │              │                  │
 │              ▼                  │
@@ -239,26 +340,39 @@ GRAPH_WORKER_POLL_INTERVAL=5
 └─────────────────────────────────┘
 ```
 
-**Setup:**
+**Step-by-step setup:**
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone <repo-url> /opt/open-source-risk-model
+cd /opt/open-source-risk-model
+
+# 2. Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# 2. Configure environment
+# 4. Configure environment
 cp .env.example .env
-# Edit .env with your settings
+# Edit .env — set GITHUB_TOKEN, OPENAI_API_KEY, GRAPH_DB_PATH, GRAPH_DB_ENABLED
+# For production, also set CORS_ALLOWED_ORIGINS
 
-# 3. Create directories
+# 5. Create directories
 mkdir -p data logs
 
-# 4. Start the server
+# 6. (Optional) Set frontend API base for split deployments
+# Edit ui/config.js or inject DS_API_BASE before it loads
+
+# 7. Start the backend (serves API + static frontend at /ui/)
 uvicorn api.app:app \
   --host 0.0.0.0 \
   --port 8000 \
-  --workers 4 \
-  --log-config logging.conf
+  --workers 4
 ```
+
+The backend automatically mounts the `ui/` directory at `/ui`, so the frontend is accessible at `http://<host>:8000/ui/`. API endpoints are at `http://<host>:8000/api/…`.
 
 **Pros:**
 - Simple setup
@@ -384,10 +498,12 @@ services:
       - "8000:8000"
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GRAPH_DB_PATH=/app/data/graphs.db
       - GRAPH_DB_ENABLED=true
       - GRAPH_TTL_HOURS=24
       - GRAPH_WORKER_ENABLED=true
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-*}
       - LOG_LEVEL=INFO
     volumes:
       - ./data:/app/data
@@ -416,9 +532,9 @@ docker-compose down
 docker-compose up -d --build
 ```
 
-### Option 4: Reverse Proxy with Nginx
+### Option 4: Reverse Proxy with Nginx (Backend + Static Frontend)
 
-For production deployments, use Nginx as a reverse proxy.
+For production deployments, use Nginx as a reverse proxy for the API and to serve the static frontend files directly.
 
 **Nginx Configuration:** `/etc/nginx/sites-available/open-source-risk-model`
 
@@ -429,7 +545,7 @@ upstream api_backend {
 
 server {
     listen 80;
-    server_name api.example.com;
+    server_name deepsignal.example.com;
 
     # Redirect to HTTPS
     return 301 https://$server_name$request_uri;
@@ -437,11 +553,11 @@ server {
 
 server {
     listen 443 ssl http2;
-    server_name api.example.com;
+    server_name deepsignal.example.com;
 
     # SSL configuration
-    ssl_certificate /etc/letsencrypt/live/api.example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.example.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/deepsignal.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/deepsignal.example.com/privkey.pem;
 
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
@@ -449,34 +565,53 @@ server {
     add_header X-XSS-Protection "1; mode=block" always;
 
     # Logging
-    access_log /var/log/nginx/api.access.log;
-    error_log /var/log/nginx/api.error.log;
+    access_log /var/log/nginx/deepsignal.access.log;
+    error_log /var/log/nginx/deepsignal.error.log;
 
-    # Proxy settings
+    # --- Static frontend files ---
+    # Serve ui/ directory as the site root so index.html loads at /
+    root /opt/open-source-risk-model/ui;
+    index index.html;
+
     location / {
+        try_files $uri $uri/ /index.html;
+        expires 1d;
+    }
+
+    # --- API proxy ---
+    # Forward /api/* requests to the FastAPI backend
+    location /api/ {
         proxy_pass http://api_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # Timeouts for long-running requests
+
+        # Timeouts for long-running requests (graph generation)
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
     }
 
-    # Static files (if any)
-    location /ui/ {
-        alias /opt/open-source-risk-model/ui/;
-        expires 1d;
+    # Forward /repos/* requests (dependency-tree endpoint)
+    location /repos/ {
+        proxy_pass http://api_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
 
+With this setup the frontend and API share the same origin (`https://deepsignal.example.com`), so `DS_API_BASE` can remain `""` (the default) and no special CORS configuration is needed.
+
 **Setup:**
 
 ```bash
+# Copy the config
+sudo cp nginx-deepsignal.conf /etc/nginx/sites-available/open-source-risk-model
+
 # Enable site
 sudo ln -s /etc/nginx/sites-available/open-source-risk-model /etc/nginx/sites-enabled/
 
@@ -485,6 +620,19 @@ sudo nginx -t
 
 # Reload Nginx
 sudo systemctl reload nginx
+```
+
+**Deploying the static frontend separately:**
+
+If you prefer to deploy the frontend to a CDN or separate static host instead of Nginx:
+
+1. Copy the `ui/` directory to your static hosting provider.
+2. Set `window.DS_API_BASE` in `config.js` (or inject it via a `<script>` tag) to point to the backend URL.
+3. Set `CORS_ALLOWED_ORIGINS` on the backend to the frontend's origin.
+
+```bash
+# On the backend server
+export CORS_ALLOWED_ORIGINS=https://cdn.deepsignal.example.com
 ```
 
 ---

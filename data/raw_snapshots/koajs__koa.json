@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 250,
+    "contributors_last_12mo": 10,
+    "days_since_last_push": 2.5846011911574074,
+    "days_since_last_release": 2.5840008413310187,
+    "fraction_issues_closed_12mo": 0.5,
+    "fraction_open_issues_stale_180d": 0.7777777777777778,
+    "issues_per_contributor": 0.136,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 34,
+    "stargazers_count": 35735,
+    "stars_count": 35735,
+    "top_contributor_fraction_12mo": 0.28
+  },
+  "fetched_at": "2026-03-30T19:42:00.851209+00:00",
+  "full_name": "koajs/koa"
+}

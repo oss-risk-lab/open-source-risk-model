@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 1010,
+    "contributors_last_12mo": 1,
+    "days_since_last_push": 39.12918157957176,
+    "days_since_last_release": 1565.0349373980207,
+    "fraction_issues_closed_12mo": 0.8909090909090909,
+    "fraction_open_issues_stale_180d": 0.9977949283351709,
+    "issues_per_contributor": 4.08019801980198,
+    "license_spdx_id": "Unlicense",
+    "open_issues_count": 4121,
+    "stargazers_count": 139954,
+    "stars_count": 139954,
+    "top_contributor_fraction_12mo": 1.0
+  },
+  "fetched_at": "2026-03-30T19:51:29.662725+00:00",
+  "full_name": "ytdl-org/youtube-dl"
+}

@@ -1,0 +1,5647 @@
+{
+  "trekhleb/javascript-algorithms": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "airbnb/javascript": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Chalarangelo/30-seconds-of-code": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nodejs/node": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "mrdoob/three.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jaywcjlove/awesome-mac": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mui/material-ui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "microsoft/Web-Dev-For-Beginners": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "louislam/uptime-kuma": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "anuraghazra/github-readme-stats": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "FortAwesome/Font-Awesome": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "typicode/json-server": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "hakimel/reveal.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "chartjs/Chart.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "juliangarnier/anime": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "leonardomso/33-js-concepts": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gorhill/uBlock": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "affaan-m/everything-claude-code": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jquery/jquery": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jgraph/drawio-desktop": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "h5bp/html5-boilerplate": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gatsbyjs/gatsby": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Mintplex-Labs/anything-llm": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "marktext/marktext": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mozilla/pdf.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "TryGhost/Ghost": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "prettier/prettier": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "poteto/hiring-without-whiteboards": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "iamkun/dayjs": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "bigskysoftware/htmx": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "typescript-cheatsheets/react": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "serverless/serverless": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Asabeneh/30-Days-Of-JavaScript": [
+    null,
+    []
+  ],
+  "microsoft/monaco-editor": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "LeCoupa/awesome-cheatsheets": [
+    null,
+    []
+  ],
+  "google/zx": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "meteor/meteor": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Leaflet/Leaflet": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sudheerj/reactjs-interview-questions": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "NaiboWang/EasySpider": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "Unitech/pm2": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nolimits4web/swiper": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nwjs/nw.js": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "yarnpkg/yarn": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "dcloudio/uni-app": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "usebruno/bruno": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "zen-browser/desktop": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "HeyPuter/puter": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "videojs/video.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "bmad-code-org/BMAD-METHOD": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "phaserjs/phaser": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "impress/impress.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "preactjs/preact": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "naptha/tesseract.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ToolJet/ToolJet": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "drawdb-io/drawdb": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "DavidHDev/react-bits": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "carbon-app/carbon": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "alvarotrigo/fullPage.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sahat/hackathon-starter": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "typicode/husky": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gchq/CyberChef": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "zenorocha/clipboard.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "qishibo/AnotherRedisDesktopManager": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pcottle/learnGitBranching": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gulpjs/gulp": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "lutzroeder/netron": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "lovell/sharp": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "parallax/jsPDF": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "docsifyjs/docsify": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "SortableJS/Sortable": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "webtorrent/webtorrent": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "AMAI-GmbH/AI-Expert-Roadmap": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "layui/layui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "songquanpeng/one-api": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "GoogleChrome/lighthouse": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sampotts/plyr": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "immerjs/immer": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gethomepage/homepage": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "swagger-api/swagger-ui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "kenwheeler/slick": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "caolan/async": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "tj/commander.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "fanmingming/live": [
+    null,
+    []
+  ],
+  "Automattic/mongoose": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jashkenas/underscore": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Asabeneh/30-Days-Of-React": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "codemirror/codemirror5": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "eslint/eslint": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sudheerj/javascript-interview-questions": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ajaxorg/ace": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "quasarframework/quasar": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "remy/nodemon": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ai/nanoid": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "haizlin/fe-interview": [
+    null,
+    []
+  ],
+  "philc/vimium": [
+    null,
+    []
+  ],
+  "badges/shields": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "koodo-reader/koodo-reader": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "eyaltoledano/claude-task-master": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Modernizr/Modernizr": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Max-Eee/NeoPass": [
+    null,
+    []
+  ],
+  "zloirock/core-js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "goldfire/howler.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "dimsemenov/PhotoSwipe": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "blackmatrix7/ios_rule_script": [
+    null,
+    []
+  ],
+  "gsd-build/get-shit-done": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "eip-work/kuboard-press": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "highlightjs/highlight.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "simple-icons/simple-icons": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "zhaoolee/ChromeAppHeroes": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "hammerjs/hammer.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "winstonjs/winston": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "greensock/GSAP": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "SillyTavern/SillyTavern": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pure-css/pure": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "validatorjs/validator.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "processing/p5.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "semantic-release/semantic-release": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "tailwindlabs/heroicons": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "MagicMirrorOrg/MagicMirror": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Gar-b-age/CookLikeHOC": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "shimohq/chinese-programmer-wrong-pronunciation": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "chalk/chalk": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "node-red/node-red": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "balderdashy/sails": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "js-cookie/js-cookie": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "websockets/ws": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "postcss/autoprefixer": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "freeCodeCamp/freeCodeCamp": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "kamranahmedse/developer-roadmap": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "openclaw/openclaw": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "microsoft/vscode": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "n8n-io/n8n": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "yangshun/tech-interview-handbook": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "langgenius/dify": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "excalidraw/excalidraw": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "anomalyco/opencode": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "iptv-org/iptv": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "microsoft/TypeScript": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "shadcn-ui/ui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "clash-verge-rev/clash-verge-rev": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "supabase/supabase": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ant-design/ant-design": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "google-gemini/gemini-cli": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "immich-app/immich": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "tailwindlabs/tailwindcss": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "puppeteer/puppeteer": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "storybookjs/storybook": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "firecrawl/firecrawl": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven"
+    ]
+  ],
+  "ChatGPTNextWeb/NextChat": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mermaid-js/mermaid": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "realworld-apps/realworld": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "modelcontextprotocol/servers": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "hoppscotch/hoppscotch": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "coder/code-server": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Stirling-Tools/Stirling-PDF": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "lobehub/lobehub": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "grafana/grafana": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "abi/screenshot-to-code": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "strapi/strapi": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "apache/superset": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Eugeny/tabby": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "apache/echarts": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "facebook/docusaurus": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "toeverything/AFFiNE": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "socketio/socket.io": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nocodb/nocodb": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "daytonaio/daytona": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "rubygems"
+    ]
+  ],
+  "reduxjs/redux": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nuxt/nuxt": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "cline/cline": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "withastro/astro": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pmndrs/zustand": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "remix-run/react-router": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "appwrite/appwrite": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "laurent22/joplin": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ionic-team/ionic-framework": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "DefinitelyTyped/DefinitelyTyped": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "FlowiseAI/Flowise": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "lyswhut/lx-music-desktop": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "TanStack/query": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "upstash/context7": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "type-challenges/type-challenges": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "expo/expo": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "pixijs/pixijs": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "OpenCut-app/OpenCut": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "makeplane/plane": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "tldraw/tldraw": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "prisma/prisma": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "RocketChat/Rocket.Chat": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "slidevjs/slidev": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "react-hook-form/react-hook-form": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "streamich/react-use": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "babel/babel": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "upscayl/upscayl": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "AykutSarac/jsoncrack.com": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "FuelLabs/fuels-ts": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "DIYgod/RSSHub": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "colinhacks/zod": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "fastapi/full-stack-fastapi-template": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "siyuan-note/siyuan": [
+    null,
+    []
+  ],
+  "hexojs/hexo": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "styled-components/styled-components": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "payloadcms/payload": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "vuetifyjs/vuetify": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "janhq/jan": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "CherryHQ/cherry-studio": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "calcom/cal.com": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "chakra-ui/chakra-ui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "twentyhq/twenty": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "trpc/trpc": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "appsmithorg/appsmith": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "chatboxai/chatbox": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mifi/lossless-cut": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "remotion-dev/remotion": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "novuhq/novu": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Kong/insomnia": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ant-design/ant-design-pro": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "RSSNext/Folo": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "outline/outline": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "NervJS/taro": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "code-yeongyu/oh-my-opencode": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "portainer/portainer": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "inkonchain/ink-kit": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "markedjs/marked": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "typeorm/typeorm": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "lerna/lerna": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mattermost/mattermost": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "amruthpillai/reactive-resume": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "umami-software/umami": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "xyflow/xyflow": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ueberdosis/tiptap": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "vadimdemedes/ink": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "solidjs/solid": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "TriliumNext/Trilium": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "alan2207/bulletproof-react": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jaredpalmer/formik": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "directus/directus": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "danny-avila/LibreChat": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pnpm/pnpm": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "refinedev/refine": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ZuodaoTech/everyone-can-use-english": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "drizzle-team/drizzle-orm": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "immutable-js/immutable-js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "thedotmack/claude-mem": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "backstage/backstage": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "remix-run/remix": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "floating-ui/floating-ui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "vercel/swr": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "medusajs/medusa": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Lissy93/web-check": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "NginxProxyManager/nginx-proxy-manager": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "hasura/graphql-engine": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "KeygraphHQ/shannon": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "continuedev/continue": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "codex-team/editor.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ianstormtaylor/slate": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "shardeum/shardeum": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Dokploy/dokploy": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ItzCrazyKns/Perplexica": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "koala73/worldmonitor": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "motiondivision/motion": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "fabricjs/fabric.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pear-devs/pear-desktop": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mantinedev/mantine": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "transloadit/uppy": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "blakeblackshear/frigate": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "refined-github/refined-github": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sequelize/sequelize": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pmndrs/react-three-fiber": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "cheeriojs/cheerio": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "bigint/hey": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "statelyai/xstate": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "CopilotKit/CopilotKit": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "honojs/hono": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "pmndrs/react-spring": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "musistudio/claude-code-router": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "postcss/postcss": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "jitsi/jitsi-meet": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "GitbookIO/gitbook": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "the1812/Bilibili-Evolved": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "t3-oss/create-t3-app": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "bytedance/UI-TARS-desktop": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "tailwindlabs/headlessui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "heroui-inc/heroui": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "voideditor/void": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nrwl/nx": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "microsoft/playwright-mcp": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "mobxjs/mobx": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "nextauthjs/next-auth": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Fission-AI/OpenSpec": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "TanStack/table": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Budibase/budibase": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ChromeDevTools/chrome-devtools-mcp": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ComposioHQ/composio": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "labring/FastGPT": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "element-plus/element-plus": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "moeru-ai/airi": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "angular/angular-cli": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "gitroomhq/postiz-app": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "better-auth/better-auth": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "simstudioai/sim": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "invoke-ai/InvokeAI": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "recharts/recharts": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "fingerprintjs/fingerprintjs": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "HumanSignal/label-studio": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "discordjs/discord.js": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "marmelab/react-admin": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Molunerfinn/PicGo": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "oldj/SwitchHosts": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "public-apis/public-apis": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "EbookFoundation/free-programming-books": [
+    null,
+    []
+  ],
+  "donnemartin/system-design-primer": [
+    null,
+    []
+  ],
+  "vinta/awesome-python": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "TheAlgorithms/Python": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Significant-Gravitas/AutoGPT": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "maven"
+    ]
+  ],
+  "AUTOMATIC1111/stable-diffusion-webui": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "huggingface/transformers": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "yt-dlp/yt-dlp": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "langflow-ai/langflow": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "521xueweihan/HelloGitHub": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ytdl-org/youtube-dl": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "langchain-ai/langchain": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "open-webui/open-webui": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "Comfy-Org/ComfyUI": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Shubhamsaboo/awesome-llm-apps": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "pytorch/pytorch": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "openai/whisper": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "microsoft/markitdown": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "home-assistant/core": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "3b1b/manim": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "anthropics/skills": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "bregman-arie/devops-exercises": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "hacksider/Deep-Live-Cam": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "browser-use/browser-use": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "tensorflow/models": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "swisskyrepo/PayloadsAllTheThings": [
+    null,
+    []
+  ],
+  "github/spec-kit": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "infiniflow/ragflow": [
+    "pypi",
+    [
+      "pypi",
+      "go"
+    ]
+  ],
+  "sherlock-project/sherlock": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "vllm-project/vllm": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "josephmisiti/awesome-machine-learning": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "python/cpython": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "maven"
+    ]
+  ],
+  "PaddlePaddle/PaddleOCR": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "binary-husky/gpt_academic": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "OpenHands/OpenHands": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ansible/ansible": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "hiyouga/LlamaFactory": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "labmlai/annotated_deep_learning_paper_implementations": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "xtekky/gpt4free": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "FoundationAgents/MetaGPT": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "localstack/localstack": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "keras-team/keras": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "OpenBB-finance/OpenBB": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "openinterpreter/open-interpreter": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "unclecode/crawl4ai": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "scrapy/scrapy": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "commaai/openpilot": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "pathwaycom/pathway": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "CorentinJ/Real-Time-Voice-Cloning": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Asabeneh/30-Days-Of-Python": [
+    null,
+    []
+  ],
+  "zylon-ai/private-gpt": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ultralytics/yolov5": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "opendatalab/MinerU": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "RVC-Boss/GPT-SoVITS": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "microsoft/autogen": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "Z4nzu/hackingtool": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "FoundationAgents/OpenManus": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "deepfakes/faceswap": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "docling-project/docling": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "karpathy/nanoGPT": [
+    null,
+    []
+  ],
+  "ultralytics/ultralytics": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "unslothai/unsloth": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Zie619/n8n-workflows": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "charlax/professional-programming": [
+    null,
+    []
+  ],
+  "harry0703/MoneyPrinterTurbo": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "odoo/odoo": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "mem0ai/mem0": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "sansan0/TrendRadar": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "lllyasviel/Fooocus": [
+    null,
+    []
+  ],
+  "run-llama/llama_index": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "freqtrade/freqtrade": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "virattt/ai-hedge-fund": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "oobabooga/text-generation-webui": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "crewAIInc/crewAI": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "NanmiCoder/MediaCrawler": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "karpathy/nanochat": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "apache/airflow": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "streamlit/streamlit": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "SimplifyJobs/Summer2026-Internships": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "getsentry/sentry": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "9001/copyparty": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "faif/python-patterns": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "mitmproxy/mitmproxy": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "hiroi-sora/Umi-OCR": [
+    null,
+    []
+  ],
+  "exo-explore/exo": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "mingrammer/diagrams": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "gradio-app/gradio": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "zhayujie/chatgpt-on-wechat": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "deepspeedai/DeepSpeed": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ray-project/ray": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Aider-AI/aider": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "hpcaitech/ColossalAI": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ccxt/ccxt": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "ComposioHQ/awesome-claude-skills": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "chubin/cheat.sh": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "jingyaogong/minimind": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "2noise/ChatTTS": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "mindsdb/mindsdb": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "agno-agi/agno": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "gto76/python-cheatsheet": [
+    null,
+    []
+  ],
+  "microsoft/qlib": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "BerriAI/litellm": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "nextlevelbuilder/ui-ux-pro-max-skill": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "chatchat-space/Langchain-Chatchat": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "vnpy/vnpy": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "0voice/interview_internal_reference": [
+    null,
+    []
+  ],
+  "paperless-ngx/paperless-ngx": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ManimCommunity/manim": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "satwikkansal/wtfpython": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "babysor/MockingBird": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "sqlmapproject/sqlmap": [
+    null,
+    []
+  ],
+  "roboflow/supervision": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "huggingface/pytorch-image-models": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "chatanywhere/GPT_API_free": [
+    null,
+    []
+  ],
+  "hankcs/HanLP": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "666ghj/BettaFish": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "jax-ml/jax": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "geekcomputers/Python": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Textualize/textual": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "google/langextract": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "facebookresearch/detectron2": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Pythagora-io/gpt-pilot": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "XX-net/XX-Net": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "explosion/spaCy": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "khoj-ai/khoj": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "huggingface/diffusers": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "certbot/certbot": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ocrmypdf/OCRmyPDF": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "stanfordnlp/dspy": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "0xAX/linux-insides": [
+    null,
+    []
+  ],
+  "datalab-to/marker": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "facebookresearch/fairseq": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "frappe/erpnext": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "PDFMathTranslate/PDFMathTranslate": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "nicolargo/glances": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "PostHog/posthog": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "kovidgoyal/kitty": [
+    "pypi",
+    [
+      "pypi",
+      "go"
+    ]
+  ],
+  "tinygrad/tinygrad": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "OWASP/CheatSheetSeries": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "OpenBMB/ChatDev": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "TauricResearch/TradingAgents": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "microsoft/graphrag": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "tqdm/tqdm": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "Lightning-AI/pytorch-lightning": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "dgtlmoon/changedetection.io": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "trailofbits/algo": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "wshobson/agents": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "openai/openai-python": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "jumpserver/jumpserver": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "StevenBlack/hosts": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "encode/django-rest-framework": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "avelino/awesome-go": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "ollama/ollama": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "golang/go": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "kubernetes/kubernetes": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "fatedier/frp": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gin-gonic/gin": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gohugoio/hugo": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "syncthing/syncthing": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "junegunn/fzf": [
+    "go",
+    [
+      "go",
+      "rubygems"
+    ]
+  ],
+  "jesseduffield/lazygit": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "moby/moby": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "caddyserver/caddy": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "nektos/act": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "base/node": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "prometheus/prometheus": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "traefik/traefik": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "minio/minio": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "usememos/memos": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "pocketbase/pocketbase": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "rclone/rclone": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "go-gitea/gitea": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go"
+    ]
+  ],
+  "wagoodman/dive": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "etcd-io/etcd": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "ethereum/go-ethereum": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "jesseduffield/lazydocker": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "AlistGo/alist": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "hashicorp/terraform": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gogs/gogs": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "v2ray/v2ray-core": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "coreybutler/nvm-windows": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "spf13/cobra": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "mudler/LocalAI": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "milvus-io/milvus": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "cli/cli": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "charmbracelet/bubbletea": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "pingcap/tidb": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "go-gorm/gorm": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "danielmiessler/Fabric": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "photoprism/photoprism": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "gofiber/fiber": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "istio/istio": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "docker/compose": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "juanfont/headscale": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "XTLS/Xray-core": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "hashicorp/vault": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "schollz/croc": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "1Panel-dev/1Panel": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "harness/harness": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "filebrowser/filebrowser": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "v2fly/v2ray-core": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "derailed/k9s": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "wailsapp/wails": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "AdguardTeam/AdGuardHome": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "aquasecurity/trivy": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "zeromicro/go-zero": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "restic/restic": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "beego/beego": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "glanceapp/glance": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "k3s-io/k3s": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "labstack/echo": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "cockroachdb/cockroach": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "kubernetes/minikube": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "SagerNet/sing-box": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "iawia002/lux": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "containers/podman": [
+    "pypi",
+    [
+      "pypi",
+      "go"
+    ]
+  ],
+  "seaweedfs/seaweedfs": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "spf13/viper": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "grafana/k6": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "hashicorp/consul": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "helm/helm": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "tailscale/tailscale": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "binwiederhier/ntfy": [
+    "pypi",
+    [
+      "pypi",
+      "go"
+    ]
+  ],
+  "micro-editor/micro": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "opentofu/opentofu": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "fyne-io/fyne": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "grafana/loki": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "goharbor/harbor": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "github/github-mcp-server": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "abiosoft/colima": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "projectdiscovery/nuclei": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "cloudreve/cloudreve": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "authelia/authelia": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "Wox-launcher/Wox": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go"
+    ]
+  ],
+  "openfaas/faas": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "stretchr/testify": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "yeasy/docker_practice": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "sirupsen/logrus": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "kataras/iris": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "dapr/dapr": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "go-kratos/kratos": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "rancher/rancher": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gitleaks/gitleaks": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gocolly/colly": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "asdf-vm/asdf": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "tsenart/vegeta": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "trufflesecurity/trufflehog": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "XIU2/CloudflareSpeedTest": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "pulumi/pulumi": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven"
+    ]
+  ],
+  "go-delve/delve": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "containrrr/watchtower": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "uber-go/zap": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "flipped-aurora/gin-vue-admin": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "microsoft/typescript-go": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "urfave/cli": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "cilium/cilium": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "quii/learn-go-with-tests": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "charmbracelet/glow": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "valyala/fasthttp": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "netbirdio/netbird": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "terrastruct/d2": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "air-verse/air": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "slimtoolkit/slim": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "charmbracelet/gum": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "GopeedLab/gopeed": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "grpc/grpc-go": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "micro/go-micro": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "jaegertracing/jaeger": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "sipeed/picoclaw": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "argoproj/argo-cd": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "redis/go-redis": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "go-chi/chi": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "JanDeDobbeleer/oh-my-posh": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "dgraph-io/dgraph": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "FiloSottile/age": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "OpenListTeam/OpenList": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "samber/lo": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "getsops/sops": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "charmbracelet/crush": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "vitessio/vitess": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "chaitin/SafeLine": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "dolthub/dolt": [
+    "npm",
+    [
+      "npm",
+      "go",
+      "maven",
+      "rubygems"
+    ]
+  ],
+  "containerd/containerd": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "lima-vm/lima": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "qax-os/excelize": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "antonmedv/fx": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "chai2010/advanced-go-programming-book": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "gravitational/teleport": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "casbin/casbin": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "GoogleCloudPlatform/microservices-demo": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven"
+    ]
+  ],
+  "grpc-ecosystem/grpc-gateway": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "rakyll/hey": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "henrygd/beszel": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "go-playground/validator": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "navidrome/navidrome": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "kubernetes/ingress-nginx": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "nats-io/nats-server": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "probelabs/goreplay": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "QuantumNous/new-api": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "dariubs/GoBooks": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "knadh/listmonk": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "apernet/hysteria": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "google/cadvisor": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "bettercap/bettercap": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "charmbracelet/vhs": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "temporalio/temporal": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "golangci/golangci-lint": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "twpayne/chezmoi": [
+    "pypi",
+    [
+      "pypi",
+      "go"
+    ]
+  ],
+  "golang-migrate/migrate": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "steveyegge/beads": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "bluenviron/mediamtx": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "TheAlgorithms/Go": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "google/gvisor": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "wavetermdev/waveterm": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "zincsearch/zincsearch": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "livekit/livekit": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "TecharoHQ/anubis": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "rqlite/rqlite": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "m1k1o/neko": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "tinygo-org/tinygo": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "slackhq/nebula": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "sqlc-dev/sqlc": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "ory/hydra": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "ent/ent": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "ipfs/kubo": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "kubesphere/kubesphere": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "Snailclimb/JavaGuide": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "krahets/hello-algo": [
+    "npm",
+    [
+      "npm",
+      "go"
+    ]
+  ],
+  "iluwatar/java-design-patterns": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "macrozheng/mall": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "spring-projects/spring-boot": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "doocs/advanced-java": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "elastic/elasticsearch": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "NationalSecurityAgency/ghidra": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "TheAlgorithms/Java": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "spring-projects/spring-framework": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "termux/termux-app": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "google/guava": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "dbeaver/dbeaver": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ReactiveX/RxJava": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "skylot/jadx": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "jeecgboot/JeecgBoot": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "apache/dubbo": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "halo-dev/halo": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "TeamNewPipe/NewPipe": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "eugenp/tutorials": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "alibaba/arthas": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "doocs/leetcode": [
+    "npm",
+    [
+      "npm",
+      "pypi"
+    ]
+  ],
+  "YunaiV/ruoyi-vue-pro": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "airbnb/lottie-android": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "bumptech/glide": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "netty/netty": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ashishps1/awesome-system-design-resources": [
+    null,
+    []
+  ],
+  "SeleniumHQ/selenium": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "zxing/zxing": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "keycloak/keycloak": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "alibaba/nacos": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "binarywang/WxJava": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/kafka": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "conductor-oss/conductor": [
+    "pypi",
+    [
+      "pypi",
+      "maven"
+    ]
+  ],
+  "chinabugotech/hutool": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "xuxueli/xxl-job": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apolloconfig/apollo": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "alibaba/canal": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "alibaba/spring-cloud-alibaba": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "DrKLO/Telegram": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "yuliskov/SmartTube": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "alibaba/druid": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Anuken/Mindustry": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "kestra-io/kestra": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/incubator-seata": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "OpenAPITools/openapi-generator": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/flink": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "CodePhiliaX/Chat2DB": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "bazelbuild/bazel": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "jenkinsci/jenkins": [
+    "npm",
+    [
+      "npm",
+      "maven"
+    ]
+  ],
+  "libgdx/libgdx": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/skywalking": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Netflix/Hystrix": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "google/gson": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "redisson/redisson": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "iBotPeaches/Apktool": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "dataease/dataease": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "doocs/source-code-hunter": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "alibaba/Sentinel": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "openjdk/jdk": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ashishps1/awesome-low-level-design": [
+    "npm",
+    [
+      "npm",
+      "go",
+      "maven"
+    ]
+  ],
+  "apache/rocketmq": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "google/ExoPlayer": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "oracle/graal": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "CarGuo/GSYVideoPlayer": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "thingsboard/thingsboard": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "brettwooldridge/HikariCP": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/shardingsphere": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "mybatis/mybatis-3": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ReactiveX/RxAndroid": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "linlinjava/litemall": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "JetBrains/intellij-community": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven"
+    ]
+  ],
+  "lionsoul2014/ip2region": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven"
+    ]
+  ],
+  "antlr/antlr4": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "dromara/Sa-Token": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "YunaiV/yudao-cloud": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "williamfiset/Algorithms": [
+    null,
+    []
+  ],
+  "Tencent/APIJSON": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Tencent/tinker": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ben-manes/caffeine": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "infinilabs/analysis-ik": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "justauth/JustAuth": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "baomidou/mybatis-plus": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "material-components/material-components-android": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "facebook/fresco": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Grasscutters/Grasscutter": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "questdb/questdb": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "prestodb/presto": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "neo4j/neo4j": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "ashishps1/awesome-leetcode-resources": [
+    null,
+    []
+  ],
+  "quarkusio/quarkus": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/hadoop": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Konloch/bytecode-viewer": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "mockito/mockito": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/pulsar": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/doris": [
+    "npm",
+    [
+      "npm",
+      "pypi",
+      "go",
+      "maven",
+      "rubygems"
+    ]
+  ],
+  "zhisheng17/flink-learning": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "supertokens/supertokens-core": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "zaproxy/zaproxy": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "elastic/logstash": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "theonedev/onedev": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "cryptomator/cryptomator": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "eclipse-vertx/vert.x": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "arduino/Arduino": [
+    null,
+    []
+  ],
+  "GoogleContainerTools/jib": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "deeplearning4j/deeplearning4j": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/dolphinscheduler": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "languagetool-org/languagetool": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Netflix/zuul": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "kekingcn/kkFileView": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/druid": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "janishar/mit-deep-learning-book-pdf": [
+    null,
+    []
+  ],
+  "xpipe-io/xpipe": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "pinpoint-apm/pinpoint": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "projectlombok/lombok": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "metersphere/metersphere": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "macrozheng/mall-swarm": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "codecentric/spring-boot-admin": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "plantuml/plantuml": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "apache/zookeeper": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "google/guice": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "Netflix/eureka": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "trinodb/trino": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "opensearch-project/OpenSearch": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "debezium/debezium": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "microg/GmsCore": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "pagehelper-org/Mybatis-PageHelper": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "redis/jedis": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "LawnchairLauncher/lawnchair": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "amitshekhariitbhu/android-interview-questions": [
+    null,
+    []
+  ],
+  "beemdevelopment/Aegis": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "grpc/grpc-java": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "PaperMC/Paper": [
+    "maven",
+    [
+      "maven"
+    ]
+  ],
+  "rails/rails": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "jekyll/jekyll": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "mastodon/mastodon": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "huginn/huginn": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "Homebrew/brew": [
+    "pypi",
+    [
+      "pypi",
+      "rubygems"
+    ]
+  ],
+  "discourse/discourse": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "fastlane/fastlane": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "freeCodeCamp/devdocs": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rapid7/metasploit-framework": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "chatwoot/chatwoot": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "hashicorp/vagrant": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "matteocrippa/awesome-swift": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "heartcombo/devise": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "gitlabhq/gitlabhq": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "ruby/ruby": [
+    "go",
+    [
+      "go",
+      "rubygems"
+    ]
+  ],
+  "forem/forem": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "Homebrew/homebrew-cask": [
+    null,
+    []
+  ],
+  "lewagon/setup": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "postalserver/postal": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "spree/spree": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "Homebrew/homebrew-core": [
+    null,
+    []
+  ],
+  "opf/openproject": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "mame/quine-relay": [
+    null,
+    []
+  ],
+  "gollum/gollum": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "neutraltone/awesome-stock-resources": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "basecamp/kamal": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "fluent/fluentd": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "sidekiq/sidekiq": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "tmuxinator/tmuxinator": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github-linguist/linguist": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "capistrano/capistrano": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rubocop/rubocop": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "sinatra/sinatra": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ubicloud/ubicloud": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "Shopify/liquid": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "faker-ruby/faker": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "docusealco/docuseal": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "greatghoul/remote-working": [
+    null,
+    []
+  ],
+  "jordansissel/fpm": [
+    "pypi",
+    [
+      "pypi",
+      "rubygems"
+    ]
+  ],
+  "teamcapybara/capybara": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ruby-grape/grape": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "activeadmin/activeadmin": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "thoughtbot/guides": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "wpscanteam/wpscan": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "resque/resque": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "javan/whenever": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/pghero": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "carrierwaveuploader/carrierwave": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "kaminari/kaminari": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "antiwork/gumroad": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "varvet/pundit": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "thoughtbot/factory_bot": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "chef/chef": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "Freika/dawarich": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "heartcombo/simple_form": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "omniauth/omniauth": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "community/community": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "railsadminteam/rails_admin": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "puma/puma": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github/scientist": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github-changelog-generator/github-changelog-generator": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "realm/jazzy": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "flyerhzm/bullet": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "presidentbeef/brakeman": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "basecamp/fizzy": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "middleman/middleman": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "paper-trail-gem/paper_trail": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "skwp/dotfiles": [
+    null,
+    []
+  ],
+  "pry/pry": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "bkeepers/dotenv": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/searchkick": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "guard/guard": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/chartkick": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "instructure/canvas-lms": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "urbanadventurer/WhatWeb": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "alexreisner/geocoder": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "hanami/hanami": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "norman/friendly_id": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "vcr/vcr": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github/markup": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "felixonmars/dnsmasq-china-list": [
+    null,
+    []
+  ],
+  "lostisland/faraday": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "redmine/redmine": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "jnunemaker/httparty": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "activerecord-hackery/ransack": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ruby-concurrency/concurrent-ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "fastruby/fast-ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rack/rack-attack": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "mislav/will_paginate": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "danger/danger": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "doorkeeper-gem/doorkeeper": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "dependabot/dependabot-core": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rmosolgo/graphql-ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "zammad/zammad": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "sferik/x-cli": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "slim-template/slim": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rails-api/active_model_serializers": [
+    null,
+    []
+  ],
+  "Hackplayers/evil-winrm": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "solidusio/solidus": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "drapergem/draper": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rspec/rspec-rails": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rails/thor": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "cucumber/cucumber-ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "formtastic/formtastic": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "shakacode/react_on_rails": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "aasm/aasm": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "asciidoctor/asciidoctor": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "athityakumar/colorls": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rack/rack": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "jeremyevans/sequel": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "mbleigh/acts-as-taggable-on": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ddnexus/pagy": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "opal/opal": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "simplecov-ruby/simplecov": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "bbc/wraith": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "lolcommits/lolcommits": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/blazer": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "red-data-tools/YouPlot": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github/explore": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "lobsters/lobsters": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "activemerchant/active_merchant": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "sferik/twitter-ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "hahwul/WebHackersWeapons": [
+    null,
+    []
+  ],
+  "github/gemoji": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "seyhunak/twitter-bootstrap-rails": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "octobox/octobox": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "sparklemotion/mechanize": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/ahoy": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "rails/jbuilder": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ankane/strong_migrations": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "binarylogic/authlogic": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "TheOdinProject/theodinproject": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "errbit/errbit": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "grosser/parallel": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "flyerhzm/rails_best_practices": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "blackcandy-org/blackcandy": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "zdennis/activerecord-import": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "troessner/reek": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "stringer-rss/stringer": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "basecamp/once-campfire": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "thoughtbot/suspenders": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "github/choosealicense.com": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "bblimke/webmock": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "svenfuchs/rails-i18n": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "redis/redis-rb": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "mongodb/mongoid": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "octokit/octokit.rb": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "flippercloud/flipper": [
+    "npm",
+    [
+      "npm",
+      "rubygems"
+    ]
+  ],
+  "refinery/refinerycms": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "ruby/rubygems": [
+    "go",
+    [
+      "go",
+      "rubygems"
+    ]
+  ],
+  "airbnb/ruby": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "haml/haml": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "TheAlgorithms/JavaScript": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "code-yeongyu/oh-my-openagent": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "ItzCrazyKns/Vane": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "HKUDS/nanobot": [
+    "pypi",
+    [
+      "pypi"
+    ]
+  ],
+  "ahmetb/kubectx": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "CocoaPods/CocoaPods": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ],
+  "noraj/OSCP-Exam-Report-Template-Markdown": [
+    null,
+    []
+  ],
+  "apache/casbin": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "vercel-labs/agent-skills": [
+    "npm",
+    [
+      "npm"
+    ]
+  ],
+  "yorukot/superfile": [
+    "go",
+    [
+      "go"
+    ]
+  ],
+  "typhoeus/typhoeus": [
+    "rubygems",
+    [
+      "rubygems"
+    ]
+  ]
+}

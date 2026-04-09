@@ -3,672 +3,389 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Deep Signal — Repo Risk</title>
+  <title>Deep Signal — Open Source Risk Intelligence</title>
   <style>
     :root{
-      --bg: #0b0f17;
-      --panel: #0f172a;
-      --card: #111827;
-      --card2:#0b1220;
-      --border: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.65);
-      --muted2: rgba(255,255,255,.45);
-      --shadow: 0 10px 30px rgba(0,0,0,.45);
-      --radius: 16px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 
-"Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 
-Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --bg: #0a0e13;
+      --bg-surface: #0f1419;
+      --bg-elevated: #151b23;
+      --bg-overlay: #1a222c;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-emphasis: rgba(255, 255, 255, 0.10);
+      --text-primary: rgba(255, 255, 255, 0.92);
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-tertiary: rgba(255, 255, 255, 0.35);
+      --accent: #3b82f6;
+      --accent-muted: rgba(59, 130, 246, 0.15);
+      --status-high-bg: rgba(239, 68, 68, 0.12);
+      --status-high-text: #ef4444;
+      --status-high-border: rgba(239, 68, 68, 0.35);
+      --status-medium-bg: rgba(234, 179, 8, 0.12);
+      --status-medium-text: #eab308;
+      --status-medium-border: rgba(234, 179, 8, 0.35);
+      --status-low-bg: rgba(34, 197, 94, 0.12);
+      --status-low-text: #22c55e;
+      --status-low-border: rgba(34, 197, 94, 0.35);
+      --sp-4: 4px; --sp-8: 8px; --sp-12: 12px; --sp-16: 16px; --sp-24: 24px; --sp-32: 32px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
     }
-
-    *{ box-sizing: border-box; }
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
     body{
-      margin:0;
-      font-family: var(--sans);
-      color: var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(99,102,241,.35), 
-transparent 60%),
-        radial-gradient(900px 600px at 90% 0%, rgba(16,185,129,.25), 
-transparent 55%),
-        radial-gradient(900px 600px at 70% 120%, rgba(239,68,68,.18), 
-transparent 55%),
-        var(--bg);
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
       min-height: 100vh;
     }
+    .wrap{ max-width: 1100px; margin: var(--sp-8) auto; padding: 0 var(--sp-12); }
 
-    .wrap{
-      max-width: 1100px;
-      margin: 28px auto 60px;
-      padding: 0 18px;
-    }
+    /* Navigation */
+    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-4) var(--sp-12); margin-bottom:var(--sp-4); border-radius:var(--radius-md); border:1px solid var(--border); background:var(--bg-elevated); }
+    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
+    .ds-nav-links { display:flex; gap:var(--sp-4); }
+    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
+    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
+    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
 
-    .topbar{
-      display:flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 16px;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .title{
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: .2px;
-    }
-    .subtitle{
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-
+    /* Panel */
     .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), 
-rgba(255,255,255,.02));
+      background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-24);
+      margin-bottom: var(--sp-16);
+      transition: border-color 0.15s ease;
+    }
+    .panel:hover{ border-color: var(--border-emphasis); }
+    .section-title{
+      font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;
+    }
+    .panel-header{
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: var(--sp-12); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--sp-16);
     }
 
-    .controls{
-      display:grid;
-      grid-template-columns: 1fr auto auto auto;
-      gap: 10px;
-      align-items: center;
+    /* Hero */
+    .hero{
+      text-align: center;
+      padding: 48px var(--sp-24) 40px;
+      margin-bottom: var(--sp-24);
+    }
+    .hero-title{
+      font-size: 32px; font-weight: 800; letter-spacing: -0.3px;
+      color: var(--text-primary); margin-bottom: var(--sp-12);
+    }
+    .hero-subtitle{
+      font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+      max-width: 600px; margin: 0 auto var(--sp-24);
     }
 
-    input[type="text"]{
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
+    /* Analyze input */
+    .analyze-bar{
+      display: flex; gap: var(--sp-8); max-width: 560px; margin: 0 auto;
     }
-    input[type="text"]::placeholder{ color: rgba(255,255,255,.35); }
+    .analyze-bar input{
+      flex: 1; padding: var(--sp-12) var(--sp-16);
+      border-radius: var(--radius-md); border: 1px solid var(--border);
+      background: var(--bg-surface); color: var(--text-primary);
+      font-size: 14px; outline: none;
+    }
+    .analyze-bar input::placeholder{ color: var(--text-tertiary); }
+    .analyze-bar input:focus{ border-color: var(--border-emphasis); }
+    .btn-primary{
+      padding: var(--sp-12) var(--sp-24);
+      border-radius: var(--radius-md); border: none;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: opacity .15s ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover{ opacity: 0.9; }
 
-    .btn{
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      font-weight: 700;
+    /* Quick actions */
+    .actions-grid{
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-12); margin-bottom: var(--sp-24);
+    }
+    .action-card{
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: var(--sp-24);
+      text-decoration: none; color: var(--text-primary);
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      display: flex; flex-direction: column; gap: var(--sp-8);
       cursor: pointer;
-      transition: transform .06s ease, background .15s ease, border-color 
-.15s ease;
-      user-select:none;
-      white-space: nowrap;
     }
-    .btn:hover{ background: rgba(255,255,255,.12); }
-    .btn:active{ transform: translateY(1px); }
+    .action-card:hover{ border-color: var(--border-emphasis); background: var(--bg-overlay); box-shadow: var(--shadow-md); }
+    .action-icon{ font-size: 24px; }
+    .action-label{ font-size: 14px; font-weight: 700; }
+    .action-desc{ font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
-    .tog{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color: var(--muted);
-      font-size: 13px;
-      user-select:none;
-      white-space: nowrap;
+    /* Explore repos */
+    .repo-group-title{
+      font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: var(--sp-8);
     }
-    .tog input{ transform: translateY(1px); }
+    .repo-grid{
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--sp-8); margin-bottom: var(--sp-16);
+    }
+    .repo-chip{
+      display: flex; align-items: center; gap: var(--sp-8);
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md); border: 1px solid var(--border);
+      background: var(--bg-surface); text-decoration: none;
+      color: var(--text-primary); font-size: 13px; font-weight: 600;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .repo-chip:hover{ border-color: var(--border-emphasis); background: var(--bg-overlay); }
+    .repo-chip .risk-dot{
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .risk-high{ background: var(--status-high-text); }
+    .risk-medium{ background: var(--status-medium-text); }
+    .risk-low{ background: var(--status-low-text); }
+    .risk-neutral{ background: var(--text-tertiary); }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 14px;
-      margin-top: 14px;
+    .trust-signal{
+      font-size: 13px; color: var(--text-tertiary); text-align: center;
+      margin-top: var(--sp-8);
     }
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), 
-rgba(255,255,255,.02));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-
-    .card h3{
-      margin: 0 0 10px;
-      font-size: 14px;
-      color: rgba(255,255,255,.85);
-      letter-spacing: .2px;
-    }
-
-    .kvs{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .kv{
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-    }
-    .kv .k{
-      font-size: 12px;
-      color: var(--muted2);
-      margin-bottom: 6px;
-    }
-    .kv .v{
-      font-size: 15px;
-      font-weight: 800;
-      display:flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-    .pill{
-      font-size: 12px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      color: rgba(255,255,255,.85);
-      background: rgba(255,255,255,.06);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .6px;
+    .explore-error{
+      font-size: 14px; color: var(--text-secondary); text-align: center;
+      padding: var(--sp-24) 0;
     }
 
-    .barrow{
-      margin-top: 12px;
-      display:flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .barhead{
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: baseline;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .bar{
-      height: 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      overflow: hidden;
-      position: relative;
-    }
-    .fill{
-  height: 100%;
-  width: 0%;
-  background-color: #22c55e; /* default; overridden per bar */
-  border-radius: 999px;
-  transition: width .35s ease, background-color .2s ease;
-}
-    .drivers{
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .driver{
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      border-radius: 14px;
-      padding: 10px;
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-    .driver .name{
-      font-weight: 800;
-      font-size: 13px;
-    }
-    .driver .num{
-      font-family: var(--mono);
-      color: rgba(255,255,255,.75);
-      font-size: 12px;
-    }
-
-    .features{
-      margin-top: 14px;
-    }
-    .feat-tools{
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .search{
-      width: 320px;
-      max-width: 100%;
-    }
-
-    .table{
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .row{
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.16);
-      border-radius: 16px;
-      padding: 12px;
-    }
-    .row.missing{
-      opacity: .58;
-    }
-
-    .rowtop{
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-    .left{
-      min-width: 0;
-    }
-    .name{
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .2px;
-      display:flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .cat{
-      font-size: 11px;
-      color: rgba(255,255,255,.72);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-      font-weight: 800;
-      letter-spacing: .4px;
-    }
-    .desc{
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.35;
-      margin-top: 6px;
-    }
-
-    .right{
-      text-align: right;
-      flex: 0 0 auto;
-    }
-    .raw{
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(255,255,255,.80);
-    }
-    .raw .u{
-      color: rgba(255,255,255,.55);
-      margin-left: 6px;
-    }
-    .meta2{
-      margin-top: 6px;
-      font-size: 11px;
-      color: rgba(255,255,255,.55);
-      display:flex;
-      gap: 8px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .mini{
-      height: 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      overflow:hidden;
-    }
-    .mini .fill{
-      height:100%;
-      border-radius: 999px;
-    }
-
-    .foot{
-      margin-top: 12px;
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .err{
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(239,68,68,.45);
-      background: rgba(239,68,68,.10);
-      color: rgba(255,255,255,.88);
-      font-size: 13px;
-      display:none;
-      white-space: pre-wrap;
-    }
-
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-      .controls{ grid-template-columns: 1fr auto; grid-auto-rows: auto; }
-      .tog{ justify-content: flex-end; }
+    @media (max-width: 700px){
+      .actions-grid{ grid-template-columns: 1fr; }
+      .repo-grid{ grid-template-columns: 1fr 1fr; }
+      .hero-title{ font-size: 24px; }
     }
   </style>
+  <script src="config.js"></script>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="title">Deep Signal — Repository Risk</div>
-        <div class="subtitle">
-          Enter a repo, pull a payload from 
-your local API, render overall + feature-level risk bars.
-        </div>
-      </div>
+<div class="wrap">
+  <!-- Hero -->
+  <div class="panel hero">
+    <div class="hero-title">Open Source Risk Intelligence</div>
+    <div class="hero-subtitle">
+      Analyze open source repositories for maintenance risk, supply chain vulnerabilities, and dependency health. Understand what you're shipping before it ships.
     </div>
-
-    <div class="panel">
-      <div class="controls">
-        <input id="repoInput" type="text" placeholder="e.g. numpy/numpy or 
-https://github.com/numpy/numpy" />
-        <button id="scoreBtn" class="btn">Score</button>
-        <label class="tog">
-          <input id="refreshToggle" type="checkbox" />
-          force refresh
-        </label>
-        
-        <label class="tog">
-          <input id="issuesToggle" type="checkbox" checked />
-          thorough mode (fetch issues, slower)
-        </label>
-        
-      </div>
-      <div id="err" class="err"></div>
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:var(--sp-24);">Analyze any public GitHub repository in seconds.</div>
+    <div class="analyze-bar">
+      <input id="repoInput" type="text" placeholder="e.g. pallets/flask or numpy/numpy" aria-label="Repository name" />
+      <button id="analyzeBtn" class="btn-primary">Scan Repo</button>
     </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Overall</h3>
-        <div class="kvs">
-          <div class="kv">
-            <div class="k">Repo</div>
-            <div class="v"><span id="repoName">—</span></div>
-          </div>
-          <div class="kv">
-            <div class="k">Score</div>
-            <div class="v">
-              <span id="overallScore">—</span>
-              <span id="overallLabel" class="pill">—</span>
-            </div>
-          </div>
-          <div class="kv">
-            <div class="k">Coverage</div>
-            <div class="v"><span id="coverage">—</span></div>
-          </div>
-          <div class="kv">
-            <div class="k">Confidence</div>
-            <div class="v"><span id="confidence">—</span></div>
-          </div>
-        </div>
-
-        <div class="barrow">
-          <div class="barhead">
-            <span>Maintenance risk (0 → low, 1 → high)</span>
-            <span id="fetchedAt" style="font-family:var(--mono); color: 
-rgba(255,255,255,.55);">—</span>
-          </div>
-          <div class="bar"><div id="overallFill" class="fill"></div></div>
-        </div>
-
-        <div class="foot" id="cacheMeta">—</div>
-      </div>
-
-      <div class="card">
-        <h3>Top drivers</h3>
-        <div id="drivers" class="drivers"></div>
-      </div>
-    </div>
-
-    <div class="features">
-      <div class="card">
-        <div class="feat-tools">
-          <h3 style="margin:0;">Features</h3>
-          <input id="search" class="search" type="text" 
-placeholder="Filter features (e.g. issues, push, contributors)" />
-        </div>
-        <div id="features" class="table"></div>
-      </div>
-    </div>
+    <div id="trustSignal" class="trust-signal" style="margin-top:var(--sp-16);"></div>
   </div>
 
+  <!-- Quick actions -->
+  <div class="actions-grid">
+    <a class="action-card" href="insights.html">
+      <span class="action-icon">📊</span>
+      <span class="action-label">Insights Dashboard</span>
+      <span class="action-desc">Risk scores, signals, and trends across all analyzed repositories.</span>
+    </a>
+    <a class="action-card" href="graph.html">
+      <span class="action-icon">🔗</span>
+      <span class="action-label">Supply Chain Graph</span>
+      <span class="action-desc">Visualize maintainers, releases, CVEs, and registry connections.</span>
+    </a>
+    <a class="action-card" href="dependency-tree.html">
+      <span class="action-icon">🌳</span>
+      <span class="action-label">Dependency Tree</span>
+      <span class="action-desc">Explore transitive dependencies and identify high-risk branches.</span>
+    </a>
+  </div>
+
+  <!-- Explore section -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3 class="section-title">Explore Repositories</h3>
+    </div>
+
+    <div class="repo-group-title">Higher Risk</div>
+    <div class="repo-grid" id="highRiskRepos"></div>
+
+    <div class="repo-group-title">Well Maintained</div>
+    <div class="repo-grid" id="lowRiskRepos"></div>
+
+    <div class="repo-group-title">Popular Libraries</div>
+    <div class="repo-grid" id="popularRepos"></div>
+  </div>
+</div>
+
 <script>
-  const API_BASE = "http://127.0.0.1:8000";
-
-  const el = (id) => document.getElementById(id);
-
-  function clamp01(x){
-    if (x == null || Number.isNaN(x)) return 0;
-    return Math.max(0, Math.min(1, x));
+// --- Navigation helpers ---
+function parseRepoParam(searchString) {
+  var params = new URLSearchParams(searchString);
+  var raw = params.get("repo");
+  if (!raw) return null;
+  var decoded = decodeURIComponent(raw);
+  if (!decoded || !decoded.trim()) return null;
+  decoded = decoded.trim();
+  var slashIndex = decoded.indexOf("/");
+  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
+  return decoded;
+}
+function getRepoFromUrl() { return parseRepoParam(window.location.search); }
+function buildPageUrl(page, repo) {
+  if (repo) return page + "?repo=" + encodeURIComponent(repo);
+  return page;
+}
+function getCurrentPageId() {
+  var path = window.location.pathname;
+  if (path.indexOf("insights") !== -1) return "insights";
+  if (path.indexOf("graph") !== -1) return "graph";
+  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
+  return "index";
+}
+function renderNav(currentPageId, repo) {
+  var existing = document.querySelector("nav.ds-nav");
+  if (existing) existing.remove();
+  var nav = document.createElement("nav");
+  nav.className = "ds-nav";
+  nav.setAttribute("aria-label", "Main navigation");
+  var brand = document.createElement("span");
+  brand.className = "ds-nav-brand";
+  brand.textContent = "Deep Signal";
+  nav.appendChild(brand);
+  var linksDiv = document.createElement("div");
+  linksDiv.className = "ds-nav-links";
+  var pages = [
+    { pageId: "index", label: "Home", file: "index.html" },
+    { pageId: "insights", label: "Insights", file: "insights.html" },
+    { pageId: "graph", label: "Graph", file: "graph.html" },
+    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
+  ];
+  for (var i = 0; i < pages.length; i++) {
+    var p = pages[i];
+    var a = document.createElement("a");
+    a.href = buildPageUrl(p.file, repo);
+    a.className = "ds-nav-link";
+    a.textContent = p.label;
+    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
+    linksDiv.appendChild(a);
   }
-  function riskToColor(score){
-  const n = Number(score);
-  if (score == null || Number.isNaN(n)) return "#9ca3af"; // gray for missing
-  const s = clamp01(n);
-  const hue = 120 * (1 - s); // 120=green, 0=red
-  return `hsl(${hue}, 75%, 50%)`;
+  nav.appendChild(linksDiv);
+  var wrap = document.querySelector(".wrap");
+  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
+}
+renderNav(getCurrentPageId(), getRepoFromUrl());
+
+// --- Analyze action ---
+function goAnalyze() {
+  var repo = document.getElementById("repoInput").value.trim();
+  if (!repo) return;
+  window.location.href = buildPageUrl("insights.html", repo);
+}
+document.getElementById("analyzeBtn").addEventListener("click", goAnalyze);
+document.getElementById("repoInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") goAnalyze();
+});
+
+// --- Explore repos (fetched from API) ---
+function riskDotClass(riskLabel) {
+  if (riskLabel === "HIGH") return "risk-high";
+  if (riskLabel === "MEDIUM") return "risk-medium";
+  if (riskLabel === "LOW") return "risk-low";
+  return "risk-neutral";
 }
 
-  function fmtNum(x, digits=4){
-    if (x == null) return "—";
-    const n = Number(x);
-    if (Number.isNaN(n)) return String(x);
-    if (Math.abs(n) >= 1000) return n.toFixed(0);
-    if (Math.abs(n) >= 100) return n.toFixed(1);
-    if (Math.abs(n) >= 10) return n.toFixed(2);
-    return n.toFixed(digits);
+function renderRepoChips(containerId, repos) {
+  var container = document.getElementById(containerId);
+  container.innerHTML = "";
+  for (var i = 0; i < repos.length; i++) {
+    var r = repos[i];
+    var a = document.createElement("a");
+    a.className = "repo-chip";
+    a.href = buildPageUrl("insights.html", r.repo);
+    a.innerHTML = '<span class="risk-dot ' + riskDotClass(r.risk_label) + '"></span>' +
+      r.name +
+      '<span style="color:var(--text-tertiary);font-size:11px;margin-left:auto;">' + r.owner + '</span>';
+    container.appendChild(a);
   }
+}
 
-  function prettyKey(k){
-    return (k || "").replaceAll("_"," ");
-  }
+function groupAndRenderRepos(repos) {
+  var highRisk = [];
+  var wellMaintained = [];
+  var popular = [];
+  var usedRepos = {};
 
-  function showError(msg){
-    const box = el("err");
-    box.style.display = msg ? "block" : "none";
-    box.textContent = msg || "";
-  }
-
-  function setLoading(isLoading){
-    const btn = el("scoreBtn");
-    btn.textContent = isLoading ? "Scoring…" : "Score";
-    btn.disabled = !!isLoading;
-  }
-
-  function renderDrivers(payload){
-    const box = el("drivers");
-    box.innerHTML = "";
-    const drivers = payload?.top_drivers || [];
-    if (!drivers.length){
-      box.innerHTML = `<div style="color:rgba(255,255,255,.55); 
-font-size:13px;">No drivers available.</div>`;
-      return;
+  for (var i = 0; i < repos.length; i++) {
+    var r = repos[i];
+    if (r.tags && r.tags.indexOf("high-risk") !== -1) {
+      highRisk.push(r);
+      usedRepos[r.repo] = true;
     }
-    for (const d of drivers){
-      const div = document.createElement("div");
-      div.className = "driver";
-      div.innerHTML = `
-        <div class="name">${prettyKey(d.key)}</div>
-        <div class="num">${fmtNum(d.contribution, 6)}</div>
-      `;
-      box.appendChild(div);
+  }
+  for (var i = 0; i < repos.length; i++) {
+    var r = repos[i];
+    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("well-maintained") !== -1) {
+      wellMaintained.push(r);
+      usedRepos[r.repo] = true;
+    }
+  }
+  for (var i = 0; i < repos.length; i++) {
+    var r = repos[i];
+    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("popular") !== -1) {
+      popular.push(r);
     }
   }
 
-  function renderFeatures(payload){
-    const box = el("features");
-    box.innerHTML = "";
-    const rows = payload?.features || [];
-    const q = (el("search").value || "").toLowerCase().trim();
+  renderRepoChips("highRiskRepos", highRisk);
+  renderRepoChips("lowRiskRepos", wellMaintained);
+  renderRepoChips("popularRepos", popular);
+}
 
-    const filtered = !q ? rows : rows.filter(r => {
-      const hay = [
-        r.key, r.label, r.category, r.status, r.unit,
-        (r.explanation || ""),
-        JSON.stringify(r.interpretation || {})
-      ].join(" ").toLowerCase();
-      return hay.includes(q);
-    });
+function showExploreError(message) {
+  var container = document.getElementById("highRiskRepos");
+  container.innerHTML = "";
+  document.getElementById("lowRiskRepos").innerHTML = "";
+  document.getElementById("popularRepos").innerHTML = "";
+  var div = document.createElement("div");
+  div.className = "explore-error";
+  div.textContent = message;
+  container.parentNode.insertBefore(div, container);
+}
 
-    if (!filtered.length){
-      box.innerHTML = `<div style="color:rgba(255,255,255,.55); 
-font-size:13px;">No matching features.</div>`;
-      return;
-    }
-
-    for (const f of filtered){
-      const missing = (f.status === "missing");
-      const missingReason =
-  (!document.getElementById("issuesToggle").checked && f.category === "Issues")
-    ? "Not computed in Quick mode"
-    : (f.status === "missing" ? "Data unavailable" : null);
-      const risk = f.risk_score;
-      const pct = Math.round(clamp01(risk) * 100);
-
-      const raw = (f.raw_value === null || f.raw_value === undefined) ? 
-"—" : fmtNum(f.raw_value, 6);
-      const unit = f.unit ? `<span class="u">${f.unit}</span>` : "";
-
-      const metaBits = [];
-      if (f.risk_label) metaBits.push(`risk: ${f.risk_label}`);
-      if (missingReason) metaBits.push(missingReason);
-      if (f.status) metaBits.push(`status: ${f.status}`);
-      metaBits.push(`weight: ${fmtNum(f.weight, 4)}`);
-      if (f.contribution != null) metaBits.push(`contrib: 
-${fmtNum(f.contribution, 6)}`);
-
-      const row = document.createElement("div");
-      row.className = "row" + (missing ? " missing" : "");
-      row.innerHTML = `
-        <div class="rowtop">
-          <div class="left">
-            <div class="name">
-              <span>${f.label || prettyKey(f.key)}</span>
-              <span class="cat">${f.category || "Other"}</span>
-            </div>
-            <div class="desc">${f.explanation ? f.explanation : ""}</div>
-          </div>
-          <div class="right">
-            <div class="raw">${raw}${unit}</div>
-            <div class="meta2">${metaBits.map(s => 
-`<span>${s}</span>`).join("")}</div>
-          </div>
-        </div>
-        <div class="mini" title="risk_score: ${risk == null ? '—' : 
-risk}">
-          <div class="fill" style="width:${pct}%; background-color:${riskToColor(risk)}"></div>
-        </div>
-      `;
-      box.appendChild(row);
-    }
-  }
-
-  function renderOverall(payload){
-    el("repoName").textContent = payload?.repo?.full_name || "—";
-    el("overallScore").textContent = payload?.overall?.maintenance_risk != 
-null ? fmtNum(payload.overall.maintenance_risk, 6) : "—";
-    el("overallLabel").textContent = (payload?.overall?.maintenance_label 
-|| "—");
-    el("coverage").textContent = payload?.overall?.coverage != null ? 
-fmtNum(payload.overall.coverage, 4) : "—";
-    el("confidence").textContent = payload?.overall?.confidence || "—";
-
-    const fill = el("overallFill");
-    const pct = Math.round(clamp01(payload?.overall?.maintenance_risk) * 
-100);
-    fill.style.width = pct + "%";
-    fill.style.backgroundColor = riskToColor(payload?.overall?.maintenance_risk);
-
-    const fetchedAt = payload?.meta?.fetched_at || "—";
-    el("fetchedAt").textContent = fetchedAt;
-
-    const cache = payload?.meta?.cache_status || "—";
-const mode = document.getElementById("issuesToggle").checked
-  ? "Thorough mode (issues fetched)"
-  : "Quick mode (issues not fetched)";
-
-el("cacheMeta").textContent =
-  `${mode} • cache: ${cache}`;
-
-  }
-
-  async function score(){
-    showError("");
-    setLoading(true);
-
-    const repo = el("repoInput").value.trim() || "numpy/numpy";
-    const refresh = el("refreshToggle").checked;
-    const fetchIssues = el("issuesToggle").checked;
-
-    const url = new URL(API_BASE + "/api/score");
-    url.searchParams.set("repo", repo);
-    url.searchParams.set("refresh", String(refresh));
-    url.searchParams.set("fetch_issues", String(fetchIssues));
-
-    try{
-      const res = await fetch(url.toString());
-      const text = await res.text();
-      if (!res.ok){
-        throw new Error(`HTTP ${res.status}\n` + text);
-      }
-      const payload = JSON.parse(text);
-
-      renderOverall(payload);
-      renderDrivers(payload);
-      renderFeatures(payload);
-    }catch(e){
-      showError(String(e));
-    }finally{
-      setLoading(false);
-    }
-  }
-
-  el("scoreBtn").addEventListener("click", score);
-  el("repoInput").addEventListener("keydown", (ev) => {
-    if (ev.key === "Enter") score();
-  });
-  el("search").addEventListener("input", () => {
-    // re-render features only (keep payload in DOM state via last render)
-    // simplest approach: call score again if you want; here we just 
-re-filter
-    // We'll store the last payload globally.
+// Fetch stats for trust signal
+var apiBase = window.DS_API_BASE || "";
+fetch(apiBase + "/api/stats")
+  .then(function(res) { return res.ok ? res.json() : Promise.reject("stats-failed"); })
+  .then(function(data) {
+    var count = data.total_repos || "100+";
+    document.getElementById("trustSignal").textContent =
+      "Analyzing " + count + "+ open-source repositories across dependency graphs, contributors, and vulnerability data.";
+  })
+  .catch(function() {
+    document.getElementById("trustSignal").textContent =
+      "Analyzing 100+ open-source repositories across dependency graphs, contributors, and vulnerability data.";
   });
 
-  // Keep last payload for filtering without refetch
-  let _lastPayload = null;
-  const _renderFeaturesOrig = renderFeatures;
-  renderFeatures = function(payload){
-    _lastPayload = payload;
-    _renderFeaturesOrig(payload);
-  };
-  el("search").addEventListener("input", () => {
-    if (_lastPayload) _renderFeaturesOrig(_lastPayload);
+// Fetch demo repos
+fetch(apiBase + "/api/demo-repos")
+  .then(function(res) { return res.ok ? res.json() : Promise.reject("demo-repos-failed"); })
+  .then(function(data) {
+    if (data.repos && data.repos.length > 0) {
+      groupAndRenderRepos(data.repos);
+    } else {
+      showExploreError("Unable to load repositories");
+    }
+  })
+  .catch(function() {
+    showExploreError("Unable to load repositories");
   });
-
-  // initial
-  el("repoInput").value = "numpy/numpy";
-  score();
 </script>
 </body>
 </html>
-

@@ -98,7 +98,7 @@ class DependencyRepository:
                     registry_type = parser_registry.infer_registry_type(dep['manifest_path'])
                 
                 conn.execute("""
-                    INSERT INTO repo_dependencies
+                    INSERT OR REPLACE INTO repo_dependencies
                     (repo_full_name, package_name, registry_type, specifier,
                      extras, markers, dependency_group, is_direct, is_optional,
                      manifest_path, confidence, created_at)
@@ -258,6 +258,54 @@ class DependencyRepository:
         except Exception as e:
             logger.error(f"Failed to delete dependencies for {repo_full_name}: {e}", exc_info=True)
             raise DatabaseError(f"Failed to delete dependencies: {e}")
+        finally:
+            conn.close()
+    
+    def update_resolution(
+        self,
+        repo_full_name: str,
+        package_name: str,
+        registry_type: str,
+        resolved_repo: str,
+        confidence: float,
+        method: str
+    ) -> None:
+        """
+        Update resolution info for a dependency.
+        
+        This method updates the resolved_repo, resolution_confidence, and
+        resolution_method columns for a specific dependency.
+        
+        Args:
+            repo_full_name: Repository that has the dependency
+            package_name: Package name
+            registry_type: Registry type (pypi, npm, etc.)
+            resolved_repo: Resolved GitHub repository (owner/repo)
+            confidence: Resolution confidence (0.0-1.0)
+            method: Resolution method used
+        
+        Raises:
+            DatabaseError: If update fails
+        """
+        conn = get_connection(self.db_path)
+        
+        try:
+            conn.execute("""
+                UPDATE repo_dependencies
+                SET resolved_repo = ?,
+                    resolution_confidence = ?,
+                    resolution_method = ?
+                WHERE repo_full_name = ?
+                  AND package_name = ?
+                  AND registry_type = ?
+            """, (resolved_repo, confidence, method, repo_full_name, package_name, registry_type))
+            
+            conn.commit()
+            logger.debug(f"Updated resolution for {package_name} in {repo_full_name}")
+        
+        except Exception as e:
+            logger.error(f"Failed to update resolution: {e}", exc_info=True)
+            raise DatabaseError(f"Failed to update resolution: {e}")
         finally:
             conn.close()
 

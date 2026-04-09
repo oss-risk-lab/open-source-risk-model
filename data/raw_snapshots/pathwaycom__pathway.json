@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 38,
+    "contributors_last_12mo": 16,
+    "days_since_last_push": 0.08700948134259259,
+    "days_since_last_release": 6.025691747060185,
+    "fraction_issues_closed_12mo": 0.8125,
+    "fraction_open_issues_stale_180d": 0.5416666666666666,
+    "issues_per_contributor": 0.8157894736842105,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 31,
+    "stargazers_count": 63138,
+    "stars_count": 63138,
+    "top_contributor_fraction_12mo": 0.545
+  },
+  "fetched_at": "2026-03-30T19:46:17.993058+00:00",
+  "full_name": "pathwaycom/pathway"
+}

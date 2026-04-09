@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-02-20T22:15:22.059191+00:00",
-  "expires_at": "2026-02-21T22:15:22.059191+00:00",
+  "fetched_at": "2026-04-07T21:11:04.139237+00:00",
+  "expires_at": "2026-04-08T21:11:04.139237+00:00",
   "ecosystem": "npm",
   "package": "code-oss-dev",
   "cves": [
@@ -21,7 +21,12 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-rpp8-4gvj-3pfr",
+      "cve_id": null,
+      "aliases": [
+        "GHSA-rpp8-4gvj-3pfr"
+      ]
     }
   ]
 }

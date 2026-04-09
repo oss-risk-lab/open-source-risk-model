@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 1038,
+    "contributors_last_12mo": 81,
+    "days_since_last_push": 0.8142143774305556,
+    "days_since_last_release": 20.720338694965278,
+    "fraction_issues_closed_12mo": 0.8563829787234043,
+    "fraction_open_issues_stale_180d": 0.8836858006042296,
+    "issues_per_contributor": 0.6868978805394991,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 713,
+    "stargazers_count": 84654,
+    "stars_count": 84654,
+    "top_contributor_fraction_12mo": 0.22
+  },
+  "fetched_at": "2026-03-30T19:42:53.767242+00:00",
+  "full_name": "louislam/uptime-kuma"
+}

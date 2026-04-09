@@ -1,9 +1,9 @@
 {
   "cache_metadata": {
     "repo": "octocat/Hello-World",
-    "cached_at": "2026-02-21T15:39:44.566510+00:00",
+    "cached_at": "2026-04-07T23:36:08.655156+00:00",
     "ttl_hours": 1,
-    "expires_at": "2026-02-21T16:39:44.566510+00:00"
+    "expires_at": "2026-04-08T00:36:08.655156+00:00"
   },
   "graph": {
     "nodes": [
@@ -13,15 +13,15 @@
         "label": "octocat/Hello-World",
         "metadata": {
           "url": "https://github.com/octocat/Hello-World",
-          "maintenance_risk": 0.7399181047933032,
+          "maintenance_risk": 0.7510194316342673,
           "maintenance_label": "high",
-          "coverage": 0.8860759493670884,
-          "confidence": "medium"
+          "coverage": 0.9746835443037974,
+          "confidence": "high"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-21T15:39:44.389552+00:00",
-          "data_confidence": 0.9658227848101264
+          "fetched_at": "2026-04-07T23:36:08.519941+00:00",
+          "data_confidence": 0.9924050632911392
         }
       },
       {
@@ -30,7 +30,7 @@
         "label": "Days Since Last Push",
         "metadata": {
           "key": "days_since_last_push",
-          "raw_value": 549.6562560279051,
+          "raw_value": 594.9816236091203,
           "risk_score": 1.0,
           "contribution": 0.19387755102040816,
           "weight": 0.19387755102040816,
@@ -38,8 +38,8 @@
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-21T15:39:44.389575+00:00",
-          "data_confidence": 0.9658227848101264
+          "fetched_at": "2026-04-07T23:36:08.519962+00:00",
+          "data_confidence": 0.9924050632911392
         }
       },
       {
@@ -56,26 +56,8 @@
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-21T15:39:44.389590+00:00",
-          "data_confidence": 0.9658227848101264
-        }
-      },
-      {
-        "id": "risk:octocat/Hello-World:issues_per_contributor",
-        "type": "risk_factor",
-        "label": "Issues Per Contributor",
-        "metadata": {
-          "key": "issues_per_contributor",
-          "raw_value": 1182.6666666666667,
-          "risk_score": 1.0,
-          "contribution": 0.11224489795918366,
-          "weight": 0.11224489795918366,
-          "category": "Issues"
-        },
-        "provenance": {
-          "source": "score_model",
-          "fetched_at": "2026-02-21T15:39:44.389602+00:00",
-          "data_confidence": 0.9658227848101264
+          "fetched_at": "2026-04-07T23:36:08.519980+00:00",
+          "data_confidence": 0.9924050632911392
         }
       },
       {
@@ -84,34 +66,52 @@
         "label": "Fraction Issues Closed 12Mo",
         "metadata": {
           "key": "fraction_issues_closed_12mo",
-          "raw_value": 0.3965702036441586,
-          "risk_score": 0.7034297963558414,
-          "contribution": 0.10766782597283284,
+          "raw_value": 0.36464088397790057,
+          "risk_score": 0.7353591160220994,
+          "contribution": 0.11255496673807641,
           "weight": 0.1530612244897959,
           "category": "Issues"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-21T15:39:44.389614+00:00",
-          "data_confidence": 0.9658227848101264
+          "fetched_at": "2026-04-07T23:36:08.519992+00:00",
+          "data_confidence": 0.9924050632911392
         }
       },
       {
-        "id": "risk:octocat/Hello-World:stars_count",
+        "id": "risk:octocat/Hello-World:issues_per_contributor",
         "type": "risk_factor",
-        "label": "Stars Count",
+        "label": "Issues Per Contributor",
         "metadata": {
-          "key": "stars_count",
-          "raw_value": 3505,
-          "risk_score": 0.28041666666666665,
-          "contribution": 0.014306972789115645,
-          "weight": 0.05102040816326531,
-          "category": "Popularity"
+          "key": "issues_per_contributor",
+          "raw_value": 1285.3333333333333,
+          "risk_score": 1.0,
+          "contribution": 0.11224489795918366,
+          "weight": 0.11224489795918366,
+          "category": "Issues"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-21T15:39:44.389632+00:00",
-          "data_confidence": 0.9658227848101264
+          "fetched_at": "2026-04-07T23:36:08.520003+00:00",
+          "data_confidence": 0.9924050632911392
+        }
+      },
+      {
+        "id": "risk:octocat/Hello-World:fraction_unanswered_after_30d",
+        "type": "risk_factor",
+        "label": "Fraction Unanswered After 30D",
+        "metadata": {
+          "key": "fraction_unanswered_after_30d",
+          "raw_value": 1.0,
+          "risk_score": 1.0,
+          "contribution": 0.03061224489795918,
+          "weight": 0.03061224489795918,
+          "category": "Issues"
+        },
+        "provenance": {
+          "source": "score_model",
+          "fetched_at": "2026-04-07T23:36:08.520015+00:00",
+          "data_confidence": 0.9924050632911392
         }
       },
       {
@@ -126,7 +126,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-21T15:39:44.389857+00:00",
+          "fetched_at": "2026-04-07T23:36:08.520237+00:00",
           "data_confidence": 0.9
         }
       },
@@ -142,7 +142,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-21T15:39:44.389872+00:00",
+          "fetched_at": "2026-04-07T23:36:08.520250+00:00",
           "data_confidence": 0.9
         }
       },
@@ -158,7 +158,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-21T15:39:44.389883+00:00",
+          "fetched_at": "2026-04-07T23:36:08.520260+00:00",
           "data_confidence": 0.9
         }
       }
@@ -173,8 +173,8 @@
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-21T15:39:44.389582+00:00",
-          "confidence": 0.9658227848101264
+          "established_at": "2026-04-07T23:36:08.519970+00:00",
+          "confidence": 0.9924050632911392
         }
       },
       {
@@ -186,8 +186,21 @@
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-21T15:39:44.389595+00:00",
-          "confidence": 0.9658227848101264
+          "established_at": "2026-04-07T23:36:08.519985+00:00",
+          "confidence": 0.9924050632911392
+        }
+      },
+      {
+        "source": "repo:octocat/Hello-World",
+        "target": "risk:octocat/Hello-World:fraction_issues_closed_12mo",
+        "relationship_type": "has_risk_factor",
+        "metadata": {
+          "contribution": 0.11255496673807641
+        },
+        "provenance": {
+          "source": "score_model",
+          "established_at": "2026-04-07T23:36:08.519997+00:00",
+          "confidence": 0.9924050632911392
         }
       },
       {
@@ -199,34 +212,21 @@
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-21T15:39:44.389607+00:00",
-          "confidence": 0.9658227848101264
+          "established_at": "2026-04-07T23:36:08.520008+00:00",
+          "confidence": 0.9924050632911392
         }
       },
       {
         "source": "repo:octocat/Hello-World",
-        "target": "risk:octocat/Hello-World:fraction_issues_closed_12mo",
+        "target": "risk:octocat/Hello-World:fraction_unanswered_after_30d",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.10766782597283284
+          "contribution": 0.03061224489795918
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-21T15:39:44.389619+00:00",
-          "confidence": 0.9658227848101264
-        }
-      },
-      {
-        "source": "repo:octocat/Hello-World",
-        "target": "risk:octocat/Hello-World:stars_count",
-        "relationship_type": "has_risk_factor",
-        "metadata": {
-          "contribution": 0.014306972789115645
-        },
-        "provenance": {
-          "source": "score_model",
-          "established_at": "2026-02-21T15:39:44.389637+00:00",
-          "confidence": 0.9658227848101264
+          "established_at": "2026-04-07T23:36:08.520019+00:00",
+          "confidence": 0.9924050632911392
         }
       },
       {
@@ -239,7 +239,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-21T15:39:44.389866+00:00",
+          "established_at": "2026-04-07T23:36:08.520244+00:00",
           "confidence": 0.9
         }
       },
@@ -253,7 +253,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-21T15:39:44.389877+00:00",
+          "established_at": "2026-04-07T23:36:08.520255+00:00",
           "confidence": 0.9
         }
       },
@@ -267,14 +267,14 @@
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-21T15:39:44.389888+00:00",
+          "established_at": "2026-04-07T23:36:08.520265+00:00",
           "confidence": 0.9
         }
       }
     ],
     "metadata": {
       "schema_version": "1.0",
-      "generated_at": "2026-02-21T15:39:44.389229+00:00",
+      "generated_at": "2026-04-07T23:36:08.519684+00:00",
       "repo": "octocat/Hello-World",
       "warnings": []
     }

@@ -1,0 +1,6 @@
+{
+  "specType": "feature",
+  "workflow": "design-first",
+  "featureName": "reverse-dependency-lookup",
+  "currentPhase": "design"
+}

@@ -37,6 +37,26 @@ class ManifestDiscovery:
         r'.*go\.mod$',
     ]
     
+    # Directories to exclude (non-production code)
+    EXCLUDED_PATHS = [
+        r'^examples?/',
+        r'^tests?/',
+        r'^test/',
+        r'^docs?/',
+        r'^benchmarks?/',
+        r'^samples?/',
+        r'^demos?/',
+        r'^tutorials?/',
+        r'.*/examples?/',
+        r'.*/tests?/',
+        r'.*/test/',
+        r'.*/docs?/',
+        r'.*/benchmarks?/',
+        r'.*/samples?/',
+        r'.*/demos?/',
+        r'.*/tutorials?/',
+    ]
+    
     def __init__(self, github_token: Optional[str] = None):
         """
         Initialize manifest discovery.
@@ -94,6 +114,10 @@ class ManifestDiscovery:
                 if depth > max_depth:
                     continue
                 
+                # Skip excluded paths (examples, tests, docs, etc.)
+                if self._is_excluded_path(path):
+                    continue
+                
                 # Check pattern match
                 if self._is_manifest(path):
                     manifests.append(path)
@@ -113,6 +137,13 @@ class ManifestDiscovery:
         """Check if path matches any manifest pattern."""
         for pattern in self.MANIFEST_PATTERNS:
             if re.match(pattern, path):
+                return True
+        return False
+    
+    def _is_excluded_path(self, path: str) -> bool:
+        """Check if path should be excluded (examples, tests, docs, etc.)."""
+        for pattern in self.EXCLUDED_PATHS:
+            if re.match(pattern, path, re.IGNORECASE):
                 return True
         return False
     

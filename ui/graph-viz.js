@@ -1,7 +1,7 @@
 // Deep Signal - Supply Chain Graph Visualization
 // Uses vis.js for interactive network graph rendering
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = window.DS_API_BASE || "";
 
 // Global state
 let currentGraphData = null;
@@ -50,8 +50,9 @@ const NODE_TYPES = {
   risk_factor: {
     label: "Risk Factor",
     color: "#ca8a04",
-    shape: "ellipse",
-    icon: "⚡"
+    shape: "dot",
+    icon: "⚡",
+    size: 18
   }
 };
 
@@ -260,9 +261,15 @@ function convertToVisFormat(graphData) {
     // Build tooltip
     const tooltip = buildNodeTooltip(node);
     
-    return {
+    // Risk factor nodes: dot shape with truncated external label
+    const isRiskFactor = nodeType === "risk_factor";
+    const displayLabel = isRiskFactor && node.label.length > 22
+      ? node.label.slice(0, 20) + "…"
+      : node.label;
+
+    const visNode = {
       id: node.id,
-      label: node.label,
+      label: displayLabel,
       shape: config.shape,
       color: {
         background: config.color,
@@ -274,8 +281,9 @@ function convertToVisFormat(graphData) {
       },
       font: {
         color: "#ffffff",
-        size: 14,
-        face: "ui-sans-serif, system-ui"
+        size: isRiskFactor ? 10 : 14,
+        face: "ui-sans-serif, system-ui",
+        vadjust: isRiskFactor ? -24 : 0
       },
       borderWidth: 2,
       borderWidthSelected: 3,
@@ -289,6 +297,13 @@ function convertToVisFormat(graphData) {
       metadata: node.metadata,
       provenance: node.provenance
     };
+
+    // Dot-shaped nodes need explicit size
+    if (config.size) {
+      visNode.size = config.size;
+    }
+
+    return visNode;
   });
   
   const edges = graphData.graph.edges.map(edge => {
@@ -592,16 +607,42 @@ function showNodeDetails(nodeId) {
   }
   
   el("nodeDetails").innerHTML = html;
+
+  // Reorder sidebar: move Selected Node to top (after insight panel), demote Graph Summary
+  const sidebar = document.getElementById("sidebarContainer");
+  const selectedPanel = document.getElementById("selectedNodePanel");
+  const summaryPanel = document.getElementById("graphSummaryPanel");
+  const insightPanel = document.getElementById("insightPanel");
+  if (sidebar && selectedPanel && summaryPanel) {
+    // Insert Selected Node right after Insight (or first if insight hidden)
+    const anchor = insightPanel && insightPanel.style.display !== "none"
+      ? insightPanel.nextSibling
+      : sidebar.firstChild;
+    sidebar.insertBefore(selectedPanel, anchor);
+    // Ensure Graph Summary comes after Selected Node
+    sidebar.insertBefore(summaryPanel, selectedPanel.nextSibling);
+    // Add state class for CSS demotion
+    sidebar.classList.add("sidebar-node-active");
+  }
 }
 
 // Clear node details
 function clearNodeDetails() {
   el("nodeDetails").innerHTML = `
-    <div class="empty-state" style="height: auto; padding: 20px;">
-      <div class="empty-state-icon" style="font-size: 32px;">👆</div>
-      <div>Click a node to see details</div>
+    <div style="font-size:13px;color:var(--text-tertiary);line-height:1.5;">
+      Select a node to inspect its role, relationships, and risk context.
     </div>
   `;
+
+  // Restore sidebar order: Insight → Graph Summary → Selected Node
+  const sidebar = document.getElementById("sidebarContainer");
+  const selectedPanel = document.getElementById("selectedNodePanel");
+  const summaryPanel = document.getElementById("graphSummaryPanel");
+  if (sidebar && selectedPanel && summaryPanel) {
+    // Move Graph Summary before Selected Node (original order)
+    sidebar.insertBefore(summaryPanel, selectedPanel);
+    sidebar.classList.remove("sidebar-node-active");
+  }
 }
 
 // Format value for display
@@ -673,7 +714,7 @@ async function loadGraph(refresh = false) {
   const repo = el("repoInput").value.trim() || "numpy/numpy";
   console.log("Loading graph for repo:", repo);
   
-  const url = new URL(API_BASE + "/api/graph");
+  const url = new URL(API_BASE + "/api/graph", window.location.origin);
   url.searchParams.set("repo", repo);
   url.searchParams.set("refresh", String(refresh));
   url.searchParams.set("max_risk_factors", "10");  // Show more risk factors by default
@@ -700,6 +741,14 @@ async function loadGraph(refresh = false) {
     console.log("About to call renderGraph with", graphData.graph.nodes.length, "nodes");
     renderGraph(graphData);
     console.log("renderGraph completed");
+
+    // Fire-and-forget insight panel fetch (Task 5.3)
+    if (typeof fetchAndRenderInsight === "function") {
+      var repoParts = repo.replace(/^https?:\/\/github\.com\//, "").split("/");
+      if (repoParts.length >= 2) {
+        fetchAndRenderInsight(repoParts[0], repoParts[1]);
+      }
+    }
     
   } catch (e) {
     console.error("Error loading graph:", e);

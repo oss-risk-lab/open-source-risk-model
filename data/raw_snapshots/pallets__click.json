@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 421,
+    "contributors_last_12mo": 25,
+    "days_since_last_push": 0.46810581240740734,
+    "days_since_last_release": 134.95764488215278,
+    "fraction_issues_closed_12mo": 0.6956521739130435,
+    "fraction_open_issues_stale_180d": 0.9024390243902439,
+    "issues_per_contributor": 0.3824228028503563,
+    "license_spdx_id": "BSD-3-Clause",
+    "open_issues_count": 161,
+    "stargazers_count": 17359,
+    "stars_count": 17359,
+    "top_contributor_fraction_12mo": 0.24736842105263157
+  },
+  "fetched_at": "2026-03-30T19:45:27.714778+00:00",
+  "full_name": "pallets/click"
+}

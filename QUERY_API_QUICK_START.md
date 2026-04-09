@@ -57,7 +57,7 @@ All 11 intents work in dev mode:
 | Intent | Parameters | Description |
 |--------|-----------|-------------|
 | `dataset_stats` | none | Overall dataset statistics |
-| `list_dependencies` | `repo_full_name` (required) | List direct dependencies |
+| `list_dependencies` | `repo_full_name` (required), `dependency_scope` (optional: prod/build/all, default: prod) | List direct dependencies |
 | `find_dependents` | `package_name` (required), `registry_type` (optional) | Find who depends on a package |
 | `get_dependency_tree` | `repo_full_name` (required), `max_depth` (optional, default: 3) | Get dependency tree |
 | `check_resolution` | `package_name` (required), `registry_type` (required) | Check package-to-repo resolution |
@@ -94,7 +94,7 @@ All queries return this structure:
 }
 ```
 
-### 2. List Dependencies for Flask
+### 2. List Dependencies for Flask (Production Only)
 ```json
 {
   "intent": "list_dependencies",
@@ -102,6 +102,30 @@ All queries return this structure:
     "repo_full_name": "pallets/flask"
   },
   "max_results": 10
+}
+```
+
+### 2b. List Dependencies for Flask (Including Build/Dev)
+```json
+{
+  "intent": "list_dependencies",
+  "parameters": {
+    "repo_full_name": "pallets/flask",
+    "dependency_scope": "build"
+  },
+  "max_results": 20
+}
+```
+
+### 2c. List All Dependencies for Flask (Including Optional Extras)
+```json
+{
+  "intent": "list_dependencies",
+  "parameters": {
+    "repo_full_name": "pallets/flask",
+    "dependency_scope": "all"
+  },
+  "max_results": 50
 }
 ```
 
@@ -148,6 +172,64 @@ All queries return this structure:
   }
 }
 ```
+
+## Dependency Scope
+
+The `list_dependencies` intent supports a `dependency_scope` parameter to control which dependencies are returned:
+
+- **prod** (default): Production/runtime dependencies only
+  - Includes: prod, runtime, standard, peer groups
+  - Excludes: dev, test, build tooling, optional extras
+  
+- **build**: Production + build/dev/test dependencies
+  - Includes: everything in prod + dev, test, lint, docs, ci, build groups
+  - Excludes: optional extras (async, dotenv, speedups, etc.)
+  
+- **all**: Everything including optional extras
+  - Includes: all dependencies regardless of group or optional flag
+
+### Example: Comparing Scopes
+
+```bash
+# Production only (default)
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "intent": "list_dependencies",
+    "parameters": {
+      "repo_full_name": "pallets/flask",
+      "dependency_scope": "prod"
+    }
+  }' | python -m json.tool
+
+# Build/CI (includes dev/test)
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "intent": "list_dependencies",
+    "parameters": {
+      "repo_full_name": "pallets/flask",
+      "dependency_scope": "build"
+    }
+  }' | python -m json.tool
+
+# All (includes optional extras)
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "intent": "list_dependencies",
+    "parameters": {
+      "repo_full_name": "pallets/flask",
+      "dependency_scope": "all"
+    }
+  }' | python -m json.tool
+```
+
+The response metadata includes:
+- `dependency_scope`: The scope used (prod/build/all)
+- `dependency_scope_description`: Human-readable description
+- `total_before_scope_filter`: Total dependencies before filtering
+- `total_after_scope_filter`: Dependencies after scope filter
 
 ## Tips
 

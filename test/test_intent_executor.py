@@ -421,3 +421,136 @@ class TestPerformance:
         
         # Should execute in < 200ms
         assert result.execution_time_ms < 200
+
+
+
+class TestDependencyScope:
+    """Test dependency scope parameter."""
+    
+    def test_list_dependencies_default_scope_is_prod(self, executor):
+        """Test that default scope is 'prod'."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={"repo_full_name": "pallets/flask"},
+            max_results=100
+        )
+        
+        assert result.metadata["dependency_scope"] == "prod"
+    
+    def test_list_dependencies_with_prod_scope(self, executor):
+        """Test list_dependencies with explicit prod scope."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "prod"
+            },
+            max_results=100
+        )
+        
+        assert result.metadata["dependency_scope"] == "prod"
+        
+        # Prod scope should exclude dev/test dependencies
+        for dep in result.results:
+            group = dep.get("dependency_group", "").lower()
+            assert group not in ["dev", "test"], f"Found {group} in prod scope"
+    
+    def test_list_dependencies_with_build_scope(self, executor):
+        """Test list_dependencies with build scope."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "build"
+            },
+            max_results=100
+        )
+        
+        assert result.metadata["dependency_scope"] == "build"
+    
+    def test_list_dependencies_with_all_scope(self, executor):
+        """Test list_dependencies with all scope."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "all"
+            },
+            max_results=100
+        )
+        
+        assert result.metadata["dependency_scope"] == "all"
+    
+    def test_list_dependencies_scope_ordering(self, executor):
+        """Test that prod <= build <= all in terms of result count."""
+        prod_result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "prod"
+            },
+            max_results=100
+        )
+        
+        build_result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "build"
+            },
+            max_results=100
+        )
+        
+        all_result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "all"
+            },
+            max_results=100
+        )
+        
+        # Prod should be subset of build, build subset of all
+        assert len(prod_result.results) <= len(build_result.results)
+        assert len(build_result.results) <= len(all_result.results)
+    
+    def test_list_dependencies_invalid_scope(self, executor):
+        """Test that invalid scope raises ValueError."""
+        with pytest.raises(ValueError, match="Invalid dependency_scope"):
+            executor.execute(
+                intent="list_dependencies",
+                parameters={
+                    "repo_full_name": "pallets/flask",
+                    "dependency_scope": "invalid"
+                },
+                max_results=100
+            )
+    
+    def test_scope_metadata_includes_description(self, executor):
+        """Test that metadata includes scope description."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "build"
+            },
+            max_results=100
+        )
+        
+        assert "dependency_scope_description" in result.metadata
+        assert len(result.metadata["dependency_scope_description"]) > 0
+    
+    def test_scope_metadata_includes_counts(self, executor):
+        """Test that metadata includes before/after filter counts."""
+        result = executor.execute(
+            intent="list_dependencies",
+            parameters={
+                "repo_full_name": "pallets/flask",
+                "dependency_scope": "prod"
+            },
+            max_results=100
+        )
+        
+        assert "total_before_scope_filter" in result.metadata
+        assert "total_after_scope_filter" in result.metadata
+        assert result.metadata["total_after_scope_filter"] == len(result.results)

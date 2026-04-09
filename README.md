@@ -211,6 +211,27 @@ Required environment variables:
 - `GITHUB_TOKEN`: Your GitHub personal access token (required)
 - `LOG_LEVEL`: Logging level (optional, defaults to INFO)
 
+### LLM Configuration (Optional)
+
+The project includes an LLM provider abstraction layer for AI-powered query classification and analysis. This is optional and only required if you plan to use the intelligent query API.
+
+**Environment Variables:**
+```bash
+# LLM Provider Configuration (optional)
+LLM_PROVIDER=openai  # Default provider
+OPENAI_API_KEY=sk-your-api-key-here
+# OPENAI_BASE_URL=https://api.openai.com/v1  # Optional
+# OPENAI_ORGANIZATION=org-your-org-id  # Optional
+```
+
+**Features:**
+- Provider-agnostic abstraction (OpenAI, with support for future providers)
+- Centralized prompt management in YAML files
+- Mock provider for testing without API costs
+- Built-in retry logic with exponential backoff
+
+See the [LLM Module README](src/open_source_risk_model/llm/README.md) for detailed configuration and usage.
+
 ### Quick Start
 
 **Score a repository using the API:**

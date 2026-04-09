@@ -1,0 +1,2107 @@
+{
+  "generated_at": "2026-03-09T14:09:31.153484",
+  "selection_criteria": {
+    "min_stars": 1000,
+    "max_days_since_commit": 365,
+    "required_ecosystems": [
+      "npm",
+      "pypi",
+      "go",
+      "maven",
+      "rubygems"
+    ],
+    "ecosystem_targets": {
+      "npm": [
+        0.25,
+        0.4
+      ],
+      "pypi": [
+        0.25,
+        0.4
+      ],
+      "go": [
+        0.1,
+        1.0
+      ],
+      "maven": [
+        0.1,
+        1.0
+      ],
+      "rubygems": [
+        0.05,
+        1.0
+      ]
+    },
+    "exclude_forks": true
+  },
+  "count": 114,
+  "ecosystem_distribution": {
+    "npm": 38,
+    "pypi": 38,
+    "go": 15,
+    "maven": 15,
+    "rubygems": 8
+  },
+  "repositories": [
+    {
+      "full_name": "realworld-apps/realworld",
+      "stars": 82958,
+      "last_commit_date": "2026-03-06T14:24:30+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.891042908437881,
+      "metadata": {
+        "description": "\"The mother of all demo apps\" \u2014 Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more",
+        "language": "TypeScript",
+        "forks_count": 7578
+      }
+    },
+    {
+      "full_name": "jquery/jquery",
+      "stars": 59861,
+      "last_commit_date": "2026-03-09T16:45:40+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8821715174090934,
+      "metadata": {
+        "description": "jQuery JavaScript Library",
+        "language": "JavaScript",
+        "forks_count": 20471
+      }
+    },
+    {
+      "full_name": "jgraph/drawio-desktop",
+      "stars": 59737,
+      "last_commit_date": "2026-03-07T22:52:57+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8812775548709588,
+      "metadata": {
+        "description": "Official electron build of draw.io",
+        "language": "JavaScript",
+        "forks_count": 5600
+      }
+    },
+    {
+      "full_name": "withastro/astro",
+      "stars": 57372,
+      "last_commit_date": "2026-03-09T18:06:53+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8806959991794732,
+      "metadata": {
+        "description": "The web framework for content-driven websites. \u2b50\ufe0f Star to support our work!",
+        "language": "TypeScript",
+        "forks_count": 3204
+      }
+    },
+    {
+      "full_name": "reduxjs/redux",
+      "stars": 61443,
+      "last_commit_date": "2026-03-06T12:15:33+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8806120395586226,
+      "metadata": {
+        "description": "A JS library for predictable global state management",
+        "language": "TypeScript",
+        "forks_count": 15127
+      }
+    },
+    {
+      "full_name": "Eugeny/tabby",
+      "stars": 69405,
+      "last_commit_date": "2026-02-28T18:04:51+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8799140004104737,
+      "metadata": {
+        "description": "A terminal for a more modern age",
+        "language": "TypeScript",
+        "forks_count": 3899
+      }
+    },
+    {
+      "full_name": "Mintplex-Labs/anything-llm",
+      "stars": 55967,
+      "last_commit_date": "2026-03-09T17:48:30+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8798345622429236,
+      "metadata": {
+        "description": "The all-in-one AI productivity accelerator. On device and privacy first with no annoying setup or configration.",
+        "language": "JavaScript",
+        "forks_count": 6046
+      }
+    },
+    {
+      "full_name": "pmndrs/zustand",
+      "stars": 57296,
+      "last_commit_date": "2026-03-08T04:06:58+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.879828026485207,
+      "metadata": {
+        "description": "\ud83d\udc3b Bear necessities for state management in React",
+        "language": "TypeScript",
+        "forks_count": 1969
+      }
+    },
+    {
+      "full_name": "gatsbyjs/gatsby",
+      "stars": 55938,
+      "last_commit_date": "2026-03-09T18:06:27+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.879816554768359,
+      "metadata": {
+        "description": "React-based framework with performance, scalability, and security built in.",
+        "language": "JavaScript",
+        "forks_count": 10221
+      }
+    },
+    {
+      "full_name": "appwrite/appwrite",
+      "stars": 55102,
+      "last_commit_date": "2026-03-09T16:19:09+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8792933889944592,
+      "metadata": {
+        "description": "Appwrite\u00ae - complete cloud infrastructure for your web, mobile and AI apps. Including Auth, Databases, Storage, Functions, Messaging, Hosting, Realtime and more",
+        "language": "TypeScript",
+        "forks_count": 5043
+      }
+    },
+    {
+      "full_name": "leonardomso/33-js-concepts",
+      "stars": 66269,
+      "last_commit_date": "2026-02-28T23:36:11+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8791294909047773,
+      "metadata": {
+        "description": "\ud83d\udcdc 33 JavaScript concepts every developer should know.",
+        "language": "JavaScript",
+        "forks_count": 9180
+      }
+    },
+    {
+      "full_name": "chartjs/Chart.js",
+      "stars": 67237,
+      "last_commit_date": "2026-02-28T01:49:55+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8788114059438152,
+      "metadata": {
+        "description": "Simple HTML5 Charts using the <canvas> tag",
+        "language": "JavaScript",
+        "forks_count": 11986
+      }
+    },
+    {
+      "full_name": "go-gitea/gitea",
+      "stars": 54195,
+      "last_commit_date": "2026-03-09T10:12:24+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "pypi",
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8787167376498963,
+      "metadata": {
+        "description": "Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD",
+        "language": "Go",
+        "forks_count": 6447
+      }
+    },
+    {
+      "full_name": "laurent22/joplin",
+      "stars": 53800,
+      "last_commit_date": "2026-03-09T14:09:08+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8784625820533112,
+      "metadata": {
+        "description": "Joplin - the privacy-focused note taking app with sync capabilities for Windows, macOS, Linux, Android and iOS.",
+        "language": "TypeScript",
+        "forks_count": 5908
+      }
+    },
+    {
+      "full_name": "mozilla/pdf.js",
+      "stars": 52947,
+      "last_commit_date": "2026-03-09T14:20:59+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8779073086261417,
+      "metadata": {
+        "description": "PDF Reader in JavaScript",
+        "language": "JavaScript",
+        "forks_count": 10588
+      }
+    },
+    {
+      "full_name": "ionic-team/ionic-framework",
+      "stars": 52386,
+      "last_commit_date": "2026-03-09T16:32:08+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8775372190882837,
+      "metadata": {
+        "description": "A powerful cross-platform UI toolkit for building native-quality iOS, Android, and Progressive Web Apps with HTML, CSS, and JavaScript.",
+        "language": "TypeScript",
+        "forks_count": 13387
+      }
+    },
+    {
+      "full_name": "TryGhost/Ghost",
+      "stars": 51998,
+      "last_commit_date": "2026-03-09T18:02:08+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8772789311743718,
+      "metadata": {
+        "description": "Independent technology for modern publishing, memberships, subscriptions and newsletters.",
+        "language": "JavaScript",
+        "forks_count": 11359
+      }
+    },
+    {
+      "full_name": "remix-run/react-router",
+      "stars": 56286,
+      "last_commit_date": "2026-03-05T07:21:45+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8767443596748226,
+      "metadata": {
+        "description": "Declarative routing for React",
+        "language": "TypeScript",
+        "forks_count": 10833
+      }
+    },
+    {
+      "full_name": "DefinitelyTyped/DefinitelyTyped",
+      "stars": 51023,
+      "last_commit_date": "2026-03-09T17:12:12+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8766212792194275,
+      "metadata": {
+        "description": "The repository for high quality TypeScript type definitions.",
+        "language": "TypeScript",
+        "forks_count": 30555
+      }
+    },
+    {
+      "full_name": "prettier/prettier",
+      "stars": 51778,
+      "last_commit_date": "2026-03-07T19:16:14+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8763097038855001,
+      "metadata": {
+        "description": "Prettier is an opinionated code formatter.",
+        "language": "JavaScript",
+        "forks_count": 4665
+      }
+    },
+    {
+      "full_name": "FlowiseAI/Flowise",
+      "stars": 50563,
+      "last_commit_date": "2026-03-09T17:34:50+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8763066266852273,
+      "metadata": {
+        "description": "Build AI Agents, Visually",
+        "language": "TypeScript",
+        "forks_count": 23901
+      }
+    },
+    {
+      "full_name": "microsoft/autogen",
+      "stars": 55362,
+      "last_commit_date": "2026-03-05T07:47:02+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8761692704467106,
+      "metadata": {
+        "description": "A programming framework for agentic AI",
+        "language": "Python",
+        "forks_count": 8318
+      }
+    },
+    {
+      "full_name": "mastodon/mastodon",
+      "stars": 49723,
+      "last_commit_date": "2026-03-09T18:00:16+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8757245858874168,
+      "metadata": {
+        "description": "Your self-hosted, globally interconnected microblogging community",
+        "language": "Ruby",
+        "forks_count": 7412
+      }
+    },
+    {
+      "full_name": "TanStack/query",
+      "stars": 48747,
+      "last_commit_date": "2026-03-09T07:15:41+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8750358314718334,
+      "metadata": {
+        "description": "\ud83e\udd16 Powerful asynchronous state management, server-state utilities and data fetching for the web. TS/JS, React Query, Solid Query, Svelte Query and Vue Query.",
+        "language": "TypeScript",
+        "forks_count": 3728
+      }
+    },
+    {
+      "full_name": "marktext/marktext",
+      "stars": 54366,
+      "last_commit_date": "2026-03-04T13:37:12+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8747166014219832,
+      "metadata": {
+        "description": "\ud83d\udcddA simple and elegant markdown editor, available for Linux, macOS and Windows.",
+        "language": "JavaScript",
+        "forks_count": 4018
+      }
+    },
+    {
+      "full_name": "upstash/context7",
+      "stars": 48272,
+      "last_commit_date": "2026-03-09T13:37:31+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8746956234264731,
+      "metadata": {
+        "description": "Context7 MCP Server -- Up-to-date code documentation for LLMs and AI code editors",
+        "language": "TypeScript",
+        "forks_count": 2280
+      }
+    },
+    {
+      "full_name": "expo/expo",
+      "stars": 47806,
+      "last_commit_date": "2026-03-09T16:43:28+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8743585925714183,
+      "metadata": {
+        "description": "An open-source framework for making universal native apps with React. Expo runs on Android, iOS, and the web.",
+        "language": "TypeScript",
+        "forks_count": 11276
+      }
+    },
+    {
+      "full_name": "h5bp/html5-boilerplate",
+      "stars": 57402,
+      "last_commit_date": "2026-03-01T07:14:08+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8741388194819477,
+      "metadata": {
+        "description": "A professional front-end template for building fast, robust, and adaptable web apps or sites.",
+        "language": "JavaScript",
+        "forks_count": 12311
+      }
+    },
+    {
+      "full_name": "serverless/serverless",
+      "stars": 46946,
+      "last_commit_date": "2026-03-09T17:18:58+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8737278875544827,
+      "metadata": {
+        "description": "\u26a1 Serverless Framework \u2013 Effortlessly build apps that auto-scale, incur zero costs when idle, and require minimal maintenance using AWS Lambda and other managed cloud services.",
+        "language": "JavaScript",
+        "forks_count": 5736
+      }
+    },
+    {
+      "full_name": "lyswhut/lx-music-desktop",
+      "stars": 49216,
+      "last_commit_date": "2026-03-07T06:11:57+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8737246694863872,
+      "metadata": {
+        "description": "\u4e00\u4e2a\u57fa\u4e8e Electron \u7684\u97f3\u4e50\u8f6f\u4ef6",
+        "language": "TypeScript",
+        "forks_count": 6654
+      }
+    },
+    {
+      "full_name": "pixijs/pixijs",
+      "stars": 46702,
+      "last_commit_date": "2026-03-09T15:11:33+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8735468383602611,
+      "metadata": {
+        "description": "The HTML5 Creation Engine: Create beautiful digital content with the fastest, most flexible 2D WebGL renderer.",
+        "language": "TypeScript",
+        "forks_count": 4982
+      }
+    },
+    {
+      "full_name": "discourse/discourse",
+      "stars": 46524,
+      "last_commit_date": "2026-03-09T18:05:33+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8734141637643869,
+      "metadata": {
+        "description": "A platform for community discussion. Free, open, simple.",
+        "language": "Ruby",
+        "forks_count": 8831
+      }
+    },
+    {
+      "full_name": "bigskysoftware/htmx",
+      "stars": 47579,
+      "last_commit_date": "2026-03-07T23:00:58+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8733713069867022,
+      "metadata": {
+        "description": "</> htmx - high power tools for HTML",
+        "language": "JavaScript",
+        "forks_count": 1570
+      }
+    },
+    {
+      "full_name": "OpenCut-app/OpenCut",
+      "stars": 46456,
+      "last_commit_date": "2026-03-08T23:11:29+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8733633450420215,
+      "metadata": {
+        "description": "The open-source CapCut alternative",
+        "language": "TypeScript",
+        "forks_count": 4786
+      }
+    },
+    {
+      "full_name": "tldraw/tldraw",
+      "stars": 45709,
+      "last_commit_date": "2026-03-09T17:59:39+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8728001376082306,
+      "metadata": {
+        "description": "very good whiteboard infinite canvas SDK",
+        "language": "TypeScript",
+        "forks_count": 3060
+      }
+    },
+    {
+      "full_name": "prisma/prisma",
+      "stars": 45475,
+      "last_commit_date": "2026-03-09T16:16:32+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8726218166188418,
+      "metadata": {
+        "description": "Next-generation ORM for Node.js & TypeScript | PostgreSQL, MySQL, MariaDB, SQL Server, SQLite, MongoDB and CockroachDB",
+        "language": "TypeScript",
+        "forks_count": 2100
+      }
+    },
+    {
+      "full_name": "jeecgboot/JeecgBoot",
+      "stars": 45366,
+      "last_commit_date": "2026-03-09T13:02:25+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm",
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.872538439075669,
+      "metadata": {
+        "description": "\u3010AI\u4f4e\u4ee3\u7801\u5e73\u53f0\u3011\u201c\u4f4e\u4ee3\u7801+\u96f6\u4ee3\u7801\u201d\u53cc\u6a21\u9a71\u52a8AI\u667a\u80fd\u5e73\u53f0  AI low-code platform empowers enterprises to quickly develop low-code solutions and build AI applications.  \u52a9\u529b\u4f01\u4e1a\u5feb\u901f\u5b9e\u73b0\u4f4e\u4ee3\u7801\u5f00\u53d1\u548c\u6784\u5efaAI\u5e94\u7528\uff01 AI\u5e94\u7528\u5e73\u53f0\u6db5\u76d6\uff1aAI\u5e94\u7528\u3001AI\u6a21\u578b\u3001AI\u804a\u5929\u52a9\u624b\u3001\u77e5\u8bc6\u5e93\u3001AI\u6d41\u7a0b\u7f16\u6392\u3001MCP\u548c\u63d2\u4ef6\uff0c\u804a\u5929\u5f0f\u4e1a\u52a1\u64cd\u4f5c\u7b49\u3002 \u5f3a\u5927\u4ee3\u7801\u751f\u6210\u5668\uff1a\u5b9e\u73b0\u524d\u540e\u7aef\u4e00\u952e\u751f\u6210\uff0c\u65e0\u9700\u624b\u5199\u4ee3\u7801! \u663e\u8457\u63d0\u5347\u6548\u7387\u8282\u7701\u6210\u672c\uff0c\u53c8\u4e0d\u5931\u7075\u6d3b~",
+        "language": "Java",
+        "forks_count": 15829
+      }
+    },
+    {
+      "full_name": "google/zx",
+      "stars": 45257,
+      "last_commit_date": "2026-03-09T13:41:29+00:00",
+      "primary_ecosystem": "npm",
+      "manifest_types": [
+        "npm"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8724548609617591,
+      "metadata": {
+        "description": "A tool for writing better scripts",
+        "language": "JavaScript",
+        "forks_count": 1215
+      }
+    },
+    {
+      "full_name": "mem0ai/mem0",
+      "stars": 49164,
+      "last_commit_date": "2026-03-09T18:00:42+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8753317768000615,
+      "metadata": {
+        "description": "Universal memory layer for AI Agents",
+        "language": "Python",
+        "forks_count": 5489
+      }
+    },
+    {
+      "full_name": "3b1b/manim",
+      "stars": 85071,
+      "last_commit_date": "2026-02-13T02:32:17+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8746564956361402,
+      "metadata": {
+        "description": "Animation engine for explanatory math videos",
+        "language": "Python",
+        "forks_count": 7160
+      }
+    },
+    {
+      "full_name": "deepfakes/faceswap",
+      "stars": 55029,
+      "last_commit_date": "2026-03-03T05:25:47+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8743158228131527,
+      "metadata": {
+        "description": "Deepfakes Software For All",
+        "language": "Python",
+        "forks_count": 13415
+      }
+    },
+    {
+      "full_name": "run-llama/llama_index",
+      "stars": 47518,
+      "last_commit_date": "2026-03-09T11:13:28+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8741486522560955,
+      "metadata": {
+        "description": "LlamaIndex is the leading document agent and OCR platform",
+        "language": "Python",
+        "forks_count": 6940
+      }
+    },
+    {
+      "full_name": "freqtrade/freqtrade",
+      "stars": 47492,
+      "last_commit_date": "2026-03-09T06:23:42+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8741296367304685,
+      "metadata": {
+        "description": "Free, open source crypto trading bot",
+        "language": "Python",
+        "forks_count": 9920
+      }
+    },
+    {
+      "full_name": "virattt/ai-hedge-fund",
+      "stars": 47092,
+      "last_commit_date": "2026-03-08T20:41:33+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8738357708277202,
+      "metadata": {
+        "description": "An AI Hedge Fund Team",
+        "language": "Python",
+        "forks_count": 8189
+      }
+    },
+    {
+      "full_name": "Homebrew/brew",
+      "stars": 46919,
+      "last_commit_date": "2026-03-09T14:59:10+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi",
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8737078997825383,
+      "metadata": {
+        "description": "\ud83c\udf7a The missing package manager for macOS (or Linux)",
+        "language": "Ruby",
+        "forks_count": 10990
+      }
+    },
+    {
+      "full_name": "oobabooga/text-generation-webui",
+      "stars": 46194,
+      "last_commit_date": "2026-03-09T03:39:43+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8731668456010064,
+      "metadata": {
+        "description": "The best local UI for large language models, with easy setup and powerful features. 100% offline.",
+        "language": "Python",
+        "forks_count": 5896
+      }
+    },
+    {
+      "full_name": "crewAIInc/crewAI",
+      "stars": 45591,
+      "last_commit_date": "2026-03-09T16:36:46+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8727103294550671,
+      "metadata": {
+        "description": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tackling complex tasks.",
+        "language": "Python",
+        "forks_count": 6133
+      }
+    },
+    {
+      "full_name": "apache/airflow",
+      "stars": 44559,
+      "last_commit_date": "2026-03-09T17:36:31+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8719148348616648,
+      "metadata": {
+        "description": "Apache Airflow - A platform to programmatically author, schedule, and monitor workflows",
+        "language": "Python",
+        "forks_count": 16624
+      }
+    },
+    {
+      "full_name": "zylon-ai/private-gpt",
+      "stars": 57162,
+      "last_commit_date": "2026-02-26T09:56:49+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8715274973576879,
+      "metadata": {
+        "description": "Interact with your documents using the power of GPT, 100% privately, no data leaks",
+        "language": "Python",
+        "forks_count": 7609
+      }
+    },
+    {
+      "full_name": "streamlit/streamlit",
+      "stars": 43817,
+      "last_commit_date": "2026-03-09T17:37:27+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8713314111668811,
+      "metadata": {
+        "description": "Streamlit \u2014 A faster way to build and share data apps.",
+        "language": "Python",
+        "forks_count": 4120
+      }
+    },
+    {
+      "full_name": "SimplifyJobs/Summer2026-Internships",
+      "stars": 43713,
+      "last_commit_date": "2026-03-09T18:01:17+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8712488490329888,
+      "metadata": {
+        "description": "Collection of Summer 2026 tech internships!",
+        "language": "Python",
+        "forks_count": 3173
+      }
+    },
+    {
+      "full_name": "9001/copyparty",
+      "stars": 43080,
+      "last_commit_date": "2026-03-08T22:11:36+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8707420555700756,
+      "metadata": {
+        "description": "Portable file server with accelerated resumable uploads, dedup, WebDAV, SFTP, FTP, TFTP, zeroconf, media indexer, thumbnails++ all in one file",
+        "language": "Python",
+        "forks_count": 1757
+      }
+    },
+    {
+      "full_name": "mitmproxy/mitmproxy",
+      "stars": 42587,
+      "last_commit_date": "2026-03-08T18:37:33+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8703421638157429,
+      "metadata": {
+        "description": "An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.",
+        "language": "Python",
+        "forks_count": 4480
+      }
+    },
+    {
+      "full_name": "exo-explore/exo",
+      "stars": 42398,
+      "last_commit_date": "2026-03-09T16:48:14+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8701876296416637,
+      "metadata": {
+        "description": "Run frontier AI locally.",
+        "language": "Python",
+        "forks_count": 2911
+      }
+    },
+    {
+      "full_name": "zhayujie/chatgpt-on-wechat",
+      "stars": 42063,
+      "last_commit_date": "2026-03-09T10:43:42+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8699120195221997,
+      "metadata": {
+        "description": "CowAgent\u662f\u57fa\u4e8e\u5927\u6a21\u578b\u7684\u8d85\u7ea7AI\u52a9\u7406\uff0c\u80fd\u4e3b\u52a8\u601d\u8003\u548c\u4efb\u52a1\u89c4\u5212\u3001\u8bbf\u95ee\u64cd\u4f5c\u7cfb\u7edf\u548c\u5916\u90e8\u8d44\u6e90\u3001\u521b\u9020\u548c\u6267\u884cSkills\u3001\u62e5\u6709\u957f\u671f\u8bb0\u5fc6\u5e76\u4e0d\u65ad\u6210\u957f\u3002\u540c\u65f6\u652f\u6301\u98de\u4e66\u3001\u9489\u9489\u3001\u4f01\u4e1a\u5fae\u4fe1\u5e94\u7528\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u3001\u7f51\u9875\u7b49\u63a5\u5165\uff0c\u53ef\u9009\u62e9OpenAI/Claude/Gemini/DeepSeek/ Qwen/GLM/Kimi/LinkAI\uff0c\u80fd\u5904\u7406\u6587\u672c\u3001\u8bed\u97f3\u3001\u56fe\u7247\u548c\u6587\u4ef6\uff0c\u53ef\u5feb\u901f\u642d\u5efa\u4e2a\u4ebaAI\u52a9\u624b\u548c\u4f01\u4e1a\u6570\u5b57\u5458\u5de5\u3002",
+        "language": "Python",
+        "forks_count": 9806
+      }
+    },
+    {
+      "full_name": "ray-project/ray",
+      "stars": 41709,
+      "last_commit_date": "2026-03-09T18:01:55+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8696183821985739,
+      "metadata": {
+        "description": "Ray is an AI compute engine. Ray consists of a core distributed runtime and a set of AI Libraries for accelerating ML workloads.",
+        "language": "Python",
+        "forks_count": 7305
+      }
+    },
+    {
+      "full_name": "hpcaitech/ColossalAI",
+      "stars": 41359,
+      "last_commit_date": "2026-03-09T17:46:44+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8693256023687042,
+      "metadata": {
+        "description": "Making large AI models cheaper, faster and more accessible",
+        "language": "Python",
+        "forks_count": 4526
+      }
+    },
+    {
+      "full_name": "karpathy/nanochat",
+      "stars": 45354,
+      "last_commit_date": "2026-03-04T23:55:32+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8692415764251322,
+      "metadata": {
+        "description": "The best ChatGPT that $100 can buy.",
+        "language": "Python",
+        "forks_count": 6006
+      }
+    },
+    {
+      "full_name": "deepspeedai/DeepSpeed",
+      "stars": 41771,
+      "last_commit_date": "2026-03-08T03:29:48+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8688480719856184,
+      "metadata": {
+        "description": "DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.",
+        "language": "Python",
+        "forks_count": 4741
+      }
+    },
+    {
+      "full_name": "sansan0/TrendRadar",
+      "stars": 48329,
+      "last_commit_date": "2026-03-01T03:21:07+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8681612822560958,
+      "metadata": {
+        "description": "\u2b50AI-driven public opinion & trend monitor with multi-platform aggregation, RSS, and smart alerts.\ud83c\udfaf \u544a\u522b\u4fe1\u606f\u8fc7\u8f7d\uff0c\u4f60\u7684 AI \u8206\u60c5\u76d1\u63a7\u52a9\u624b\u4e0e\u70ed\u70b9\u7b5b\u9009\u5de5\u5177\uff01\u805a\u5408\u591a\u5e73\u53f0\u70ed\u70b9 +  RSS \u8ba2\u9605\uff0c\u652f\u6301\u5173\u952e\u8bcd\u7cbe\u51c6\u7b5b\u9009\u3002AI \u7ffb\u8bd1 +  AI \u5206\u6790\u7b80\u62a5\u76f4\u63a8\u624b\u673a\uff0c\u4e5f\u652f\u6301\u63a5\u5165 MCP \u67b6\u6784\uff0c\u8d4b\u80fd AI \u81ea\u7136\u8bed\u8a00\u5bf9\u8bdd\u5206\u6790\u3001\u60c5\u611f\u6d1e\u5bdf\u4e0e\u8d8b\u52bf\u9884\u6d4b\u7b49\u3002\u652f\u6301 Docker \uff0c\u6570\u636e\u672c\u5730/\u4e91\u7aef\u81ea\u6301\u3002\u96c6\u6210\u5fae\u4fe1/\u98de\u4e66/\u9489\u9489/Telegram/\u90ae\u4ef6/ntfy/bark/slack \u7b49\u6e20\u9053\u667a\u80fd\u63a8\u9001\u3002",
+        "language": "Python",
+        "forks_count": 22533
+      }
+    },
+    {
+      "full_name": "mindsdb/mindsdb",
+      "stars": 38659,
+      "last_commit_date": "2026-03-09T12:08:17+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8669800492685247,
+      "metadata": {
+        "description": "Query Engine for AI Analytics: Build self-reasoning agents across all your live data",
+        "language": "Python",
+        "forks_count": 6122
+      }
+    },
+    {
+      "full_name": "agno-agi/agno",
+      "stars": 38544,
+      "last_commit_date": "2026-03-09T16:35:27+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8668765426123415,
+      "metadata": {
+        "description": "Build, run, manage agentic software at scale.",
+        "language": "Python",
+        "forks_count": 5094
+      }
+    },
+    {
+      "full_name": "nwjs/nw.js",
+      "stars": 41568,
+      "last_commit_date": "2026-03-05T04:08:18+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.866213059118558,
+      "metadata": {
+        "description": "Call all Node.js modules directly from DOM/WebWorker and enable a new way of writing applications with all Web technologies.",
+        "language": "JavaScript",
+        "forks_count": 3870
+      }
+    },
+    {
+      "full_name": "paperless-ngx/paperless-ngx",
+      "stars": 37240,
+      "last_commit_date": "2026-03-09T17:58:09+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8656807737847445,
+      "metadata": {
+        "description": "A community-supported supercharged document management system: scan, index and archive all your documents",
+        "language": "Python",
+        "forks_count": 2368
+      }
+    },
+    {
+      "full_name": "roboflow/supervision",
+      "stars": 36660,
+      "last_commit_date": "2026-03-09T17:54:55+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8651353968500959,
+      "metadata": {
+        "description": "We write your reusable computer vision tools. \ud83d\udc9c",
+        "language": "Python",
+        "forks_count": 3115
+      }
+    },
+    {
+      "full_name": "huggingface/pytorch-image-models",
+      "stars": 36461,
+      "last_commit_date": "2026-03-09T04:44:39+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8649462860550641,
+      "metadata": {
+        "description": "The largest collection of PyTorch image encoders / backbones. Including train, eval, inference, export scripts, and pretrained weights -- ResNet, ResNeXT, EfficientNet, NFNet, Vision Transformer (ViT), MobileNetV4, MobileNet-V3 & V2, RegNet, DPN, CSPNet, Swin Transformer, MaxViT, CoAtNet, ConvNeXt, and more",
+        "language": "Python",
+        "forks_count": 5128
+      }
+    },
+    {
+      "full_name": "ManimCommunity/manim",
+      "stars": 37112,
+      "last_commit_date": "2026-03-08T08:47:57+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8647392309526372,
+      "metadata": {
+        "description": "A community-maintained Python framework for creating mathematical animations. ",
+        "language": "Python",
+        "forks_count": 2708
+      }
+    },
+    {
+      "full_name": "Aider-AI/aider",
+      "stars": 41704,
+      "last_commit_date": "2026-03-03T15:48:00+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8646827101042018,
+      "metadata": {
+        "description": "aider is AI pair programming in your terminal",
+        "language": "Python",
+        "forks_count": 3985
+      }
+    },
+    {
+      "full_name": "jax-ml/jax",
+      "stars": 35034,
+      "last_commit_date": "2026-03-09T17:55:33+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8635591780507945,
+      "metadata": {
+        "description": "Composable transformations of Python+NumPy programs: differentiate, vectorize, JIT to GPU/TPU, and more",
+        "language": "Python",
+        "forks_count": 3463
+      }
+    },
+    {
+      "full_name": "Textualize/textual",
+      "stars": 34704,
+      "last_commit_date": "2026-03-09T12:36:56+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8632303627736093,
+      "metadata": {
+        "description": "The lean application framework for Python.  Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser.",
+        "language": "Python",
+        "forks_count": 1119
+      }
+    },
+    {
+      "full_name": "666ghj/BettaFish",
+      "stars": 37259,
+      "last_commit_date": "2026-03-05T07:23:26+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8624108243367723,
+      "metadata": {
+        "description": "\u5fae\u8206\uff1a\u4eba\u4eba\u53ef\u7528\u7684\u591aAgent\u8206\u60c5\u5206\u6790\u52a9\u624b\uff0c\u6253\u7834\u4fe1\u606f\u8327\u623f\uff0c\u8fd8\u539f\u8206\u60c5\u539f\u8c8c\uff0c\u9884\u6d4b\u672a\u6765\u8d70\u5411\uff0c\u8f85\u52a9\u51b3\u7b56\uff01\u4ece0\u5b9e\u73b0\uff0c\u4e0d\u4f9d\u8d56\u4efb\u4f55\u6846\u67b6\u3002",
+        "language": "Python",
+        "forks_count": 7025
+      }
+    },
+    {
+      "full_name": "explosion/spaCy",
+      "stars": 33287,
+      "last_commit_date": "2026-03-09T15:12:34+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8617819724808895,
+      "metadata": {
+        "description": "\ud83d\udcab Industrial-strength Natural Language Processing (NLP) in Python",
+        "language": "Python",
+        "forks_count": 4642
+      }
+    },
+    {
+      "full_name": "huggingface/diffusers",
+      "stars": 32970,
+      "last_commit_date": "2026-03-09T13:56:45+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8614495157714521,
+      "metadata": {
+        "description": "\ud83e\udd17 Diffusers: State-of-the-art diffusion models for image, video, and audio generation in PyTorch.",
+        "language": "Python",
+        "forks_count": 6817
+      }
+    },
+    {
+      "full_name": "ocrmypdf/OCRmyPDF",
+      "stars": 32885,
+      "last_commit_date": "2026-03-09T11:18:21+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.861359827695622,
+      "metadata": {
+        "description": "OCRmyPDF adds an OCR text layer to scanned PDF files, allowing them to be searched",
+        "language": "Python",
+        "forks_count": 2288
+      }
+    },
+    {
+      "full_name": "stanfordnlp/dspy",
+      "stars": 32662,
+      "last_commit_date": "2026-03-09T17:47:19+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8611234219577593,
+      "metadata": {
+        "description": "DSPy: The framework for programming\u2014not prompting\u2014language models",
+        "language": "Python",
+        "forks_count": 2674
+      }
+    },
+    {
+      "full_name": "openinterpreter/open-interpreter",
+      "stars": 62605,
+      "last_commit_date": "2026-02-09T09:19:51+00:00",
+      "primary_ecosystem": "pypi",
+      "manifest_types": [
+        "pypi"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8607150229604916,
+      "metadata": {
+        "description": "A natural language interface for computers",
+        "language": "Python",
+        "forks_count": 5391
+      }
+    },
+    {
+      "full_name": "cli/cli",
+      "stars": 43031,
+      "last_commit_date": "2026-03-09T15:08:47+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8807025151036354,
+      "metadata": {
+        "description": "GitHub\u2019s official command line tool",
+        "language": "Go",
+        "forks_count": 8037
+      }
+    },
+    {
+      "full_name": "charmbracelet/bubbletea",
+      "stars": 40468,
+      "last_commit_date": "2026-03-09T11:25:28+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8785689393057567,
+      "metadata": {
+        "description": "A powerful little TUI framework \ud83c\udfd7",
+        "language": "Go",
+        "forks_count": 1113
+      }
+    },
+    {
+      "full_name": "pingcap/tidb",
+      "stars": 39913,
+      "last_commit_date": "2026-03-09T15:59:50+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8780891497676577,
+      "metadata": {
+        "description": "TiDB - the open-source, cloud-native, distributed SQL database designed for modern applications.",
+        "language": "Go",
+        "forks_count": 6130
+      }
+    },
+    {
+      "full_name": "danielmiessler/Fabric",
+      "stars": 39607,
+      "last_commit_date": "2026-03-09T15:52:16+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8778217558694201,
+      "metadata": {
+        "description": "Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.",
+        "language": "Go",
+        "forks_count": 3960
+      }
+    },
+    {
+      "full_name": "gofiber/fiber",
+      "stars": 39353,
+      "last_commit_date": "2026-03-09T13:32:14+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8775982276446954,
+      "metadata": {
+        "description": "\u26a1\ufe0f Express inspired web framework written in Go",
+        "language": "Go",
+        "forks_count": 1961
+      }
+    },
+    {
+      "full_name": "istio/istio",
+      "stars": 38134,
+      "last_commit_date": "2026-03-09T08:11:04+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8765049889785479,
+      "metadata": {
+        "description": "Connect, secure, control, and observe services.",
+        "language": "Go",
+        "forks_count": 8261
+      }
+    },
+    {
+      "full_name": "docker/compose",
+      "stars": 37184,
+      "last_commit_date": "2026-03-09T09:17:01+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8756284885099375,
+      "metadata": {
+        "description": "Define and run multi-container applications with Docker",
+        "language": "Go",
+        "forks_count": 5735
+      }
+    },
+    {
+      "full_name": "go-gorm/gorm",
+      "stars": 39701,
+      "last_commit_date": "2026-03-06T12:07:15+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8754383622579782,
+      "metadata": {
+        "description": "The fantastic ORM library for Golang, aims to be developer friendly",
+        "language": "Go",
+        "forks_count": 4146
+      }
+    },
+    {
+      "full_name": "XTLS/Xray-core",
+      "stars": 35704,
+      "last_commit_date": "2026-03-09T16:08:14+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8742173499065979,
+      "metadata": {
+        "description": "Xray, Penetrates Everything. Also the best v2ray-core. Where the magic happens. An open platform for various uses.",
+        "language": "Go",
+        "forks_count": 5032
+      }
+    },
+    {
+      "full_name": "juanfont/headscale",
+      "stars": 36251,
+      "last_commit_date": "2026-03-08T00:31:37+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8739236814941167,
+      "metadata": {
+        "description": "An open source, self-hosted implementation of the Tailscale control server",
+        "language": "Go",
+        "forks_count": 1947
+      }
+    },
+    {
+      "full_name": "hashicorp/vault",
+      "stars": 35181,
+      "last_commit_date": "2026-03-09T17:17:03+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8737046543897258,
+      "metadata": {
+        "description": "A tool for secrets management, encryption as a service, and privileged access management",
+        "language": "Go",
+        "forks_count": 4607
+      }
+    },
+    {
+      "full_name": "schollz/croc",
+      "stars": 34333,
+      "last_commit_date": "2026-03-09T08:42:43+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8728569402811008,
+      "metadata": {
+        "description": "Easily and securely send things from one computer to another :crocodile: :package:",
+        "language": "Go",
+        "forks_count": 1353
+      }
+    },
+    {
+      "full_name": "minio/minio",
+      "stars": 60446,
+      "last_commit_date": "2026-02-12T20:18:51+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8727833779476408,
+      "metadata": {
+        "description": "MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.",
+        "language": "Go",
+        "forks_count": 7206
+      }
+    },
+    {
+      "full_name": "filebrowser/filebrowser",
+      "stars": 33765,
+      "last_commit_date": "2026-03-09T13:40:08+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8722773403244961,
+      "metadata": {
+        "description": "\ud83d\udcc2 Web File Browser",
+        "language": "Go",
+        "forks_count": 3731
+      }
+    },
+    {
+      "full_name": "beego/beego",
+      "stars": 32428,
+      "last_commit_date": "2026-03-09T09:07:18+00:00",
+      "primary_ecosystem": "go",
+      "manifest_types": [
+        "go"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8708736131476191,
+      "metadata": {
+        "description": "beego is an open-source, high-performance web framework for the Go programming language.",
+        "language": "Go",
+        "forks_count": 5612
+      }
+    },
+    {
+      "full_name": "skylot/jadx",
+      "stars": 47558,
+      "last_commit_date": "2026-03-07T19:55:15+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.883355968795642,
+      "metadata": {
+        "description": "Dex to Java decompiler",
+        "language": "Java",
+        "forks_count": 5443
+      }
+    },
+    {
+      "full_name": "TeamNewPipe/NewPipe",
+      "stars": 37463,
+      "last_commit_date": "2026-03-08T20:19:33+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8758882041843601,
+      "metadata": {
+        "description": "A libre lightweight streaming front-end for Android.",
+        "language": "Java",
+        "forks_count": 3489
+      }
+    },
+    {
+      "full_name": "eugenp/tutorials",
+      "stars": 37356,
+      "last_commit_date": "2026-03-09T14:43:47+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8757888293384113,
+      "metadata": {
+        "description": "Getting Started with Spring Boot 3: ",
+        "language": "Java",
+        "forks_count": 53767
+      }
+    },
+    {
+      "full_name": "alibaba/arthas",
+      "stars": 37128,
+      "last_commit_date": "2026-03-09T08:17:49+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8755761244328779,
+      "metadata": {
+        "description": "Alibaba Java Diagnostic Tool Arthas/Alibaba Java\u8bca\u65ad\u5229\u5668Arthas",
+        "language": "Java",
+        "forks_count": 7629
+      }
+    },
+    {
+      "full_name": "YunaiV/ruoyi-vue-pro",
+      "stars": 35712,
+      "last_commit_date": "2026-03-08T02:13:57+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8734032160254981,
+      "metadata": {
+        "description": "\ud83d\udd25 \u5b98\u65b9\u63a8\u8350 \ud83d\udd25 RuoYi-Vue \u5168\u65b0 Pro \u7248\u672c\uff0c\u4f18\u5316\u91cd\u6784\u6240\u6709\u529f\u80fd\u3002\u57fa\u4e8e Spring Boot + MyBatis Plus + Vue & Element \u5b9e\u73b0\u7684\u540e\u53f0\u7ba1\u7406\u7cfb\u7edf + \u5fae\u4fe1\u5c0f\u7a0b\u5e8f\uff0c\u652f\u6301 RBAC \u52a8\u6001\u6743\u9650\u3001\u6570\u636e\u6743\u9650\u3001SaaS \u591a\u79df\u6237\u3001Flowable \u5de5\u4f5c\u6d41\u3001\u4e09\u65b9\u767b\u5f55\u3001\u652f\u4ed8\u3001\u77ed\u4fe1\u3001\u5546\u57ce\u3001CRM\u3001ERP\u3001AI \u5927\u6a21\u578b\u3001IoT \u7269\u8054\u7f51\u7b49\u529f\u80fd\u3002\u4f60\u7684 \u2b50\ufe0f Star \u2b50\ufe0f\uff0c\u662f\u4f5c\u8005\u751f\u53d1\u7684\u52a8\u529b\uff01",
+        "language": "Java",
+        "forks_count": 7713
+      }
+    },
+    {
+      "full_name": "netty/netty",
+      "stars": 34844,
+      "last_commit_date": "2026-03-09T17:59:33+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8733702404053851,
+      "metadata": {
+        "description": "Netty project - an event-driven asynchronous network application framework",
+        "language": "Java",
+        "forks_count": 16283
+      }
+    },
+    {
+      "full_name": "keycloak/keycloak",
+      "stars": 33210,
+      "last_commit_date": "2026-03-09T17:53:58+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8717015100478709,
+      "metadata": {
+        "description": "Open Source Identity and Access Management For Modern Applications and Services",
+        "language": "Java",
+        "forks_count": 8112
+      }
+    },
+    {
+      "full_name": "alibaba/nacos",
+      "stars": 32705,
+      "last_commit_date": "2026-03-09T08:30:12+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8711691322774386,
+      "metadata": {
+        "description": "an easy-to-use dynamic service discovery, configuration and service management platform for building AI cloud native applications.",
+        "language": "Java",
+        "forks_count": 13262
+      }
+    },
+    {
+      "full_name": "binarywang/WxJava",
+      "stars": 32609,
+      "last_commit_date": "2026-03-09T09:19:01+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8710669984616284,
+      "metadata": {
+        "description": "\u5fae\u4fe1\u5f00\u53d1 Java SDK \uff0c\u652f\u6301\u5305\u62ec\u5fae\u4fe1\u652f\u4ed8\uff0c\u5f00\u653e\u5e73\u53f0\uff0c\u5c0f\u7a0b\u5e8f\uff0c\u4f01\u4e1a\u5fae\u4fe1\uff0c\u89c6\u9891\u53f7\uff0c\u516c\u4f17\u53f7\u7b49\u7684\u540e\u7aef\u5f00\u53d1",
+        "language": "Java",
+        "forks_count": 9056
+      }
+    },
+    {
+      "full_name": "apache/kafka",
+      "stars": 32183,
+      "last_commit_date": "2026-03-09T17:40:42+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8706101220193714,
+      "metadata": {
+        "description": "Mirror of Apache Kafka",
+        "language": "Java",
+        "forks_count": 15004
+      }
+    },
+    {
+      "full_name": "alibaba/spring-cloud-alibaba",
+      "stars": 29070,
+      "last_commit_date": "2026-03-09T13:42:10+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8670756025416342,
+      "metadata": {
+        "description": "Spring Cloud Alibaba provides a one-stop solution for application development for the distributed solutions of Alibaba middleware.",
+        "language": "Java",
+        "forks_count": 8525
+      }
+    },
+    {
+      "full_name": "chinabugotech/hutool",
+      "stars": 30342,
+      "last_commit_date": "2026-03-07T12:03:30+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8669197007048568,
+      "metadata": {
+        "description": "\ud83c\udf6cA set of tools that keep Java sweet.",
+        "language": "Java",
+        "forks_count": 7661
+      }
+    },
+    {
+      "full_name": "DrKLO/Telegram",
+      "stars": 28678,
+      "last_commit_date": "2026-03-08T19:57:32+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8666039088328807,
+      "metadata": {
+        "description": "Telegram for Android source",
+        "language": "Java",
+        "forks_count": 9325
+      }
+    },
+    {
+      "full_name": "yuliskov/SmartTube",
+      "stars": 28656,
+      "last_commit_date": "2026-03-09T17:33:48+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8665772454803966,
+      "metadata": {
+        "description": "Browse media content with your own rules on Android TV",
+        "language": "Java",
+        "forks_count": 1542
+      }
+    },
+    {
+      "full_name": "alibaba/druid",
+      "stars": 28218,
+      "last_commit_date": "2026-03-08T05:36:49+00:00",
+      "primary_ecosystem": "maven",
+      "manifest_types": [
+        "maven"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8652201805221587,
+      "metadata": {
+        "description": "\u963f\u91cc\u4e91\u8ba1\u7b97\u5e73\u53f0DataWorks(https://help.aliyun.com/document_detail/137663.html) \u56e2\u961f\u51fa\u54c1\uff0c\u4e3a\u76d1\u63a7\u800c\u751f\u7684\u6570\u636e\u5e93\u8fde\u63a5\u6c60",
+        "language": "Java",
+        "forks_count": 8610
+      }
+    },
+    {
+      "full_name": "huginn/huginn",
+      "stars": 48839,
+      "last_commit_date": "2026-03-09T02:11:37+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8801013410394721,
+      "metadata": {
+        "description": "Create agents that monitor and act on your behalf.  Your agents are standing by!",
+        "language": "Ruby",
+        "forks_count": 4226
+      }
+    },
+    {
+      "full_name": "jekyll/jekyll",
+      "stars": 51432,
+      "last_commit_date": "2026-02-27T21:23:27+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8745014127463021,
+      "metadata": {
+        "description": ":globe_with_meridians: Jekyll is a blog-aware static site generator in Ruby",
+        "language": "Ruby",
+        "forks_count": 10292
+      }
+    },
+    {
+      "full_name": "heartcombo/devise",
+      "stars": 24344,
+      "last_commit_date": "2026-03-06T13:49:03+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8534456017233513,
+      "metadata": {
+        "description": "Flexible authentication solution for Rails with Warden.",
+        "language": "Ruby",
+        "forks_count": 5509
+      }
+    },
+    {
+      "full_name": "CocoaPods/CocoaPods",
+      "stars": 14811,
+      "last_commit_date": "2026-03-09T01:04:51+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8386467505551355,
+      "metadata": {
+        "description": "The Cocoa Dependency Manager.",
+        "language": "Ruby",
+        "forks_count": 2685
+      }
+    },
+    {
+      "full_name": "fluent/fluentd",
+      "stars": 13509,
+      "last_commit_date": "2026-03-09T13:31:16+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8354498561346076,
+      "metadata": {
+        "description": "Fluentd: Unified Logging Layer (project under CNCF)",
+        "language": "Ruby",
+        "forks_count": 1383
+      }
+    },
+    {
+      "full_name": "github-linguist/linguist",
+      "stars": 13361,
+      "last_commit_date": "2026-03-09T09:49:37+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8350671171196004,
+      "metadata": {
+        "description": "Language Savant. If your repository's language is being reported incorrectly, send us a pull request!",
+        "language": "Ruby",
+        "forks_count": 5042
+      }
+    },
+    {
+      "full_name": "rubocop/rubocop",
+      "stars": 12842,
+      "last_commit_date": "2026-03-09T06:18:02+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.833690613246438,
+      "metadata": {
+        "description": "A Ruby static code analyzer and formatter, based on the community Ruby style guide.",
+        "language": "Ruby",
+        "forks_count": 3103
+      }
+    },
+    {
+      "full_name": "sidekiq/sidekiq",
+      "stars": 13504,
+      "last_commit_date": "2026-03-06T00:17:11+00:00",
+      "primary_ecosystem": "rubygems",
+      "manifest_types": [
+        "rubygems"
+      ],
+      "has_prod_deps": true,
+      "is_fork": false,
+      "fork_parent": null,
+      "priority_score": 0.8329712409178688,
+      "metadata": {
+        "description": "Simple, efficient background processing for Ruby",
+        "language": "Ruby",
+        "forks_count": 2471
+      }
+    }
+  ]
+}

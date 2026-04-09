@@ -3,110 +3,211 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Deep Signal — Supply Chain Graph</title>
+  <title>Supply Chain Graph</title>
   
   <!-- vis.js from CDN -->
   <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
   
   <style>
     :root{
-      --bg: #0b0f17;
-      --panel: #0f172a;
-      --card: #111827;
-      --border: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.65);
-      --muted2: rgba(255,255,255,.45);
-      --shadow: 0 10px 30px rgba(0,0,0,.45);
-      --radius: 16px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 
-"Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 
-Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      /* Background layers */
+      --bg: #0a0e13;
+      --bg-surface: #0f1419;
+      --bg-elevated: #151b23;
+      --bg-overlay: #1a222c;
+
+      /* Borders */
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-emphasis: rgba(255, 255, 255, 0.10);
+
+      /* Text */
+      --text-primary: rgba(255, 255, 255, 0.92);
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-tertiary: rgba(255, 255, 255, 0.35);
+
+      /* Accent */
+      --accent: #3b82f6;
+      --accent-muted: rgba(59, 130, 246, 0.15);
+
+      /* Status colors */
+      --status-high-bg: rgba(239, 68, 68, 0.12);
+      --status-high-text: #ef4444;
+      --status-high-border: rgba(239, 68, 68, 0.35);
+      --status-medium-bg: rgba(234, 179, 8, 0.12);
+      --status-medium-text: #eab308;
+      --status-medium-border: rgba(234, 179, 8, 0.35);
+      --status-low-bg: rgba(34, 197, 94, 0.12);
+      --status-low-text: #22c55e;
+      --status-low-border: rgba(34, 197, 94, 0.35);
+
+      /* Mild status (for signal badges) */
+      --status-mild-bg: rgba(234, 88, 12, 0.12);
+      --status-mild-text: #ea580c;
+
+      /* Spacing scale */
+      --sp-4: 4px; --sp-8: 8px; --sp-12: 12px; --sp-16: 16px; --sp-24: 24px; --sp-32: 32px;
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+      /* Typography */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+      /* Backward-compat aliases for JS-generated inline styles */
+      --mono: var(--font-mono);
     }
 
     *{ box-sizing: border-box; }
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(99,102,241,.35), 
-transparent 60%),
-        radial-gradient(900px 600px at 90% 0%, rgba(16,185,129,.25), 
-transparent 55%),
-        radial-gradient(900px 600px at 70% 120%, rgba(239,68,68,.18), 
-transparent 55%),
-        var(--bg);
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
       min-height: 100vh;
     }
 
     .wrap{
       max-width: 1600px;
-      margin: 20px auto;
-      padding: 0 18px;
+      margin: var(--sp-8) auto;
+      padding: 0 var(--sp-12);
     }
 
     .topbar{
       display:flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 16px;
+      gap: var(--sp-16);
+      margin-bottom: var(--sp-16);
     }
 
     .brand{
       display:flex;
       flex-direction: column;
-      gap: 6px;
+      gap: var(--sp-4);
     }
 
     .title{
       font-size: 22px;
-      font-weight: 800;
+      font-weight: 700;
+      color: var(--text-primary);
       letter-spacing: .2px;
     }
     .subtitle{
       font-size: 13px;
-      color: var(--muted);
+      color: var(--text-secondary);
       line-height: 1.35;
     }
 
+    /* Panel */
     .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), 
-rgba(255,255,255,.02));
+      background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      margin-bottom: 14px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-24);
+      margin-bottom: var(--sp-16);
+      transition: border-color 0.15s ease;
+    }
+    .panel:hover{ border-color: var(--border-emphasis); }
+
+    /* Panel Header */
+    .panel-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--sp-16);
+    }
+    .section-title{
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .panel-subtitle{
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* Page Header */
+    .graph-page-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-4);
+    }
+    .graph-page-header .page-title{
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .graph-page-header .page-subtitle{
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin: var(--sp-4) 0 0;
+    }
+    .header-actions{ display: flex; gap: var(--sp-8); }
+    .btn-subtle{
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: var(--sp-4) var(--sp-12);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-subtle:hover{
+      background: var(--bg-surface);
+      border-color: var(--border-emphasis);
+      color: var(--text-secondary);
     }
 
     .controls{
       display:grid;
       grid-template-columns: 1fr auto auto;
-      gap: 10px;
+      gap: var(--sp-12);
       align-items: center;
     }
 
     input[type="text"]{
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
+      background: var(--bg-surface);
+      color: var(--text-primary);
       outline: none;
       font-size: 14px;
     }
-    input[type="text"]::placeholder{ color: rgba(255,255,255,.35); }
+    input[type="text"]::placeholder{ color: var(--text-tertiary); }
+    input[type="text"]:focus{ border-color: var(--border-emphasis); }
 
+    /* Button */
     .btn{
-      padding: 10px 16px;
-      border-radius: 12px;
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
       font-weight: 700;
       cursor: pointer;
       transition: transform .06s ease, background .15s ease;
@@ -114,58 +215,64 @@ rgba(255,255,255,.02));
       white-space: nowrap;
       font-size: 14px;
     }
-    .btn:hover{ background: rgba(255,255,255,.12); }
+    .btn:hover{ background: var(--bg-overlay); }
     .btn:active{ transform: translateY(1px); }
     .btn:disabled{ opacity: .5; cursor: not-allowed; }
 
     .main-container{
       display: flex;
-      gap: 14px;
-      height: calc(100vh - 200px);
-      min-height: 600px;
+      gap: var(--sp-8);
+      min-height: calc(100vh - 140px);
     }
 
     .graph-section{
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: var(--sp-4);
+      min-height: 600px;
+      position: sticky;
+      top: var(--sp-8);
+      align-self: flex-start;
+      height: calc(100vh - 140px);
     }
 
     .filters-panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), 
-rgba(255,255,255,.02));
+      background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
+      border-radius: var(--radius-sm);
+      box-shadow: none;
+      padding: var(--sp-8) var(--sp-12);
+      transition: border-color 0.15s ease;
     }
+    .filters-panel:hover{ border-color: var(--border-emphasis); }
 
     .filter-group{
-      margin-bottom: 14px;
+      margin-bottom: var(--sp-8);
     }
+    .filter-group:last-child{ margin-bottom: 0; }
 
     .filter-group h4{
-      margin: 0 0 8px;
-      font-size: 13px;
-      color: var(--muted);
+      margin: 0 0 var(--sp-4);
+      font-size: 11px;
+      color: var(--text-tertiary);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .5px;
     }
 
     .filter-checks{
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px var(--sp-4);
     }
 
     .filter-check{
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text);
+      gap: var(--sp-4);
+      font-size: 12px;
+      color: var(--text-primary);
       user-select: none;
       cursor: pointer;
     }
@@ -185,22 +292,23 @@ rgba(255,255,255,.02));
     .slider-group{
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: var(--sp-4);
     }
 
     .slider-label{
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: var(--muted);
+      color: var(--text-secondary);
     }
 
     input[type="range"]{
       width: 100%;
       height: 6px;
       border-radius: 3px;
-      background: rgba(255,255,255,.1);
+      background: rgba(255,255,255,.08);
       outline: none;
+      appearance: none;
       -webkit-appearance: none;
     }
 
@@ -224,14 +332,25 @@ rgba(255,255,255,.02));
       border: 2px solid var(--bg);
     }
 
+    /* Form Controls */
+    select{
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+    select option{ background: var(--bg-elevated); color: var(--text-primary); }
+
     #graph-container{
       flex: 1;
-      min-height: 500px; /* Ensure minimum height */
-      background: linear-gradient(180deg, rgba(255,255,255,.05), 
-rgba(255,255,255,.02));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      min-height: 550px;
+      background: var(--bg);
+      border: 1px solid var(--border-emphasis);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
       position: relative;
     }
     
@@ -246,61 +365,66 @@ rgba(255,255,255,.02));
 
     .details-panel{
       width: 350px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), 
-rgba(255,255,255,.02));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      overflow-y: auto;
       flex-shrink: 0;
+      align-self: flex-start;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
     }
 
     .details-panel h3{
-      margin: 0 0 12px;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .details-panel-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--sp-16);
     }
 
     .detail-section{
-      margin-bottom: 16px;
+      margin-bottom: var(--sp-16);
     }
 
     .detail-section h4{
-      margin: 0 0 8px;
-      font-size: 12px;
-      color: var(--muted);
+      margin: 0 0 var(--sp-8);
+      font-size: 11px;
+      color: var(--text-tertiary);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .5px;
     }
 
     .detail-item{
-      padding: 8px 10px;
-      border-radius: 10px;
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      margin-bottom: 6px;
+      background: var(--bg-surface);
+      margin-bottom: var(--sp-4);
     }
 
     .detail-item .label{
       font-size: 11px;
-      color: var(--muted2);
-      margin-bottom: 4px;
+      color: var(--text-tertiary);
+      margin-bottom: var(--sp-4);
     }
 
     .detail-item .value{
       font-size: 13px;
-      color: var(--text);
+      color: var(--text-primary);
       font-weight: 600;
       word-break: break-word;
     }
 
     .confidence-badge{
       display: inline-block;
-      padding: 3px 8px;
-      border-radius: 999px;
+      padding: var(--sp-4) var(--sp-8);
+      border-radius: var(--radius-pill);
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
@@ -308,21 +432,21 @@ rgba(255,255,255,.02));
     }
 
     .confidence-high{
-      background: rgba(34, 197, 94, .2);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, .3);
+      background: var(--status-low-bg);
+      color: var(--status-low-text);
+      border: 1px solid var(--status-low-border);
     }
 
     .confidence-medium{
-      background: rgba(234, 179, 8, .2);
-      color: #eab308;
-      border: 1px solid rgba(234, 179, 8, .3);
+      background: var(--status-medium-bg);
+      color: var(--status-medium-text);
+      border: 1px solid var(--status-medium-border);
     }
 
     .confidence-low{
-      background: rgba(239, 68, 68, .2);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, .3);
+      background: var(--status-high-bg);
+      color: var(--status-high-text);
+      border: 1px solid var(--status-high-border);
     }
 
     .empty-state{
@@ -331,25 +455,26 @@ rgba(255,255,255,.02));
       align-items: center;
       justify-content: center;
       height: 100%;
-      color: var(--muted);
+      color: var(--text-secondary);
       font-size: 14px;
       text-align: center;
-      padding: 40px;
+      padding: var(--sp-32);
     }
 
     .empty-state-icon{
       font-size: 48px;
-      margin-bottom: 16px;
+      margin-bottom: var(--sp-16);
       opacity: .5;
     }
 
+    /* Error */
     .err{
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(239,68,68,.45);
-      background: rgba(239,68,68,.10);
-      color: rgba(255,255,255,.88);
+      margin-top: var(--sp-12);
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--status-high-border);
+      background: var(--status-high-bg);
+      color: var(--text-primary);
       font-size: 13px;
       display:none;
       white-space: pre-wrap;
@@ -357,46 +482,49 @@ rgba(255,255,255,.02));
 
     .stats{
       display: flex;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-12);
     }
 
     .stat{
       flex: 1;
-      padding: 10px;
-      border-radius: 10px;
+      padding: var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
+      background: var(--bg-surface);
       text-align: center;
+      transition: border-color 0.15s ease;
     }
+    .stat:hover{ border-color: var(--border-emphasis); }
 
     .stat .num{
       font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
     }
 
     .stat .label{
       font-size: 11px;
-      color: var(--muted2);
-      margin-top: 4px;
+      color: var(--text-tertiary);
+      margin-top: var(--sp-4);
       text-transform: uppercase;
       letter-spacing: .5px;
     }
 
     .export-buttons{
       display: flex;
-      gap: 8px;
-      margin-top: 12px;
+      gap: var(--sp-8);
+      margin-top: var(--sp-12);
     }
 
     .export-btn{
       flex: 1;
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -405,13 +533,19 @@ rgba(255,255,255,.02));
     }
 
     .export-btn:hover{
-      background: rgba(255,255,255,.10);
+      background: var(--bg-overlay);
     }
 
-    /* Explanation Panel Styles */
+    /* Explanation Panel — demoted to supporting context */
     .explanation-panel{
-      margin-bottom: 14px;
+      margin-bottom: var(--sp-4);
+      padding: var(--sp-4) var(--sp-12);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      box-shadow: none;
     }
+    .explanation-panel:hover{ border-color: var(--border); }
 
     .explanation-header{
       display: flex;
@@ -419,18 +553,19 @@ rgba(255,255,255,.02));
       align-items: center;
       cursor: pointer;
       user-select: none;
-      padding: 4px 0;
+      padding: 0;
     }
 
     .explanation-title{
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.3px;
     }
 
     .explanation-toggle{
       font-size: 12px;
-      color: var(--muted);
+      color: var(--text-secondary);
       transition: transform .2s ease;
     }
 
@@ -446,25 +581,25 @@ rgba(255,255,255,.02));
 
     .explanation-content.open{
       max-height: 1000px;
-      margin-top: 14px;
+      margin-top: var(--sp-16);
     }
 
     .explanation-section{
-      margin-bottom: 18px;
+      margin-bottom: var(--sp-24);
     }
 
     .explanation-section h4{
-      margin: 0 0 8px;
+      margin: 0 0 var(--sp-8);
       font-size: 14px;
       font-weight: 700;
-      color: var(--text);
+      color: var(--text-primary);
     }
 
     .explanation-section p{
-      margin: 0 0 8px;
+      margin: 0 0 var(--sp-8);
       font-size: 13px;
       line-height: 1.6;
-      color: var(--muted);
+      color: var(--text-secondary);
     }
 
     .explanation-list{
@@ -472,46 +607,47 @@ rgba(255,255,255,.02));
       padding-left: 20px;
       font-size: 13px;
       line-height: 1.8;
-      color: var(--muted);
+      color: var(--text-secondary);
     }
 
     .explanation-list li{
-      margin-bottom: 6px;
+      margin-bottom: var(--sp-4);
     }
 
     .explanation-list code{
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 12px;
       padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(0,0,0,.3);
-      color: rgba(255,255,255,.85);
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      color: var(--text-primary);
     }
 
     .explanation-list strong{
-      color: var(--text);
+      color: var(--text-primary);
       font-weight: 600;
     }
 
     .provenance-toggle{
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 10px;
+      gap: var(--sp-8);
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
+      background: var(--bg-surface);
       font-size: 12px;
-      color: var(--text);
+      color: var(--text-primary);
       cursor: pointer;
       user-select: none;
-      margin-bottom: 12px;
+      margin-bottom: var(--sp-12);
     }
 
     .provenance-toggle input{
       cursor: pointer;
     }
 
+    /* Responsive */
     @media (max-width: 1200px){
       .main-container{
         flex-direction: column;
@@ -521,28 +657,95 @@ rgba(255,255,255,.02));
         width: 100%;
         max-height: 400px;
       }
+      .topbar{
+        flex-direction: column;
+      }
     }
+
+    /* Sidebar state: node selected — demote Graph Summary */
+    .sidebar-node-active #graphSummaryPanel {
+      padding: var(--sp-8) var(--sp-16);
+      opacity: 0.75;
+      transition: padding 0.2s ease, opacity 0.2s ease;
+    }
+    .sidebar-node-active #graphSummaryPanel .panel-header {
+      padding-bottom: var(--sp-4);
+      margin-bottom: var(--sp-8);
+    }
+    .sidebar-node-active #graphSummaryPanel .section-title {
+      font-size: 12px;
+    }
+    .sidebar-node-active #graphSummaryPanel .stats {
+      gap: var(--sp-4);
+    }
+    .sidebar-node-active #graphSummaryPanel .stat {
+      padding: var(--sp-4) var(--sp-8);
+    }
+    .sidebar-node-active #graphSummaryPanel .stat .num {
+      font-size: 15px;
+    }
+
+    /* Label Indicator */
+    .label-indicator{
+      display: inline-block;
+      padding: var(--sp-4) var(--sp-12);
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .label-high   { background: var(--status-high-bg);   color: var(--status-high-text); }
+    .label-medium { background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .label-low    { background: var(--status-low-bg);    color: var(--status-low-text); }
+
+    /* Signal Badge */
+    .signal-badge{
+      display: inline-block;
+      padding: var(--sp-4) var(--sp-8);
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .3px;
+    }
+    .signal-high   { background: var(--status-high-bg);   color: var(--status-high-text); }
+    .signal-medium { background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .signal-mild   { background: var(--status-mild-bg);   color: var(--status-mild-text); }
+
+    /* Inline risk color text emphasis */
+    .text-high{ color: var(--status-high-text); }
+    .text-medium{ color: var(--status-medium-text); }
+    .text-low{ color: var(--status-low-text); }
+
+    /* Navigation */
+    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-4) var(--sp-12); margin-bottom:var(--sp-4); border-radius:var(--radius-md); border:1px solid var(--border); background:var(--bg-elevated); box-shadow:none; }
+    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
+    .ds-nav-links { display:flex; gap:var(--sp-4); }
+    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
+    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
+    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="title">Deep Signal — Supply Chain Graph</div>
-        <div class="subtitle">
-          Visualize repository supply chain relationships: releases, maintainers, vulnerabilities, and risk factors.
-        </div>
+    <!-- Page Header (static title + cross-page actions) -->
+    <div class="graph-page-header" style="margin-bottom:var(--sp-4);">
+      <div>
+        <h1 class="page-title">Supply Chain Graph</h1>
+        <p class="page-subtitle">Visualize dependencies, maintainers, and vulnerabilities</p>
       </div>
+      <div class="header-actions" id="graphHeaderActions"></div>
     </div>
 
-    <div class="panel">
+    <div class="panel" style="padding:var(--sp-4) var(--sp-12);margin-bottom:var(--sp-4);">
       <div class="controls">
         <input id="repoInput" type="text" placeholder="e.g. numpy/numpy or https://github.com/numpy/numpy" />
         <button id="loadBtn" class="btn">Load Graph</button>
         <button id="refreshBtn" class="btn">Force Refresh</button>
       </div>
       <div id="err" class="err"></div>
+      <div id="crossLinks" style="display:none; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
     </div>
 
     <!-- Explanation Panel -->
@@ -624,7 +827,7 @@ rgba(255,255,255,.02));
 
           <div class="filter-group">
             <h4>CVE Severity Filter</h4>
-            <select id="cveSeverityFilter" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: rgba(0,0,0,.18); color: var(--text); font-size: 13px;">
+            <select id="cveSeverityFilter" style="width: 100%;">
               <option value="all">All CVEs</option>
               <option value="high-critical">High & Critical Only</option>
               <option value="critical">Critical Only</option>
@@ -645,42 +848,151 @@ rgba(255,255,255,.02));
         </div>
       </div>
 
-      <div class="details-panel">
-        <h3>Node Details</h3>
-        
-        <div class="stats" id="graphStats" style="display:none;">
-          <div class="stat">
-            <div class="num" id="nodeCount">0</div>
-            <div class="label">Nodes</div>
+      <div id="sidebarContainer" class="details-panel" style="display:flex;flex-direction:column;gap:var(--sp-12);padding:0;background:transparent;border:none;box-shadow:none;">
+        <!-- Key Risk Signals -->
+        <div id="insightPanel" class="panel" style="display:none;padding:var(--sp-16);margin-bottom:0;" aria-label="Insight summary">
+          <div class="panel-header" style="margin-bottom:var(--sp-12);">
+            <h3 class="section-title">Key Risk Signals</h3>
           </div>
-          <div class="stat">
-            <div class="num" id="edgeCount">0</div>
-            <div class="label">Edges</div>
-          </div>
+          <div id="insightContent">Loading insight…</div>
         </div>
 
-        <label class="provenance-toggle" id="provenanceToggle" style="display:none;">
-          <input type="checkbox" id="showProvenance" />
-          <span>Show Provenance</span>
-        </label>
-
-        <div class="export-buttons" id="exportButtons" style="display:none;">
-          <button class="export-btn" id="exportJson">Export JSON</button>
-          <button class="export-btn" id="exportPng">Export PNG</button>
+        <!-- Graph Summary -->
+        <div id="graphSummaryPanel" class="panel" style="padding:var(--sp-16);margin-bottom:0;">
+          <div class="panel-header" style="margin-bottom:var(--sp-12);">
+            <h3 class="section-title">Graph Summary</h3>
+          </div>
+          <div class="stats" id="graphStats" style="display:none;margin-bottom:var(--sp-8);">
+            <div class="stat">
+              <div class="num" id="nodeCount">0</div>
+              <div class="label">Nodes</div>
+            </div>
+            <div class="stat">
+              <div class="num" id="edgeCount">0</div>
+              <div class="label">Edges</div>
+            </div>
+          </div>
+          <label class="provenance-toggle" id="provenanceToggle" style="display:none;margin-bottom:var(--sp-8);">
+            <input type="checkbox" id="showProvenance" />
+            <span>Show Provenance</span>
+          </label>
+          <div class="export-buttons" id="exportButtons" style="display:none;">
+            <button class="export-btn" id="exportJson">Export JSON</button>
+            <button class="export-btn" id="exportPng">Export PNG</button>
+          </div>
+          <div id="graphSummaryEmpty" style="font-size:13px;color:var(--text-tertiary);">Load a graph to see summary</div>
         </div>
 
-        <div id="nodeDetails">
-          <div class="empty-state" style="height: auto; padding: 20px;">
-            <div class="empty-state-icon" style="font-size: 32px;">👆</div>
-            <div>Click a node to see details</div>
+        <!-- Selected Node -->
+        <div id="selectedNodePanel" class="panel" style="padding:var(--sp-16);margin-bottom:0;">
+          <div class="panel-header" style="margin-bottom:var(--sp-12);">
+            <h3 class="section-title">Selected Node</h3>
+          </div>
+          <div id="nodeDetails">
+            <div style="font-size:13px;color:var(--text-tertiary);line-height:1.5;">
+              Select a node to inspect its role, relationships, and risk context.
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="config.js"></script>
   <script src="graph-viz.js"></script>
   <script>
+// --- Navigation helpers (inlined) ---
+function parseRepoParam(searchString) {
+  var params = new URLSearchParams(searchString);
+  var raw = params.get("repo");
+  if (!raw) return null;
+  var decoded = decodeURIComponent(raw);
+  if (!decoded || !decoded.trim()) return null;
+  decoded = decoded.trim();
+  var slashIndex = decoded.indexOf("/");
+  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
+  return decoded;
+}
+function getRepoFromUrl() { return parseRepoParam(window.location.search); }
+function buildPageUrl(page, repo) {
+  if (repo) return page + "?repo=" + encodeURIComponent(repo);
+  return page;
+}
+function getCurrentPageId() {
+  var path = window.location.pathname;
+  if (path.indexOf("insights") !== -1) return "insights";
+  if (path.indexOf("graph") !== -1) return "graph";
+  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
+  return "index";
+}
+function renderNav(currentPageId, repo) {
+  var existing = document.querySelector("nav.ds-nav");
+  if (existing) existing.remove();
+  var nav = document.createElement("nav");
+  nav.className = "ds-nav";
+  nav.setAttribute("aria-label", "Main navigation");
+  var brand = document.createElement("span");
+  brand.className = "ds-nav-brand";
+  brand.textContent = "Deep Signal";
+  nav.appendChild(brand);
+  var linksDiv = document.createElement("div");
+  linksDiv.className = "ds-nav-links";
+  var pages = [
+    { pageId: "index", label: "Home", file: "index.html" },
+    { pageId: "insights", label: "Insights", file: "insights.html" },
+    { pageId: "graph", label: "Graph", file: "graph.html" },
+    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
+  ];
+  for (var i = 0; i < pages.length; i++) {
+    var p = pages[i];
+    var a = document.createElement("a");
+    a.href = buildPageUrl(p.file, repo);
+    a.className = "ds-nav-link";
+    a.textContent = p.label;
+    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
+    linksDiv.appendChild(a);
+  }
+  nav.appendChild(linksDiv);
+  var wrap = document.querySelector(".wrap");
+  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
+}
+renderNav(getCurrentPageId(), getRepoFromUrl());
+// --- End navigation helpers ---
+
+// --- Cross-page links ---
+function getCrossLinks(currentPageId, repo) {
+  if (!repo) return [];
+  var targets = [
+    { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
+    { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
+    { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
+  ];
+  var links = [];
+  for (var i = 0; i < targets.length; i++) {
+    if (targets[i].targetPageId === currentPageId) continue;
+    links.push({ label: targets[i].label, href: buildPageUrl(targets[i].file, repo), targetPageId: targets[i].targetPageId });
+  }
+  return links;
+}
+function renderCrossLinks(containerId, repo) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  var links = getCrossLinks(getCurrentPageId(), repo);
+  container.innerHTML = "";
+  if (links.length === 0) { container.style.display = "none"; return; }
+  for (var i = 0; i < links.length; i++) {
+    var a = document.createElement("a");
+    a.href = links[i].href;
+    a.className = "btn";
+    a.style.fontSize = "13px";
+    a.style.padding = "8px 14px";
+    a.textContent = links[i].label;
+    container.appendChild(a);
+  }
+  container.style.display = "flex";
+}
+// --- End cross-page links ---
+
     // Toggle explanation panel
     function toggleExplanation() {
       const content = document.getElementById('explanationContent');
@@ -694,6 +1006,121 @@ rgba(255,255,255,.02));
         toggle.classList.add('open');
       }
     }
+
+    var INSIGHT_API_BASE = window.DS_API_BASE || "";
+
+    /**
+     * fetchAndRenderInsight(owner, repo)
+     * Fetches insight data for a repo and renders it in the insight panel.
+     * Called after graph loads successfully. Fire-and-forget, never throws.
+     */
+    async function fetchAndRenderInsight(owner, repo) {
+      var panel = document.getElementById("insightPanel");
+      var content = document.getElementById("insightContent");
+      try {
+        var response = await fetch(INSIGHT_API_BASE + "/api/insights/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo));
+        if (response.status === 404) {
+          content.textContent = "No insight data available for this repository.";
+          panel.style.display = "block";
+          return;
+        }
+        if (!response.ok) {
+          content.textContent = "Could not load insight data";
+          panel.style.display = "block";
+          return;
+        }
+        var data = await response.json();
+
+        // Build label indicator
+        var labelClass = "";
+        if (data.graph_signal_label === "HIGH") labelClass = "label-high";
+        else if (data.graph_signal_label === "MEDIUM") labelClass = "label-medium";
+        else if (data.graph_signal_label === "LOW") labelClass = "label-low";
+
+        // Build reasons HTML
+        var reasonsHtml = "";
+        if (data.reasons && data.reasons.length > 0) {
+          reasonsHtml = "<ul style=\"margin:6px 0 0;padding-left:18px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;\">";
+          for (var i = 0; i < data.reasons.length; i++) {
+            reasonsHtml += "<li>" + data.reasons[i] + "</li>";
+          }
+          reasonsHtml += "</ul>";
+        }
+
+        // Build signal badges HTML from direct_signals (detail endpoint)
+        var badgesHtml = "";
+        if (data.direct_signals) {
+          for (var j = 0; j < data.direct_signals.length; j++) {
+            var sig = data.direct_signals[j];
+            if (sig.severity !== "info") {
+              var badgeClass = "signal-badge";
+              if (sig.severity === "high" || sig.severity === "medium" || sig.severity === "mild") {
+                badgeClass += " signal-" + sig.severity;
+              }
+              var badgeText = sig.signal_name;
+              if (sig.signal_name === "cve_risk") badgeText = "CVE";
+              else if (sig.signal_name === "maintainer_concentration") badgeText = "Maintainer";
+              else if (sig.signal_name === "release_staleness") badgeText = "Stale release";
+              badgesHtml += " <span class=\"" + badgeClass + "\">" + badgeText + "</span>";
+            }
+          }
+        }
+
+        content.innerHTML =
+          "<div style=\"display:flex;align-items:center;gap:10px;flex-wrap:wrap;\">" +
+            "<span style=\"font-family:var(--mono);font-size:15px;font-weight:800;\">" + data.graph_signal_score.toFixed(3) + "</span>" +
+            "<span class=\"label-indicator " + labelClass + "\">" + data.graph_signal_label + "</span>" +
+            badgesHtml +
+          "</div>" +
+          reasonsHtml;
+
+        panel.setAttribute("aria-label", "Insight summary for " + data.repo_full_name);
+        panel.style.display = "block";
+      } catch (e) {
+        content.textContent = "Could not load insight data";
+        panel.style.display = "block";
+      }
+    }
+
+    // Auto-load from ?repo= query param (reuses getRepoFromUrl for consistent validation)
+    (function() {
+      var repo = getRepoFromUrl();
+      if (repo) {
+        document.getElementById("repoInput").value = repo;
+        // Build header action links
+        var actionsEl = document.getElementById("graphHeaderActions");
+        var links = getCrossLinks("graph", repo);
+        for (var i = 0; i < links.length; i++) {
+          var a = document.createElement("a");
+          a.href = links[i].href;
+          a.className = "btn-subtle";
+          a.textContent = links[i].label.replace("Open in ", "");
+          actionsEl.appendChild(a);
+        }
+        loadGraph(false);
+        renderCrossLinks("crossLinks", repo);
+      }
+    })();
+
+    // Show cross-links and update header actions when user manually loads a graph
+    document.getElementById("loadBtn").addEventListener("click", function() {
+      setTimeout(function() {
+        var repoVal = document.getElementById("repoInput").value.trim();
+        renderCrossLinks("crossLinks", repoVal);
+        if (repoVal) {
+          var actionsEl = document.getElementById("graphHeaderActions");
+          actionsEl.innerHTML = "";
+          var links = getCrossLinks("graph", repoVal);
+          for (var i = 0; i < links.length; i++) {
+            var a = document.createElement("a");
+            a.href = links[i].href;
+            a.className = "btn-subtle";
+            a.textContent = links[i].label.replace("Open in ", "");
+            actionsEl.appendChild(a);
+          }
+        }
+      }, 100);
+    });
   </script>
 </body>
 </html>

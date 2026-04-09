@@ -11,12 +11,13 @@ CRITICAL: LLM NEVER GENERATES SQL
 - Confidence gating (reject < 0.7)
 """
 
-import os
 import json
 import logging
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+from open_source_risk_model.llm import LLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,10 @@ class IntentType(str, Enum):
     DATASET_STATS = "dataset_stats"
     SEARCH_REPOS = "search_repos"
     SEARCH_PACKAGES = "search_packages"
+    # New query coverage intents
+    REPO_LOOKUP = "repo_lookup"
+    REPO_COMPARISON = "repo_comparison"
+    MISSING_REPO_HANDLING = "missing_repo_handling"
     UNKNOWN = "unknown"
 
 
@@ -64,19 +69,149 @@ class IntentClassifier:
     # Confidence threshold for accepting classification
     CONFIDENCE_THRESHOLD = 0.7
     
-    def __init__(self, model: str = "gpt-4", api_key: Optional[str] = None):
+    # Intent definitions for prompt formatting
+    INTENT_DEFINITIONS = [
+        {
+            "name": "list_dependencies",
+            "description": "List direct dependencies of a repository",
+            "parameters": "repo_full_name (required), dependency_group (optional: prod/dev/optional)",
+            "examples": [
+                "What are the dependencies of django/django?",
+                "List prod dependencies for flask"
+            ]
+        },
+        {
+            "name": "find_dependents",
+            "description": "Find repositories that depend on a package",
+            "parameters": "package_name (required), registry_type (optional: pypi/npm)",
+            "examples": [
+                "Which repos depend on flask?",
+                "What uses the requests package?"
+            ]
+        },
+        {
+            "name": "get_dependency_tree",
+            "description": "Get full dependency tree for a repository",
+            "parameters": "repo_full_name (required), max_depth (optional: 1-5, default 3)",
+            "examples": [
+                "Show dependency tree for react",
+                "Get the full dependency graph of django"
+            ]
+        },
+        {
+            "name": "check_resolution",
+            "description": "Check if a package resolves to a GitHub repository",
+            "parameters": "package_name (required), registry_type (required: pypi/npm)",
+            "examples": [
+                "Does numpy resolve to a GitHub repo?",
+                "Check if flask has a GitHub repository"
+            ]
+        },
+        {
+            "name": "list_unresolved",
+            "description": "List dependencies that couldn't be resolved",
+            "parameters": "repo_full_name (optional)",
+            "examples": [
+                "Show unresolved dependencies",
+                "Which dependencies of django couldn't be resolved?"
+            ]
+        },
+        {
+            "name": "list_manifests",
+            "description": "List manifest files for a repository",
+            "parameters": "repo_full_name (required)",
+            "examples": [
+                "What manifest files does react have?",
+                "List manifests for django/django"
+            ]
+        },
+        {
+            "name": "count_by_manifest_type",
+            "description": "Count manifests by type across all repositories",
+            "parameters": "none",
+            "examples": [
+                "How many package.json vs requirements.txt files?",
+                "Count manifests by type"
+            ]
+        },
+        {
+            "name": "repo_stats",
+            "description": "Get statistics for a specific repository",
+            "parameters": "repo_full_name (required)",
+            "examples": [
+                "Give me stats for django/django",
+                "Show repository statistics for flask"
+            ]
+        },
+        {
+            "name": "dataset_stats",
+            "description": "Get overall dataset statistics",
+            "parameters": "none",
+            "examples": [
+                "How many repos do we have?",
+                "Show dataset statistics",
+                "What's in the database?"
+            ]
+        },
+        {
+            "name": "search_repos",
+            "description": "Search repositories by name pattern",
+            "parameters": "pattern (required)",
+            "examples": [
+                "Find repos with 'django' in the name",
+                "Search for test repositories"
+            ]
+        },
+        {
+            "name": "search_packages",
+            "description": "Search packages by name pattern",
+            "parameters": "pattern (required), registry_type (optional: pypi/npm)",
+            "examples": [
+                "Find packages starting with 'pytest'",
+                "Search for flask packages"
+            ]
+        },
+        {
+            "name": "repo_lookup",
+            "description": "Look up maintenance risk score for a single repository (may fetch live if not in database)",
+            "parameters": "repo_identifier (required: repo name or package name), ingestion_mode (optional: provisional/full), persistence_mode (optional: temporary/cache/database)",
+            "examples": [
+                "What's the maintenance risk score for numpy?",
+                "How risky is the flask repository?",
+                "Analyze the maintenance risk of django/django"
+            ]
+        },
+        {
+            "name": "repo_comparison",
+            "description": "Compare maintenance risk scores for multiple repositories",
+            "parameters": "repo_identifiers (required: list of repo/package names), ingestion_mode (optional: provisional/full), persistence_mode (optional: temporary/cache/database)",
+            "examples": [
+                "Compare flask vs django maintenance risk",
+                "Which is safer: numpy or pandas?",
+                "Compare maintenance risk for react, vue, and angular"
+            ]
+        },
+        {
+            "name": "missing_repo_handling",
+            "description": "Force live ingestion for a repository not in database",
+            "parameters": "repo_identifier (required: repo name or package name), ingestion_mode (optional: provisional/full), persistence_mode (optional: temporary/cache/database)",
+            "examples": [
+                "Fetch live data for new-package",
+                "Ingest and analyze unknown-repo",
+                "Get fresh data for this repository"
+            ]
+        }
+    ]
+    
+    def __init__(self, llm_client: LLMClient):
         """
         Initialize intent classifier.
         
         Args:
-            model: LLM model to use (default: gpt-4)
-            api_key: OpenAI API key (defaults to OPENAI_API_KEY env var)
+            llm_client: LLMClient instance configured with provider and prompt manager
         """
-        self.model = model
-        self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
-        
-        if not self.api_key:
-            logger.warning("No OpenAI API key found. Classifier will not work.")
+        self.llm_client = llm_client
+        logger.info("IntentClassifier initialized with LLMClient")
     
     def classify(self, query: str) -> ClassificationResult:
         """
@@ -91,16 +226,20 @@ class IntentClassifier:
         Raises:
             ValueError: If classification fails or confidence too low
         """
-        if not self.api_key:
-            raise ValueError("OpenAI API key not configured")
-        
-        # Build prompt with strict JSON schema
-        prompt = self._build_prompt(query)
-        
-        # Call LLM
+        # Call LLM using abstraction layer
         try:
-            response = self._call_llm(prompt)
-            result = self._parse_response(response)
+            response = self.llm_client.complete(
+                prompt_name="intent_classification",
+                prompt_params={
+                    "query": query,
+                    "available_intents": self._format_intents()
+                },
+                response_format="json",
+                temperature=0.0,
+                max_tokens=500
+            )
+            
+            result = self._parse_response(response.content)
             
             # Validate confidence
             if result.confidence < self.CONFIDENCE_THRESHOLD:
@@ -140,144 +279,22 @@ class IntentClassifier:
             logger.error(f"Classification failed: {e}", exc_info=True)
             raise ValueError(f"Failed to classify query: {e}")
     
-    def _build_prompt(self, query: str) -> str:
-        """Build LLM prompt with strict JSON schema."""
-        return f"""You are a query intent classifier for a dependency graph database.
-
-Your job is to classify user queries into predefined intents and extract parameters.
-
-AVAILABLE INTENTS:
-
-1. list_dependencies
-   Description: List direct dependencies of a repository
-   Parameters: repo_full_name (required), dependency_group (optional: prod/dev/optional)
-   Examples: "What are the dependencies of django/django?"
-             "List prod dependencies for flask"
-
-2. find_dependents
-   Description: Find repositories that depend on a package
-   Parameters: package_name (required), registry_type (optional: pypi/npm)
-   Examples: "Which repos depend on flask?"
-             "What uses the requests package?"
-
-3. get_dependency_tree
-   Description: Get full dependency tree for a repository
-   Parameters: repo_full_name (required), max_depth (optional: 1-5, default 3)
-   Examples: "Show dependency tree for react"
-             "Get the full dependency graph of django"
-
-4. check_resolution
-   Description: Check if a package resolves to a GitHub repository
-   Parameters: package_name (required), registry_type (required: pypi/npm)
-   Examples: "Does numpy resolve to a GitHub repo?"
-             "Check if flask has a GitHub repository"
-
-5. list_unresolved
-   Description: List dependencies that couldn't be resolved
-   Parameters: repo_full_name (optional)
-   Examples: "Show unresolved dependencies"
-             "Which dependencies of django couldn't be resolved?"
-
-6. list_manifests
-   Description: List manifest files for a repository
-   Parameters: repo_full_name (required)
-   Examples: "What manifest files does react have?"
-             "List manifests for django/django"
-
-7. count_by_manifest_type
-   Description: Count manifests by type across all repositories
-   Parameters: none
-   Examples: "How many package.json vs requirements.txt files?"
-             "Count manifests by type"
-
-8. repo_stats
-   Description: Get statistics for a specific repository
-   Parameters: repo_full_name (required)
-   Examples: "Give me stats for django/django"
-             "Show repository statistics for flask"
-
-9. dataset_stats
-   Description: Get overall dataset statistics
-   Parameters: none
-   Examples: "How many repos do we have?"
-             "Show dataset statistics"
-             "What's in the database?"
-
-10. search_repos
-    Description: Search repositories by name pattern
-    Parameters: pattern (required)
-    Examples: "Find repos with 'django' in the name"
-              "Search for test repositories"
-
-11. search_packages
-    Description: Search packages by name pattern
-    Parameters: pattern (required), registry_type (optional: pypi/npm)
-    Examples: "Find packages starting with 'pytest'"
-              "Search for flask packages"
-
-USER QUERY: "{query}"
-
-Classify the query and extract parameters. Return ONLY valid JSON in this exact format:
-
-{{
-  "intent": "<intent_name>",
-  "parameters": {{
-    "param1": "value1",
-    "param2": "value2"
-  }},
-  "confidence": 0.95,
-  "reasoning": "Brief explanation of classification"
-}}
-
-RULES:
-1. intent MUST be one of the 11 intents listed above
-2. confidence MUST be a number between 0.0 and 1.0
-3. If unsure (confidence < 0.7), use intent "unknown"
-4. Extract ALL relevant parameters from the query
-5. For repo names, use format "owner/repo" (e.g., "django/django")
-6. For registry_type, infer from context (Python packages = pypi, JavaScript = npm)
-7. Return ONLY the JSON object, no other text
-
-RESPOND WITH JSON ONLY:"""
-    
-    def _call_llm(self, prompt: str) -> str:
+    def _format_intents(self) -> str:
         """
-        Call LLM API.
-        
-        Args:
-            prompt: Prompt to send to LLM
+        Format intent definitions for the prompt.
         
         Returns:
-            LLM response text
+            Formatted string with all intent definitions
         """
-        try:
-            import openai
-            
-            client = openai.OpenAI(api_key=self.api_key)
-            
-            response = client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a precise query classifier. Return only valid JSON."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                temperature=0.0,  # Deterministic
-                max_tokens=500,
-                response_format={"type": "json_object"}  # Force JSON output
-            )
-            
-            return response.choices[0].message.content
+        formatted = []
+        for i, intent in enumerate(self.INTENT_DEFINITIONS, 1):
+            formatted.append(f"{i}. {intent['name']}")
+            formatted.append(f"   Description: {intent['description']}")
+            formatted.append(f"   Parameters: {intent['parameters']}")
+            formatted.append(f"   Examples: {'; '.join(intent['examples'])}")
+            formatted.append("")
         
-        except ImportError:
-            raise ValueError("openai package not installed. Run: pip install openai")
-        except Exception as e:
-            raise ValueError(f"LLM API call failed: {e}")
+        return "\n".join(formatted)
     
     def _parse_response(self, response: str) -> ClassificationResult:
         """
@@ -330,16 +347,16 @@ RESPOND WITH JSON ONLY:"""
 
 
 # Convenience function for quick classification
-def classify_query(query: str, model: str = "gpt-4") -> ClassificationResult:
+def classify_query(query: str, llm_client: LLMClient) -> ClassificationResult:
     """
-    Classify a query using default classifier.
+    Classify a query using provided LLM client.
     
     Args:
         query: Natural language query
-        model: LLM model to use
+        llm_client: Configured LLMClient instance
     
     Returns:
         ClassificationResult
     """
-    classifier = IntentClassifier(model=model)
+    classifier = IntentClassifier(llm_client)
     return classifier.classify(query)

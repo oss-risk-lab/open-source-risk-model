@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "rate_limited",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 78,
+    "contributors_last_12mo": 28,
+    "days_since_last_push": 0.10092367903935184,
+    "days_since_last_release": 37.99556657403935,
+    "fraction_issues_closed_12mo": 0.13440860215053763,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 6.371794871794871,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 497,
+    "stargazers_count": 92888,
+    "stars_count": 92888,
+    "top_contributor_fraction_12mo": 0.27906976744186046
+  },
+  "fetched_at": "2026-03-30T19:43:49.290614+00:00",
+  "full_name": "microsoft/markitdown"
+}

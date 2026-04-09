@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 1556,
+    "contributors_last_12mo": 15,
+    "days_since_last_push": 0.26248377590277777,
+    "days_since_last_release": 4.362913736712963,
+    "fraction_issues_closed_12mo": 0.9762019230769231,
+    "fraction_open_issues_stale_180d": 0.8678038379530917,
+    "issues_per_contributor": 0.3097686375321337,
+    "license_spdx_id": "Apache-2.0",
+    "open_issues_count": 482,
+    "stargazers_count": 80294,
+    "stars_count": 80294,
+    "top_contributor_fraction_12mo": 0.41701534170153415
+  },
+  "fetched_at": "2026-03-30T19:48:11.223633+00:00",
+  "full_name": "spring-projects/spring-boot"
+}

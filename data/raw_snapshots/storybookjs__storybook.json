@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 2608,
+    "contributors_last_12mo": 19,
+    "days_since_last_push": 0.10843891751157407,
+    "days_since_last_release": 7.258035465127315,
+    "fraction_issues_closed_12mo": 0.6324269889224572,
+    "fraction_open_issues_stale_180d": 0.9099056603773585,
+    "issues_per_contributor": 0.848159509202454,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 2212,
+    "stargazers_count": 89574,
+    "stars_count": 89574,
+    "top_contributor_fraction_12mo": 0.1909177115161732
+  },
+  "fetched_at": "2026-03-30T19:48:44.214157+00:00",
+  "full_name": "storybookjs/storybook"
+}

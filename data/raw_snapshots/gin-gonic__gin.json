@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 522,
+    "contributors_last_12mo": 67,
+    "days_since_last_push": 3.8796649870601856,
+    "days_since_last_release": 30.393787278206016,
+    "fraction_issues_closed_12mo": 0.6125,
+    "fraction_open_issues_stale_180d": 0.9797979797979798,
+    "issues_per_contributor": 1.2662835249042146,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 661,
+    "stargazers_count": 88302,
+    "stars_count": 88302,
+    "top_contributor_fraction_12mo": 0.2681564245810056
+  },
+  "fetched_at": "2026-03-30T19:39:32.331398+00:00",
+  "full_name": "gin-gonic/gin"
+}

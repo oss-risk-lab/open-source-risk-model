@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 286,
+    "contributors_last_12mo": 15,
+    "days_since_last_push": 32.40463370342592,
+    "days_since_last_release": 39.09078138734954,
+    "fraction_issues_closed_12mo": 0.7117117117117117,
+    "fraction_open_issues_stale_180d": 0.9140271493212669,
+    "issues_per_contributor": 1.0874125874125875,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 311,
+    "stargazers_count": 55919,
+    "stars_count": 55919,
+    "top_contributor_fraction_12mo": 0.86
+  },
+  "fetched_at": "2026-03-30T19:34:59.764093+00:00",
+  "full_name": "Textualize/rich"
+}

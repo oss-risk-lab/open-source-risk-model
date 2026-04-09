@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 722,
+    "contributors_last_12mo": 23,
+    "days_since_last_push": 0.09153207773148149,
+    "days_since_last_release": 52.12647576811343,
+    "fraction_issues_closed_12mo": 0.8688725490196079,
+    "fraction_open_issues_stale_180d": 0.7936241610738255,
+    "issues_per_contributor": 0.8490304709141274,
+    "license_spdx_id": "Apache-2.0",
+    "open_issues_count": 613,
+    "stargazers_count": 85282,
+    "stars_count": 85282,
+    "top_contributor_fraction_12mo": 0.20793499043977057
+  },
+  "fetched_at": "2026-03-30T19:43:53.890761+00:00",
+  "full_name": "microsoft/playwright"
+}

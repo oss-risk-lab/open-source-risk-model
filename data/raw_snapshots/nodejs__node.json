@@ -1,0 +1,67 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "fraction_unanswered_after_30d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 5389,
+        "compact_stats": {
+          "comments": {
+            "dropped": 4695,
+            "kept": 6377,
+            "path": "data/issues/nodejs__node/comments.jsonl",
+            "rows_before": 11072
+          },
+          "issues": {
+            "dropped": 634,
+            "kept": 902,
+            "path": "data/issues/nodejs__node/issues.jsonl",
+            "rows_before": 1536
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 756,
+        "last_fetch_utc": "2026-04-07T21:22:38.142457+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 25,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": true,
+        "updated_at_utc": "2026-03-12T21:33:25.055139+00:00"
+      },
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "avg_time_to_first_maintainer_response_days": 5.737234452051204,
+    "contributors_count": 4328,
+    "contributors_last_12mo": 54,
+    "days_since_last_push": 0.008408711770833334,
+    "days_since_last_release": 6.273410828206019,
+    "fraction_issues_closed_12mo": 0.6410466067048242,
+    "fraction_open_issues_stale_180d": 0.8685843203609701,
+    "fraction_unanswered_after_30d": 0.4340425531914894,
+    "issues_per_contributor": 0.5995841035120147,
+    "license_spdx_id": "NOASSERTION",
+    "median_time_to_close_days": 7.976203703703703,
+    "open_issue_age_p90_days": 273.155372969294,
+    "open_issues_count": 2595,
+    "stargazers_count": 116584,
+    "stars_count": 116584,
+    "top_contributor_fraction_12mo": 0.12827663134411602
+  },
+  "fetched_at": "2026-04-07T21:22:38.235500+00:00",
+  "full_name": "nodejs/node"
+}

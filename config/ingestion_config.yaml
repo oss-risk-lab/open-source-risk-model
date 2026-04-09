@@ -1,0 +1,184 @@
+# Ingestion Configuration
+# Configuration for GitHub API optimization and query coverage system
+
+version: "1.0"
+
+# GraphQL Configuration
+graphql:
+  # Conservative batch sizing for reliability
+  initial_batch_size: 10  # Start with 10 repos per query
+  max_batch_size: 30      # Maximum 30 repos per query
+  
+  # Adaptive batching behavior
+  increase_factor: 1.2    # Increase batch size by 20% on success
+  decrease_factor: 0.5    # Decrease batch size by 50% on failure
+  
+  # Retry configuration
+  max_retries: 3
+  retry_delay_seconds: 2
+  
+  # Query timeout
+  timeout_seconds: 30
+
+# REST API Configuration
+rest:
+  # Pagination
+  per_page: 100           # Items per page (max: 100)
+  max_pages: 10           # Maximum pages to fetch per endpoint
+  
+  # Retry configuration
+  max_retries: 3
+  retry_delay_seconds: 2
+  
+  # Request timeout
+  timeout_seconds: 30
+
+# Rate Limiting Configuration
+rate_limiting:
+  # Separate tracking for GraphQL and REST
+  graphql_limit: 5000     # GraphQL points per hour
+  rest_limit: 5000        # REST requests per hour
+  
+  # Warning thresholds
+  warning_threshold: 100  # Warn when remaining < 100
+  
+  # Backoff configuration
+  max_backoff_seconds: 60
+  exponential_base: 2
+
+# Caching Configuration
+caching:
+  # Cache directory
+  cache_dir: "data/github_cache"
+  
+  # TTL settings
+  default_ttl_seconds: 3600  # 1 hour
+  
+  # Cache promotion
+  promote_to_database: false  # Don't auto-promote to database
+
+# Feature Engineering Configuration
+feature_engineering:
+  # Coverage threshold
+  minimum_coverage_threshold: 0.6  # 60% weighted feature coverage
+  
+  # Feature weights (must sum to 1.0)
+  feature_weights:
+    # Snapshot features (40% total)
+    days_since_last_push: 0.10
+    days_since_last_release: 0.10
+    stars_count: 0.05
+    archived: 0.10
+    open_issues_count: 0.05
+    
+    # Contributor features (20% total)
+    contributors_count: 0.05
+    contributors_last_12mo: 0.05
+    top_contributor_fraction_12mo: 0.10
+    
+    # Issue lifecycle features (40% total)
+    issues_per_contributor: 0.05
+    fraction_issues_closed_12mo: 0.10
+    fraction_open_issues_stale_180d: 0.10
+    avg_time_to_first_maintainer_response_days: 0.05
+    median_time_to_close_days: 0.05
+    open_issue_age_p90_days: 0.05
+
+# Issue Fetching Configuration
+issues:
+  # MVP limits
+  enable_deep_issue_enrichment: false  # Disable deep enrichment for MVP
+  max_issues_per_repo: 100             # Cap at 100 issues
+  
+  # Issue states to fetch
+  fetch_states: ["open", "closed"]
+  
+  # Issue events (use sparingly)
+  fetch_events: false  # Disable events for MVP
+
+# Ingestion Pipeline Configuration
+pipeline:
+  # Progress reporting
+  progress_report_interval: 10  # Report every 10 repos
+  
+  # Error handling
+  continue_on_error: true  # Continue with remaining repos on failure
+  
+  # Modes
+  default_mode: "provisional"  # provisional or full
+  
+  # Persistence
+  default_persistence: "cache"  # temporary, cache, or database
+
+# Query Coverage Configuration
+query_coverage:
+  # Retrieval strategy
+  prefer_database: true  # Prefer database over live ingestion when available
+  
+  # Live ingestion defaults
+  default_ingestion_mode: "provisional"
+  default_persistence_mode: "cache"
+  
+  # Cost classification thresholds
+  low_cost_threshold: 5      # < 5 API calls = low
+  medium_cost_threshold: 15  # < 15 API calls = medium
+  # >= 15 API calls = high
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # Log API calls
+  log_api_calls: true
+  
+  # Log cache hits/misses
+  log_cache_operations: false
+
+# Database Configuration
+database:
+  # Connection
+  path: "data/graphs.db"
+  
+  # Timeouts
+  connection_timeout_seconds: 30
+  
+  # Indexes
+  create_indexes: true
+
+# Validation Configuration
+validation:
+  # Benchmark parity
+  score_tolerance: 0.01  # ±0.01 acceptable difference
+  feature_tolerance: 0.05  # ±5% acceptable difference
+  
+  # Schema validation
+  validate_schema: true
+  strict_mode: false  # Allow missing optional fields
+
+# Performance Configuration
+performance:
+  # Concurrency
+  max_concurrent_requests: 3
+  
+  # Timeouts
+  global_timeout_seconds: 300  # 5 minutes per repo
+  
+  # Memory limits
+  max_cache_size_mb: 500
+
+# Feature Flags
+features:
+  # Enable/disable features
+  enable_graphql_batching: true
+  enable_adaptive_sizing: true
+  enable_cache_promotion: false
+  enable_database_persistence: true
+  enable_provisional_mode: true
+  enable_full_mode: true
+
+# Metadata
+metadata:
+  config_version: "1.0"
+  created_at: "2025-01-24"
+  description: "Configuration for GitHub API optimization and query coverage system"

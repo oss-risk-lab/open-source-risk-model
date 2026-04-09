@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-02-21T15:29:27.867724+00:00",
+  "cached_at": "2026-03-30T19:39:45.106769+00:00",
   "cache_key": "contributors:golang/go",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 7556
+      "contributions": 7563
     },
     {
       "login": "griesemer",
@@ -88,7 +88,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 2855
+      "contributions": 2863
     },
     {
       "login": "bradfitz",
@@ -110,7 +110,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 2390
+      "contributions": 2394
     }
   ]
 }

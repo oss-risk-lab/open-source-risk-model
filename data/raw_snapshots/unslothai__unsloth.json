@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 156,
+    "contributors_last_12mo": 25,
+    "days_since_last_push": 0.0014532124768518518,
+    "days_since_last_release": 3.1951935722569442,
+    "fraction_issues_closed_12mo": 0.560639070442992,
+    "fraction_open_issues_stale_180d": 0.6855345911949685,
+    "issues_per_contributor": 6.7243589743589745,
+    "license_spdx_id": "Apache-2.0",
+    "open_issues_count": 1049,
+    "stargazers_count": 58668,
+    "stars_count": 58668,
+    "top_contributor_fraction_12mo": 0.475
+  },
+  "fetched_at": "2026-03-30T19:50:09.280469+00:00",
+  "full_name": "unslothai/unsloth"
+}

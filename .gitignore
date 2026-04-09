@@ -213,6 +213,52 @@ __marimo__/
 .Rhistory
 
 # Multi-repo persistent graph database
-data/graphs.db
+# WAL and SHM files are transient — never commit
 data/graphs.db-shm
 data/graphs.db-wal
+
+# Cache directories
+# Never commit cache files - these are temporary artifacts
+.cache/
+cache/
+.manifest_cache/
+.cve_cache/
+
+# Test artifacts
+# Temporary test databases and files
+test_*.db
+test_*.db-*
+*.test.db
+
+# Environment files with secrets
+# Never commit .env with actual secrets - use .env.example as template
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node modules (if JavaScript tooling is added)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Generated documentation
+docs/_build/
+site/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/

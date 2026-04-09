@@ -1,0 +1,28 @@
+{
+  "cached_at": "2026-03-30T19:42:58.017313+00:00",
+  "cache_key": "contributors:macrozheng/mall",
+  "data": [
+    {
+      "login": "macrozheng",
+      "id": 15903809,
+      "node_id": "MDQ6VXNlcjE1OTAzODA5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15903809?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/macrozheng",
+      "html_url": "https://github.com/macrozheng",
+      "followers_url": "https://api.github.com/users/macrozheng/followers",
+      "following_url": "https://api.github.com/users/macrozheng/following{/other_user}",
+      "gists_url": "https://api.github.com/users/macrozheng/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/macrozheng/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/macrozheng/subscriptions",
+      "organizations_url": "https://api.github.com/users/macrozheng/orgs",
+      "repos_url": "https://api.github.com/users/macrozheng/repos",
+      "events_url": "https://api.github.com/users/macrozheng/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/macrozheng/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false,
+      "contributions": 940
+    }
+  ]
+}

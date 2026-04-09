@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Insights Dashboard</title>
+  <style>
+    :root{
+      /* Background layers */
+      --bg: #0a0e13;
+      --bg-surface: #0f1419;
+      --bg-elevated: #151b23;
+      --bg-overlay: #1a222c;
+
+      /* Borders */
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-emphasis: rgba(255, 255, 255, 0.10);
+
+      /* Text */
+      --text-primary: rgba(255, 255, 255, 0.92);
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-tertiary: rgba(255, 255, 255, 0.35);
+
+      /* Accent */
+      --accent: #3b82f6;
+      --accent-muted: rgba(59, 130, 246, 0.15);
+
+      /* Status colors */
+      --status-high-bg: rgba(239, 68, 68, 0.12);
+      --status-high-text: #ef4444;
+      --status-high-border: rgba(239, 68, 68, 0.35);
+      --status-medium-bg: rgba(234, 179, 8, 0.12);
+      --status-medium-text: #eab308;
+      --status-medium-border: rgba(234, 179, 8, 0.35);
+      --status-low-bg: rgba(34, 197, 94, 0.12);
+      --status-low-text: #22c55e;
+      --status-low-border: rgba(34, 197, 94, 0.35);
+
+      /* Mild status (for signal badges) */
+      --status-mild-bg: rgba(234, 88, 12, 0.12);
+      --status-mild-text: #ea580c;
+
+      /* Spacing scale */
+      --sp-4: 4px;
+      --sp-8: 8px;
+      --sp-12: 12px;
+      --sp-16: 16px;
+      --sp-24: 24px;
+      --sp-32: 32px;
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+      /* Typography */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Layout */
+    .wrap{
+      max-width: 1100px;
+      margin: var(--sp-32) auto;
+      padding: 0 var(--sp-16);
+    }
+    .topbar{
+      display:flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-16);
+      margin-bottom: var(--sp-16);
+    }
+    .title{
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    /* Panel */
+    .panel{
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-24);
+      margin-bottom: var(--sp-16);
+      transition: border-color 0.15s ease;
+    }
+    .panel:hover{
+      border-color: var(--border-emphasis);
+    }
+
+    /* Panel Header */
+    .panel-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--sp-16);
+    }
+
+    /* Section Title & Panel Subtitle */
+    .section-title{
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .panel-subtitle{
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* Inline risk color text emphasis */
+    .text-high{ color: var(--status-high-text); }
+    .text-medium{ color: var(--status-medium-text); }
+    .text-low{ color: var(--status-low-text); }
+
+    /* Hero Section */
+    .hero { display: flex; align-items: center; gap: var(--sp-24); padding: var(--sp-24) var(--sp-32); margin-bottom: var(--sp-12); background: var(--bg-overlay); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+    .hero-left { display: flex; flex-direction: column; align-items: flex-start; min-width: 140px; }
+    .hero-right { flex: 1; }
+    .hero-value { font-size: 44px; font-weight: 800; font-family: var(--font-mono); color: var(--text-primary); line-height: 1; }
+    .hero-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; margin-top: var(--sp-8); }
+    .hero-insight { font-size: 15px; color: var(--text-secondary); line-height: 1.5; border-left: 3px solid var(--border); padding-left: var(--sp-16); }
+    .hero-insight-high { border-left-color: var(--status-high-border); }
+    .hero-insight-medium { border-left-color: var(--status-medium-border); }
+    .hero-insight-low { border-left-color: var(--status-low-border); }
+
+    /* Button */
+    .btn{
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, background .15s ease;
+      user-select:none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    .btn:hover{ background: var(--bg-overlay); }
+    .btn:active{ transform: translateY(1px); }
+    .btn:disabled{ opacity: .5; cursor: not-allowed; }
+
+    /* Error */
+    .err{
+      margin-top: var(--sp-12);
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--status-high-border);
+      background: var(--status-high-bg);
+      color: var(--text-primary);
+      font-size: 13px;
+      display:none;
+      white-space: pre-wrap;
+    }
+
+    /* Pill */
+    .pill{
+      font-size: 12px;
+      padding: var(--sp-4) var(--sp-8);
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      background: var(--border);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    /* Label Indicator */
+    .label-indicator{
+      display: inline-block;
+      padding: var(--sp-4) var(--sp-12);
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .label-high   { background: var(--status-high-bg);   color: var(--status-high-text); }
+    .label-medium { background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .label-low    { background: var(--status-low-bg);    color: var(--status-low-text); }
+
+    /* Signal Badge */
+    .signal-badge{
+      display: inline-block;
+      padding: var(--sp-4) var(--sp-8);
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .signal-high   { background: var(--status-high-bg);   color: var(--status-high-text); }
+    .signal-medium { background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .signal-mild   { background: var(--status-mild-bg); color: var(--status-mild-text); }
+
+    /* KPI Strip — two-tier: dominant left + secondary grid right */
+    .kpi-strip { display: flex; gap: var(--sp-12); margin-bottom: var(--sp-12); align-items: stretch; }
+    .kpi-card { display: flex; flex-direction: column; align-items: flex-start; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); transition: border-color 0.15s ease; }
+    .kpi-card:hover { border-color: var(--border-emphasis); }
+    .kpi-card-dominant { flex: 0 0 auto; min-width: 180px; padding: var(--sp-24) var(--sp-32); background: var(--bg-overlay); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+    .kpi-card-dominant .kpi-value-lg { font-size: 36px; font-weight: 800; }
+    .kpi-secondary-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-12); flex: 1; }
+    .kpi-card-secondary { padding: var(--sp-12) var(--sp-16); }
+    .kpi-value { font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+    .kpi-label { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: var(--sp-4); }
+    .kpi-card-high { border-top: 2px solid var(--status-high-border); }
+
+    /* Form Controls */
+    select, input[type="number"]{
+      padding: var(--sp-8) var(--sp-12);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+    select option{ background: var(--bg-elevated); color: var(--text-primary); }
+
+    .filter-bar{
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-12);
+      align-items: center;
+    }
+    .filter-bar label{
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+      font-size: 13px;
+      color: var(--text-secondary);
+      user-select: none;
+      white-space: nowrap;
+    }
+    .filter-bar input[type="checkbox"]{
+      cursor: pointer;
+    }
+
+    /* Table */
+    .table-wrap{
+      overflow-x: auto;
+      margin-bottom: var(--sp-16);
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead th{
+      text-align: left;
+      padding: var(--sp-8) var(--sp-12);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody td{
+      padding: var(--sp-8) var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+    tbody tr{
+      transition: background 0.12s ease;
+    }
+    tbody tr:hover{
+      background: var(--bg-overlay);
+    }
+    tbody tr.row-high{
+      border-left: 3px solid var(--status-high-border);
+    }
+    .repo-link{
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .repo-link:hover{
+      text-decoration: underline;
+    }
+    .score-cell{
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .reasons-list{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .reasons-list li{
+      margin-bottom: var(--sp-4);
+    }
+    .signals-cell{
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+    }
+
+    /* Pagination */
+    .pagination{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-16);
+      padding: var(--sp-16) 0;
+    }
+    .pagination .range-text{
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    /* Detail View */
+    .detail-view{
+      display: none;
+    }
+    /* Detail Hero Header */
+    .detail-hero{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-4);
+    }
+    .detail-hero-left{ flex: 1; min-width: 0; }
+    .detail-title{
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .detail-subtitle{
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin: var(--sp-4) 0 0;
+    }
+    /* Detail Action Buttons */
+    .detail-actions{
+      display: flex;
+      gap: var(--sp-8);
+      flex-shrink: 0;
+    }
+    .btn-subtle{
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: var(--sp-4) var(--sp-12);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-subtle:hover{
+      background: var(--bg-surface);
+      border-color: var(--border-emphasis);
+      color: var(--text-secondary);
+    }
+    /* Detail Meta — Score hero + secondary row */
+    .detail-score-hero{
+      display: flex;
+      align-items: center;
+      gap: var(--sp-24);
+      padding: var(--sp-24) var(--sp-32);
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--sp-12);
+    }
+    .detail-score-hero .meta-value{
+      font-size: 48px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .detail-score-hero .meta-label{
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: var(--sp-4);
+    }
+    .detail-score-hero .score-context{
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: var(--sp-8);
+    }
+    .detail-score-hero-high{
+      border-left: 3px solid var(--status-high-border);
+    }
+    .detail-score-hero-medium{
+      border-left: 3px solid var(--status-medium-border);
+    }
+    .detail-score-hero-low{
+      border-left: 3px solid var(--status-low-border);
+    }
+    .detail-secondary-meta{
+      display: flex;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-24);
+    }
+    .detail-secondary-meta .meta-card{
+      flex: 1;
+      padding: var(--sp-8) var(--sp-16);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      transition: border-color 0.15s ease;
+    }
+    .detail-secondary-meta .meta-card:hover{
+      border-color: var(--border-emphasis);
+    }
+    .detail-secondary-meta .meta-card .meta-label{
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--sp-4);
+    }
+    .detail-secondary-meta .meta-card .meta-value{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .signals-table{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: var(--sp-4);
+    }
+    .signals-table th{
+      text-align: left;
+      padding: var(--sp-8) var(--sp-12);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--border);
+    }
+    .signals-table td{
+      padding: var(--sp-8) var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+
+    /* Loading / Empty States */
+    .loading-state{
+      display: none;
+      text-align: center;
+      padding: var(--sp-32) var(--sp-16);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .empty-state{
+      display: none;
+      text-align: center;
+      padding: var(--sp-32) var(--sp-16);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px){
+      .hero{ flex-direction: column; }
+      .filter-bar{ flex-direction: column; align-items: flex-start; }
+      .kpi-strip{ flex-direction: column; }
+      .kpi-secondary-group{ grid-template-columns: 1fr; }
+      .detail-hero{ flex-direction: column; }
+      .detail-actions{ flex-wrap: wrap; }
+      .detail-secondary-meta{ flex-direction: column; }
+    }
+
+    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-8) var(--sp-12); margin-bottom:var(--sp-12); border-radius:var(--radius-lg); border:1px solid var(--border); background:var(--bg-elevated); box-shadow:var(--shadow-sm); }
+    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
+    .ds-nav-links { display:flex; gap:var(--sp-4); }
+    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
+    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
+    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="title">Insights Dashboard</div>
+    </div>
+
+    <!-- Hero Section -->
+    <div id="heroSection" class="hero" style="display:none;">
+      <div class="hero-left">
+        <div class="hero-value" id="heroValue"></div>
+        <div class="hero-label">Repositories Monitored</div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-insight" id="heroInsight"></div>
+      </div>
+    </div>
+
+    <!-- Summary Strip (KPI) -->
+    <div id="summaryStrip" class="kpi-strip" style="display:none;"></div>
+
+    <!-- Filter / Sort Controls -->
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="section-title">Filters &amp; Sorting</h3>
+      </div>
+      <div class="filter-bar">
+        <label>
+          Label
+          <select id="labelFilter" aria-label="Filter by label">
+            <option value="">All</option>
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+          </select>
+        </label>
+
+        <label>
+          <input type="checkbox" id="hasCvesFilter" aria-label="Filter repos with CVEs" />
+          Has CVEs
+        </label>
+
+        <label>
+          <input type="checkbox" id="hasMaintainerRiskFilter" aria-label="Filter repos with maintainer risk" />
+          Maintainer risk
+        </label>
+
+        <label>
+          <input type="checkbox" id="hasStaleReleaseFilter" aria-label="Filter repos with stale releases" />
+          Stale release
+        </label>
+
+        <label>
+          Min score
+          <input type="number" id="minScoreFilter" min="0" max="1" step="0.05" placeholder="0.0"
+                 aria-label="Minimum score filter" style="width:80px;" />
+        </label>
+
+        <label>
+          Sort by
+          <select id="sortBySelect" aria-label="Sort by field">
+            <option value="score">Score</option>
+            <option value="base_risk">Base Risk</option>
+            <option value="cve_count">CVE Count</option>
+            <option value="maintainer_fraction">Maintainer Fraction</option>
+            <option value="release_staleness">Release Staleness</option>
+          </select>
+        </label>
+
+        <label>
+          Order
+          <select id="orderSelect" aria-label="Sort order">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading-state">Loading insights…</div>
+
+    <!-- Error State -->
+    <div id="errorState" class="err"></div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state">No repositories match the current filters.</div>
+
+    <!-- Table -->
+    <div id="tableContainer" class="panel" style="display:none;">
+      <div class="panel-header">
+        <h3 class="section-title">Repositories by Risk</h3>
+        <span class="panel-subtitle">Sorted by score, descending</span>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Repository</th>
+            <th scope="col">Score</th>
+            <th scope="col">Label</th>
+            <th scope="col">Reasons</th>
+            <th scope="col">Signals</th>
+          </tr>
+        </thead>
+        <tbody id="insightsBody"></tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div id="paginationControls" class="pagination" style="display:none;">
+      <button id="prevBtn" class="btn" aria-label="Previous page" disabled>Previous</button>
+      <span id="paginationRange" class="range-text" aria-live="polite">0 of 0</span>
+      <button id="nextBtn" class="btn" aria-label="Next page" disabled>Next</button>
+    </div>
+
+    <!-- Detail View -->
+    <div id="detailView" class="detail-view"></div>
+  </div>
+
+<script src="config.js"></script>
+<script>
+// --- Navigation helpers (inlined) ---
+function parseRepoParam(searchString) {
+  var params = new URLSearchParams(searchString);
+  var raw = params.get("repo");
+  if (!raw) return null;
+  var decoded = decodeURIComponent(raw);
+  if (!decoded || !decoded.trim()) return null;
+  decoded = decoded.trim();
+  var slashIndex = decoded.indexOf("/");
+  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
+  return decoded;
+}
+function getRepoFromUrl() { return parseRepoParam(window.location.search); }
+function buildPageUrl(page, repo) {
+  if (repo) return page + "?repo=" + encodeURIComponent(repo);
+  return page;
+}
+function getCurrentPageId() {
+  var path = window.location.pathname;
+  if (path.indexOf("insights") !== -1) return "insights";
+  if (path.indexOf("graph") !== -1) return "graph";
+  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
+  return "index";
+}
+function renderNav(currentPageId, repo) {
+  var existing = document.querySelector("nav.ds-nav");
+  if (existing) existing.remove();
+  var nav = document.createElement("nav");
+  nav.className = "ds-nav";
+  nav.setAttribute("aria-label", "Main navigation");
+  var brand = document.createElement("span");
+  brand.className = "ds-nav-brand";
+  brand.textContent = "Deep Signal";
+  nav.appendChild(brand);
+  var linksDiv = document.createElement("div");
+  linksDiv.className = "ds-nav-links";
+  var pages = [
+    { pageId: "index", label: "Home", file: "index.html" },
+    { pageId: "insights", label: "Insights", file: "insights.html" },
+    { pageId: "graph", label: "Graph", file: "graph.html" },
+    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
+  ];
+  for (var i = 0; i < pages.length; i++) {
+    var p = pages[i];
+    var a = document.createElement("a");
+    a.href = buildPageUrl(p.file, repo);
+    a.className = "ds-nav-link";
+    a.textContent = p.label;
+    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
+    linksDiv.appendChild(a);
+  }
+  nav.appendChild(linksDiv);
+  var wrap = document.querySelector(".wrap");
+  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
+}
+renderNav(getCurrentPageId(), getRepoFromUrl());
+// --- End navigation helpers ---
+
+// --- Cross-page links ---
+function getCrossLinks(currentPageId, repo) {
+  if (!repo) return [];
+  var targets = [
+    { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
+    { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
+    { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
+  ];
+  var links = [];
+  for (var i = 0; i < targets.length; i++) {
+    if (targets[i].targetPageId === currentPageId) continue;
+    links.push({ label: targets[i].label, href: buildPageUrl(targets[i].file, repo), targetPageId: targets[i].targetPageId });
+  }
+  return links;
+}
+// --- End cross-page links ---
+
+  /* ── Constants ── */
+  var API_BASE = window.DS_API_BASE || "";
+
+  var LABEL_COLORS = {
+    HIGH:   { bg: "rgba(239,68,68,.15)", text: "#ef4444" },
+    MEDIUM: { bg: "rgba(234,179,8,.15)",  text: "#eab308" },
+    LOW:    { bg: "rgba(34,197,94,.15)",  text: "#22c55e" }
+  };
+
+  var SEVERITY_COLORS = {
+    high:   { bg: "rgba(239,68,68,.15)", text: "#ef4444" },
+    medium: { bg: "rgba(234,179,8,.15)",  text: "#eab308" },
+    mild:   { bg: "rgba(234,88,12,.15)",  text: "#ea580c" }
+  };
+
+  /* ── Application State ── */
+  var appState = {
+    mode: "list",
+    repo: null,
+    filters: {
+      label: null,
+      has_cves: null,
+      has_maintainer_risk: null,
+      has_stale_release: null,
+      min_score: null
+    },
+    sort_by: "score",
+    order: "desc",
+    limit: 25,
+    offset: 0,
+    total: 0,
+    items: [],
+    detail: null,
+    loading: false,
+    error: null
+  };
+
+  /* ── Pure Helper Functions (no DOM dependencies) ── */
+
+  /**
+   * buildApiUrl(state)
+   * Builds the full API URL from appState. Omits null and empty-string
+   * filter params. Never sends `false` for boolean filters.
+   */
+  function buildApiUrl(state) {
+    var url = API_BASE + "/api/insights?sort_by=" + encodeURIComponent(state.sort_by) +
+      "&order=" + encodeURIComponent(state.order) +
+      "&limit=" + state.limit +
+      "&offset=" + state.offset;
+
+    if (state.filters.label != null && state.filters.label !== "") {
+      url += "&label=" + encodeURIComponent(state.filters.label);
+    }
+    if (state.filters.has_cves === true) {
+      url += "&has_cves=true";
+    }
+    if (state.filters.has_maintainer_risk === true) {
+      url += "&has_maintainer_risk=true";
+    }
+    if (state.filters.has_stale_release === true) {
+      url += "&has_stale_release=true";
+    }
+    if (state.filters.min_score != null && state.filters.min_score !== "") {
+      url += "&min_score=" + encodeURIComponent(state.filters.min_score);
+    }
+
+    return url;
+  }
+
+  /**
+   * signalBadgeText(signals)
+   * Returns array of {text, severity} objects for signal badges.
+   * CVE badge: "CVE" if cve_count<=1, "{n} CVEs" if >1, severity always "high".
+   * Maintainer badge if concentration !== "info".
+   * Stale release badge if staleness !== "info".
+   */
+  function signalBadgeText(signals) {
+    var badges = [];
+    if (signals.has_cves) {
+      badges.push({
+        text: signals.cve_count > 1 ? signals.cve_count + " CVEs" : "CVE",
+        severity: "high"
+      });
+    }
+    if (signals.maintainer_concentration !== "info") {
+      badges.push({
+        text: "Maintainer",
+        severity: signals.maintainer_concentration
+      });
+    }
+    if (signals.release_staleness !== "info") {
+      badges.push({
+        text: "Stale release",
+        severity: signals.release_staleness
+      });
+    }
+    return badges;
+  }
+
+  /**
+   * labelColorClass(label)
+   * Maps label string to CSS class name.
+   */
+  function labelColorClass(label) {
+    switch (label) {
+      case "HIGH":   return "label-high";
+      case "MEDIUM": return "label-medium";
+      case "LOW":    return "label-low";
+      default:       return "";
+    }
+  }
+
+  /**
+   * paginationRangeText(offset, limit, total)
+   * Returns "1–25 of 145" format. When total is 0, returns "0 of 0".
+   */
+  function paginationRangeText(offset, limit, total) {
+    if (total === 0) return "0 of 0";
+    var start = offset + 1;
+    var end = Math.min(offset + limit, total);
+    return start + "\u2013" + end + " of " + total;
+  }
+
+  /**
+   * paginationButtonState(offset, limit, total)
+   * Returns {prevDisabled, nextDisabled}.
+   */
+  function paginationButtonState(offset, limit, total) {
+    return {
+      prevDisabled: offset === 0,
+      nextDisabled: offset + limit >= total
+    };
+  }
+
+  /**
+   * nextOffset(offset, limit, total)
+   * Returns offset+limit only when offset+limit < total, otherwise returns offset.
+   */
+  function nextOffset(offset, limit, total) {
+    if (offset + limit < total) return offset + limit;
+    return offset;
+  }
+
+  /**
+   * prevOffset(offset, limit)
+   * Returns Math.max(0, offset - limit).
+   */
+  function prevOffset(offset, limit) {
+    return Math.max(0, offset - limit);
+  }
+
+  /**
+   * encodeRepoParam(repoFullName)
+   * Returns encodeURIComponent(repoFullName).
+   */
+  function encodeRepoParam(repoFullName) {
+    return encodeURIComponent(repoFullName);
+  }
+
+  /**
+   * decodeRepoParam(encoded)
+   * Returns decodeURIComponent(encoded).
+   */
+  function decodeRepoParam(encoded) {
+    return decodeURIComponent(encoded);
+  }
+
+  /**
+   * graphViewUrl(repoFullName)
+   * Returns "graph.html?repo=" + encodeURIComponent(repoFullName).
+   */
+  function graphViewUrl(repoFullName) {
+    return "graph.html?repo=" + encodeURIComponent(repoFullName);
+  }
+
+  /**
+   * insightPanelAriaLabel(repoFullName)
+   * Returns "Insight summary for " + repoFullName.
+   */
+  function insightPanelAriaLabel(repoFullName) {
+    return "Insight summary for " + repoFullName;
+  }
+
+  /**
+   * summaryCounts(items)
+   * Takes array of insight items, returns {high, medium, low} counting
+   * items by graph_signal_label (case-insensitive match).
+   */
+  function summaryCounts(items) {
+    var counts = { high: 0, medium: 0, low: 0 };
+    for (var i = 0; i < items.length; i++) {
+      var label = (items[i].graph_signal_label || "").toUpperCase();
+      if (label === "HIGH") counts.high++;
+      else if (label === "MEDIUM") counts.medium++;
+      else if (label === "LOW") counts.low++;
+    }
+    return counts;
+  }
+
+  /**
+   * formatErrorMessage(status, detail)
+   * Returns string like "Error 404: Not found" containing both status code
+   * and detail text.
+   */
+  function formatErrorMessage(status, detail) {
+    return "Error " + status + ": " + detail;
+  }
+
+  /**
+   * generateInsightText(items)
+   * Produces a human-readable insight sentence from the current items.
+   */
+  function generateInsightText(items) {
+    var highItems = [];
+    for (var i = 0; i < items.length; i++) {
+      if ((items[i].graph_signal_label || "").toUpperCase() === "HIGH") {
+        highItems.push(items[i]);
+      }
+    }
+    if (highItems.length === 0) {
+      return "All repositories are within acceptable risk thresholds. No immediate action required.";
+    }
+    var reasonCounts = {};
+    for (var j = 0; j < highItems.length; j++) {
+      var reasons = highItems[j].reasons || [];
+      for (var k = 0; k < reasons.length; k++) {
+        reasonCounts[reasons[k]] = (reasonCounts[reasons[k]] || 0) + 1;
+      }
+    }
+    var topReason = "";
+    var topCount = 0;
+    for (var reason in reasonCounts) {
+      if (reasonCounts[reason] > topCount) {
+        topCount = reasonCounts[reason];
+        topReason = reason;
+      }
+    }
+    var suffix = topReason ? " \u2014 " + topReason.toLowerCase() : "";
+    return highItems.length + " high-risk repositor" +
+      (highItems.length === 1 ? "y" : "ies") + suffix;
+  }
+
+  /**
+   * getDominantRiskLevel(items)
+   * Returns the dominant risk level from items: high > medium > low > none.
+   */
+  function getDominantRiskLevel(items) {
+    var counts = summaryCounts(items);
+    if (counts.high > 0) return "high";
+    if (counts.medium > 0) return "medium";
+    if (counts.low > 0) return "low";
+    return "none";
+  }
+
+  /**
+   * renderHero(items, total)
+   * Renders the hero section with total count and insight text.
+   */
+  function renderHero(items, total) {
+    var heroSection = document.getElementById("heroSection");
+    document.getElementById("heroValue").textContent = total;
+    var insightEl = document.getElementById("heroInsight");
+    var dominant = getDominantRiskLevel(items);
+    var insightText = generateInsightText(items);
+    if (dominant !== "none") {
+      insightEl.innerHTML = '<span class="text-' + dominant + '">' +
+        insightText.split(" \u2014 ")[0] + '</span>' +
+        (insightText.indexOf(" \u2014 ") !== -1 ? ' \u2014 ' + insightText.split(" \u2014 ")[1] : '');
+    } else {
+      insightEl.textContent = insightText;
+    }
+    insightEl.className = "hero-insight";
+    if (dominant !== "none") {
+      insightEl.classList.add("hero-insight-" + dominant);
+    }
+    heroSection.style.display = "flex";
+  }
+
+  /**
+   * setViewState(state)
+   * Manages mutually exclusive visibility of UI containers.
+   * States: "loading", "error", "empty", "list", "detail"
+   */
+  function setViewState(state) {
+    var hero = document.getElementById("heroSection");
+    var loading = document.getElementById("loadingState");
+    var error = document.getElementById("errorState");
+    var empty = document.getElementById("emptyState");
+    var table = document.getElementById("tableContainer");
+    var summary = document.getElementById("summaryStrip");
+    var pagination = document.getElementById("paginationControls");
+    var detail = document.getElementById("detailView");
+
+    // Hide everything first
+    hero.style.display = "none";
+    loading.style.display = "none";
+    error.style.display = "none";
+    empty.style.display = "none";
+    table.style.display = "none";
+    summary.style.display = "none";
+    pagination.style.display = "none";
+    detail.style.display = "none";
+
+    switch (state) {
+      case "loading":
+        loading.style.display = "block";
+        break;
+      case "error":
+        error.style.display = "block";
+        break;
+      case "empty":
+        empty.style.display = "block";
+        break;
+      case "list":
+        hero.style.display = "flex";
+        table.style.display = "block";
+        summary.style.display = "flex";
+        pagination.style.display = "flex";
+        break;
+      case "detail":
+        detail.style.display = "block";
+        break;
+    }
+  }
+
+  /* ── API Functions ── */
+
+  /**
+   * fetchInsightsList()
+   * Fetches the insights list from the API using current appState params.
+   * Returns {total, items} on success, throws Error on failure.
+   */
+  async function fetchInsightsList() {
+    var url = buildApiUrl(appState);
+    var response = await fetch(url);
+    if (!response.ok) {
+      var detail = await response.text();
+      throw new Error(formatErrorMessage(response.status, detail));
+    }
+    return await response.json();
+  }
+
+  /* ── Rendering Functions ── */
+
+  /**
+   * renderTable(items)
+   * Clears and rebuilds <tbody> rows from items array.
+   * Uses event delegation on tbody for repo link clicks.
+   */
+  function renderTable(items) {
+    var tbody = document.getElementById("insightsBody");
+    tbody.innerHTML = "";
+
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var tr = document.createElement("tr");
+
+      // Add row-high class for HIGH risk items
+      if ((item.graph_signal_label || "").toUpperCase() === "HIGH") {
+        tr.className = "row-high";
+      }
+
+      // Repo name cell (clickable link)
+      var tdRepo = document.createElement("td");
+      var repoLink = document.createElement("a");
+      repoLink.className = "repo-link";
+      repoLink.href = "#";
+      repoLink.setAttribute("data-repo", item.repo_full_name);
+      repoLink.textContent = item.repo_full_name;
+      tdRepo.appendChild(repoLink);
+      tr.appendChild(tdRepo);
+
+      // Score cell
+      var tdScore = document.createElement("td");
+      tdScore.className = "score-cell";
+      tdScore.textContent = item.graph_signal_score.toFixed(3);
+      tr.appendChild(tdScore);
+
+      // Label cell
+      var tdLabel = document.createElement("td");
+      var labelSpan = document.createElement("span");
+      labelSpan.className = "label-indicator " + labelColorClass(item.graph_signal_label);
+      labelSpan.textContent = item.graph_signal_label;
+      tdLabel.appendChild(labelSpan);
+      tr.appendChild(tdLabel);
+
+      // Reasons cell
+      var tdReasons = document.createElement("td");
+      var reasonsList = document.createElement("ul");
+      reasonsList.className = "reasons-list";
+      for (var j = 0; j < item.reasons.length; j++) {
+        var li = document.createElement("li");
+        li.textContent = item.reasons[j];
+        reasonsList.appendChild(li);
+      }
+      tdReasons.appendChild(reasonsList);
+      tr.appendChild(tdReasons);
+
+      // Signals cell
+      var tdSignals = document.createElement("td");
+      var signalsDiv = document.createElement("div");
+      signalsDiv.className = "signals-cell";
+      var badges = signalBadgeText(item.signals);
+      for (var k = 0; k < badges.length; k++) {
+        var badge = document.createElement("span");
+        badge.className = "signal-badge signal-" + badges[k].severity;
+        badge.textContent = badges[k].text;
+        signalsDiv.appendChild(badge);
+      }
+      tdSignals.appendChild(signalsDiv);
+      tr.appendChild(tdSignals);
+
+      tbody.appendChild(tr);
+    }
+  }
+
+  // Event delegation on tbody for repo link clicks
+  document.getElementById("insightsBody").addEventListener("click", function(e) {
+    var target = e.target.closest(".repo-link");
+    if (target) {
+      e.preventDefault();
+      var repoFullName = target.getAttribute("data-repo");
+      navigateToDetail(repoFullName);
+    }
+  });
+
+  /**
+   * renderSummaryStrip(items, total)
+   * Shows page-scoped summary counts above the table.
+   */
+  function renderSummaryStrip(items, total) {
+    var strip = document.getElementById("summaryStrip");
+    var counts = summaryCounts(items);
+    strip.innerHTML =
+      '<div class="kpi-card kpi-card-dominant">' +
+        '<span class="kpi-value kpi-value-lg">' + total + '</span>' +
+        '<span class="kpi-label">Total Repos</span>' +
+      '</div>' +
+      '<div class="kpi-secondary-group">' +
+        '<div class="kpi-card kpi-card-secondary kpi-card-high">' +
+          '<span class="kpi-value" style="color:var(--status-high-text);">' + counts.high + '</span>' +
+          '<span class="kpi-label">High Risk</span>' +
+        '</div>' +
+        '<div class="kpi-card kpi-card-secondary">' +
+          '<span class="kpi-value" style="color:var(--status-medium-text);">' + counts.medium + '</span>' +
+          '<span class="kpi-label">Medium Risk</span>' +
+        '</div>' +
+        '<div class="kpi-card kpi-card-secondary">' +
+          '<span class="kpi-value" style="color:var(--status-low-text);">' + counts.low + '</span>' +
+          '<span class="kpi-label">Low Risk</span>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /**
+   * renderPagination(total, offset, limit)
+   * Updates pagination range text and button disabled states.
+   */
+  function renderPagination(total, offset, limit) {
+    document.getElementById("paginationRange").textContent = paginationRangeText(offset, limit, total);
+    var btnState = paginationButtonState(offset, limit, total);
+    document.getElementById("prevBtn").disabled = btnState.prevDisabled;
+    document.getElementById("nextBtn").disabled = btnState.nextDisabled;
+  }
+
+  /**
+   * renderLoading()
+   * Shows the loading state.
+   */
+  function renderLoading() {
+    setViewState("loading");
+  }
+
+  /**
+   * renderError(message)
+   * Shows the error state with the given message.
+   */
+  function renderError(message) {
+    document.getElementById("errorState").textContent = message;
+    setViewState("error");
+  }
+
+  /**
+   * renderEmpty()
+   * Shows the empty state.
+   */
+  function renderEmpty() {
+    setViewState("empty");
+  }
+
+  /* ── Orchestrator ── */
+
+  /**
+   * fetchAndRender()
+   * Async orchestrator: clears errors, shows loading, fetches list,
+   * updates appState, renders appropriate view.
+   */
+  async function fetchAndRender() {
+    appState.error = null;
+    renderLoading();
+    appState.loading = true;
+    try {
+      var data = await fetchInsightsList();
+      appState.items = data.items;
+      appState.total = data.total;
+      if (appState.total === 0) {
+        renderEmpty();
+      } else {
+        setViewState("list");
+        renderHero(appState.items, appState.total);
+        renderTable(appState.items);
+        renderSummaryStrip(appState.items, appState.total);
+        renderPagination(appState.total, appState.offset, appState.limit);
+      }
+    } catch (error) {
+      renderError(error.message);
+    } finally {
+      appState.loading = false;
+    }
+  }
+
+  /* ── Event Handlers ── */
+
+  /**
+   * onFilterChange()
+   * Reads filter control values from DOM, updates appState.filters,
+   * resets offset, and re-fetches.
+   */
+  function onFilterChange() {
+    var labelVal = document.getElementById("labelFilter").value;
+    appState.filters.label = labelVal === "" ? null : labelVal;
+
+    var hasCves = document.getElementById("hasCvesFilter").checked;
+    appState.filters.has_cves = hasCves ? true : null;
+
+    var hasMaintainerRisk = document.getElementById("hasMaintainerRiskFilter").checked;
+    appState.filters.has_maintainer_risk = hasMaintainerRisk ? true : null;
+
+    var hasStaleRelease = document.getElementById("hasStaleReleaseFilter").checked;
+    appState.filters.has_stale_release = hasStaleRelease ? true : null;
+
+    var minScoreVal = document.getElementById("minScoreFilter").value;
+    appState.filters.min_score = minScoreVal === "" ? null : parseFloat(minScoreVal);
+
+    appState.offset = 0;
+    fetchAndRender();
+  }
+
+  /**
+   * onSortChange()
+   * Reads sort control values from DOM, updates appState, resets offset,
+   * and re-fetches.
+   */
+  function onSortChange() {
+    appState.sort_by = document.getElementById("sortBySelect").value;
+    appState.order = document.getElementById("orderSelect").value;
+    appState.offset = 0;
+    fetchAndRender();
+  }
+
+  /**
+   * onPageChange(direction)
+   * Adjusts offset by ±limit (clamped) and re-fetches.
+   */
+  function onPageChange(direction) {
+    if (direction === "next") {
+      appState.offset = nextOffset(appState.offset, appState.limit, appState.total);
+    } else if (direction === "prev") {
+      appState.offset = prevOffset(appState.offset, appState.limit);
+    }
+    fetchAndRender();
+  }
+
+  /* ── Wire Event Listeners ── */
+  document.getElementById("labelFilter").addEventListener("change", onFilterChange);
+  document.getElementById("hasCvesFilter").addEventListener("change", onFilterChange);
+  document.getElementById("hasMaintainerRiskFilter").addEventListener("change", onFilterChange);
+  document.getElementById("hasStaleReleaseFilter").addEventListener("change", onFilterChange);
+  document.getElementById("minScoreFilter").addEventListener("change", onFilterChange);
+  document.getElementById("sortBySelect").addEventListener("change", onSortChange);
+  document.getElementById("orderSelect").addEventListener("change", onSortChange);
+  document.getElementById("prevBtn").addEventListener("click", function() { onPageChange("prev"); });
+  document.getElementById("nextBtn").addEventListener("click", function() { onPageChange("next"); });
+
+  /* ── Detail Mode Functions ── */
+
+  /**
+   * fetchRepoInsight(owner, repo)
+   * Fetches single-repo insight detail from the API.
+   * Returns parsed JSON on success, throws on error.
+   */
+  async function fetchRepoInsight(owner, repo) {
+    var response = await fetch(API_BASE + "/api/insights/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo));
+    if (response.ok) {
+      return await response.json();
+    }
+    if (response.status === 404) {
+      throw new Error("Repository not found");
+    }
+    var responseText = await response.text();
+    throw new Error(formatErrorMessage(response.status, responseText));
+  }
+
+  /**
+   * renderDetailView(detail)
+   * Renders the full detail view for a single repo insight.
+   */
+  function renderDetailView(detail) {
+    var el = document.getElementById("detailView");
+    var signalsHtml = "";
+    if (detail.direct_signals && detail.direct_signals.length > 0) {
+      var rows = "";
+      for (var i = 0; i < detail.direct_signals.length; i++) {
+        var sig = detail.direct_signals[i];
+        var badgeClass = "signal-badge";
+        if (sig.severity === "high" || sig.severity === "medium" || sig.severity === "mild") {
+          badgeClass += " signal-" + sig.severity;
+        }
+        rows += "<tr>" +
+          "<td>" + sig.signal_name + "</td>" +
+          "<td><span class=\"" + badgeClass + "\">" + sig.severity + "</span></td>" +
+          "<td style=\"font-family:var(--font-mono);\">" + sig.score_contribution.toFixed(3) + "</td>" +
+          "<td>" + sig.reason + "</td>" +
+          "</tr>";
+      }
+      signalsHtml = "<div class=\"panel\"><div class=\"panel-header\"><h3 class=\"section-title\">Direct Signals</h3><span class=\"panel-subtitle\">" + detail.direct_signals.length + " signals contributing to risk</span></div>" +
+        "<table class=\"signals-table\">" +
+        "<thead><tr>" +
+        "<th scope=\"col\">Signal Name</th>" +
+        "<th scope=\"col\">Severity</th>" +
+        "<th scope=\"col\">Score Contribution</th>" +
+        "<th scope=\"col\">Reason</th>" +
+        "</tr></thead>" +
+        "<tbody>" + rows + "</tbody></table></div>";
+    }
+
+    var reasonsHtml = "";
+    if (detail.reasons && detail.reasons.length > 0) {
+      var lis = "";
+      for (var j = 0; j < detail.reasons.length; j++) {
+        lis += "<li>" + detail.reasons[j] + "</li>";
+      }
+      reasonsHtml = "<div class=\"panel\"><div class=\"panel-header\"><h3 class=\"section-title\">Reasons</h3></div><ul class=\"reasons-list\" style=\"padding-left:var(--sp-16);line-height:1.6;\">" + lis + "</ul></div>";
+    }
+
+    // Build action buttons
+    var crossLinks = getCrossLinks("insights", detail.repo_full_name);
+    var actionsHtml = "<button class=\"btn-subtle\" id=\"backToList\">\u2190 Back</button>";
+    for (var cl = 0; cl < crossLinks.length; cl++) {
+      var shortLabel = crossLinks[cl].label.replace("Open in ", "");
+      actionsHtml += "<a href=\"" + crossLinks[cl].href + "\" class=\"btn-subtle\" style=\"text-decoration:none;display:inline-flex;align-items:center;\">" + shortLabel + "</a>";
+    }
+
+    // Build subtitle — human-readable risk summary
+    var labelLower = detail.graph_signal_label.toLowerCase();
+    var subtitleText = "";
+    if (detail.graph_signal_label === "HIGH") {
+      subtitleText = "High risk \u2014 requires attention";
+    } else if (detail.graph_signal_label === "MEDIUM") {
+      subtitleText = "Moderate risk based on graph signals";
+    } else {
+      subtitleText = "Low current risk \u2014 no immediate concerns";
+    }
+    if (detail.reasons && detail.reasons.length > 0) {
+      subtitleText += " \u00b7 " + detail.reasons.length + " contributing factor" + (detail.reasons.length !== 1 ? "s" : "");
+    }
+
+    // Score card risk accent class
+    var scoreHeroClass = "detail-score-hero";
+    if (detail.graph_signal_label === "HIGH") {
+      scoreHeroClass += " detail-score-hero-high";
+    } else if (detail.graph_signal_label === "MEDIUM") {
+      scoreHeroClass += " detail-score-hero-medium";
+    } else if (detail.graph_signal_label === "LOW") {
+      scoreHeroClass += " detail-score-hero-low";
+    }
+
+    // Score context line
+    var labelLc = detail.graph_signal_label.charAt(0) + detail.graph_signal_label.slice(1).toLowerCase();
+    var scoreContext = labelLc + " risk";
+    if (detail.direct_signals && detail.direct_signals.length > 0) {
+      scoreContext += " based on " + detail.direct_signals.length + " signal" + (detail.direct_signals.length !== 1 ? "s" : "");
+    }
+
+    el.innerHTML =
+      "<div class=\"detail-hero\">" +
+        "<div class=\"detail-hero-left\">" +
+          "<h1 class=\"detail-title\">" + detail.repo_full_name + "</h1>" +
+          "<p class=\"detail-subtitle\">" + subtitleText + "</p>" +
+        "</div>" +
+        "<div class=\"detail-actions\">" + actionsHtml + "</div>" +
+      "</div>" +
+      "<div class=\"" + scoreHeroClass + "\">" +
+        "<div>" +
+          "<div class=\"meta-label\">Risk Score</div>" +
+          "<div class=\"meta-value\">" + detail.graph_signal_score.toFixed(3) + "</div>" +
+          "<div class=\"score-context\">" + scoreContext + "</div>" +
+        "</div>" +
+      "</div>" +
+      "<div class=\"detail-secondary-meta\">" +
+        "<div class=\"meta-card\"><div class=\"meta-label\">Label</div><div class=\"meta-value\"><span class=\"label-indicator " + labelColorClass(detail.graph_signal_label) + "\">" + detail.graph_signal_label + "</span></div></div>" +
+        "<div class=\"meta-card\"><div class=\"meta-label\">Base Maintenance Risk</div><div class=\"meta-value\" style=\"font-family:var(--font-mono);\">" + detail.base_maintenance_risk.toFixed(3) + "</div></div>" +
+      "</div>" +
+      reasonsHtml +
+      signalsHtml;
+
+    setViewState("detail");
+  }
+
+  /**
+   * renderDetailError(message)
+   * Shows an error message in the detail view with a back link.
+   */
+  function renderDetailError(message) {
+    var el = document.getElementById("detailView");
+    el.innerHTML =
+      "<div class=\"err\" style=\"display:block;\">" + message + "</div>" +
+      "<div style=\"margin-top:var(--sp-16);\">" +
+        "<button class=\"btn-subtle\" id=\"backToList\">\u2190 Back to list</button>" +
+      "</div>";
+    setViewState("detail");
+  }
+
+  /**
+   * navigateToDetail(repoFullName)
+   * Switches to detail mode, updates URL, fetches and renders detail.
+   */
+  async function navigateToDetail(repoFullName) {
+    appState.mode = "detail";
+    appState.repo = repoFullName;
+    history.pushState({}, "", "?repo=" + encodeRepoParam(repoFullName));
+    setViewState("loading");
+    var parts = repoFullName.split("/");
+    var owner = parts[0];
+    var repo = parts[1];
+    try {
+      var data = await fetchRepoInsight(owner, repo);
+      appState.detail = data;
+      renderDetailView(data);
+    } catch (error) {
+      renderDetailError(error.message);
+    }
+  }
+
+  /**
+   * navigateToList()
+   * Switches back to list mode, updates URL, fetches and renders list.
+   */
+  function navigateToList() {
+    appState.mode = "list";
+    appState.repo = null;
+    history.pushState({}, "", window.location.pathname);
+    fetchAndRender();
+  }
+
+  /* ── Event delegation for "Back to list" in detail view ── */
+  document.getElementById("detailView").addEventListener("click", function(e) {
+    var target = e.target.closest("#backToList");
+    if (target) {
+      e.preventDefault();
+      navigateToList();
+    }
+  });
+
+  /* ── URL Routing: popstate handler ── */
+  window.addEventListener("popstate", function() {
+    var params = new URLSearchParams(window.location.search);
+    var repoParam = params.get("repo");
+    if (repoParam) {
+      var decoded = decodeRepoParam(repoParam);
+      appState.mode = "detail";
+      appState.repo = decoded;
+      var parts = decoded.split("/");
+      setViewState("loading");
+      fetchRepoInsight(parts[0], parts[1]).then(function(data) {
+        appState.detail = data;
+        renderDetailView(data);
+      }).catch(function(err) {
+        renderDetailError(err.message);
+      });
+    } else {
+      appState.mode = "list";
+      appState.repo = null;
+      fetchAndRender();
+    }
+  });
+
+  /* ── URL Routing: initial page load ── */
+  (function initRoute() {
+    var params = new URLSearchParams(window.location.search);
+    var repoParam = params.get("repo");
+    if (repoParam) {
+      var decoded = decodeRepoParam(repoParam);
+      appState.mode = "detail";
+      appState.repo = decoded;
+      var parts = decoded.split("/");
+      setViewState("loading");
+      fetchRepoInsight(parts[0], parts[1]).then(function(data) {
+        appState.detail = data;
+        renderDetailView(data);
+      }).catch(function(err) {
+        renderDetailError(err.message);
+      });
+    } else {
+      appState.mode = "list";
+      fetchAndRender();
+    }
+  })();
+</script>
+</body>
+</html>

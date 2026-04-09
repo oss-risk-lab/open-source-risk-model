@@ -1,0 +1,116 @@
+{
+  "fetched_at": "2026-03-31T17:37:17.515595+00:00",
+  "expires_at": "2026-04-01T17:37:17.515595+00:00",
+  "ecosystem": "npm",
+  "package": "code-server",
+  "cves": [
+    {
+      "id": "GHSA-2gp3-6c9p-jp7w",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+      "cvss_score": null,
+      "summary": "Cross site scripting in code-server",
+      "published": "2022-05-12T00:00:40Z",
+      "fixed_in": "3.12.0",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "3.12.0"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-2gp3-6c9p-jp7w",
+      "cve_id": "CVE-2021-42648",
+      "aliases": [
+        "CVE-2021-42648"
+      ]
+    },
+    {
+      "id": "GHSA-49x3-8228-3w3m",
+      "severity": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "cvss_score": null,
+      "summary": "Inefficient Regular Expression Complexity in code-server",
+      "published": "2021-09-20T20:18:39Z",
+      "fixed_in": "3.12.0",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "3.12.0"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-49x3-8228-3w3m",
+      "cve_id": "CVE-2021-3810",
+      "aliases": [
+        "CVE-2021-3810"
+      ]
+    },
+    {
+      "id": "GHSA-frjg-g767-7363",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
+      "cvss_score": null,
+      "summary": "code-server vulnerable to Missing Origin Validation in WebSockets",
+      "published": "2023-03-23T06:30:15Z",
+      "fixed_in": "4.10.1",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.10.1"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-frjg-g767-7363",
+      "cve_id": "CVE-2023-26114",
+      "aliases": [
+        "CVE-2023-26114"
+      ]
+    },
+    {
+      "id": "GHSA-p483-wpfp-42cj",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
+      "cvss_score": null,
+      "summary": "code-server's session cookie can be extracted by having user visit specially crafted proxy URL",
+      "published": "2025-05-09T19:34:35Z",
+      "fixed_in": "4.99.4",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.99.4"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-p483-wpfp-42cj",
+      "cve_id": "CVE-2025-47269",
+      "aliases": [
+        "CVE-2025-47269"
+      ]
+    }
+  ]
+}

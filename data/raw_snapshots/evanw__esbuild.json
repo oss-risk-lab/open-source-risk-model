@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 125,
+    "contributors_last_12mo": 14,
+    "days_since_last_push": 18.218331187569444,
+    "days_since_last_release": 18.21832086998843,
+    "fraction_issues_closed_12mo": 0.6331877729257642,
+    "fraction_open_issues_stale_180d": 0.9205776173285198,
+    "issues_per_contributor": 4.896,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 612,
+    "stargazers_count": 39812,
+    "stars_count": 39812,
+    "top_contributor_fraction_12mo": 0.8954248366013072
+  },
+  "fetched_at": "2026-03-30T19:38:33.792801+00:00",
+  "full_name": "evanw/esbuild"
+}

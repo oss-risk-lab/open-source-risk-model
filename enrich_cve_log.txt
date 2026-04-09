@@ -1,0 +1,46 @@
+📊 GitHub API: 5000 requests remaining
+
+🔧 Enrichment mode: full (with CVEs)
+📦 Repos to enrich: 30
+  [1/30] ✅ 521xueweihan/HelloGitHub → 20 nodes, 19 edges (232ms)
+  [2/30] ✅ AUTOMATIC1111/stable-diffusion-webui → 23 nodes, 22 edges (871ms)
+  [3/30] ✅ Chalarangelo/30-seconds-of-code → 19 nodes, 18 edges (1018ms)
+  [4/30] ✅ Comfy-Org/ComfyUI → 19 nodes, 18 edges (1837ms)
+  [5/30] ✅ CorentinJ/Real-Time-Voice-Cloning → 11 nodes, 10 edges (642ms)
+  [6/30] ✅ NationalSecurityAgency/ghidra → 21 nodes, 20 edges (268ms)
+  [7/30] ✅ OpenHands/OpenHands → 19 nodes, 18 edges (767ms)
+  [8/30] ✅ PaddlePaddle/PaddleOCR → 20 nodes, 19 edges (746ms)
+  [9/30] ✅ PyCQA/pylint → 20 nodes, 19 edges (1049ms)
+  [10/30] ✅ ReactiveX/RxJava → 18 nodes, 17 edges (275ms)
+  [11/30] ✅ Shubhamsaboo/awesome-llm-apps → 9 nodes, 8 edges (236ms)
+  [12/30] ✅ Stirling-Tools/Stirling-PDF → 19 nodes, 18 edges (323ms)
+  [13/30] ✅ Textualize/rich → 22 nodes, 21 edges (779ms)
+  [14/30] ✅ TheAlgorithms/Java → 8 nodes, 7 edges (794ms)
+  [15/30] ✅ TheAlgorithms/Python → 10 nodes, 9 edges (724ms)
+  [16/30] ✅ aio-libs/aiodns → 22 nodes, 21 edges (531ms)
+  [17/30] ✅ aio-libs/aiohttp → 30 nodes, 87 edges (1954ms)
+  [18/30] ✅ angular/angular → 19 nodes, 18 edges (1566ms)
+  [19/30] ✅ ansible/ansible → 25 nodes, 33 edges (1086ms)
+  [20/30] ✅ anthropics/skills → 11 nodes, 10 edges (256ms)
+  [21/30] ✅ anuraghazra/github-readme-stats → 11 nodes, 10 edges (722ms)
+  [22/30] ✅ apache/dubbo → 22 nodes, 21 edges (807ms)
+  [23/30] ✅ apache/superset → 37 nodes, 180 edges (3324ms)
+  [24/30] ✅ avelino/awesome-go → 7 nodes, 6 edges (467ms)
+  [25/30] ✅ axios/axios → 20 nodes, 24 edges (1791ms)
+  [26/30] ✅ base/node → 18 nodes, 17 edges (288ms)
+  [27/30] ✅ browser-use/browser-use → 19 nodes, 18 edges (2969ms)
+  [28/30] ✅ caddyserver/caddy → 19 nodes, 18 edges (2435ms)
+  [29/30] ✅ coder/code-server → 21 nodes, 20 edges (906ms)
+  [30/30] ✅ commaai/openpilot → 21 nodes, 20 edges (1039ms)
+
+============================================================
+📊 Enrichment complete
+   Success: 30/30
+   Failed:  0/30
+   Total nodes added: 560
+   Total edges added: 746
+   Avg nodes/repo: 18.7
+   Avg edges/repo: 24.9
+   Elapsed: 32s (0.5min)
+
+📊 GitHub API remaining: 4895

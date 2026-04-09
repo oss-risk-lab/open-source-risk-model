@@ -30,30 +30,30 @@
         "days_back": 365,
         "errors": [],
         "issues_written_last_run": 0,
-        "last_fetch_utc": "2026-02-21T15:42:55.305520+00:00",
+        "last_fetch_utc": "2026-04-07T23:28:50.191311+00:00",
         "max_pages": 25,
         "pages_fetched_last_run": 7,
         "per_page": 100,
         "status": "ok",
         "truncated": false,
-        "updated_at_utc": "2026-02-21T15:30:05.150914+00:00"
+        "updated_at_utc": "2026-04-07T23:23:45.740579+00:00"
       },
       "schema_version": "1.1"
     },
     "archived": false,
     "contributors_count": null,
-    "contributors_last_12mo": 89,
-    "days_since_last_push": 0.6005898730439815,
+    "contributors_last_12mo": 101,
+    "days_since_last_push": 0.16834483175925924,
     "days_since_last_release": null,
     "fraction_issues_closed_12mo": null,
     "fraction_open_issues_stale_180d": null,
     "issues_per_contributor": null,
     "license_spdx_id": "NOASSERTION",
     "open_issues_count": 3,
-    "stargazers_count": 218128,
-    "stars_count": 218128,
-    "top_contributor_fraction_12mo": 0.1438423138284185
+    "stargazers_count": 227408,
+    "stars_count": 227408,
+    "top_contributor_fraction_12mo": 0.14410409325020332
   },
-  "fetched_at": "2026-02-21T15:42:55.308341+00:00",
+  "fetched_at": "2026-04-07T23:28:50.195784+00:00",
   "full_name": "torvalds/linux"
 }

@@ -1,0 +1,168 @@
+=== Phase 2: Query Test Set ===
+Testing 10 queries across all intents
+
+----------------------------------------
+Query: How many repos do we have?
+Expected Intent: dataset_stats
+Actual Intent: dataset_stats
+Confidence: 0.98
+Row Count: 1
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "repo_count": 51,
+  "total_dependencies": 3313,
+  "repos_with_dependencies": 47,
+  "total_manifests": 175,
+  "resolved_dependencies": 2936,
+  "unique_packages": 1473,
+  "resolution_rate": 88.6
+}
+
+----------------------------------------
+Query: Show stats for django/django
+Expected Intent: repo_stats
+Actual Intent: repo_stats
+Confidence: 0.95
+Row Count: 1
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "total_dependencies": 11,
+  "manifest_count": 2,
+  "direct_dependencies": 11,
+  "resolved_dependencies": 10,
+  "registry_types": 2
+}
+
+----------------------------------------
+Query: What are the dependencies of django?
+Expected Intent: list_dependencies
+Actual Intent: list_dependencies
+Confidence: 0.95
+Row Count: 3
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "package_name": "asgiref",
+  "registry_type": "pypi",
+  "specifier": ">=3.9.1",
+  "dependency_group": "prod",
+  "manifest_path": "pyproject.toml",
+  "resolved_repo": "django/asgiref",
+  "resolution_confidence": 0.75,
+  "is_optional": 0
+}
+
+----------------------------------------
+Query: Show dependency tree for django/django with depth 2
+Expected Intent: dependency_tree
+Actual Intent: get_dependency_tree
+Confidence: 0.95
+Row Count: 50
+Response Time: 0ms
+❌ Intent MISMATCH
+Sample Result:
+{
+  "package_name": "pyenchant",
+  "registry_type": "pypi",
+  "specifier": "",
+  "resolved_repo": "pyenchant/pyenchant",
+  "resolution_confidence": 0.95,
+  "manifest_path": "docs/requirements.txt",
+  "depth": 0,
+  "parent": null,
+  "repo_full_name": "django/django"
+
+----------------------------------------
+Query: What repos depend on requests?
+Expected Intent: find_dependents
+Actual Intent: find_dependents
+Confidence: 0.95
+Row Count: 8
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "repo_full_name": "PyCQA/pylint",
+  "specifier": "",
+  "dependency_group": "prod",
+  "manifest_path": "requirements_test_min.txt",
+  "is_direct": 1
+}
+
+----------------------------------------
+Query: Search for repos containing 'security'
+Expected Intent: search_repos
+Actual Intent: search_repos
+Confidence: 0.95
+Row Count: 0
+Response Time: 0ms
+✅ Intent CORRECT
+
+----------------------------------------
+Query: Search for packages named 'express'
+Expected Intent: search_packages
+Actual Intent: search_packages
+Confidence: 0.95
+Row Count: 5
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "package_name": "express",
+  "registry_type": "npm",
+  "used_by_count": 3
+}
+
+----------------------------------------
+Query: List manifests for django/django
+Expected Intent: list_manifests
+Actual Intent: list_manifests
+Confidence: 0.95
+Row Count: 7
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "manifest_path": "docs/requirements.txt",
+  "dependency_count": 5
+}
+
+----------------------------------------
+Query: Count dependencies by manifest type
+Expected Intent: count_by_manifest
+Actual Intent: count_by_manifest_type
+Confidence: 0.95
+Row Count: 3
+Response Time: 0ms
+❌ Intent MISMATCH
+Sample Result:
+{
+  "manifest_type": "package.json",
+  "count": 176
+}
+
+----------------------------------------
+Query: Show unresolved dependencies
+Expected Intent: list_unresolved
+Actual Intent: list_unresolved
+Confidence: 0.95
+Row Count: 100
+Response Time: 0ms
+✅ Intent CORRECT
+Sample Result:
+{
+  "repo_full_name": "PyCQA/pylint",
+  "package_name": "-r",
+  "registry_type": "pypi",
+  "specifier": "requirements.txt",
+  "manifest_path": "doc/readthedoc_requirements.txt"
+}
+
+========================================
+Query Test Set Complete
+========================================

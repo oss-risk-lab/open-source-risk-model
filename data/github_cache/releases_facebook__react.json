@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-02-20T22:19:33.348118+00:00",
+  "cached_at": "2026-04-07T21:14:29.860585+00:00",
   "cache_key": "releases:facebook/react",
   "data": [
     {
@@ -45,15 +45,15 @@
       "body": "## React Server Components\r\n\r\n- Add more DoS mitigations to Server Actions, and harden Server Components ([#35632](https://github.com/facebook/react/pull/35632) by @gnoff, @lubieowoce, @sebmarkbage, @unstubbable)",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/279999398/reactions",
-        "total_count": 94,
-        "+1": 48,
+        "total_count": 135,
+        "+1": 68,
         "-1": 0,
-        "laugh": 7,
-        "hooray": 13,
+        "laugh": 10,
+        "hooray": 16,
         "confused": 0,
-        "heart": 3,
-        "rocket": 14,
-        "eyes": 9
+        "heart": 10,
+        "rocket": 17,
+        "eyes": 14
       },
       "mentions_count": 4
     },
@@ -100,8 +100,8 @@
       "body": "## React Server Components\r\n\r\n- Add more DoS mitigations to Server Actions, and harden Server Components ([#35632](https://github.com/facebook/react/pull/35632) by @gnoff, @lubieowoce, @sebmarkbage, @unstubbable)",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/279999648/reactions",
-        "total_count": 9,
-        "+1": 6,
+        "total_count": 10,
+        "+1": 7,
         "-1": 0,
         "laugh": 0,
         "hooray": 3,
@@ -155,11 +155,11 @@
       "body": "## React Server Components\r\n\r\n- Add more DoS mitigations to Server Actions, and harden Server Components ([#35632](https://github.com/facebook/react/pull/35632) by @gnoff, @lubieowoce, @sebmarkbage, @unstubbable)",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/279999747/reactions",
-        "total_count": 3,
+        "total_count": 4,
         "+1": 2,
         "-1": 0,
         "laugh": 0,
-        "hooray": 1,
+        "hooray": 2,
         "confused": 0,
         "heart": 0,
         "rocket": 0,
@@ -210,14 +210,14 @@
       "body": "## React Server Components\r\n\r\n- Add extra loop protection to React Server Functions (@sebmarkbage [#35351](https://github.com/facebook/react/pull/35351))",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/269718826/reactions",
-        "total_count": 40,
-        "+1": 28,
+        "total_count": 45,
+        "+1": 31,
         "-1": 0,
         "laugh": 0,
         "hooray": 2,
         "confused": 0,
-        "heart": 1,
-        "rocket": 6,
+        "heart": 2,
+        "rocket": 7,
         "eyes": 3
       },
       "mentions_count": 1
@@ -265,14 +265,14 @@
       "body": "## React Server Components\r\n\r\n- Add extra loop protection to React Server Functions (@sebmarkbage [#35351](https://github.com/facebook/react/pull/35351))",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/269718915/reactions",
-        "total_count": 73,
+        "total_count": 74,
         "+1": 39,
         "-1": 0,
         "laugh": 0,
         "hooray": 10,
         "confused": 0,
         "heart": 9,
-        "rocket": 15,
+        "rocket": 16,
         "eyes": 0
       },
       "mentions_count": 1
@@ -320,13 +320,13 @@
       "body": "## React Server Components\r\n\r\n- Add extra loop protection to React Server Functions (@sebmarkbage [#35351](https://github.com/facebook/react/pull/35351))",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/269717092/reactions",
-        "total_count": 48,
+        "total_count": 49,
         "+1": 19,
         "-1": 0,
         "laugh": 5,
         "hooray": 9,
         "confused": 0,
-        "heart": 8,
+        "heart": 9,
         "rocket": 7,
         "eyes": 0
       },
@@ -375,14 +375,14 @@
       "body": "## React Server Components\r\n\r\n- Move `react-server-dom-webpack/*.unbundled` to private `react-server-dom-unbundled` (@eps1lon https://github.com/facebook/react/pull/35290)\r\n- Patch Promise cycles and toString on Server Functions (@sebmarkbage, @unstubbable [#35289](https://github.com/facebook/react/pull/35289), [#35345](https://github.com/facebook/react/pull/35345))",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/269210489/reactions",
-        "total_count": 10,
+        "total_count": 11,
         "+1": 0,
         "-1": 0,
         "laugh": 2,
         "hooray": 0,
         "confused": 0,
         "heart": 0,
-        "rocket": 6,
+        "rocket": 7,
         "eyes": 2
       },
       "mentions_count": 3
@@ -540,15 +540,15 @@
       "body": "## React Server Components\r\n - Bring React Server Component fixes to Server Actions (@sebmarkbage [#35277](https://github.com/facebook/react/pull/35277))",
       "reactions": {
         "url": "https://api.github.com/repos/facebook/react/releases/267135247/reactions",
-        "total_count": 129,
+        "total_count": 134,
         "+1": 0,
         "-1": 0,
-        "laugh": 43,
-        "hooray": 2,
+        "laugh": 44,
+        "hooray": 3,
         "confused": 0,
-        "heart": 40,
+        "heart": 41,
         "rocket": 22,
-        "eyes": 22
+        "eyes": 24
       },
       "mentions_count": 1
     }

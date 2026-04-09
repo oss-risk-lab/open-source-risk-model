@@ -1,9 +1,9 @@
 {
   "cache_metadata": {
     "repo": "numpy/numpy",
-    "cached_at": "2026-02-19T21:10:48.594881+00:00",
+    "cached_at": "2026-02-23T19:26:17.975031+00:00",
     "ttl_hours": 1,
-    "expires_at": "2026-02-19T22:10:48.594881+00:00"
+    "expires_at": "2026-02-23T20:26:17.975031+00:00"
   },
   "graph": {
     "nodes": [
@@ -20,7 +20,7 @@
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.035919+00:00",
+          "fetched_at": "2026-02-23T19:26:15.768559+00:00",
           "data_confidence": 0.9724489795918367
         }
       },
@@ -38,7 +38,7 @@
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-19T21:10:48.035939+00:00",
+          "fetched_at": "2026-02-23T19:26:15.768596+00:00",
           "data_confidence": 0.9724489795918367
         }
       },
@@ -56,7 +56,25 @@
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-19T21:10:48.035955+00:00",
+          "fetched_at": "2026-02-23T19:26:15.768633+00:00",
+          "data_confidence": 0.9724489795918367
+        }
+      },
+      {
+        "id": "risk:numpy/numpy:top_contributor_fraction_12mo",
+        "type": "risk_factor",
+        "label": "Top Contributor Fraction 12Mo",
+        "metadata": {
+          "key": "top_contributor_fraction_12mo",
+          "raw_value": 0.32598920863309355,
+          "risk_score": 0.12598920863309357,
+          "contribution": 0.01414164586697989,
+          "weight": 0.11224489795918367,
+          "category": "Contributors"
+        },
+        "provenance": {
+          "source": "score_model",
+          "fetched_at": "2026-02-23T19:26:15.768660+00:00",
           "data_confidence": 0.9724489795918367
         }
       },
@@ -66,13 +84,13 @@
         "label": "charris",
         "metadata": {
           "username": "charris",
-          "contribution_fraction": 0.42977392977392975,
-          "commit_count": 7148,
+          "contribution_fraction": 0.4298509257032941,
+          "commit_count": 7151,
           "type": "individual"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.036153+00:00",
+          "fetched_at": "2026-02-23T19:26:16.690426+00:00",
           "data_confidence": 0.9
         }
       },
@@ -82,13 +100,13 @@
         "label": "mattip",
         "metadata": {
           "username": "mattip",
-          "contribution_fraction": 0.1774891774891775,
-          "commit_count": 2952,
+          "contribution_fraction": 0.17750661216638616,
+          "commit_count": 2953,
           "type": "individual"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.036165+00:00",
+          "fetched_at": "2026-02-23T19:26:16.690575+00:00",
           "data_confidence": 0.9
         }
       },
@@ -98,13 +116,13 @@
         "label": "seberg",
         "metadata": {
           "username": "seberg",
-          "contribution_fraction": 0.1768879268879269,
+          "contribution_fraction": 0.1768453955277711,
           "commit_count": 2942,
           "type": "individual"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.036173+00:00",
+          "fetched_at": "2026-02-23T19:26:16.690597+00:00",
           "data_confidence": 0.9
         }
       },
@@ -114,13 +132,13 @@
         "label": "teoliphant",
         "metadata": {
           "username": "teoliphant",
-          "contribution_fraction": 0.12415824915824916,
+          "contribution_fraction": 0.12412839624909834,
           "commit_count": 2065,
           "type": "individual"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.036181+00:00",
+          "fetched_at": "2026-02-23T19:26:16.690614+00:00",
           "data_confidence": 0.9
         }
       },
@@ -130,13 +148,13 @@
         "label": "cournape",
         "metadata": {
           "username": "cournape",
-          "contribution_fraction": 0.0916907166907167,
+          "contribution_fraction": 0.09166867035345035,
           "commit_count": 1525,
           "type": "individual"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.036187+00:00",
+          "fetched_at": "2026-02-23T19:26:16.690631+00:00",
           "data_confidence": 0.9
         }
       },
@@ -148,13 +166,13 @@
           "tag_name": "v2.4.2",
           "name": "2.4.2 (Feb 1, 2026)",
           "published_at": "2026-02-01T16:19:50Z",
-          "days_ago": 18,
+          "days_ago": 22,
           "is_latest": true,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037077+00:00",
+          "fetched_at": "2026-02-23T19:26:17.032602+00:00",
           "data_confidence": 1.0
         }
       },
@@ -166,13 +184,13 @@
           "tag_name": "v2.4.1",
           "name": "2.4.1 (Jan 10, 2026)",
           "published_at": "2026-01-10T18:01:49Z",
-          "days_ago": 40,
+          "days_ago": 44,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037093+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033181+00:00",
           "data_confidence": 1.0
         }
       },
@@ -184,13 +202,13 @@
           "tag_name": "v2.4.0",
           "name": "2.4.0 (Dec 20, 2025)",
           "published_at": "2025-12-20T18:20:29Z",
-          "days_ago": 61,
+          "days_ago": 65,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037103+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033211+00:00",
           "data_confidence": 1.0
         }
       },
@@ -202,13 +220,13 @@
           "tag_name": "v2.4.0rc1",
           "name": "2.4.0rc1 (Dec 3, 2025)",
           "published_at": "2025-12-03T16:00:55Z",
-          "days_ago": 78,
+          "days_ago": 82,
           "is_latest": false,
           "is_prerelease": true
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037113+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033234+00:00",
           "data_confidence": 1.0
         }
       },
@@ -220,13 +238,13 @@
           "tag_name": "v2.3.5",
           "name": "2.3.5 (Nov 16, 2025)",
           "published_at": "2025-11-16T23:15:13Z",
-          "days_ago": 94,
+          "days_ago": 98,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037122+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033255+00:00",
           "data_confidence": 1.0
         }
       },
@@ -238,13 +256,13 @@
           "tag_name": "v2.3.4",
           "name": "v2.3.4 (Oct 15,  2025)",
           "published_at": "2025-10-15T23:15:52Z",
-          "days_ago": 126,
+          "days_ago": 130,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037130+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033276+00:00",
           "data_confidence": 1.0
         }
       },
@@ -256,13 +274,13 @@
           "tag_name": "v2.3.3",
           "name": "2.3.3 (Sep 9, 2025)",
           "published_at": "2025-09-09T17:37:44Z",
-          "days_ago": 163,
+          "days_ago": 167,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037138+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033296+00:00",
           "data_confidence": 1.0
         }
       },
@@ -274,13 +292,13 @@
           "tag_name": "v2.3.2",
           "name": "v2.3.2 (Jul 24,  2025)",
           "published_at": "2025-07-24T21:44:51Z",
-          "days_ago": 209,
+          "days_ago": 213,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037145+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033315+00:00",
           "data_confidence": 1.0
         }
       },
@@ -292,13 +310,13 @@
           "tag_name": "v2.3.1",
           "name": "v2.3.1 (Jun 21,  2025)",
           "published_at": "2025-06-21T13:02:28Z",
-          "days_ago": 243,
+          "days_ago": 247,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037152+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033335+00:00",
           "data_confidence": 1.0
         }
       },
@@ -310,13 +328,13 @@
           "tag_name": "v2.3.0",
           "name": "v2.3.0 (June 7, 2025)",
           "published_at": "2025-06-07T15:08:03Z",
-          "days_ago": 257,
+          "days_ago": 261,
           "is_latest": false,
           "is_prerelease": false
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-19T21:10:48.037160+00:00",
+          "fetched_at": "2026-02-23T19:26:17.033354+00:00",
           "data_confidence": 1.0
         }
       },
@@ -333,7 +351,7 @@
         },
         "provenance": {
           "source": "heuristic",
-          "fetched_at": "2026-02-19T21:10:48.426035+00:00",
+          "fetched_at": "2026-02-23T19:26:17.221337+00:00",
           "match_confidence": 0.9,
           "data_confidence": 0.8
         }
@@ -353,7 +371,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "fetched_at": "2026-02-19T21:10:48.592681+00:00",
+          "fetched_at": "2026-02-23T19:26:17.956182+00:00",
           "data_confidence": 0.95
         }
       }
@@ -368,7 +386,7 @@
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-19T21:10:48.035945+00:00",
+          "established_at": "2026-02-23T19:26:15.768612+00:00",
           "confidence": 0.9724489795918367
         }
       },
@@ -381,7 +399,20 @@
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-19T21:10:48.035960+00:00",
+          "established_at": "2026-02-23T19:26:15.768645+00:00",
+          "confidence": 0.9724489795918367
+        }
+      },
+      {
+        "source": "repo:numpy/numpy",
+        "target": "risk:numpy/numpy:top_contributor_fraction_12mo",
+        "relationship_type": "has_risk_factor",
+        "metadata": {
+          "contribution": 0.01414164586697989
+        },
+        "provenance": {
+          "source": "score_model",
+          "established_at": "2026-02-23T19:26:15.768669+00:00",
           "confidence": 0.9724489795918367
         }
       },
@@ -390,12 +421,12 @@
         "target": "repo:numpy/numpy",
         "relationship_type": "maintained_by",
         "metadata": {
-          "contribution_fraction": 0.42977392977392975,
-          "commit_count": 7148
+          "contribution_fraction": 0.4298509257032941,
+          "commit_count": 7151
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.036160+00:00",
+          "established_at": "2026-02-23T19:26:16.690553+00:00",
           "confidence": 0.9
         }
       },
@@ -404,12 +435,12 @@
         "target": "repo:numpy/numpy",
         "relationship_type": "maintained_by",
         "metadata": {
-          "contribution_fraction": 0.1774891774891775,
-          "commit_count": 2952
+          "contribution_fraction": 0.17750661216638616,
+          "commit_count": 2953
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.036169+00:00",
+          "established_at": "2026-02-23T19:26:16.690586+00:00",
           "confidence": 0.9
         }
       },
@@ -418,12 +449,12 @@
         "target": "repo:numpy/numpy",
         "relationship_type": "maintained_by",
         "metadata": {
-          "contribution_fraction": 0.1768879268879269,
+          "contribution_fraction": 0.1768453955277711,
           "commit_count": 2942
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.036177+00:00",
+          "established_at": "2026-02-23T19:26:16.690605+00:00",
           "confidence": 0.9
         }
       },
@@ -432,12 +463,12 @@
         "target": "repo:numpy/numpy",
         "relationship_type": "maintained_by",
         "metadata": {
-          "contribution_fraction": 0.12415824915824916,
+          "contribution_fraction": 0.12412839624909834,
           "commit_count": 2065
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.036184+00:00",
+          "established_at": "2026-02-23T19:26:16.690622+00:00",
           "confidence": 0.9
         }
       },
@@ -446,12 +477,12 @@
         "target": "repo:numpy/numpy",
         "relationship_type": "maintained_by",
         "metadata": {
-          "contribution_fraction": 0.0916907166907167,
+          "contribution_fraction": 0.09166867035345035,
           "commit_count": 1525
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.036190+00:00",
+          "established_at": "2026-02-23T19:26:16.690639+00:00",
           "confidence": 0.9
         }
       },
@@ -460,12 +491,12 @@
         "target": "release:numpy/numpy:v2.4.2",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 18,
+          "days_ago": 22,
           "is_latest": true
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037084+00:00",
+          "established_at": "2026-02-23T19:26:17.033141+00:00",
           "confidence": 1.0
         }
       },
@@ -474,12 +505,12 @@
         "target": "release:numpy/numpy:v2.4.1",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 40,
+          "days_ago": 44,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037097+00:00",
+          "established_at": "2026-02-23T19:26:17.033195+00:00",
           "confidence": 1.0
         }
       },
@@ -488,12 +519,12 @@
         "target": "release:numpy/numpy:v2.4.0",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 61,
+          "days_ago": 65,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037107+00:00",
+          "established_at": "2026-02-23T19:26:17.033220+00:00",
           "confidence": 1.0
         }
       },
@@ -502,12 +533,12 @@
         "target": "release:numpy/numpy:v2.4.0rc1",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 78,
+          "days_ago": 82,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037117+00:00",
+          "established_at": "2026-02-23T19:26:17.033242+00:00",
           "confidence": 1.0
         }
       },
@@ -516,12 +547,12 @@
         "target": "release:numpy/numpy:v2.3.5",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 94,
+          "days_ago": 98,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037125+00:00",
+          "established_at": "2026-02-23T19:26:17.033263+00:00",
           "confidence": 1.0
         }
       },
@@ -530,12 +561,12 @@
         "target": "release:numpy/numpy:v2.3.4",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 126,
+          "days_ago": 130,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037133+00:00",
+          "established_at": "2026-02-23T19:26:17.033284+00:00",
           "confidence": 1.0
         }
       },
@@ -544,12 +575,12 @@
         "target": "release:numpy/numpy:v2.3.3",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 163,
+          "days_ago": 167,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037141+00:00",
+          "established_at": "2026-02-23T19:26:17.033303+00:00",
           "confidence": 1.0
         }
       },
@@ -558,12 +589,12 @@
         "target": "release:numpy/numpy:v2.3.2",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 209,
+          "days_ago": 213,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037148+00:00",
+          "established_at": "2026-02-23T19:26:17.033323+00:00",
           "confidence": 1.0
         }
       },
@@ -572,12 +603,12 @@
         "target": "release:numpy/numpy:v2.3.1",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 243,
+          "days_ago": 247,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037155+00:00",
+          "established_at": "2026-02-23T19:26:17.033342+00:00",
           "confidence": 1.0
         }
       },
@@ -586,12 +617,12 @@
         "target": "release:numpy/numpy:v2.3.0",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 257,
+          "days_ago": 261,
           "is_latest": false
         },
         "provenance": {
           "source": "github_api",
-          "established_at": "2026-02-19T21:10:48.037163+00:00",
+          "established_at": "2026-02-23T19:26:17.033362+00:00",
           "confidence": 1.0
         }
       },
@@ -605,7 +636,7 @@
         },
         "provenance": {
           "source": "heuristic",
-          "established_at": "2026-02-19T21:10:48.426063+00:00",
+          "established_at": "2026-02-23T19:26:17.221373+00:00",
           "match_confidence": 0.9,
           "confidence": 0.8
         }
@@ -620,7 +651,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592698+00:00",
+          "established_at": "2026-02-23T19:26:17.956220+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -635,7 +666,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592713+00:00",
+          "established_at": "2026-02-23T19:26:17.956243+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -650,7 +681,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592725+00:00",
+          "established_at": "2026-02-23T19:26:17.956257+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -665,7 +696,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592734+00:00",
+          "established_at": "2026-02-23T19:26:17.956267+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -680,7 +711,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592742+00:00",
+          "established_at": "2026-02-23T19:26:17.956277+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -695,7 +726,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592750+00:00",
+          "established_at": "2026-02-23T19:26:17.956287+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -710,7 +741,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592758+00:00",
+          "established_at": "2026-02-23T19:26:17.956296+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -725,7 +756,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592765+00:00",
+          "established_at": "2026-02-23T19:26:17.956305+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -740,7 +771,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592773+00:00",
+          "established_at": "2026-02-23T19:26:17.956315+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -755,7 +786,7 @@
         },
         "provenance": {
           "source": "github_advisory",
-          "established_at": "2026-02-19T21:10:48.592781+00:00",
+          "established_at": "2026-02-23T19:26:17.956324+00:00",
           "match_confidence": 0.85,
           "confidence": 0.85
         }
@@ -763,7 +794,7 @@
     ],
     "metadata": {
       "schema_version": "1.0",
-      "generated_at": "2026-02-19T21:10:48.035692+00:00",
+      "generated_at": "2026-02-23T19:26:15.768145+00:00",
       "repo": "numpy/numpy",
       "warnings": []
     }

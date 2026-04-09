@@ -225,6 +225,12 @@
           <input type="checkbox" id="devMode" checked />
           Dev Mode (no API key needed)
         </label>
+        <span style="margin-left: 20px; color: var(--muted);">Dependency Scope:</span>
+        <select id="dependencyScope" style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: rgba(0,0,0,.3); color: var(--text); font-size: 14px;">
+          <option value="prod">Production</option>
+          <option value="build">Build/CI</option>
+          <option value="all">All</option>
+        </select>
       </div>
 
       <div class="examples">
@@ -282,6 +288,12 @@
 
     async function executeQuery(intent, parameters) {
       showLoading();
+
+      // Add dependency_scope parameter for list_dependencies intent
+      if (intent === "list_dependencies") {
+        const scopeSelect = document.getElementById("dependencyScope");
+        parameters.dependency_scope = scopeSelect.value;
+      }
 
       try {
         const response = await fetch(`${API_BASE}/api/query`, {
@@ -358,6 +370,24 @@
           <span class="meta">${result_count} results • ${execution_time_ms}ms</span>
         </h2>
       `;
+
+      // Show dependency scope badge if present
+      if (metadata && metadata.dependency_scope) {
+        const scopeLabels = {
+          'prod': 'Production',
+          'build': 'Build/CI',
+          'all': 'All'
+        };
+        const scopeLabel = scopeLabels[metadata.dependency_scope] || metadata.dependency_scope;
+        html += `
+          <div style="margin-bottom: 12px;">
+            <span style="display: inline-block; padding: 4px 12px; border-radius: 8px; background: rgba(99,102,241,.2); border: 1px solid rgba(99,102,241,.3); font-size: 13px; color: var(--text);">
+              Scope: ${scopeLabel}
+            </span>
+            ${metadata.dependency_scope_description ? `<span style="color: var(--muted); font-size: 13px; margin-left: 8px;">${metadata.dependency_scope_description}</span>` : ''}
+          </div>
+        `;
+      }
 
       if (results.length === 0) {
         html += `<div class="empty">No results found</div>`;

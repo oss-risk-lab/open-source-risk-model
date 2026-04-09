@@ -16,52 +16,52 @@
     },
     "__snapshot__": {
       "issues_meta": {
-        "comments_written_last_run": 819,
+        "comments_written_last_run": 1077,
         "compact_stats": {
           "comments": {
-            "dropped": 3,
-            "kept": 865,
+            "dropped": 1077,
+            "kept": 1870,
             "path": "data/issues/tensorflow__tensorflow/comments.jsonl",
-            "rows_before": 868
+            "rows_before": 2947
           },
           "issues": {
-            "dropped": 1,
-            "kept": 148,
+            "dropped": 293,
+            "kept": 458,
             "path": "data/issues/tensorflow__tensorflow/issues.jsonl",
-            "rows_before": 149
+            "rows_before": 751
           }
         },
         "days_back": 365,
         "errors": [],
-        "issues_written_last_run": 139,
-        "last_fetch_utc": "2026-02-20T22:20:37.268640+00:00",
+        "issues_written_last_run": 293,
+        "last_fetch_utc": "2026-04-07T23:33:23.363963+00:00",
         "max_pages": 25,
         "pages_fetched_last_run": 25,
         "per_page": 100,
         "status": "ok",
         "truncated": true,
-        "updated_at_utc": "2025-12-30T22:09:36.755400+00:00"
+        "updated_at_utc": "2026-04-07T21:15:49.782374+00:00"
       },
       "schema_version": "1.1"
     },
     "archived": false,
-    "avg_time_to_first_maintainer_response_days": 24.463063271604938,
-    "contributors_count": 5021,
-    "contributors_last_12mo": 63,
-    "days_since_last_push": 0.003621378854166667,
-    "days_since_last_release": 191.19052305827546,
-    "fraction_issues_closed_12mo": 0.5971769815418024,
-    "fraction_open_issues_stale_180d": 0.7377979568671964,
-    "fraction_unanswered_after_30d": 0.9655172413793104,
-    "issues_per_contributor": 0.7060346544513045,
+    "avg_time_to_first_maintainer_response_days": 20.043327546296297,
+    "contributors_count": 5045,
+    "contributors_last_12mo": 66,
+    "days_since_last_push": 0.0009369856134259259,
+    "days_since_last_release": 32.15552192640046,
+    "fraction_issues_closed_12mo": 0.5363735070575462,
+    "fraction_open_issues_stale_180d": 0.6924686192468619,
+    "fraction_unanswered_after_30d": 0.9855769230769231,
+    "issues_per_contributor": 0.8344895936570862,
     "license_spdx_id": "Apache-2.0",
-    "median_time_to_close_days": 22.549328703703704,
-    "open_issue_age_p90_days": 116.38650795203705,
-    "open_issues_count": 3545,
-    "stargazers_count": 193872,
-    "stars_count": 193872,
-    "top_contributor_fraction_12mo": 0.6412825651302605
+    "median_time_to_close_days": 30.39037037037037,
+    "open_issue_age_p90_days": 309.4778175339699,
+    "open_issues_count": 4210,
+    "stargazers_count": 194572,
+    "stars_count": 194572,
+    "top_contributor_fraction_12mo": 0.616454380036392
   },
-  "fetched_at": "2026-02-20T22:20:37.288158+00:00",
+  "fetched_at": "2026-04-07T23:33:23.438806+00:00",
   "full_name": "tensorflow/tensorflow"
 }

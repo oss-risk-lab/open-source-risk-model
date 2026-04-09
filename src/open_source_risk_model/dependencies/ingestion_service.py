@@ -209,7 +209,8 @@ class DependencyIngestionService:
         self,
         repo_full_name: str,
         refresh: bool = False,
-        resolve_packages: bool = True
+        resolve_packages: bool = True,
+        resolve_transitive: bool = False
     ) -> IngestionResult:
         """
         Ingest dependencies for a repository.
@@ -343,6 +344,26 @@ class DependencyIngestionService:
                 f"({result.resolution_rate:.0%}), "
                 f"{result.duration_seconds:.1f}s"
             )
+            
+            # Optional transitive resolution (Req 13.1-13.4)
+            if resolve_transitive and result.success and result.dependencies_found > 0:
+                try:
+                    from ..resolution.resolver import TransitiveResolver
+                    from ..resolution.storage import ResolvedDependencyStorage
+                    resolver = TransitiveResolver(db_path=self.db_path)
+                    edges, summary = resolver.resolve_repo(repo_full_name)
+                    storage = ResolvedDependencyStorage(self.db_path)
+                    storage.store_edges(repo_full_name, edges)
+                    logger.info(
+                        "Transitive resolution for %s: %d edges, %d errors",
+                        repo_full_name, summary.total_edges, summary.error_count,
+                    )
+                except Exception as exc:
+                    # Req 13.3: log and continue, don't abort ingestion
+                    logger.error(
+                        "Transitive resolution failed for %s: %s",
+                        repo_full_name, exc, exc_info=True
+                    )
             
             return result
             

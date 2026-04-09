@@ -1,2 +1,0 @@
-- Look into population/sampling opportunities for the feature mapping.
-- Look into how many features we will add and what that looks like in the UI.

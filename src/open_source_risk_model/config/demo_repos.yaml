@@ -1,0 +1,40 @@
+# Curated demo repositories for Deep Signal homepage and QA validation
+repos:
+  - repo: "numpy/numpy"
+    tags: ["well-maintained", "popular", "deep-tree"]
+  - repo: "pallets/flask"
+    tags: ["well-maintained", "popular"]
+  - repo: "django/django"
+    tags: ["well-maintained", "popular", "deep-tree"]
+  - repo: "facebook/react"
+    tags: ["popular", "deep-tree"]
+  - repo: "expressjs/express"
+    tags: ["well-maintained", "popular"]
+  - repo: "axios/axios"
+    tags: ["popular"]
+  - repo: "psf/requests"
+    tags: ["well-maintained", "popular"]
+  - repo: "scikit-learn/scikit-learn"
+    tags: ["popular", "deep-tree"]
+  - repo: "tensorflow/tensorflow"
+    tags: ["popular", "deep-tree"]
+  - repo: "lodash/lodash"
+    tags: ["popular"]
+  - repo: "minimistjs/minimist"
+    tags: ["high-risk", "vulnerable"]
+  - repo: "Marak/colors.js"
+    tags: ["high-risk"]
+  - repo: "dominictarr/event-stream"
+    tags: ["high-risk", "vulnerable"]
+  - repo: "AhmedAli7O1/node-ipc"
+    tags: ["high-risk"]
+  - repo: "fastapi/fastapi"
+    tags: ["well-maintained", "popular"]
+  - repo: "torvalds/linux"
+    tags: ["popular", "deep-tree"]
+  - repo: "vuejs/vue"
+    tags: ["popular"]
+  - repo: "yaml/pyyaml"
+    tags: ["popular"]
+  - repo: "ytdl-org/youtube-dl"
+    tags: ["popular"]

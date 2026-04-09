@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 542,
+    "contributors_last_12mo": 23,
+    "days_since_last_push": 0.02431858563657407,
+    "days_since_last_release": 17.071554543935186,
+    "fraction_issues_closed_12mo": 0.6881496881496881,
+    "fraction_open_issues_stale_180d": 0.9191919191919192,
+    "issues_per_contributor": 2.243542435424354,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 1216,
+    "stargazers_count": 49608,
+    "stars_count": 49608,
+    "top_contributor_fraction_12mo": 0.3133720930232558
+  },
+  "fetched_at": "2026-03-30T19:37:18.178642+00:00",
+  "full_name": "cypress-io/cypress"
+}

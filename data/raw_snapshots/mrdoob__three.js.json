@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 2489,
+    "contributors_last_12mo": 38,
+    "days_since_last_push": 0.2104195212037037,
+    "days_since_last_release": 38.17544413846065,
+    "fraction_issues_closed_12mo": 0.8404907975460123,
+    "fraction_open_issues_stale_180d": 0.868421052631579,
+    "issues_per_contributor": 0.22981116914423463,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 572,
+    "stargazers_count": 111666,
+    "stars_count": 111666,
+    "top_contributor_fraction_12mo": 0.312677657760091
+  },
+  "fetched_at": "2026-03-30T19:44:19.451759+00:00",
+  "full_name": "mrdoob/three.js"
+}

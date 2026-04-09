@@ -16,52 +16,52 @@
     },
     "__snapshot__": {
       "issues_meta": {
-        "comments_written_last_run": 6077,
+        "comments_written_last_run": 4779,
         "compact_stats": {
           "comments": {
-            "dropped": 6077,
-            "kept": 6079,
+            "dropped": 2234,
+            "kept": 10330,
             "path": "data/issues/python__cpython/comments.jsonl",
-            "rows_before": 12156
+            "rows_before": 12564
           },
           "issues": {
-            "dropped": 1026,
-            "kept": 1027,
+            "dropped": 419,
+            "kept": 1842,
             "path": "data/issues/python__cpython/issues.jsonl",
-            "rows_before": 2053
+            "rows_before": 2261
           }
         },
         "days_back": 365,
         "errors": [],
-        "issues_written_last_run": 1026,
-        "last_fetch_utc": "2026-02-21T15:34:02.392734+00:00",
+        "issues_written_last_run": 868,
+        "last_fetch_utc": "2026-04-07T21:25:41.895682+00:00",
         "max_pages": 25,
         "pages_fetched_last_run": 25,
         "per_page": 100,
         "status": "ok",
         "truncated": true,
-        "updated_at_utc": "2026-02-21T15:16:27.641540+00:00"
+        "updated_at_utc": "2026-03-12T21:37:31.846472+00:00"
       },
       "schema_version": "1.1"
     },
     "archived": false,
-    "avg_time_to_first_maintainer_response_days": 7.205394551917995,
-    "contributors_count": 3689,
-    "contributors_last_12mo": 69,
-    "days_since_last_push": 0.016775138715277776,
+    "avg_time_to_first_maintainer_response_days": 5.949901099396232,
+    "contributors_count": 3749,
+    "contributors_last_12mo": 74,
+    "days_since_last_push": 0.009360409143518518,
     "days_since_last_release": null,
-    "fraction_issues_closed_12mo": 0.7318875119161106,
-    "fraction_open_issues_stale_180d": 0.9136630343671417,
-    "fraction_unanswered_after_30d": 0.24864864864864866,
-    "issues_per_contributor": 2.5088099756031443,
+    "fraction_issues_closed_12mo": 0.7352730741712378,
+    "fraction_open_issues_stale_180d": 0.9164924020632929,
+    "fraction_unanswered_after_30d": 0.3270440251572327,
+    "issues_per_contributor": 2.486796479061083,
     "license_spdx_id": "NOASSERTION",
-    "median_time_to_close_days": 4.848796296296296,
-    "open_issue_age_p90_days": 221.0407694786574,
-    "open_issues_count": 9255,
-    "stargazers_count": 71650,
-    "stars_count": 71650,
-    "top_contributor_fraction_12mo": 0.11218464841653247
+    "median_time_to_close_days": 3.9351099537037033,
+    "open_issue_age_p90_days": 234.76074099592594,
+    "open_issues_count": 9323,
+    "stargazers_count": 72194,
+    "stars_count": 72194,
+    "top_contributor_fraction_12mo": 0.11938202247191011
   },
-  "fetched_at": "2026-02-21T15:34:02.495208+00:00",
+  "fetched_at": "2026-04-07T21:25:42.041718+00:00",
   "full_name": "python/cpython"
 }

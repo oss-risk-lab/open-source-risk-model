@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 2441,
+    "contributors_last_12mo": 132,
+    "days_since_last_push": 0.1510006808449074,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.8387096774193549,
+    "fraction_open_issues_stale_180d": 0.5,
+    "issues_per_contributor": 0.07005325686194183,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 171,
+    "stargazers_count": 168658,
+    "stars_count": 168658,
+    "top_contributor_fraction_12mo": 0.075
+  },
+  "fetched_at": "2026-03-30T19:36:13.047940+00:00",
+  "full_name": "avelino/awesome-go"
+}

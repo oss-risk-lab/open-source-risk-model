@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 322,
+    "contributors_last_12mo": 17,
+    "days_since_last_push": 1.139674304386574,
+    "days_since_last_release": 5.596562417569444,
+    "fraction_issues_closed_12mo": 0.962800875273523,
+    "fraction_open_issues_stale_180d": 0.0,
+    "issues_per_contributor": 0.6614906832298136,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 213,
+    "stargazers_count": 85095,
+    "stars_count": 85095,
+    "top_contributor_fraction_12mo": 0.275
+  },
+  "fetched_at": "2026-03-30T19:36:57.333635+00:00",
+  "full_name": "browser-use/browser-use"
+}

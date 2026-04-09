@@ -711,9 +711,12 @@ class GraphBuilder:
         node = Node(
             id=f"cve:{cve.id}",
             type=NodeType.CVE,
-            label=cve.id,
+            label=cve.cve_id or cve.ghsa_id or cve.id,  # Prefer CVE ID for label
             metadata={
-                "cve_id": cve.id,
+                "id": cve.id,
+                "cve_id": cve.cve_id,
+                "ghsa_id": cve.ghsa_id,
+                "aliases": cve.aliases,
                 "severity": cve.severity,
                 "cvss_score": cve.cvss_score,
                 "summary": cve.summary,

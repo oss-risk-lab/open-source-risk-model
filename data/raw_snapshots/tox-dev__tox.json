@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "rate_limited",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 123,
+    "contributors_last_12mo": 12,
+    "days_since_last_push": 0.04260837332175926,
+    "days_since_last_release": 3.1218460668518517,
+    "fraction_issues_closed_12mo": 0.9896907216494846,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 0.016260162601626018,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 2,
+    "stargazers_count": 3908,
+    "stars_count": 3908,
+    "top_contributor_fraction_12mo": 0.75
+  },
+  "fetched_at": "2026-03-30T19:49:50.791714+00:00",
+  "full_name": "tox-dev/tox"
+}

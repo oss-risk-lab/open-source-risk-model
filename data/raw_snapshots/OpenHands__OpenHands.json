@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 464,
+    "contributors_last_12mo": 39,
+    "days_since_last_push": 0.007324134594907408,
+    "days_since_last_release": 0.14726796888888888,
+    "fraction_issues_closed_12mo": 0.8744059742023083,
+    "fraction_open_issues_stale_180d": 0.13227513227513227,
+    "issues_per_contributor": 0.7392241379310345,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 343,
+    "stargazers_count": 70219,
+    "stars_count": 70219,
+    "top_contributor_fraction_12mo": 0.195
+  },
+  "fetched_at": "2026-03-30T19:33:46.102977+00:00",
+  "full_name": "OpenHands/OpenHands"
+}

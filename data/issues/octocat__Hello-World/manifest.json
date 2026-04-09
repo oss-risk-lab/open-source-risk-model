@@ -1,27 +1,27 @@
 {
-  "comments_written_last_run": 106,
+  "comments_written_last_run": 220,
   "compact_stats": {
     "comments": {
-      "dropped": 106,
-      "kept": 106,
+      "dropped": 220,
+      "kept": 245,
       "path": "data/issues/octocat__Hello-World/comments.jsonl",
-      "rows_before": 212
+      "rows_before": 465
     },
     "issues": {
-      "dropped": 2314,
-      "kept": 2315,
+      "dropped": 2186,
+      "kept": 2615,
       "path": "data/issues/octocat__Hello-World/issues.jsonl",
-      "rows_before": 4629
+      "rows_before": 4801
     }
   },
   "days_back": 365,
   "errors": [],
-  "issues_written_last_run": 2314,
-  "last_fetch_utc": "2026-02-21T15:42:42.486859+00:00",
+  "issues_written_last_run": 2186,
+  "last_fetch_utc": "2026-04-07T23:28:40.398869+00:00",
   "max_pages": 25,
   "pages_fetched_last_run": 25,
   "per_page": 100,
   "status": "ok",
   "truncated": true,
-  "updated_at_utc": "2026-02-21T15:42:42.486934+00:00"
+  "updated_at_utc": "2026-04-07T23:28:40.398992+00:00"
 }

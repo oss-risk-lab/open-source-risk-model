@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "rate_limited",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 433,
+    "contributors_last_12mo": 6,
+    "days_since_last_push": 0.6229477580902778,
+    "days_since_last_release": 56.68286825988425,
+    "fraction_issues_closed_12mo": 0.5465116279069767,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 1.371824480369515,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 594,
+    "stargazers_count": 44048,
+    "stars_count": 44048,
+    "top_contributor_fraction_12mo": 0.8852459016393442
+  },
+  "fetched_at": "2026-03-30T19:46:13.347939+00:00",
+  "full_name": "parcel-bundler/parcel"
+}

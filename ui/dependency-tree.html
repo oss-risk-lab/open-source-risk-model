@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dependency Tree — Deep Signal</title>
+  <style>
+    :root{
+      --bg: #0a0e13;
+      --bg-surface: #0f1419;
+      --bg-elevated: #151b23;
+      --bg-overlay: #1a222c;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-emphasis: rgba(255, 255, 255, 0.10);
+      --text-primary: rgba(255, 255, 255, 0.92);
+      --text-secondary: rgba(255, 255, 255, 0.55);
+      --text-tertiary: rgba(255, 255, 255, 0.35);
+      --accent: #3b82f6;
+      --accent-muted: rgba(59, 130, 246, 0.15);
+      --status-high-bg: rgba(239, 68, 68, 0.12);
+      --status-high-text: #ef4444;
+      --status-high-border: rgba(239, 68, 68, 0.35);
+      --status-medium-bg: rgba(234, 179, 8, 0.12);
+      --status-medium-text: #eab308;
+      --status-medium-border: rgba(234, 179, 8, 0.35);
+      --status-low-bg: rgba(34, 197, 94, 0.12);
+      --status-low-text: #22c55e;
+      --status-low-border: rgba(34, 197, 94, 0.35);
+      --status-mild-bg: rgba(234, 88, 12, 0.12);
+      --status-mild-text: #ea580c;
+      --sp-4: 4px; --sp-8: 8px; --sp-12: 12px; --sp-16: 16px; --sp-24: 24px; --sp-32: 32px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+      --mono: var(--font-mono);
+      --green: #22c55e; --yellow: #eab308; --red: #ef4444; --orange: #f97316; --indigo: #6366f1;
+      /* Backward-compat aliases for JS inline styles */
+      --muted: var(--text-secondary);
+      --muted2: var(--text-tertiary);
+      --sans: var(--font-sans);
+    }
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    body{
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Layout */
+    .wrap{ max-width:1600px; margin:var(--sp-8) auto; padding:0 var(--sp-12); }
+
+    /* Navigation */
+    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-4) var(--sp-12); margin-bottom:var(--sp-4); border-radius:var(--radius-md); border:1px solid var(--border); background:var(--bg-elevated); }
+    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
+    .ds-nav-links { display:flex; gap:var(--sp-4); }
+    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
+    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
+    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
+
+    /* Page Header */
+    .graph-page-header{
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--sp-12); margin-bottom: var(--sp-4);
+    }
+    .graph-page-header .page-title{ font-size: 22px; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.2; }
+    .graph-page-header .page-subtitle{ font-size: 13px; color: var(--text-tertiary); margin: var(--sp-4) 0 0; }
+    .header-actions{ display: flex; gap: var(--sp-8); }
+    .btn-subtle{
+      background: transparent; border: 1px solid var(--border); color: var(--text-tertiary);
+      font-size: 12px; font-weight: 600; padding: var(--sp-4) var(--sp-12);
+      border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s ease;
+      white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-subtle:hover{ background: var(--bg-surface); border-color: var(--border-emphasis); color: var(--text-secondary); }
+
+    /* Panel */
+    .panel{
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+      padding: var(--sp-24); margin-bottom: var(--sp-16);
+      transition: border-color 0.15s ease;
+    }
+    .panel:hover{ border-color: var(--border-emphasis); }
+    .panel-header{
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: var(--sp-12); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--sp-16);
+    }
+    .section-title{ font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
+
+    /* Controls */
+    .controls{ display:flex; gap:var(--sp-8); align-items:center; flex-wrap:wrap; }
+    input[type="text"]{
+      flex:1; min-width:200px; padding:var(--sp-8) var(--sp-12);
+      border-radius:var(--radius-md); border:1px solid var(--border);
+      background:var(--bg-surface); color:var(--text-primary); outline:none; font-size:14px;
+    }
+    input[type="text"]::placeholder{ color:var(--text-tertiary); }
+    input[type="text"]:focus{ border-color:var(--border-emphasis); }
+    .btn{
+      padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-md);
+      border:1px solid var(--border); background:var(--bg-elevated);
+      color:var(--text-primary); font-weight:700; cursor:pointer;
+      transition:transform .06s ease, background .15s ease;
+      user-select:none; white-space:nowrap; font-size:14px;
+    }
+    .btn:hover{ background:var(--bg-overlay); }
+    .btn:active{ transform:translateY(1px); }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+    .btn-sm{ padding:var(--sp-4) var(--sp-8); font-size:12px; }
+    select{
+      padding:var(--sp-8) var(--sp-8); border-radius:var(--radius-md);
+      border:1px solid var(--border); background:var(--bg-surface);
+      color:var(--text-primary); font-size:13px; outline:none;
+    }
+    select option{ background:var(--bg-elevated); color:var(--text-primary); }
+
+    /* Filter bar */
+    .filter-bar{ display:flex; gap:var(--sp-8); align-items:center; flex-wrap:wrap; }
+    .filter-bar label{ display:flex; align-items:center; gap:var(--sp-4); font-size:12px; color:var(--text-secondary); cursor:pointer; user-select:none; }
+    .filter-bar label input{ cursor:pointer; }
+    .filter-group{ display:flex; align-items:center; gap:var(--sp-4); }
+    .filter-group span{ font-size:11px; color:var(--text-tertiary); }
+
+    /* Summary stats — compact, secondary */
+    .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(85px,1fr)); gap:var(--sp-4); margin-bottom:var(--sp-8); }
+    .stat-card{
+      padding:var(--sp-8); border-radius:var(--radius-md); border:1px solid var(--border);
+      background:var(--bg-surface); text-align:center; transition: border-color 0.15s ease;
+    }
+    .stat-card:hover{ border-color: var(--border-emphasis); }
+    .stat-card .num{ font-size:16px; font-weight:700; font-family:var(--font-mono); color:var(--text-primary); }
+    .stat-card .label{ font-size:10px; color:var(--text-tertiary); margin-top:2px; text-transform:uppercase; letter-spacing:.5px; }
+
+    /* Main layout */
+    .main-layout{ display:flex; gap:var(--sp-8); align-items:flex-start; min-height:calc(100vh - 200px); }
+    .tree-column{ flex:1; min-width:0; display:flex; flex-direction:column; gap:var(--sp-4); }
+    .detail-column{
+      width:350px; flex-shrink:0; align-self:flex-start;
+      max-height:calc(100vh - 60px); overflow-y:auto;
+      display:flex; flex-direction:column; gap:var(--sp-12);
+      padding:0; background:transparent; border:none; box-shadow:none;
+    }
+
+    /* Provenance banner — subtle notice */
+    .provenance-banner{
+      padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-sm); font-size:11px; line-height:1.4;
+      margin-bottom:var(--sp-4); display:flex; align-items:center; gap:var(--sp-8); flex-wrap:wrap;
+      opacity: 0.7;
+    }
+    .provenance-banner.warn{
+      border:1px solid rgba(234,179,8,.15); background:rgba(234,179,8,.04); color:var(--text-secondary);
+    }
+    .provenance-banner.info{
+      border:1px solid rgba(99,102,241,.15); background:rgba(99,102,241,.03); color:var(--text-secondary);
+    }
+    .prov-badge{
+      display:inline-block; padding:1px 6px; border-radius:var(--radius-pill); font-size:9px;
+      font-weight:700; text-transform:uppercase; letter-spacing:.5px;
+      border:1px solid var(--border); background:var(--bg-overlay);
+    }
+
+    /* Tree container */
+    .tree-container{
+      background:var(--bg); border:1px solid var(--border-emphasis);
+      border-radius:var(--radius-lg); box-shadow:var(--shadow-md);
+      padding:var(--sp-8); min-height:400px;
+    }
+    .tree-node{ margin-left:20px; }
+    .tree-node.depth-0{ margin-left:0; }
+    .tree-row{
+      display:flex; align-items:center; gap:var(--sp-8); padding:var(--sp-4) var(--sp-8);
+      border-radius:var(--radius-md); cursor:pointer; transition:background .1s ease;
+      min-height:34px; position:relative;
+    }
+    .tree-row:hover{ background:var(--bg-overlay); }
+    .tree-row.selected{ background:var(--accent-muted); border:1px solid rgba(59,130,246,.3); }
+    .tree-row.error-node{ opacity:.7; }
+
+    .caret{
+      width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+      font-size:10px; color:var(--text-tertiary); transition:transform .15s ease; flex-shrink:0;
+      border-radius:var(--sp-4);
+    }
+    .caret:hover{ background:var(--bg-overlay); }
+    .caret.expanded{ transform:rotate(90deg); }
+    .caret.empty{ visibility:hidden; }
+
+    .node-icon{
+      width:20px; height:20px; border-radius:var(--radius-sm); display:flex; align-items:center;
+      justify-content:center; font-size:11px; flex-shrink:0;
+    }
+    .node-icon.repo{ background:var(--accent-muted); }
+    .node-icon.pkg{ background:var(--bg-overlay); }
+    .node-icon.error{ background:var(--status-high-bg); }
+
+    .node-name{ font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .node-version{ font-size:12px; color:var(--text-tertiary); font-family:var(--font-mono); }
+    .node-badges{ display:flex; gap:var(--sp-4); flex-shrink:0; margin-left:auto; }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:3px; padding:2px 7px;
+      border-radius:var(--radius-pill); font-size:10px; font-weight:700; letter-spacing:.3px;
+      border:1px solid var(--border); white-space:nowrap;
+    }
+    .badge.direct{ background:var(--accent-muted); color:var(--accent); border-color:rgba(59,130,246,.3); }
+    .badge.transitive{ background:var(--bg-overlay); color:var(--text-tertiary); }
+    .badge.risk-high{ background:var(--status-high-bg); color:var(--status-high-text); border-color:var(--status-high-border); }
+    .badge.risk-medium{ background:var(--status-medium-bg); color:var(--status-medium-text); border-color:var(--status-medium-border); }
+    .badge.risk-low{ background:var(--status-low-bg); color:var(--status-low-text); border-color:var(--status-low-border); }
+    .badge.vuln{ background:var(--status-high-bg); color:var(--status-high-text); border-color:var(--status-high-border); }
+    .badge.error-badge{ background:var(--status-high-bg); color:var(--status-high-text); border-color:var(--status-high-border); }
+    .badge.ecosystem{ background:var(--bg-overlay); color:var(--text-tertiary); }
+
+    .truncation-row{
+      margin-left:38px; padding:var(--sp-4) var(--sp-8); font-size:12px;
+      color:var(--text-tertiary); font-style:italic; cursor:default;
+    }
+
+    /* Detail panel items */
+    .detail-title{ font-size:15px; font-weight:700; margin-bottom:var(--sp-12); }
+    .detail-section{ margin-bottom:var(--sp-16); }
+    .detail-section h4{
+      margin:0 0 var(--sp-8); font-size:11px; color:var(--text-tertiary);
+      font-weight:700; text-transform:uppercase; letter-spacing:.5px;
+    }
+    .detail-item{
+      padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-md);
+      border:1px solid var(--border); background:var(--bg-surface); margin-bottom:var(--sp-4);
+    }
+    .detail-item .dl{ font-size:11px; color:var(--text-tertiary); margin-bottom:3px; }
+    .detail-item .dv{ font-size:13px; color:var(--text-primary); font-weight:600; word-break:break-word; }
+
+    .risk-bar-container{ margin-top:var(--sp-4); }
+    .risk-bar{
+      height:8px; border-radius:var(--radius-pill); background:var(--bg-overlay);
+      overflow:hidden; border:1px solid var(--border);
+    }
+    .risk-bar-fill{ height:100%; border-radius:var(--radius-pill); transition:width .3s ease; }
+
+    /* States */
+    .state-msg{
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:48px 20px; text-align:center; color:var(--text-secondary);
+    }
+    .state-msg .icon{ font-size:36px; margin-bottom:var(--sp-12); opacity:.5; }
+    .state-msg .msg{ font-size:14px; line-height:1.5; }
+    .state-msg .sub{ font-size:12px; color:var(--text-tertiary); margin-top:var(--sp-8); }
+
+    .err-box{
+      padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-lg);
+      border:1px solid var(--status-high-border); background:var(--status-high-bg);
+      color:var(--text-primary); font-size:13px; margin-top:var(--sp-8);
+      display:none; white-space:pre-wrap;
+    }
+
+    .spinner{
+      display:inline-block; width:20px; height:20px;
+      border:3px solid rgba(255,255,255,.1); border-top-color:var(--text-primary);
+      border-radius:50%; animation:spin .8s linear infinite;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+
+    .refetch-indicator{
+      position:absolute; top:8px; right:14px; display:none;
+      align-items:center; gap:var(--sp-4); font-size:12px; color:var(--text-tertiary);
+    }
+    .refetch-indicator.active{ display:flex; }
+
+    /* Responsive */
+    @media(max-width:1100px){
+      .main-layout{ flex-direction:column; }
+      .detail-column{ width:100%; position:static; max-height:none; }
+    }
+    @media(max-width:700px){
+      .summary-grid{ grid-template-columns:repeat(2,1fr); }
+      .filter-bar{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <!-- Page Header (static title + cross-page actions) -->
+  <div class="graph-page-header" style="margin-bottom:var(--sp-4);">
+    <div>
+      <h1 class="page-title">Dependency Tree</h1>
+      <p class="page-subtitle">Explore structure, depth, and risk across dependencies</p>
+    </div>
+    <div class="header-actions" id="treeHeaderActions"></div>
+  </div>
+
+  <!-- Repo input -->
+  <div class="panel" style="padding:var(--sp-4) var(--sp-12);margin-bottom:var(--sp-4);">
+    <div class="controls">
+      <input id="repoInput" type="text" placeholder="e.g. pallets/flask or facebook/react" aria-label="Repository name" />
+      <button id="loadBtn" class="btn" aria-label="Load dependency tree">Load Tree</button>
+    </div>
+    <div id="errBox" class="err-box" role="alert"></div>
+  </div>
+
+  <!-- Summary metrics (hidden until loaded) -->
+  <div id="summarySection" style="display:none;">
+    <div class="panel" style="padding:var(--sp-8) var(--sp-12);position:relative;margin-bottom:var(--sp-4);">
+      <div id="refetchIndicator" class="refetch-indicator"><div class="spinner"></div> Updating…</div>
+      <span id="repoNameDisplay" style="display:none;"></span>
+      <div id="crossLinks" style="display:none; gap:var(--sp-8); margin-top:var(--sp-4); flex-wrap:wrap;"></div>
+      <div class="summary-grid" id="summaryGrid"></div>
+    </div>
+  </div>
+
+  <!-- Provenance banner -->
+  <div id="provenanceBanner" style="display:none;"></div>
+
+  <!-- Filter controls -->
+  <div id="filterSection" class="panel" style="display:none;padding:var(--sp-8) var(--sp-12);margin-bottom:var(--sp-4);">
+    <div class="filter-bar">
+      <div class="filter-group">
+        <span>Depth:</span>
+        <select id="maxDepthSelect" aria-label="Maximum depth">
+          <option value="">All</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+          <option value="4">4</option><option value="5">5</option>
+        </select>
+      </div>
+      <label><input type="checkbox" id="highRiskOnly" /> High-risk only</label>
+      <label><input type="checkbox" id="vulnerableOnly" /> Vulnerable only</label>
+      <label><input type="checkbox" id="directOnly" /> Direct only</label>
+      <div class="filter-group">
+        <span>Sort:</span>
+        <select id="sortBySelect" aria-label="Sort order">
+          <option value="">Default</option>
+          <option value="risk_score">Risk score</option>
+          <option value="name">Name</option>
+          <option value="vulnerability_count">Vulnerabilities</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span>Max children:</span>
+        <select id="truncateSelect" aria-label="Truncate after children">
+          <option value="">None</option>
+          <option value="10">10</option><option value="25">25</option><option value="50">50</option>
+        </select>
+      </div>
+      <button id="expandAllBtn" class="btn btn-sm">Expand all</button>
+      <button id="collapseAllBtn" class="btn btn-sm">Collapse all</button>
+      <button id="resetBtn" class="btn btn-sm">Reset</button>
+    </div>
+  </div>
+
+  <!-- Main content: tree + sidebar -->
+  <div class="main-layout">
+    <div class="tree-column">
+      <div class="tree-container" id="treeContainer">
+        <div class="state-msg" id="initialState">
+          <div class="icon">🌳</div>
+          <div class="msg">Enter a repository above to explore its dependency tree</div>
+        </div>
+        <div class="state-msg" id="loadingState" style="display:none;">
+          <div class="spinner" style="width:32px;height:32px;border-width:4px;"></div>
+          <div class="msg" style="margin-top:var(--sp-16);">Loading dependency tree…</div>
+        </div>
+        <div id="emptyState" class="state-msg" style="display:none;">
+          <div class="icon">📦</div>
+          <div class="msg">No dependencies found for this repository.</div>
+          <div class="sub">This repo has zero declared dependencies.</div>
+        </div>
+        <div id="treeRoot" style="display:none;"></div>
+      </div>
+    </div>
+
+    <div class="detail-column" id="detailPanel">
+      <!-- Selected Node (primary) -->
+      <div id="selectedNodePanel" class="panel" style="padding:var(--sp-16);margin-bottom:0;">
+        <div class="panel-header" style="margin-bottom:var(--sp-12);">
+          <h3 class="section-title">Selected Node</h3>
+        </div>
+        <div id="detailContent">
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+            Select a dependency to inspect its metadata, risk level, and relationship context.
+          </div>
+        </div>
+      </div>
+
+      <!-- Tree Summary (secondary) -->
+      <div id="treeSummaryPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;opacity:0.7;">
+        <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+          <h3 class="section-title" style="font-size:12px;">Analysis</h3>
+        </div>
+        <div id="treeSummaryContent">
+          <div style="font-size:12px;color:var(--text-tertiary);">Load a tree to see summary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+// --- Navigation helpers (inlined) ---
+function parseRepoParam(searchString) {
+  var params = new URLSearchParams(searchString);
+  var raw = params.get("repo");
+  if (!raw) return null;
+  var decoded = decodeURIComponent(raw);
+  if (!decoded || !decoded.trim()) return null;
+  decoded = decoded.trim();
+  var slashIndex = decoded.indexOf("/");
+  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
+  return decoded;
+}
+function getRepoFromUrl() { return parseRepoParam(window.location.search); }
+function buildPageUrl(page, repo) {
+  if (repo) return page + "?repo=" + encodeURIComponent(repo);
+  return page;
+}
+function getCurrentPageId() {
+  var path = window.location.pathname;
+  if (path.indexOf("insights") !== -1) return "insights";
+  if (path.indexOf("graph") !== -1) return "graph";
+  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
+  return "index";
+}
+function renderNav(currentPageId, repo) {
+  var existing = document.querySelector("nav.ds-nav");
+  if (existing) existing.remove();
+  var nav = document.createElement("nav");
+  nav.className = "ds-nav";
+  nav.setAttribute("aria-label", "Main navigation");
+  var brand = document.createElement("span");
+  brand.className = "ds-nav-brand";
+  brand.textContent = "Deep Signal";
+  nav.appendChild(brand);
+  var linksDiv = document.createElement("div");
+  linksDiv.className = "ds-nav-links";
+  var pages = [
+    { pageId: "index", label: "Home", file: "index.html" },
+    { pageId: "insights", label: "Insights", file: "insights.html" },
+    { pageId: "graph", label: "Graph", file: "graph.html" },
+    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
+  ];
+  for (var i = 0; i < pages.length; i++) {
+    var p = pages[i];
+    var a = document.createElement("a");
+    a.href = buildPageUrl(p.file, repo);
+    a.className = "ds-nav-link";
+    a.textContent = p.label;
+    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
+    linksDiv.appendChild(a);
+  }
+  nav.appendChild(linksDiv);
+  var wrap = document.querySelector(".wrap");
+  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
+}
+renderNav(getCurrentPageId(), getRepoFromUrl());
+// --- End navigation helpers ---
+
+// --- Cross-page links ---
+function getCrossLinks(currentPageId, repo) {
+  if (!repo) return [];
+  var targets = [
+    { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
+    { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
+    { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
+  ];
+  var links = [];
+  for (var i = 0; i < targets.length; i++) {
+    if (targets[i].targetPageId === currentPageId) continue;
+    links.push({ label: targets[i].label, href: buildPageUrl(targets[i].file, repo), targetPageId: targets[i].targetPageId });
+  }
+  return links;
+}
+function renderCrossLinks(containerId, repo) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  var links = getCrossLinks(getCurrentPageId(), repo);
+  container.innerHTML = "";
+  if (links.length === 0) { container.style.display = "none"; return; }
+  for (var i = 0; i < links.length; i++) {
+    var a = document.createElement("a");
+    a.href = links[i].href;
+    a.className = "btn-subtle";
+    a.textContent = links[i].label;
+    container.appendChild(a);
+  }
+  container.style.display = "flex";
+}
+
+// Show cross-links when tree loads
+var _treeObserver = new MutationObserver(function(mutations) {
+  for (var i = 0; i < mutations.length; i++) {
+    if (mutations[i].attributeName === "style") {
+      var section = document.getElementById("summarySection");
+      if (section && section.style.display !== "none") {
+        var repo = document.getElementById("repoInput").value.trim();
+        renderCrossLinks("crossLinks", repo);
+        // Update header actions
+        var actionsEl = document.getElementById("treeHeaderActions");
+        if (actionsEl && repo) {
+          actionsEl.innerHTML = "";
+          var links = getCrossLinks("dependency-tree", repo);
+          for (var j = 0; j < links.length; j++) {
+            var a = document.createElement("a");
+            a.href = links[j].href;
+            a.className = "btn-subtle";
+            a.textContent = links[j].label.replace("Open in ", "");
+            actionsEl.appendChild(a);
+          }
+        }
+      }
+    }
+  }
+});
+var _summaryEl = document.getElementById("summarySection");
+if (_summaryEl) _treeObserver.observe(_summaryEl, { attributes: true, attributeFilter: ["style"] });
+
+// Auto-load from ?repo= query param
+(function() {
+  var repo = getRepoFromUrl();
+  if (repo) {
+    document.getElementById("repoInput").value = repo;
+    var actionsEl = document.getElementById("treeHeaderActions");
+    var links = getCrossLinks("dependency-tree", repo);
+    for (var i = 0; i < links.length; i++) {
+      var a = document.createElement("a");
+      a.href = links[i].href;
+      a.className = "btn-subtle";
+      a.textContent = links[i].label.replace("Open in ", "");
+      actionsEl.appendChild(a);
+    }
+  }
+})();
+</script>
+<script src="dependency-tree.js"></script>
+</body>
+</html>

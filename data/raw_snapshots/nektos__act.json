@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 214,
+    "contributors_last_12mo": 11,
+    "days_since_last_push": 0.10383620978009259,
+    "days_since_last_release": 5.231581078055555,
+    "fraction_issues_closed_12mo": 0.37894736842105264,
+    "fraction_open_issues_stale_180d": 0.9109311740890689,
+    "issues_per_contributor": 1.4532710280373833,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 311,
+    "stargazers_count": 69631,
+    "stars_count": 69631,
+    "top_contributor_fraction_12mo": 0.3333333333333333
+  },
+  "fetched_at": "2026-03-30T19:44:22.770072+00:00",
+  "full_name": "nektos/act"
+}

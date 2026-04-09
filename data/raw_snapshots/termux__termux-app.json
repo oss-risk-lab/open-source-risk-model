@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 89,
+    "contributors_last_12mo": 8,
+    "days_since_last_push": 7.004278904293981,
+    "days_since_last_release": 311.8761673620949,
+    "fraction_issues_closed_12mo": 0.6270491803278688,
+    "fraction_open_issues_stale_180d": 0.9029345372460497,
+    "issues_per_contributor": 5.719101123595506,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 509,
+    "stargazers_count": 52675,
+    "stars_count": 52675,
+    "top_contributor_fraction_12mo": 0.4444444444444444
+  },
+  "fetched_at": "2026-03-30T19:49:09.572827+00:00",
+  "full_name": "termux/termux-app"
+}

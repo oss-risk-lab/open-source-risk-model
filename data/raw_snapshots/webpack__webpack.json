@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "rate_limited",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 978,
+    "contributors_last_12mo": 23,
+    "days_since_last_push": 0.10822061229166667,
+    "days_since_last_release": 27.139275426979168,
+    "fraction_issues_closed_12mo": 0.9395973154362416,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 0.20449897750511248,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 200,
+    "stargazers_count": 65957,
+    "stars_count": 65957,
+    "top_contributor_fraction_12mo": 0.4758800521512386
+  },
+  "fetched_at": "2026-03-30T19:51:05.851127+00:00",
+  "full_name": "webpack/webpack"
+}

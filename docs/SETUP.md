@@ -74,7 +74,34 @@ Edit `.env` and add your token:
 GITHUB_TOKEN=ghp_your_actual_token_here
 ```
 
-### 6. Verify Installation
+### 6. Configure LLM Provider (Optional)
+
+If you plan to use the intelligent query API with LLM-powered intent classification, configure an LLM provider:
+
+**OpenAI Setup:**
+
+1. Get an API key from https://platform.openai.com/api-keys
+2. Add to your `.env` file:
+```
+# LLM Provider Configuration (optional)
+LLM_PROVIDER=openai
+OPENAI_API_KEY=sk-your-api-key-here
+# OPENAI_BASE_URL=https://api.openai.com/v1  # Optional
+# OPENAI_ORGANIZATION=org-your-org-id  # Optional
+```
+
+**Testing Without API Keys:**
+
+All unit tests use a mock provider and don't require API keys:
+```bash
+pytest -m "not integration" -v
+```
+
+Integration tests (which use real API calls) are automatically skipped if no API key is present.
+
+**See Also:** [LLM Module README](../src/open_source_risk_model/llm/README.md) for detailed configuration.
+
+### 7. Verify Installation
 
 Test the GitHub API connection:
 ```bash
@@ -90,7 +117,7 @@ pytest
 
 All tests should pass.
 
-### 7. Start the API Server
+### 8. Start the API Server
 
 ```bash
 uvicorn api.app:app --reload

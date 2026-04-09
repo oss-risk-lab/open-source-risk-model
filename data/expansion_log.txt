@@ -1,0 +1,180 @@
+2026-03-09 12:02:23,929 - __main__ - INFO - ================================================================================
+2026-03-09 12:02:23,929 - __main__ - INFO - DATASET EXPANSION ORCHESTRATOR
+2026-03-09 12:02:23,929 - __main__ - INFO - ================================================================================
+2026-03-09 12:02:23,929 - __main__ - INFO - Target count: 200
+2026-03-09 12:02:23,929 - __main__ - INFO - Database: data/graphs.db
+2026-03-09 12:02:23,929 - __main__ - INFO - Dry run: False
+2026-03-09 12:02:23,929 - __main__ - INFO - 
+2026-03-09 12:02:23,929 - __main__ - INFO - Step 1: Calculating repos to add...
+2026-03-09 12:02:23,931 - __main__ - INFO - Current repos: 51
+2026-03-09 12:02:23,931 - __main__ - INFO - Repos to add: 149
+2026-03-09 12:02:23,932 - __main__ - INFO - 
+2026-03-09 12:02:23,932 - __main__ - INFO - Step 2: Creating pre-expansion backup...
+2026-03-09 12:02:23,997 - __main__ - INFO - ✓ Backup created: backups/graphs_20260309_120223.db
+2026-03-09 12:02:23,997 - __main__ - INFO - 
+2026-03-09 12:02:23,997 - __main__ - INFO - Step 3: Selecting repositories...
+2026-03-09 12:02:24,000 - src.open_source_risk_model.expansion.repo_selector - INFO - Starting repository selection for 149 repos
+2026-03-09 12:02:24,000 - src.open_source_risk_model.expansion.repo_selector - INFO - Phase 1: Querying GitHub API
+2026-03-09 12:02:24,000 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:javascript
+2026-03-09 12:02:24,001 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:02:29,154 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:02:32,808 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:javascript
+2026-03-09 12:02:32,808 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:typescript
+2026-03-09 12:02:32,808 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:02:38,128 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:02:42,633 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:typescript
+2026-03-09 12:02:42,633 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:python
+2026-03-09 12:02:42,633 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:02:46,629 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:02:50,927 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:python
+2026-03-09 12:02:50,927 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:go
+2026-03-09 12:02:50,927 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:02:54,616 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:02:58,616 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:go
+2026-03-09 12:02:58,616 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:java
+2026-03-09 12:02:58,616 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:03:02,633 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:03:07,209 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:java
+2026-03-09 12:03:07,210 - src.open_source_risk_model.expansion.repo_selector - INFO - Querying GitHub: stars:>1000 language:ruby
+2026-03-09 12:03:07,210 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 1
+2026-03-09 12:03:11,510 - src.open_source_risk_model.expansion.github_client - INFO - Searching repositories: page 2
+2026-03-09 12:03:17,042 - src.open_source_risk_model.expansion.repo_selector - INFO -   Found 200 repos for query: stars:>1000 language:ruby
+2026-03-09 12:03:17,042 - src.open_source_risk_model.expansion.repo_selector - INFO - Total repos from all queries: 1200
+2026-03-09 12:03:17,043 - src.open_source_risk_model.expansion.repo_selector - INFO - Unique repos after deduplication: 1200
+2026-03-09 12:03:17,043 - src.open_source_risk_model.expansion.repo_selector - INFO - Found 1200 candidates from GitHub
+2026-03-09 12:03:17,043 - src.open_source_risk_model.expansion.repo_selector - INFO - Pass A: Trying stars >= 1000, recency <= 180 days
+2026-03-09 12:03:17,044 - src.open_source_risk_model.expansion.repo_selector - INFO - Recency filter: keeping repos pushed after 2025-09-10T12:03:17.043959
+2026-03-09 12:03:17,050 - src.open_source_risk_model.expansion.repo_selector - INFO - Recency filter: kept 955/1200 repos
+2026-03-09 12:03:17,058 - src.open_source_risk_model.expansion.repo_selector - INFO - Pass A: 955 candidates
+2026-03-09 12:03:17,058 - src.open_source_risk_model.expansion.repo_selector - INFO - Pass A succeeded with 955 candidates
+2026-03-09 12:03:17,058 - src.open_source_risk_model.expansion.repo_selector - INFO - After two-pass fallback: 955 candidates
+2026-03-09 12:03:17,059 - src.open_source_risk_model.expansion.repo_selector - INFO - After fork filter: 955 candidates
+2026-03-09 12:03:17,068 - src.open_source_risk_model.expansion.repo_selector - INFO - After existing repo filter: 924 candidates
+2026-03-09 12:03:17,068 - src.open_source_risk_model.expansion.repo_selector - INFO - Phase 2: Inferring ecosystems
+2026-03-09 12:03:17,069 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 1/924
+2026-03-09 12:03:17,069 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 11/924
+2026-03-09 12:03:17,069 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 21/924
+2026-03-09 12:03:17,070 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 31/924
+2026-03-09 12:03:17,070 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 41/924
+2026-03-09 12:03:17,070 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 51/924
+2026-03-09 12:03:17,070 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 61/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 71/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 81/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 91/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 101/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 111/924
+2026-03-09 12:03:17,071 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 121/924
+2026-03-09 12:03:17,072 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 131/924
+2026-03-09 12:03:17,072 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 141/924
+2026-03-09 12:03:17,072 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 151/924
+2026-03-09 12:03:17,072 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 161/924
+2026-03-09 12:03:17,073 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 171/924
+2026-03-09 12:03:17,081 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 181/924
+2026-03-09 12:03:17,081 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 191/924
+2026-03-09 12:03:17,081 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 201/924
+2026-03-09 12:03:17,082 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 211/924
+2026-03-09 12:03:17,082 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 221/924
+2026-03-09 12:03:17,082 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 231/924
+2026-03-09 12:03:17,082 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 241/924
+2026-03-09 12:03:17,082 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 251/924
+2026-03-09 12:03:17,083 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 261/924
+2026-03-09 12:03:17,083 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 271/924
+2026-03-09 12:03:17,083 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 281/924
+2026-03-09 12:03:17,083 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 291/924
+2026-03-09 12:03:17,083 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 301/924
+2026-03-09 12:03:17,084 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 311/924
+2026-03-09 12:03:17,084 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 321/924
+2026-03-09 12:03:17,084 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 331/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 341/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 351/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 361/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 371/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 381/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 391/924
+2026-03-09 12:03:17,085 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 401/924
+2026-03-09 12:03:17,086 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 411/924
+2026-03-09 12:03:17,086 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 421/924
+2026-03-09 12:03:17,086 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 431/924
+2026-03-09 12:03:17,087 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 441/924
+2026-03-09 12:03:17,087 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 451/924
+2026-03-09 12:03:17,087 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 461/924
+2026-03-09 12:03:17,091 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 471/924
+2026-03-09 12:03:17,092 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 481/924
+2026-03-09 12:03:17,094 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 491/924
+2026-03-09 12:03:17,095 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 501/924
+2026-03-09 12:03:17,095 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 511/924
+2026-03-09 12:03:17,095 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 521/924
+2026-03-09 12:03:17,095 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 531/924
+2026-03-09 12:03:17,095 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 541/924
+2026-03-09 12:03:17,096 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 551/924
+2026-03-09 12:03:17,096 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 561/924
+2026-03-09 12:03:17,096 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 571/924
+2026-03-09 12:03:17,096 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 581/924
+2026-03-09 12:03:17,097 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 591/924
+2026-03-09 12:03:17,097 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 601/924
+2026-03-09 12:03:17,097 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 611/924
+2026-03-09 12:03:17,097 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 621/924
+2026-03-09 12:03:17,097 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 631/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 641/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 651/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 661/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 671/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 681/924
+2026-03-09 12:03:17,098 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 691/924
+2026-03-09 12:03:17,112 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 701/924
+2026-03-09 12:03:17,112 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 711/924
+2026-03-09 12:03:17,113 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 721/924
+2026-03-09 12:03:17,116 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 731/924
+2026-03-09 12:03:17,116 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 741/924
+2026-03-09 12:03:17,117 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 751/924
+2026-03-09 12:03:17,118 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 761/924
+2026-03-09 12:03:17,119 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 771/924
+2026-03-09 12:03:17,119 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 781/924
+2026-03-09 12:03:17,119 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 791/924
+2026-03-09 12:03:17,119 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 801/924
+2026-03-09 12:03:17,120 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 811/924
+2026-03-09 12:03:17,120 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 821/924
+2026-03-09 12:03:17,120 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 831/924
+2026-03-09 12:03:17,120 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 841/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 851/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 861/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 871/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 881/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 891/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 901/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 911/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Processing candidate 921/924
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - After ecosystem inference: 888 candidates
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - After star filter: 888 candidates
+2026-03-09 12:03:17,121 - src.open_source_risk_model.expansion.repo_selector - INFO - Phase 3: Scoring and deduplicating
+2026-03-09 12:03:17,191 - src.open_source_risk_model.expansion.repo_selector - INFO - After deduplication: 886 candidates
+2026-03-09 12:03:17,191 - src.open_source_risk_model.expansion.repo_selector - INFO - Phase 4: Quota-based selection
+2026-03-09 12:03:17,215 - src.open_source_risk_model.expansion.repo_selector - INFO - Selected 149 repositories
+2026-03-09 12:03:17,220 - __main__ - INFO - ✓ Selected 149 repositories
+2026-03-09 12:03:17,242 - __main__ - INFO - Saved selection to data/expansion_reports/selection_20260309_160317.json
+2026-03-09 12:03:17,242 - __main__ - INFO - 
+2026-03-09 12:03:17,242 - __main__ - INFO - Step 4: Executing batch ingestion...
+2026-03-09 12:03:17,242 - __main__ - INFO - (This will be implemented in the next task)
+2026-03-09 12:03:17,242 - __main__ - INFO - 
+2026-03-09 12:03:17,242 - __main__ - INFO - ================================================================================
+2026-03-09 12:03:17,242 - __main__ - INFO - EXPANSION COMPLETE
+2026-03-09 12:03:17,242 - __main__ - INFO - Duration: 53.3s
+2026-03-09 12:03:17,243 - __main__ - INFO - ================================================================================
+Creating backup: backups/graphs_20260309_120223.db
+✓ Backup created successfully
+Verifying backup integrity...
+✓ Backup integrity verified
+Backup size: 2.20 MB
+Cleaning up backups older than 30 days...
+No old backups to remove
+
+================================================================================
+EXPANSION RESULT
+================================================================================
+Success: True
+Repos added: 149
+Repos failed: 0
+Backup path: backups/graphs_20260309_120223.db
+Duration: 53.3s
+Selection file: data/expansion_reports/selection_20260309_160317.json
+================================================================================

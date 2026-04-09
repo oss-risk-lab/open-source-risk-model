@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-02-21T15:16:27.989868+00:00",
+  "cached_at": "2026-04-07T21:25:43.523779+00:00",
   "cache_key": "contributors:python/cpython",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 11274
+      "contributions": 11275
     },
     {
       "login": "vstinner",
@@ -44,7 +44,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 6601
+      "contributions": 6661
     },
     {
       "login": "benjaminp",

@@ -1,0 +1,332 @@
+{
+  "fetched_at": "2026-03-31T17:37:03.065429+00:00",
+  "expires_at": "2026-04-01T17:37:03.065429+00:00",
+  "ecosystem": "PyPI",
+  "package": "ansible-core",
+  "cves": [
+    {
+      "id": "GHSA-32p4-gm2c-wmch",
+      "severity": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:L",
+      "cvss_score": null,
+      "summary": "ansible-core Incorrect Authorization vulnerability",
+      "published": "2024-11-06T12:31:32Z",
+      "fixed_in": "2.14.18rc1",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.14.18rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.15.0b1"
+            },
+            {
+              "fixed": "2.15.13rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.16.0b1"
+            },
+            {
+              "fixed": "2.16.13rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.17.0b1"
+            },
+            {
+              "fixed": "2.17.6rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.18.0b1"
+            },
+            {
+              "fixed": "2.18.0rc2"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-32p4-gm2c-wmch",
+      "cve_id": "CVE-2024-9902",
+      "aliases": [
+        "CVE-2024-9902"
+      ]
+    },
+    {
+      "id": "GHSA-7j69-qfc3-2fq9",
+      "severity": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+      "cvss_score": null,
+      "summary": "Ansible template injection vulnerability",
+      "published": "2023-12-13T00:30:37Z",
+      "fixed_in": "2.16.1",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.16.0"
+            },
+            {
+              "fixed": "2.16.1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.15.0"
+            },
+            {
+              "fixed": "2.15.8"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.14.12"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-7j69-qfc3-2fq9",
+      "cve_id": "CVE-2023-5764",
+      "aliases": [
+        "CVE-2023-5764"
+      ]
+    },
+    {
+      "id": "GHSA-99w6-3xph-cx78",
+      "severity": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+      "cvss_score": null,
+      "summary": "Ansible-Core vulnerable to content protections bypass",
+      "published": "2024-11-12T00:30:36Z",
+      "fixed_in": "2.18.1rc1",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.18.0b1"
+            },
+            {
+              "fixed": "2.18.1rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.17.0b1"
+            },
+            {
+              "fixed": "2.17.7rc1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.16.14rc1"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-99w6-3xph-cx78",
+      "cve_id": "CVE-2024-11079",
+      "aliases": [
+        "CVE-2024-11079"
+      ]
+    },
+    {
+      "id": "GHSA-h24r-m9qc-pvpg",
+      "severity": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:N",
+      "cvss_score": null,
+      "summary": "Ansible-core information disclosure flaw",
+      "published": "2024-02-06T12:30:31Z",
+      "fixed_in": "2.14.14",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.14.14"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.16.0"
+            },
+            {
+              "fixed": "2.16.3"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.15.0"
+            },
+            {
+              "fixed": "2.15.9"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-h24r-m9qc-pvpg",
+      "cve_id": "CVE-2024-0690",
+      "aliases": [
+        "CVE-2024-0690",
+        "PYSEC-2024-36"
+      ]
+    },
+    {
+      "id": "GHSA-jpxc-vmjf-9fcj",
+      "severity": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": null,
+      "summary": "Ansible vulnerable to Insertion of Sensitive Information into Log File",
+      "published": "2024-09-16T14:37:26Z",
+      "fixed_in": "2.17.6",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.17.0b1"
+            },
+            {
+              "fixed": "2.17.6"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.16.13"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-jpxc-vmjf-9fcj",
+      "cve_id": "CVE-2024-8775",
+      "aliases": [
+        "CVE-2024-8775"
+      ]
+    },
+    {
+      "id": "GHSA-ww3m-ffrm-qvqv",
+      "severity": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+      "cvss_score": null,
+      "summary": "Ansible may expose private key",
+      "published": "2023-10-04T15:30:35Z",
+      "fixed_in": null,
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.8.0"
+            },
+            {
+              "last_affected": "2.15.2"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-ww3m-ffrm-qvqv",
+      "cve_id": "CVE-2023-4237",
+      "aliases": [
+        "CVE-2023-4237"
+      ]
+    },
+    {
+      "id": "PYSEC-2024-36",
+      "severity": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "cvss_score": null,
+      "summary": "An information disclosure flaw was found in ansible-core due to a failure to respect the ANSIBLE_NO_LOG configuration in some scenarios. It was discovered that information is still included in the output in certain tasks, such as loop items. Depending on the task, this issue may include sensitive information, such as decrypted secret values.",
+      "published": "2024-02-06T12:15:00Z",
+      "fixed_in": "2.16.3",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "2.16.0"
+            },
+            {
+              "fixed": "2.16.3"
+            },
+            {
+              "introduced": "2.15.0"
+            },
+            {
+              "fixed": "2.15.9"
+            },
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.14.4"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-h24r-m9qc-pvpg",
+      "cve_id": "CVE-2024-0690",
+      "aliases": [
+        "CVE-2024-0690",
+        "GHSA-h24r-m9qc-pvpg"
+      ]
+    }
+  ]
+}

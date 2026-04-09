@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-02-20T22:19:34.280158+00:00",
-  "expires_at": "2026-02-21T22:19:34.280158+00:00",
+  "fetched_at": "2026-04-07T21:14:30.690451+00:00",
+  "expires_at": "2026-04-08T21:14:30.690451+00:00",
   "ecosystem": "npm",
   "package": "react",
   "cves": [
@@ -35,7 +35,12 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-g53w-52xc-2j85",
+      "cve_id": "CVE-2013-7035",
+      "aliases": [
+        "CVE-2013-7035"
+      ]
     },
     {
       "id": "GHSA-hg79-j56m-fxgv",
@@ -57,7 +62,10 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-hg79-j56m-fxgv",
+      "cve_id": null,
+      "aliases": []
     }
   ]
 }

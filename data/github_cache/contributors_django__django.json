@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-02-19T21:12:05.575664+00:00",
+  "cached_at": "2026-03-30T19:37:29.966084+00:00",
   "cache_key": "contributors:django/django",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 3509
+      "contributions": 3513
     },
     {
       "login": "adrianholovaty",

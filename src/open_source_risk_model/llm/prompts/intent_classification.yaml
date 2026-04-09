@@ -1,0 +1,46 @@
+name: intent_classification
+version: "1.0"
+description: "Classify user queries into predefined intents"
+
+required_params:
+  - query
+  - available_intents
+
+system_template: |
+  You are a query intent classifier for a dependency graph database.
+  
+  Your job is to classify user queries into predefined intents and extract parameters.
+  
+  AVAILABLE INTENTS:
+  {available_intents}
+  
+  RULES:
+  1. intent MUST be one of the intents listed above
+  2. confidence MUST be a number between 0.0 and 1.0
+  3. If unsure (confidence < 0.7), use intent "unknown"
+  4. Extract ALL relevant parameters from the query
+  5. For repo names, use format "owner/repo" (e.g., "django/django")
+  6. For registry_type, infer from context (Python packages = pypi, JavaScript = npm)
+  7. Return ONLY valid JSON
+
+user_template: |
+  USER QUERY: "{query}"
+  
+  Classify the query and extract parameters. Return ONLY valid JSON in this exact format:
+  
+  {{
+    "intent": "<intent_name>",
+    "parameters": {{
+      "param1": "value1",
+      "param2": "value2"
+    }},
+    "confidence": 0.95,
+    "reasoning": "Brief explanation of classification"
+  }}
+  
+  RESPOND WITH JSON ONLY:
+
+metadata:
+  author: "engineering-team"
+  created_at: "2024-02-13"
+  tags: ["classification", "intent", "query"]

@@ -9,6 +9,7 @@ from typing import Dict, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from open_source_risk_model.service.score_repo import score_repo
@@ -29,6 +30,9 @@ from open_source_risk_model.persistence.job_repo import JobRepository
 from open_source_risk_model.persistence.index_repo import IndexRepository
 from open_source_risk_model.persistence.worker import IngestionWorker
 from open_source_risk_model.persistence.errors import DatabaseError
+from open_source_risk_model.persistence.db import get_connection
+from open_source_risk_model.insights.compute import compute_repo_insight
+from open_source_risk_model.config.demo_repos import load_demo_repos, validate_demo_repos
 
 # Load .env file if it exists
 try:
@@ -63,14 +67,31 @@ index_repo: IndexRepository | None = None
 ingestion_worker: IngestionWorker | None = None
 worker_task = None
 
-# For local dev (React/Next/etc.). Tighten later for prod.
+# CORS: read allowed origins from env var (comma-separated), fall back to ["*"] for dev
+_cors_origins_raw = os.getenv("CORS_ALLOWED_ORIGINS", "")
+_cors_origins = [o.strip() for o in _cors_origins_raw.split(",") if o.strip()] if _cors_origins_raw else ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Root route — serves homepage at /
+@app.get("/")
+def serve_home():
+    return FileResponse("ui/index.html")
+
+
+# Catch-all for UI pages (insights.html, graph.html, etc.)
+@app.get("/{page}.html")
+def serve_page(page: str):
+    file_path = Path("ui") / f"{page}.html"
+    if file_path.exists():
+        return FileResponse(str(file_path))
+    raise HTTPException(status_code=404, detail="Page not found")
+
 
 # Mount static files for UI
 # Serve the ui/ directory at /ui for the graph visualization HTML
@@ -83,6 +104,28 @@ app.mount("/static", StaticFiles(directory="ui"), name="static_ui")
 async def startup_event():
     """Initialize services on application startup."""
     global graph_repo, job_repo, index_repo, ingestion_worker, worker_task
+
+    db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+
+    # Startup banner
+    print("=" * 60)
+    print("  Deep Signal — Open Source Risk Intelligence")
+    print("=" * 60)
+    print(f"  DB path:        {db_path}")
+    print(f"  DB exists:      {Path(db_path).exists()}")
+    print(f"  GITHUB_TOKEN:   {'set' if os.environ.get('GITHUB_TOKEN') else 'NOT SET (degraded mode)'}")
+    print(f"  OPENAI_API_KEY: {'set' if os.environ.get('OPENAI_API_KEY') else 'not set'}")
+    print("=" * 60)
+
+    # Startup validation: warn if GITHUB_TOKEN is not set (degraded mode)
+    if not os.environ.get("GITHUB_TOKEN"):
+        logger.warning(
+            "GITHUB_TOKEN is not set — running in degraded mode with rate-limited GitHub API access"
+        )
+
+    # Ensure data directory exists (critical for fresh deployments like Render)
+    data_dir = Path(db_path).parent
+    data_dir.mkdir(parents=True, exist_ok=True)
     
     # Check if database persistence is enabled
     db_enabled = os.getenv("GRAPH_DB_ENABLED", "true").lower() == "true"
@@ -1644,12 +1687,86 @@ def get_package_dependents(
 
 
 # ============================================================================
+# Dependency Tree API - Hierarchical Dependency Visualization
+# ============================================================================
+
+from open_source_risk_model.tree.service import TreeService
+from open_source_risk_model.tree.exceptions import (
+    RepositoryNotFoundError as TreeRepoNotFoundError,
+    TreeConstructionTimeoutError,
+    AllDependenciesFailedError,
+)
+
+
+@app.get("/repos/{repo_id:path}/dependency-tree", tags=["dependency-tree"])
+async def get_dependency_tree(
+    repo_id: str,
+    max_depth: Optional[int] = Query(None, ge=1, le=10, description="Maximum tree depth (1-10)"),
+    high_risk_only: bool = Query(False, description="Include only high-risk nodes and ancestors"),
+    vulnerable_only: bool = Query(False, description="Include only vulnerable nodes and ancestors"),
+    direct_only: bool = Query(False, description="Include only direct dependencies"),
+    sort_by: Optional[str] = Query(None, description="Sort order: risk_score, name, vulnerability_count"),
+    truncate_after_children: Optional[int] = Query(None, ge=1, description="Max children per node"),
+):
+    """Get dependency tree for a repository.
+
+    Returns a hierarchical tree of dependencies enriched with risk metadata,
+    summary metrics, and provenance information.
+
+    The ``repo_id`` accepts ``owner/repo`` format (e.g. ``facebook/react``).
+    """
+    # Validate sort_by
+    if sort_by is not None and sort_by not in ("risk_score", "name", "vulnerability_count"):
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": {
+                    "code": "INVALID_PARAMETER",
+                    "message": f"Invalid sort_by value: '{sort_by}'. Must be one of: risk_score, name, vulnerability_count",
+                }
+            },
+        )
+
+    db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+    service = TreeService(db_path=db_path)
+
+    try:
+        response = service.get_dependency_tree(
+            repo_full_name=repo_id,
+            max_depth=max_depth,
+            high_risk_only=high_risk_only,
+            vulnerable_only=vulnerable_only,
+            direct_only=direct_only,
+            sort_by=sort_by,
+            truncate_after_children=truncate_after_children,
+        )
+        return response.to_dict()
+
+    except TreeRepoNotFoundError as exc:
+        raise HTTPException(status_code=404, detail={"error": {"code": "NOT_FOUND", "message": str(exc)}})
+
+    except TreeConstructionTimeoutError as exc:
+        raise HTTPException(status_code=503, detail={"error": {"code": "TIMEOUT", "message": str(exc)}})
+
+    except AllDependenciesFailedError as exc:
+        raise HTTPException(status_code=503, detail={"error": {"code": "ALL_DEPS_FAILED", "message": str(exc)}})
+
+    except Exception as exc:
+        logger.error(f"Unexpected error building dependency tree for {repo_id}: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail={"error": {"code": "INTERNAL_ERROR", "message": "Failed to build dependency tree"}},
+        )
+
+
+# ============================================================================
 # Query API - Intent-Based Natural Language Queries
 # ============================================================================
 
 from pydantic import BaseModel, Field
 from open_source_risk_model.query.intent_executor import IntentExecutor
 from open_source_risk_model.query.intent_classifier import IntentClassifier
+from open_source_risk_model.llm import create_provider_from_env, LLMClient, PromptManager
 
 
 class QueryRequest(BaseModel):
@@ -1759,7 +1876,18 @@ async def query_dependencies(
             global intent_classifier
             if intent_classifier is None:
                 try:
-                    intent_classifier = IntentClassifier()
+                    # Create LLM provider from environment
+                    provider = create_provider_from_env()
+                    
+                    # Initialize prompt manager
+                    prompts_dir = Path("src/open_source_risk_model/llm/prompts")
+                    prompt_manager = PromptManager(prompts_dir)
+                    
+                    # Create LLM client
+                    llm_client = LLMClient(provider, prompt_manager)
+                    
+                    # Initialize classifier with LLM client
+                    intent_classifier = IntentClassifier(llm_client)
                 except Exception as e:
                     logger.error(f"Failed to initialize intent classifier: {e}")
                     raise HTTPException(
@@ -1890,3 +2018,294 @@ async def query_dependencies(
     
     finally:
         clear_request_id()
+
+
+# ---------------------------------------------------------------------------
+# Stats API
+# ---------------------------------------------------------------------------
+
+
+@app.get("/api/stats")
+def get_stats():
+    """Return dataset coverage statistics.
+
+    Computes total repos, fully analyzed repos (present in both repo_graphs
+    and repo_dependencies), and coverage ratio.
+    """
+    db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+
+    try:
+        conn = get_connection(db_path)
+    except Exception:
+        raise HTTPException(status_code=503, detail="Database is not available")
+
+    try:
+        cursor = conn.execute(
+            "SELECT COUNT(DISTINCT repo_full_name) FROM repo_graphs"
+        )
+        total_repos = cursor.fetchone()[0]
+
+        cursor = conn.execute(
+            "SELECT COUNT(DISTINCT rg.repo_full_name) "
+            "FROM repo_graphs rg "
+            "INNER JOIN repo_dependencies rd ON rg.repo_full_name = rd.repo_full_name"
+        )
+        fully_analyzed_repos = cursor.fetchone()[0]
+
+        if total_repos > 0:
+            coverage_ratio = round(fully_analyzed_repos / total_repos, 2)
+        else:
+            coverage_ratio = 0.00
+
+        return {
+            "total_repos": total_repos,
+            "fully_analyzed_repos": fully_analyzed_repos,
+            "coverage_ratio": coverage_ratio,
+        }
+    except Exception as e:
+        logger.error(f"Error computing stats: {e}", exc_info=True)
+        raise HTTPException(status_code=503, detail="Database is not available")
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Demo Repos API
+# ---------------------------------------------------------------------------
+
+
+@app.get("/api/demo-repos")
+def get_demo_repos():
+    """Return curated demo repos with live risk labels.
+
+    Loads repos from demo_repos.yaml, validates against the database,
+    and enriches each validated entry with a risk_label from
+    compute_repo_insight. Invalid repos are excluded from the response.
+
+    If the database is unavailable, returns all repos from YAML
+    without enrichment (risk_label: null for all).
+    """
+    db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+
+    # Always load the YAML config first
+    try:
+        config = load_demo_repos()
+    except Exception as e:
+        logger.error(f"Failed to load demo repos config: {e}", exc_info=True)
+        return {"repos": []}
+
+    # Try to validate and enrich from DB
+    try:
+        validated = validate_demo_repos(db_path)
+
+        repos = []
+        for demo in validated:
+            owner, name = demo.repo.split("/", 1)
+            risk_label = None
+            try:
+                gr = GraphRepository(db_path=db_path)
+                insight = compute_repo_insight(demo.repo, gr)
+                if insight.graph_signal_score is not None:
+                    risk_label = insight.graph_signal_label
+            except Exception:
+                risk_label = None
+
+            repos.append({
+                "repo": demo.repo,
+                "name": name,
+                "owner": owner,
+                "tags": demo.tags,
+                "risk_label": risk_label,
+            })
+
+        return {"repos": repos}
+
+    except Exception as e:
+        # DB unavailable — fall back to YAML without enrichment
+        logger.warning(
+            f"DB unavailable for demo-repos validation, returning unenriched list: {e}"
+        )
+        repos = []
+        for demo in config.repos:
+            owner, name = demo.repo.split("/", 1)
+            repos.append({
+                "repo": demo.repo,
+                "name": name,
+                "owner": owner,
+                "tags": demo.tags,
+                "risk_label": None,
+            })
+        return {"repos": repos}
+
+
+# ---------------------------------------------------------------------------
+# Insights API
+# ---------------------------------------------------------------------------
+
+
+def _repo_exists_in_db(repo_full_name: str, db_path: str) -> bool:
+    """Check whether a row exists in repo_graphs for the given repo.
+
+    Uses a lightweight SELECT 1 query — does not load graph JSON.
+    """
+    conn = get_connection(db_path)
+    try:
+        cursor = conn.execute(
+            "SELECT 1 FROM repo_graphs WHERE repo_full_name = ?",
+            (repo_full_name,),
+        )
+        return cursor.fetchone() is not None
+    finally:
+        conn.close()
+
+
+@app.get("/api/insights/{owner}/{repo}")
+def get_repo_insights(owner: str, repo: str):
+    """Return computed insight for a repository (Req 9.1-9.5).
+
+    Computes on demand. Does not persist results.
+    """
+    repo_full_name = f"{owner}/{repo}"
+
+    try:
+        if graph_repo is None:
+            raise HTTPException(
+                status_code=503,
+                detail="Database is not available",
+            )
+
+        db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+
+        if not _repo_exists_in_db(repo_full_name, db_path):
+            raise HTTPException(
+                status_code=404,
+                detail=f"Repository {repo_full_name} not found",
+            )
+
+        insight = compute_repo_insight(repo_full_name, graph_repo)
+        return insight.to_dict()
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(
+            f"Error computing insights for {repo_full_name}: {e}",
+            exc_info=True,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Internal error computing insights",
+        )
+
+
+@app.get("/api/insights")
+def list_insights(
+    sort_by: str = Query("score", description="Sort key: score, base_risk, cve_count, maintainer_fraction, release_staleness"),
+    order: str = Query("desc", description="Sort order: asc or desc"),
+    label: Optional[str] = Query(None, description="Filter by graph_signal_label: HIGH, MEDIUM, LOW"),
+    has_cves: Optional[bool] = Query(None, description="Filter repos with/without CVEs"),
+    has_maintainer_risk: Optional[bool] = Query(None, description="Filter repos with/without maintainer risk (severity != info)"),
+    has_stale_release: Optional[bool] = Query(None, description="Filter repos with/without stale releases (severity != info)"),
+    min_score: Optional[float] = Query(None, description="Minimum graph_signal_score", ge=0.0, le=1.0),
+    limit: int = Query(25, description="Max results to return", ge=1, le=500),
+    offset: int = Query(0, description="Pagination offset", ge=0),
+):
+    """Cross-repo insight listing with filtering and sorting.
+
+    Computes insights on the fly for all repos, applies filters,
+    sorts, and returns a paginated lightweight summary.
+    """
+    try:
+        if graph_repo is None:
+            raise HTTPException(status_code=503, detail="Database is not available")
+
+        repos = graph_repo.list_repos(limit=10000)
+        all_insights = []
+        for r in repos:
+            name = r["repo_full_name"]
+            try:
+                insight = compute_repo_insight(name, graph_repo)
+                all_insights.append(insight)
+            except Exception:
+                continue
+
+        # --- helpers to pull signal metadata ---
+        def _signal(insight, name):
+            for s in insight.direct_signals:
+                if s.signal_name == name:
+                    return s
+            return None
+
+        # --- filter ---
+        filtered = all_insights
+
+        if label:
+            filtered = [i for i in filtered if i.graph_signal_label == label.upper()]
+
+        if has_cves is not None:
+            if has_cves:
+                filtered = [i for i in filtered if (_signal(i, "cve_risk") and _signal(i, "cve_risk").severity != "info")]
+            else:
+                filtered = [i for i in filtered if (not _signal(i, "cve_risk") or _signal(i, "cve_risk").severity == "info")]
+
+        if has_maintainer_risk is not None:
+            if has_maintainer_risk:
+                filtered = [i for i in filtered if (_signal(i, "maintainer_concentration") and _signal(i, "maintainer_concentration").severity != "info")]
+            else:
+                filtered = [i for i in filtered if (not _signal(i, "maintainer_concentration") or _signal(i, "maintainer_concentration").severity == "info")]
+
+        if has_stale_release is not None:
+            if has_stale_release:
+                filtered = [i for i in filtered if (_signal(i, "release_staleness") and _signal(i, "release_staleness").severity != "info")]
+            else:
+                filtered = [i for i in filtered if (not _signal(i, "release_staleness") or _signal(i, "release_staleness").severity == "info")]
+
+        if min_score is not None:
+            filtered = [i for i in filtered if i.graph_signal_score >= min_score]
+
+        # --- sort ---
+        sort_keys = {
+            "score": lambda i: i.graph_signal_score,
+            "base_risk": lambda i: i.base_maintenance_risk or 0.0,
+            "cve_count": lambda i: (_signal(i, "cve_risk").metadata.get("total_count", 0) if _signal(i, "cve_risk") else 0),
+            "maintainer_fraction": lambda i: (_signal(i, "maintainer_concentration").metadata.get("top_contributor_fraction", 0.0) if _signal(i, "maintainer_concentration") else 0.0),
+            "release_staleness": lambda i: (_signal(i, "release_staleness").metadata.get("days_since_latest", 0) or 0 if _signal(i, "release_staleness") else 0),
+        }
+        key_fn = sort_keys.get(sort_by, sort_keys["score"])
+        reverse = order.lower() != "asc"
+        filtered.sort(key=key_fn, reverse=reverse)
+
+        total = len(filtered)
+        page = filtered[offset : offset + limit]
+
+        # --- serialize lightweight items ---
+        items = []
+        for i in page:
+            cve_s = _signal(i, "cve_risk")
+            maint_s = _signal(i, "maintainer_concentration")
+            rel_s = _signal(i, "release_staleness")
+            items.append({
+                "repo_full_name": i.repo_full_name,
+                "graph_signal_score": round(i.graph_signal_score, 3),
+                "graph_signal_label": i.graph_signal_label,
+                "base_maintenance_risk": i.base_maintenance_risk,
+                "base_maintenance_label": i.base_maintenance_label,
+                "reasons": i.reasons,
+                "signals": {
+                    "has_cves": cve_s.severity != "info" if cve_s else False,
+                    "cve_count": cve_s.metadata.get("total_count", 0) if cve_s else 0,
+                    "maintainer_concentration": maint_s.severity if maint_s else "info",
+                    "top_contributor": maint_s.metadata.get("top_contributor_username") if maint_s else None,
+                    "top_contributor_fraction": round(maint_s.metadata.get("top_contributor_fraction", 0.0), 2) if maint_s else None,
+                    "release_staleness": rel_s.severity if rel_s else "info",
+                    "days_since_release": rel_s.metadata.get("days_since_latest") if rel_s else None,
+                },
+            })
+
+        return {"total": total, "returned": len(items), "items": items}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error listing insights: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Internal error listing insights")

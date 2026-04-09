@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 1328,
+    "contributors_last_12mo": 82,
+    "days_since_last_push": 2.898936523159722,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.26582278481012656,
+    "fraction_open_issues_stale_180d": 0.4482758620689655,
+    "issues_per_contributor": 0.6844879518072289,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 909,
+    "stargazers_count": 219137,
+    "stars_count": 219137,
+    "top_contributor_fraction_12mo": 0.1564625850340136
+  },
+  "fetched_at": "2026-03-30T19:35:10.800378+00:00",
+  "full_name": "TheAlgorithms/Python"
+}

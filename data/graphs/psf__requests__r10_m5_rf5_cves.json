@@ -1,9 +1,9 @@
 {
   "cache_metadata": {
     "repo": "psf/requests",
-    "cached_at": "2026-02-20T19:51:55.129881+00:00",
+    "cached_at": "2026-04-07T23:36:11.327634+00:00",
     "ttl_hours": 1,
-    "expires_at": "2026-02-20T20:51:55.129881+00:00"
+    "expires_at": "2026-04-08T00:36:11.327634+00:00"
   },
   "graph": {
     "nodes": [
@@ -13,15 +13,15 @@
         "label": "psf/requests",
         "metadata": {
           "url": "https://github.com/psf/requests",
-          "maintenance_risk": 0.23963297832922245,
+          "maintenance_risk": 0.28134744429657355,
           "maintenance_label": "low",
-          "coverage": 0.9081632653061225,
-          "confidence": "medium"
+          "coverage": 1.0,
+          "confidence": "high"
         },
         "provenance": {
           "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.755849+00:00",
-          "data_confidence": 0.9724489795918367
+          "fetched_at": "2026-04-07T23:36:11.118685+00:00",
+          "data_confidence": 1.0
         }
       },
       {
@@ -30,34 +30,34 @@
         "label": "Days Since Last Release",
         "metadata": {
           "key": "days_since_last_release",
-          "raw_value": 177.98749569651622,
-          "risk_score": 0.7444097102681007,
-          "contribution": 0.060768139613722495,
+          "raw_value": 186.83798632642362,
+          "risk_score": 0.7555443132376408,
+          "contribution": 0.06167708679490945,
           "weight": 0.08163265306122448,
           "category": "Release"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-20T19:51:54.755870+00:00",
-          "data_confidence": 0.9724489795918367
+          "fetched_at": "2026-04-07T23:36:11.118718+00:00",
+          "data_confidence": 1.0
         }
       },
       {
-        "id": "risk:psf/requests:issues_per_contributor",
+        "id": "risk:psf/requests:days_since_last_push",
         "type": "risk_factor",
-        "label": "Issues Per Contributor",
+        "label": "Days Since Last Push",
         "metadata": {
-          "key": "issues_per_contributor",
-          "raw_value": 0.42010309278350516,
-          "risk_score": 0.3020618556701031,
-          "contribution": 0.03390490216705238,
-          "weight": 0.11224489795918366,
-          "category": "Issues"
+          "key": "days_since_last_push",
+          "raw_value": 7.689698076122686,
+          "risk_score": 0.20599737457497988,
+          "contribution": 0.03993826649923079,
+          "weight": 0.19387755102040816,
+          "category": "Activity"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-20T19:51:54.755886+00:00",
-          "data_confidence": 0.9724489795918367
+          "fetched_at": "2026-04-07T23:36:11.118747+00:00",
+          "data_confidence": 1.0
         }
       },
       {
@@ -66,223 +66,66 @@
         "label": "Top Contributor Fraction 12Mo",
         "metadata": {
           "key": "top_contributor_fraction_12mo",
-          "raw_value": 0.42424242424242425,
-          "risk_score": 0.2737373737373738,
-          "contribution": 0.03072562358276644,
+          "raw_value": 0.4473684210526316,
+          "risk_score": 0.31228070175438594,
+          "contribution": 0.03505191550304332,
           "weight": 0.11224489795918366,
           "category": "Contributors"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-20T19:51:54.755898+00:00",
-          "data_confidence": 0.9724489795918367
+          "fetched_at": "2026-04-07T23:36:11.118770+00:00",
+          "data_confidence": 1.0
         }
       },
       {
-        "id": "risk:psf/requests:fraction_issues_closed_12mo",
+        "id": "risk:psf/requests:issues_per_contributor",
         "type": "risk_factor",
-        "label": "Fraction Issues Closed 12Mo",
+        "label": "Issues Per Contributor",
         "metadata": {
-          "key": "fraction_issues_closed_12mo",
-          "raw_value": 0.8290598290598291,
-          "risk_score": 0.19458689458689454,
-          "contribution": 0.029783708355136915,
-          "weight": 0.1530612244897959,
+          "key": "issues_per_contributor",
+          "raw_value": 0.39768339768339767,
+          "risk_score": 0.2886100386100386,
+          "contribution": 0.032395004333779835,
+          "weight": 0.11224489795918366,
           "category": "Issues"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-20T19:51:54.755909+00:00",
-          "data_confidence": 0.9724489795918367
+          "fetched_at": "2026-04-07T23:36:11.118792+00:00",
+          "data_confidence": 1.0
         }
       },
       {
-        "id": "risk:psf/requests:contributors_last_12mo",
+        "id": "risk:psf/requests:fraction_unanswered_after_30d",
         "type": "risk_factor",
-        "label": "Contributors Last 12Mo",
+        "label": "Fraction Unanswered After 30D",
         "metadata": {
-          "key": "contributors_last_12mo",
-          "raw_value": 16,
-          "risk_score": 0.21999999999999997,
-          "contribution": 0.026938775510204075,
-          "weight": 0.12244897959183672,
-          "category": "Contributors"
+          "key": "fraction_unanswered_after_30d",
+          "raw_value": 0.7272727272727273,
+          "risk_score": 0.9454545454545454,
+          "contribution": 0.028942486085343222,
+          "weight": 0.03061224489795918,
+          "category": "Issues"
         },
         "provenance": {
           "source": "score_model",
-          "fetched_at": "2026-02-20T19:51:54.755922+00:00",
-          "data_confidence": 0.9724489795918367
-        }
-      },
-      {
-        "id": "maintainer:psf/requests:kennethreitz",
-        "type": "maintainer",
-        "label": "kennethreitz",
-        "metadata": {
-          "username": "kennethreitz",
-          "contribution_fraction": 0.4246517517940059,
-          "commit_count": 1006,
-          "type": "individual"
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756157+00:00",
-          "data_confidence": 0.9
-        }
-      },
-      {
-        "id": "maintainer:psf/requests:Lukasa",
-        "type": "maintainer",
-        "label": "Lukasa",
-        "metadata": {
-          "username": "Lukasa",
-          "contribution_fraction": 0.25749261291684256,
-          "commit_count": 610,
-          "type": "individual"
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756170+00:00",
-          "data_confidence": 0.9
-        }
-      },
-      {
-        "id": "maintainer:psf/requests:sigmavirus24",
-        "type": "maintainer",
-        "label": "sigmavirus24",
-        "metadata": {
-          "username": "sigmavirus24",
-          "contribution_fraction": 0.16673701983959477,
-          "commit_count": 395,
-          "type": "individual"
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756181+00:00",
-          "data_confidence": 0.9
-        }
-      },
-      {
-        "id": "maintainer:psf/requests:nateprewitt",
-        "type": "maintainer",
-        "label": "nateprewitt",
-        "metadata": {
-          "username": "nateprewitt",
-          "contribution_fraction": 0.13212325875897002,
-          "commit_count": 313,
-          "type": "individual"
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756191+00:00",
-          "data_confidence": 0.9
-        }
-      },
-      {
-        "id": "maintainer:psf/requests:slingamn",
-        "type": "maintainer",
-        "label": "slingamn",
-        "metadata": {
-          "username": "slingamn",
-          "contribution_fraction": 0.018995356690586745,
-          "commit_count": 45,
-          "type": "individual"
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756201+00:00",
-          "data_confidence": 0.9
-        }
-      },
-      {
-        "id": "release:psf/requests:v2.32.5",
-        "type": "release",
-        "label": "v2.32.5",
-        "metadata": {
-          "tag_name": "v2.32.5",
-          "name": "v2.32.5",
-          "published_at": "2025-08-18T20:33:27Z",
-          "days_ago": 185,
-          "is_latest": true,
-          "is_prerelease": false
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756521+00:00",
+          "fetched_at": "2026-04-07T23:36:11.118813+00:00",
           "data_confidence": 1.0
         }
       },
       {
-        "id": "release:psf/requests:v2.32.4",
+        "id": "release:psf/requests:latest",
         "type": "release",
-        "label": "v2.32.4",
+        "label": "Latest Release",
         "metadata": {
-          "tag_name": "v2.32.4",
-          "name": "v2.32.4",
-          "published_at": "2025-06-09T18:22:07Z",
-          "days_ago": 256,
-          "is_latest": false,
-          "is_prerelease": false
+          "days_since_release": 186.83798632642362,
+          "type": "latest"
         },
         "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756537+00:00",
-          "data_confidence": 1.0
-        }
-      },
-      {
-        "id": "release:psf/requests:v2.32.3",
-        "type": "release",
-        "label": "v2.32.3",
-        "metadata": {
-          "tag_name": "v2.32.3",
-          "name": "v2.32.3",
-          "published_at": "2024-05-29T15:39:40Z",
-          "days_ago": 632,
-          "is_latest": false,
-          "is_prerelease": false
-        },
-        "provenance": {
-          "source": "github_api",
-          "fetched_at": "2026-02-20T19:51:54.756550+00:00",
-          "data_confidence": 1.0
-        }
-      },
-      {
-        "id": "registry:pypi:requests",
-        "type": "registry",
-        "label": "pypi: requests",
-        "metadata": {
-          "registry_type": "pypi",
-          "package_name": "requests",
-          "detected_from": "pyproject.toml",
-          "latest_version": null,
-          "download_count": null
-        },
-        "provenance": {
-          "source": "heuristic",
-          "fetched_at": "2026-02-20T19:51:54.983609+00:00",
-          "match_confidence": 0.9,
+          "source": "score_data",
+          "fetched_at": "2026-04-07T23:36:11.264985+00:00",
           "data_confidence": 0.8
-        }
-      },
-      {
-        "id": "cve:GHSA-9hjg-9r4m-mvj7",
-        "type": "cve",
-        "label": "GHSA-9hjg-9r4m-mvj7",
-        "metadata": {
-          "cve_id": "GHSA-9hjg-9r4m-mvj7",
-          "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
-          "cvss_score": null,
-          "summary": "Requests vulnerable to .netrc credentials leak via malicious URLs",
-          "published": "2025-06-09T19:06:08Z",
-          "fixed_in": "2.32.4",
-          "source": "github_advisory"
-        },
-        "provenance": {
-          "source": "github_advisory",
-          "fetched_at": "2026-02-20T19:51:55.124379+00:00",
-          "data_confidence": 0.95
         }
       }
     ],
@@ -292,25 +135,25 @@
         "target": "risk:psf/requests:days_since_last_release",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.060768139613722495
+          "contribution": 0.06167708679490945
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-20T19:51:54.755878+00:00",
-          "confidence": 0.9724489795918367
+          "established_at": "2026-04-07T23:36:11.118732+00:00",
+          "confidence": 1.0
         }
       },
       {
         "source": "repo:psf/requests",
-        "target": "risk:psf/requests:issues_per_contributor",
+        "target": "risk:psf/requests:days_since_last_push",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.03390490216705238
+          "contribution": 0.03993826649923079
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-20T19:51:54.755891+00:00",
-          "confidence": 0.9724489795918367
+          "established_at": "2026-04-07T23:36:11.118757+00:00",
+          "confidence": 1.0
         }
       },
       {
@@ -318,188 +161,65 @@
         "target": "risk:psf/requests:top_contributor_fraction_12mo",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.03072562358276644
+          "contribution": 0.03505191550304332
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-20T19:51:54.755903+00:00",
-          "confidence": 0.9724489795918367
+          "established_at": "2026-04-07T23:36:11.118779+00:00",
+          "confidence": 1.0
         }
       },
       {
         "source": "repo:psf/requests",
-        "target": "risk:psf/requests:fraction_issues_closed_12mo",
+        "target": "risk:psf/requests:issues_per_contributor",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.029783708355136915
+          "contribution": 0.032395004333779835
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-20T19:51:54.755914+00:00",
-          "confidence": 0.9724489795918367
+          "established_at": "2026-04-07T23:36:11.118800+00:00",
+          "confidence": 1.0
         }
       },
       {
         "source": "repo:psf/requests",
-        "target": "risk:psf/requests:contributors_last_12mo",
+        "target": "risk:psf/requests:fraction_unanswered_after_30d",
         "relationship_type": "has_risk_factor",
         "metadata": {
-          "contribution": 0.026938775510204075
+          "contribution": 0.028942486085343222
         },
         "provenance": {
           "source": "score_model",
-          "established_at": "2026-02-20T19:51:54.755926+00:00",
-          "confidence": 0.9724489795918367
-        }
-      },
-      {
-        "source": "maintainer:psf/requests:kennethreitz",
-        "target": "repo:psf/requests",
-        "relationship_type": "maintained_by",
-        "metadata": {
-          "contribution_fraction": 0.4246517517940059,
-          "commit_count": 1006
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756164+00:00",
-          "confidence": 0.9
-        }
-      },
-      {
-        "source": "maintainer:psf/requests:Lukasa",
-        "target": "repo:psf/requests",
-        "relationship_type": "maintained_by",
-        "metadata": {
-          "contribution_fraction": 0.25749261291684256,
-          "commit_count": 610
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756175+00:00",
-          "confidence": 0.9
-        }
-      },
-      {
-        "source": "maintainer:psf/requests:sigmavirus24",
-        "target": "repo:psf/requests",
-        "relationship_type": "maintained_by",
-        "metadata": {
-          "contribution_fraction": 0.16673701983959477,
-          "commit_count": 395
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756186+00:00",
-          "confidence": 0.9
-        }
-      },
-      {
-        "source": "maintainer:psf/requests:nateprewitt",
-        "target": "repo:psf/requests",
-        "relationship_type": "maintained_by",
-        "metadata": {
-          "contribution_fraction": 0.13212325875897002,
-          "commit_count": 313
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756196+00:00",
-          "confidence": 0.9
-        }
-      },
-      {
-        "source": "maintainer:psf/requests:slingamn",
-        "target": "repo:psf/requests",
-        "relationship_type": "maintained_by",
-        "metadata": {
-          "contribution_fraction": 0.018995356690586745,
-          "commit_count": 45
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756205+00:00",
-          "confidence": 0.9
-        }
-      },
-      {
-        "source": "repo:psf/requests",
-        "target": "release:psf/requests:v2.32.5",
-        "relationship_type": "has_release",
-        "metadata": {
-          "days_ago": 185,
-          "is_latest": true
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756529+00:00",
+          "established_at": "2026-04-07T23:36:11.118821+00:00",
           "confidence": 1.0
         }
       },
       {
         "source": "repo:psf/requests",
-        "target": "release:psf/requests:v2.32.4",
+        "target": "release:psf/requests:latest",
         "relationship_type": "has_release",
         "metadata": {
-          "days_ago": 256,
-          "is_latest": false
+          "days_ago": 186.83798632642362
         },
         "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756542+00:00",
-          "confidence": 1.0
-        }
-      },
-      {
-        "source": "repo:psf/requests",
-        "target": "release:psf/requests:v2.32.3",
-        "relationship_type": "has_release",
-        "metadata": {
-          "days_ago": 632,
-          "is_latest": false
-        },
-        "provenance": {
-          "source": "github_api",
-          "established_at": "2026-02-20T19:51:54.756554+00:00",
-          "confidence": 1.0
-        }
-      },
-      {
-        "source": "repo:psf/requests",
-        "target": "registry:pypi:requests",
-        "relationship_type": "published_as",
-        "metadata": {
-          "package_name": "requests",
-          "latest_version": null
-        },
-        "provenance": {
-          "source": "heuristic",
-          "established_at": "2026-02-20T19:51:54.983645+00:00",
-          "match_confidence": 0.9,
+          "source": "score_data",
+          "established_at": "2026-04-07T23:36:11.265008+00:00",
           "confidence": 0.8
-        }
-      },
-      {
-        "source": "release:psf/requests:v2.32.3",
-        "target": "cve:GHSA-9hjg-9r4m-mvj7",
-        "relationship_type": "has_cve",
-        "metadata": {
-          "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
-          "fixed_in": "2.32.4"
-        },
-        "provenance": {
-          "source": "github_advisory",
-          "established_at": "2026-02-20T19:51:55.124399+00:00",
-          "match_confidence": 0.85,
-          "confidence": 0.85
         }
       }
     ],
     "metadata": {
       "schema_version": "1.0",
-      "generated_at": "2026-02-20T19:51:54.755575+00:00",
+      "generated_at": "2026-04-07T23:36:11.118155+00:00",
       "repo": "psf/requests",
-      "warnings": []
+      "warnings": [
+        {
+          "source": "maintainer_nodes",
+          "error": "403 Client Error: Forbidden for url: https://api.github.com/repos/psf/requests/contributors?per_page=5",
+          "impact": "maintainer_nodes not included in graph"
+        }
+      ]
     }
   }
 }

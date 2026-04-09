@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "not_applicable",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 1380,
+    "contributors_last_12mo": 1,
+    "days_since_last_push": 12.137585857164352,
+    "days_since_last_release": null,
+    "fraction_issues_closed_12mo": 0.988950276243094,
+    "fraction_open_issues_stale_180d": 0.5,
+    "issues_per_contributor": 0.8442028985507246,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 1165,
+    "stargazers_count": 417526,
+    "stars_count": 417526,
+    "top_contributor_fraction_12mo": 1.0
+  },
+  "fetched_at": "2026-03-30T19:46:31.473224+00:00",
+  "full_name": "public-apis/public-apis"
+}

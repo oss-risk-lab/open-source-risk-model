@@ -1,0 +1,27 @@
+{
+  "comments_written_last_run": 5389,
+  "compact_stats": {
+    "comments": {
+      "dropped": 4695,
+      "kept": 6377,
+      "path": "data/issues/nodejs__node/comments.jsonl",
+      "rows_before": 11072
+    },
+    "issues": {
+      "dropped": 634,
+      "kept": 902,
+      "path": "data/issues/nodejs__node/issues.jsonl",
+      "rows_before": 1536
+    }
+  },
+  "days_back": 365,
+  "errors": [],
+  "issues_written_last_run": 756,
+  "last_fetch_utc": "2026-04-07T21:22:38.142457+00:00",
+  "max_pages": 25,
+  "pages_fetched_last_run": 25,
+  "per_page": 100,
+  "status": "ok",
+  "truncated": true,
+  "updated_at_utc": "2026-04-07T21:22:38.142548+00:00"
+}

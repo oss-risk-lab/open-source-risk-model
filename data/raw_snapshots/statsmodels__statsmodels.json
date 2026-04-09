@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 479,
+    "contributors_last_12mo": 21,
+    "days_since_last_push": 11.179493987870371,
+    "days_since_last_release": 115.0754330833449,
+    "fraction_issues_closed_12mo": 0.34408602150537637,
+    "fraction_open_issues_stale_180d": 0.9873737373737373,
+    "issues_per_contributor": 6.187891440501044,
+    "license_spdx_id": "BSD-3-Clause",
+    "open_issues_count": 2964,
+    "stargazers_count": 11330,
+    "stars_count": 11330,
+    "top_contributor_fraction_12mo": 0.823076923076923
+  },
+  "fetched_at": "2026-03-30T19:48:39.999656+00:00",
+  "full_name": "statsmodels/statsmodels"
+}

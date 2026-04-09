@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 956,
+    "contributors_last_12mo": 14,
+    "days_since_last_push": 4.886994245370371,
+    "days_since_last_release": 47.54736626873843,
+    "fraction_issues_closed_12mo": 0.28,
+    "fraction_open_issues_stale_180d": 0.9944598337950139,
+    "issues_per_contributor": 1.3399581589958158,
+    "license_spdx_id": "NOASSERTION",
+    "open_issues_count": 1281,
+    "stargazers_count": 77680,
+    "stars_count": 77680,
+    "top_contributor_fraction_12mo": 0.8851351351351351
+  },
+  "fetched_at": "2026-03-30T19:49:05.657289+00:00",
+  "full_name": "tensorflow/models"
+}

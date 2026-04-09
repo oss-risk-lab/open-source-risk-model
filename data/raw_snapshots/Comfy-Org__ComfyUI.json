@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 293,
+    "contributors_last_12mo": 34,
+    "days_since_last_push": 0.14664575458333334,
+    "days_since_last_release": 5.6325618123148145,
+    "fraction_issues_closed_12mo": 0.4948678071539658,
+    "fraction_open_issues_stale_180d": 0.7400732188116024,
+    "issues_per_contributor": 13.341296928327646,
+    "license_spdx_id": "GPL-3.0",
+    "open_issues_count": 3909,
+    "stargazers_count": 107329,
+    "stars_count": 107329,
+    "top_contributor_fraction_12mo": 0.285
+  },
+  "fetched_at": "2026-03-30T19:33:33.781516+00:00",
+  "full_name": "Comfy-Org/ComfyUI"
+}

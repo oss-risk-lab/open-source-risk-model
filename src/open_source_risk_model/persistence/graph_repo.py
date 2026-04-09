@@ -152,7 +152,13 @@ class GraphRepository:
         for node in graph.nodes:
             if node.type == NodeType.CVE:
                 cve_id = node.metadata.get("cve_id")
-                if cve_id:
+                ghsa_id = node.metadata.get("ghsa_id")
+                cve_aliases = node.metadata.get("aliases", [])
+                
+                # Use cve_id if available, otherwise use ghsa_id, otherwise use node id
+                primary_cve_id = cve_id or ghsa_id or node.metadata.get("id")
+                
+                if primary_cve_id:
                     # Find affected releases using node lookup dict (O(1) per edge)
                     affected_releases = []
                     for edge in graph.edges:
@@ -165,14 +171,16 @@ class GraphRepository:
                     
                     conn.execute("""
                         INSERT INTO repo_cves
-                        (repo_full_name, cve_id, severity, cvss_score, affected_releases)
-                        VALUES (?, ?, ?, ?, ?)
+                        (repo_full_name, cve_id, severity, cvss_score, affected_releases, ghsa_id, cve_aliases)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
                     """, (
                         repo_full_name,
-                        cve_id,
+                        primary_cve_id,
                         node.metadata.get("severity", "UNKNOWN"),
                         node.metadata.get("cvss_score"),
-                        json.dumps(affected_releases) if affected_releases else None
+                        json.dumps(affected_releases) if affected_releases else None,
+                        ghsa_id,
+                        json.dumps(cve_aliases) if cve_aliases else None
                     ))
         
         # Extract and insert registries

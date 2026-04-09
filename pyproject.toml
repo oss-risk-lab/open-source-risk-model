@@ -20,6 +20,7 @@ dependencies = [
     "python-dotenv",
     "packaging",  # For parsing Python dependency specifiers
     "tomli; python_version < '3.11'",  # For parsing pyproject.toml (built-in in 3.11+)
+    "openai>=1.0",  # OpenAI API client for LLM provider
 ]
 
 [project.optional-dependencies]
@@ -44,7 +45,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["test"]
 pythonpath = ["src"]
-asyncio_mode = "auto"
+markers = [
+    "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
+]
 
 [tool.ruff]
 line-length = 100

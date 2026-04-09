@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "rejected",
+        "fraction_open_issues_stale_180d": "rejected",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 215,
+    "contributors_last_12mo": 23,
+    "days_since_last_push": 2.3283605004166668,
+    "days_since_last_release": 14.556395586678242,
+    "fraction_issues_closed_12mo": null,
+    "fraction_open_issues_stale_180d": null,
+    "issues_per_contributor": 0.386046511627907,
+    "license_spdx_id": "BSD-3-Clause",
+    "open_issues_count": 83,
+    "stargazers_count": 10553,
+    "stars_count": 10553,
+    "top_contributor_fraction_12mo": 0.6190476190476191
+  },
+  "fetched_at": "2026-03-30T19:38:23.647783+00:00",
+  "full_name": "encode/uvicorn"
+}

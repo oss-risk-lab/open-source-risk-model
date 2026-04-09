@@ -1,0 +1,81 @@
+# Package to Repository Mappings
+# Maps package names to their canonical GitHub repository identifiers
+# Used for entity normalization in query processing
+
+pypi:
+  # Python packages
+  numpy: numpy/numpy
+  pandas: pandas-dev/pandas
+  flask: pallets/flask
+  django: django/django
+  requests: psf/requests
+  pytest: pytest-dev/pytest
+  scipy: scipy/scipy
+  matplotlib: matplotlib/matplotlib
+  scikit-learn: scikit-learn/scikit-learn
+  tensorflow: tensorflow/tensorflow
+  pytorch: pytorch/pytorch
+  fastapi: tiangolo/fastapi
+  sqlalchemy: sqlalchemy/sqlalchemy
+  celery: celery/celery
+  redis: redis/redis-py
+  pillow: python-pillow/Pillow
+  beautifulsoup4: wention/BeautifulSoup4
+  scrapy: scrapy/scrapy
+  black: psf/black
+  mypy: python/mypy
+
+npm:
+  # JavaScript/Node.js packages
+  react: facebook/react
+  vue: vuejs/vue
+  angular: angular/angular
+  express: expressjs/express
+  webpack: webpack/webpack
+  next: vercel/next.js
+  typescript: microsoft/TypeScript
+  eslint: eslint/eslint
+  prettier: prettier/prettier
+  jest: jestjs/jest
+  mocha: mochajs/mocha
+  lodash: lodash/lodash
+  axios: axios/axios
+  moment: moment/moment
+  redux: reduxjs/redux
+  babel: babel/babel
+  rollup: rollup/rollup
+  vite: vitejs/vite
+  svelte: sveltejs/svelte
+  tailwindcss: tailwindlabs/tailwindcss
+
+maven:
+  # Java packages
+  junit:junit: junit-team/junit4
+  org.mockito:mockito-core: mockito/mockito
+  org.springframework:spring-core: spring-projects/spring-framework
+  org.springframework.boot:spring-boot: spring-projects/spring-boot
+  com.google.guava:guava: google/guava
+  org.apache.commons:commons-lang3: apache/commons-lang
+  org.hibernate:hibernate-core: hibernate/hibernate-orm
+  com.fasterxml.jackson.core:jackson-databind: FasterXML/jackson-databind
+  org.slf4j:slf4j-api: qos-ch/slf4j
+  log4j:log4j: apache/logging-log4j2
+
+cargo:
+  # Rust packages
+  serde: serde-rs/serde
+  tokio: tokio-rs/tokio
+  clap: clap-rs/clap
+  regex: rust-lang/regex
+  rand: rust-random/rand
+  reqwest: seanmonstar/reqwest
+  actix-web: actix/actix-web
+  diesel: diesel-rs/diesel
+  rayon: rayon-rs/rayon
+  anyhow: dtolnay/anyhow
+
+# Ambiguity resolution strategy:
+# 1. Exact owner/repo format (highest priority)
+# 2. Exact package mapping by ecosystem (from this file)
+# 3. Inferred mapping from known repo/package aliases
+# 4. Unresolved entity warning (lowest priority)

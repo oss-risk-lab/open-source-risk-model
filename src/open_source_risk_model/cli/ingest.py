@@ -173,22 +173,51 @@ class ProgressReporter:
         self.failed = 0
         self.skipped = 0
         self.start_time = time.time()
+        self.last_update_time = time.time()
+        self.total_dependencies = 0
+        self.total_resolved = 0
     
-    def update(self, status: str) -> None:
+    def update(self, status: str, dependencies_found: int = 0, dependencies_resolved: int = 0) -> None:
         """
         Update progress.
         
         Args:
             status: Status (success, failed, skipped)
+            dependencies_found: Number of dependencies found
+            dependencies_resolved: Number of dependencies resolved
         """
         self.processed += 1
         
         if status == 'success':
             self.successful += 1
+            self.total_dependencies += dependencies_found
+            self.total_resolved += dependencies_resolved
         elif status == 'failed':
             self.failed += 1
         elif status == 'skipped':
             self.skipped += 1
+    
+    def should_update_display(self) -> bool:
+        """
+        Check if display should be updated (minimum 60 seconds between updates).
+        
+        Returns:
+            True if display should be updated
+        """
+        current_time = time.time()
+        elapsed_since_last = current_time - self.last_update_time
+        
+        # Always update on first repo or last repo
+        if self.processed == 1 or self.processed == self.total:
+            self.last_update_time = current_time
+            return True
+        
+        # Update at least every 60 seconds
+        if elapsed_since_last >= 60:
+            self.last_update_time = current_time
+            return True
+        
+        return False
     
     def print_progress(self, repo_name: str, status: str, details: str = "") -> None:
         """
@@ -199,6 +228,10 @@ class ProgressReporter:
             status: Status (success, failed, skipped)
             details: Additional details
         """
+        # Check if we should update display (minimum 60 seconds between updates)
+        if not self.should_update_display():
+            return
+        
         elapsed = time.time() - self.start_time
         rate = self.processed / elapsed if elapsed > 0 else 0
         remaining = self.total - self.processed
@@ -220,16 +253,21 @@ class ProgressReporter:
         # Format ETA
         eta_str = self._format_duration(eta_seconds)
         
-        # Print line
+        # Calculate resolution rate
+        resolution_rate = (self.total_resolved / self.total_dependencies * 100) if self.total_dependencies > 0 else 0.0
+        
+        # Print line with resolution rate
         print(f"\r[{bar}] {progress_pct:5.1f}% | "
               f"{self.processed}/{self.total} | "
               f"{emoji} {repo_name:40s} | "
               f"ETA: {eta_str:8s} | "
-              f"{details:30s}", end='', flush=True)
+              f"Resolution: {resolution_rate:.1f}% | "
+              f"{details:20s}", end='', flush=True)
     
     def print_summary(self) -> None:
         """Print final summary."""
         elapsed = time.time() - self.start_time
+        resolution_rate = (self.total_resolved / self.total_dependencies * 100) if self.total_dependencies > 0 else 0.0
         
         print("\n")
         print("=" * 80)
@@ -239,6 +277,8 @@ class ProgressReporter:
         print(f"Successful:       {self.successful} ({self.successful/self.total*100:.1f}%)")
         print(f"Failed:           {self.failed} ({self.failed/self.total*100:.1f}%)")
         print(f"Skipped:          {self.skipped} ({self.skipped/self.total*100:.1f}%)")
+        print(f"Dependencies:     {self.total_dependencies}")
+        print(f"Resolved:         {self.total_resolved} ({resolution_rate:.1f}%)")
         print(f"Duration:         {self._format_duration(elapsed)}")
         print(f"Rate:             {self.processed/elapsed:.2f} repos/sec")
         print("=" * 80)
@@ -606,7 +646,7 @@ Examples:
                 reporter.print_progress(repo, 'skipped', 'Already ingested')
             elif status == 'success':
                 results.append(result)
-                reporter.update('success')
+                reporter.update('success', result.dependencies_found, result.dependencies_resolved)
                 details = f"{result.dependencies_found} deps, {result.resolution_rate:.0%} resolved"
                 reporter.print_progress(repo, 'success', details)
             else:
@@ -636,7 +676,7 @@ Examples:
                         reporter.print_progress(repo, 'skipped', 'Already ingested')
                     elif status == 'success':
                         results.append(result)
-                        reporter.update('success')
+                        reporter.update('success', result.dependencies_found, result.dependencies_resolved)
                         details = f"{result.dependencies_found} deps, {result.resolution_rate:.0%} resolved"
                         reporter.print_progress(repo, 'success', details)
                     else:

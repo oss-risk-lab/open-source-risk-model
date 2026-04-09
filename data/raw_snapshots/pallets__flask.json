@@ -2,27 +2,64 @@
   "features": {
     "__meta__": {
       "feature_status": {
+        "avg_time_to_first_maintainer_response_days": "ok",
         "contributors_count": "ok",
         "days_since_last_release": "ok",
         "fraction_issues_closed_12mo": "ok",
-        "fraction_open_issues_stale_180d": "not_applicable",
-        "issues_per_contributor": "ok"
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok",
+        "median_time_to_close_days": "ok",
+        "open_issue_age_p90_days": "ok"
       },
       "has_issues": true
     },
+    "__snapshot__": {
+      "issues_meta": {
+        "comments_written_last_run": 154,
+        "compact_stats": {
+          "comments": {
+            "dropped": 154,
+            "kept": 154,
+            "path": "data/issues/pallets__flask/comments.jsonl",
+            "rows_before": 308
+          },
+          "issues": {
+            "dropped": 58,
+            "kept": 58,
+            "path": "data/issues/pallets__flask/issues.jsonl",
+            "rows_before": 116
+          }
+        },
+        "days_back": 365,
+        "errors": [],
+        "issues_written_last_run": 58,
+        "last_fetch_utc": "2026-02-21T16:41:27.972348+00:00",
+        "max_pages": 25,
+        "pages_fetched_last_run": 3,
+        "per_page": 100,
+        "status": "ok",
+        "truncated": false,
+        "updated_at_utc": "2026-02-21T16:38:41.891401+00:00"
+      },
+      "schema_version": "1.1"
+    },
     "archived": false,
+    "avg_time_to_first_maintainer_response_days": 3.630203510802469,
     "contributors_count": 862,
     "contributors_last_12mo": 18,
-    "days_since_last_push": 5.95302829787037,
-    "days_since_last_release": 176.96657341829862,
-    "fraction_issues_closed_12mo": 1.0,
-    "fraction_open_issues_stale_180d": null,
-    "issues_per_contributor": 0.002320185614849188,
+    "days_since_last_push": 1.528189114548611,
+    "days_since_last_release": 2.485901495590278,
+    "fraction_issues_closed_12mo": 0.9814814814814815,
+    "fraction_open_issues_stale_180d": 0.0,
+    "issues_per_contributor": 0.004640371229698376,
     "license_spdx_id": "BSD-3-Clause",
-    "open_issues_count": 2,
-    "stargazers_count": 71151,
-    "top_contributor_fraction_12mo": 0.8392857142857143
+    "median_time_to_close_days": 0.17402777777777778,
+    "open_issue_age_p90_days": 0.03415483666666667,
+    "open_issues_count": 4,
+    "stargazers_count": 71247,
+    "stars_count": 71247,
+    "top_contributor_fraction_12mo": 0.856
   },
-  "fetched_at": "2026-02-12T20:15:25.932885+00:00",
+  "fetched_at": "2026-02-21T16:41:27.978556+00:00",
   "full_name": "pallets/flask"
 }

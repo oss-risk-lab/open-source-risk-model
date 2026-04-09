@@ -30,7 +30,7 @@ class CVERecord:
     Represents a CVE/vulnerability record from OSV.dev.
     
     Attributes:
-        id: CVE identifier (e.g., "CVE-2024-1234" or "GHSA-xxxx-yyyy-zzzz")
+        id: Primary vulnerability identifier (CVE-xxxx or GHSA-xxxx)
         severity: Severity level (LOW/MEDIUM/HIGH/CRITICAL)
         cvss_score: CVSS score (0-10)
         summary: Brief description of the vulnerability
@@ -38,6 +38,9 @@ class CVERecord:
         fixed_in: Version that fixes the vulnerability (if known)
         affected_ranges: List of affected version ranges
         source: Data source (osv, github_advisory, etc.)
+        ghsa_id: GitHub Security Advisory ID (if available)
+        cve_id: CVE identifier (if available)
+        aliases: List of all alias identifiers
     """
     
     id: str
@@ -48,6 +51,14 @@ class CVERecord:
     fixed_in: Optional[str]
     affected_ranges: List[Dict[str, Any]]
     source: str
+    ghsa_id: Optional[str] = None
+    cve_id: Optional[str] = None
+    aliases: List[str] = None
+    
+    def __post_init__(self):
+        """Initialize aliases list if None."""
+        if self.aliases is None:
+            self.aliases = []
 
 
 class CVEFetcher:
@@ -164,6 +175,9 @@ class CVEFetcher:
             "fixed_in": cve.fixed_in,
             "affected_ranges": cve.affected_ranges,
             "source": cve.source,
+            "ghsa_id": cve.ghsa_id,
+            "cve_id": cve.cve_id,
+            "aliases": cve.aliases,
         }
     
     def _dict_to_cve_record(self, data: Dict[str, Any]) -> CVERecord:
@@ -177,6 +191,9 @@ class CVEFetcher:
             fixed_in=data.get("fixed_in"),
             affected_ranges=data.get("affected_ranges", []),
             source=data["source"],
+            ghsa_id=data.get("ghsa_id"),
+            cve_id=data.get("cve_id"),
+            aliases=data.get("aliases", []),
         )
     
     def fetch_cves(
@@ -357,6 +374,26 @@ class CVEFetcher:
                 logger.warning("Vulnerability missing ID, skipping")
                 return None
             
+            # Extract aliases (includes CVE IDs)
+            aliases = vuln.get("aliases", [])
+            
+            # Determine CVE and GHSA IDs
+            cve_id = None
+            ghsa_id = None
+            
+            # Check primary ID
+            if vuln_id.startswith("CVE-"):
+                cve_id = vuln_id
+            elif vuln_id.startswith("GHSA-"):
+                ghsa_id = vuln_id
+            
+            # Check aliases for CVE and GHSA IDs
+            for alias in aliases:
+                if alias.startswith("CVE-") and not cve_id:
+                    cve_id = alias
+                elif alias.startswith("GHSA-") and not ghsa_id:
+                    ghsa_id = alias
+            
             # Extract summary
             summary = vuln.get("summary", "")
             if not summary:
@@ -408,9 +445,9 @@ class CVEFetcher:
             
             # Determine source
             source = "osv"
-            if vuln_id.startswith("GHSA-"):
+            if ghsa_id:
                 source = "github_advisory"
-            elif vuln_id.startswith("CVE-"):
+            elif cve_id:
                 source = "cve"
             
             return CVERecord(
@@ -422,6 +459,9 @@ class CVEFetcher:
                 fixed_in=fixed_in,
                 affected_ranges=affected_ranges,
                 source=source,
+                ghsa_id=ghsa_id,
+                cve_id=cve_id,
+                aliases=aliases,
             )
             
         except Exception as e:

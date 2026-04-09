@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 917,
+    "contributors_last_12mo": 14,
+    "days_since_last_push": 1.9633062565393518,
+    "days_since_last_release": 4.389639167488426,
+    "fraction_issues_closed_12mo": 0.8375286041189931,
+    "fraction_open_issues_stale_180d": 0.826271186440678,
+    "issues_per_contributor": 0.2966194111232279,
+    "license_spdx_id": "Apache-2.0",
+    "open_issues_count": 272,
+    "stargazers_count": 87348,
+    "stars_count": 87348,
+    "top_contributor_fraction_12mo": 0.605
+  },
+  "fetched_at": "2026-03-30T19:39:42.758441+00:00",
+  "full_name": "gohugoio/hugo"
+}

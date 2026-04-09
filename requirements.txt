@@ -1,7 +1,11 @@
-PyGithub
-matplotlib
+fastapi
+uvicorn[standard]
 requests
-
-[pytest]
-testpaths = tests
-pythonpath = src
+pyyaml
+python-dotenv
+packaging
+openai>=1.0
+PyGithub
+hypothesis
+httpx
+aiofiles

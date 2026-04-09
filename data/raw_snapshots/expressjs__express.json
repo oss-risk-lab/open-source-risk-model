@@ -1,0 +1,33 @@
+{
+  "features": {
+    "__meta__": {
+      "feature_status": {
+        "contributors_count": "ok",
+        "days_since_last_release": "ok",
+        "fraction_issues_closed_12mo": "ok",
+        "fraction_open_issues_stale_180d": "ok",
+        "issues_per_contributor": "ok"
+      },
+      "has_issues": true
+    },
+    "__snapshot__": {
+      "issues_meta": {},
+      "schema_version": "1.1"
+    },
+    "archived": false,
+    "contributors_count": 378,
+    "contributors_last_12mo": 30,
+    "days_since_last_push": 29.23857401653935,
+    "days_since_last_release": 118.94711735458333,
+    "fraction_issues_closed_12mo": 0.8295454545454546,
+    "fraction_open_issues_stale_180d": 0.94,
+    "issues_per_contributor": 0.5264550264550265,
+    "license_spdx_id": "MIT",
+    "open_issues_count": 199,
+    "stargazers_count": 68884,
+    "stars_count": 68884,
+    "top_contributor_fraction_12mo": 0.3793103448275862
+  },
+  "fetched_at": "2026-03-30T19:38:37.121295+00:00",
+  "full_name": "expressjs/express"
+}

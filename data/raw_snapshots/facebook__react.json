@@ -16,51 +16,2251 @@
     },
     "__snapshot__": {
       "issues_meta": {
-        "comments_written_last_run": 6535,
+        "comments_written_last_run": 4067,
         "compact_stats": {
           "comments": {
-            "dropped": 0,
-            "kept": 6535,
+            "dropped": 4067,
+            "kept": 7160,
             "path": "data/issues/facebook__react/comments.jsonl",
-            "rows_before": 6535
+            "rows_before": 11227
           },
           "issues": {
-            "dropped": 0,
-            "kept": 970,
+            "dropped": 866,
+            "kept": 1058,
             "path": "data/issues/facebook__react/issues.jsonl",
-            "rows_before": 970
+            "rows_before": 1924
           }
         },
         "days_back": 365,
-        "errors": [],
-        "issues_written_last_run": 970,
-        "last_fetch_utc": "2026-02-20T22:19:32.664566+00:00",
+        "errors": [
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822525:20C764C:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35219/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82254F:20C7731:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30368/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82257E:20C77B9:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35206/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8225A9:20C7875:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29111/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8225D9:20C794E:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35183/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8225F9:20C7A0E:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/26069/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82262F:20C7AF0:69D594D4 and timestamp 2026-04-07 23:35:48 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/11566/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82265C:20C7BCA:69D594D4 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/16773/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82268A:20C7C91:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35163/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8226BC:20C7D37:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32196/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8226E4:20C7DD5:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33015/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822713:20C7E8B:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30691/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822740:20C7F5E:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35138/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82276F:20C8021:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/10657/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8227A2:20C80C5:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32362/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8227C3:20C817C:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30994/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8227F8:20C8269:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35157/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822822:20C8309:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34194/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822856:20C83D2:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29913/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82287B:20C847B:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33153/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8228A7:20C8560:69D594D5 and timestamp 2026-04-07 23:35:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/26906/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822C0B:20C932E:69D594D5 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35040/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822C32:20C9414:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31722/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822C5B:20C94C4:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35118/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822C86:20C9550:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31285/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822CAF:20C95D4:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35055/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822CD7:20C96A2:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35105/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822CFB:20C9779:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33555/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822D25:20C9833:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32743/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822D51:20C98C8:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35000/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822D7A:20C9951:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32576/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822DB0:20C99F1:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34011/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822DDC:20C9A89:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34111/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822E0E:20C9B6A:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31260/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822E30:20C9BFF:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27311/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822E51:20C9CD0:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33703/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822E79:20C9D8C:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35073/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822EBA:20C9EA0:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35070/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822EE1:20C9F4D:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35049/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822F02:20C9FCC:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34079/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822F3B:20CA07F:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/26052/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822F6A:20CA15C:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/20065/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822F9D:20CA20E:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33586/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:822FD1:20CA2ED:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35007/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823008:20CA388:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34061/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823038:20CA444:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34957/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823068:20CA4D9:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33360/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823096:20CA5C5:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33315/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8230C2:20CA6AA:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33302/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8230F4:20CA791:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33032/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823121:20CA8A3:69D594D6 and timestamp 2026-04-07 23:35:50 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33025/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823157:20CA96C:69D594D6 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32986/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823190:20CAA45:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32473/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8231C6:20CAAB6:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32235/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8231FE:20CABE2:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32109/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82322A:20CAC8B:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31651/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823605:20CBC9F:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31630/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82362F:20CBD15:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31551/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823664:20CBDDB:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31481/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82368E:20CBE82:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31469/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8236BC:20CBF4D:69D594D7 and timestamp 2026-04-07 23:35:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34470/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823774:20CC262:69D594D7 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34413/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82379C:20CC337:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34378/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8237D8:20CC41E:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34342/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823803:20CC4DC:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34262/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82383B:20CC56E:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34232/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82386B:20CC649:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34072/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823893:20CC6F1:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33762/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8238B9:20CC7A0:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33689/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8238F1:20CC82D:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33681/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82391C:20CC8FC:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33628/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823944:20CC9F2:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33617/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823969:20CCA8E:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33559/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823993:20CCB35:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35035/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8239D2:20CCC0D:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35029/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823A0D:20CCCA6:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/35009/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823A3E:20CCD92:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34989/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823A67:20CCE40:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34971/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823A8C:20CCEFE:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34931/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823AB7:20CCFA4:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34891/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823AF0:20CD053:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34750/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823B23:20CD11A:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34749/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823B52:20CD1F3:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34657/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823B82:20CD2E9:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33783/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823BB2:20CD3C0:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31747/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823BE0:20CD49D:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27197/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823C03:20CD553:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34007/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823C25:20CD5F4:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34845/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823C53:20CD693:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34074/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823C7E:20CD741:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32960/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823CAF:20CD807:69D594D8 and timestamp 2026-04-07 23:35:52 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33967/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823CE9:20CD8C0:69D594D8 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34733/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823D1A:20CD9A1:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/25710/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823D4A:20CDA64:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34801/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823D75:20CDAED:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33612/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823D9F:20CDBC2:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32557/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823DDD:20CDC8A:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/24136/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823E06:20CDD4A:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34788/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823E28:20CDDD2:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31638/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823E60:20CDE63:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30454/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:823E7F:20CDEFE:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29000/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82416A:20CEB8F:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33341/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8241A0:20CEC3F:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34795/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8241D1:20CECE4:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34960/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8241F8:20CED8B:69D594D9 and timestamp 2026-04-07 23:35:53 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33805/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82422B:20CEE64:69D594D9 and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30570/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824258:20CEF13:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31790/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824284:20CEFE2:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/22733/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8242B7:20CF0CD:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33690/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8242E3:20CF17B:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/2979/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824316:20CF263:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/16643/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824343:20CF33F:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/5030/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82437C:20CF434:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/13097/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82439B:20CF4EE:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/14099/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8243CF:20CF5E3:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29640/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824406:20CF68D:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/19778/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824430:20CF745:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30031/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824461:20CF803:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30493/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824496:20CF8CF:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33541/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8244C6:20CF995:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/9244/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824502:20CFA4D:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/7797/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82452C:20CFB2A:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31613/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824559:20CFBF9:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32156/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824585:20CFCCC:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/17944/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8245BA:20CFD90:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/13702/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8245E6:20CFE4D:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/23396/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82461B:20CFF26:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32552/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82464B:20D0015:69D594DA and timestamp 2026-04-07 23:35:54 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/5682/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824AB8:20D11D6:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/20613/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824AE7:20D12A4:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/8483/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824B11:20D1364:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31483/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824B41:20D143D:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34802/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824B66:20D14F4:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29583/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824B9A:20D1584:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34748/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824BC1:20D1630:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34772/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824BE7:20D16F3:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/24391/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824C13:20D17C6:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32771/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824C49:20D1895:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34781/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824C75:20D1936:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27724/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824C9C:20D1A08:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34711/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824CC8:20D1ABF:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34826/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824D02:20D1B76:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/6641/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824D34:20D1C61:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33687/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824D60:20D1D07:69D594DB and timestamp 2026-04-07 23:35:55 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/4694/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824D90:20D1DB5:69D594DB and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/13039/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824DBC:20D1E83:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28820/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824DEF:20D1F93:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33418/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824E20:20D207A:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34603/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824E55:20D212D:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/24201/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824E96:20D21DA:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34818/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824EC9:20D229F:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/285/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824EF4:20D2358:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33721/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824F2A:20D2405:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34777/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824F5B:20D24E8:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28999/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824F88:20D25D7:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34785/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824FB4:20D2695:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33781/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:824FE8:20D277B:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/21751/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825019:20D2832:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/24608/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82504A:20D28FE:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/23226/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82509F:20D2A3A:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27121/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8250D5:20D2B31:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30577/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825102:20D2BF4:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30607/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825127:20D2C89:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31086/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825158:20D2D69:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31436/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825189:20D2E2D:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31743/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8251B6:20D2ED7:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31950/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8251DE:20D2F93:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32750/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82520B:20D3012:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32964/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825232:20D30DC:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33322/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825261:20D3176:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34600/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825295:20D3230:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34138/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8252CE:20D32E9:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34128/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8252FF:20D3389:69D594DC and timestamp 2026-04-07 23:35:56 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27186/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82534D:20D3526:69D594DC and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/23202/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82570E:20D447D:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28779/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825748:20D454B:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28360/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82576E:20D45F4:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/17299/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825796:20D46CC:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/24638/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8257C7:20D478A:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34679/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8257FC:20D488E:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34622/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825827:20D4948:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29589/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825861:20D49FD:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34776/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825887:20D4A8C:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33698/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8258BF:20D4B60:69D594DD and timestamp 2026-04-07 23:35:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/15176/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825900:20D4C67:69D594DD and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/25379/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825932:20D4D49:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34132/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825960:20D4E48:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34317/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825993:20D4F16:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34753/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8259C7:20D4FDD:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/15924/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825A04:20D50D7:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34735/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825A34:20D5194:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/20308/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825A76:20D527B:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32016/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825AA0:20D5355:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30141/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825AD5:20D541E:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32516/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825B1A:20D5525:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34693/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825B58:20D5659:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33676/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825B8A:20D5724:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34705/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825BB7:20D57DC:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34519/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825BEE:20D5879:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34632/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825C1E:20D5913:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33669/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825C4B:20D59CB:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34618/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825C84:20D5B23:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34647/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825CAD:20D5BEE:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29119/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825CEB:20D5CB8:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/1643/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825D1B:20D5D9C:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34680/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825D43:20D5E47:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34289/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825D74:20D5EC4:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34701/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:825D95:20D5F4D:69D594DE and timestamp 2026-04-07 23:35:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34686/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8260EC:20D6DAC:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31290/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82611D:20D6E88:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31407/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82614E:20D6F40:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/22214/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826176:20D6FF2:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34670/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8261A3:20D70A4:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27025/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8261D7:20D7180:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33133/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826209:20D725D:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/17351/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82623B:20D730D:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/6325/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826272:20D73BB:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32961/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826298:20D7455:69D594DF and timestamp 2026-04-07 23:35:59 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32721/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8265B4:20D81D7:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33542/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8265DF:20D82BC:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/17256/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826611:20D8391:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32562/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82663A:20D8459:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/9567/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826674:20D8539:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/22138/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8266AA:20D8606:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33498/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8266DA:20D86C0:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33615/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826720:20D87E4:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27670/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82674D:20D88D0:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30859/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826776:20D89A1:69D594E0 and timestamp 2026-04-07 23:36:00 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33536/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826B97:20D9AC2:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28938/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826BC4:20D9B5D:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/19482/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826C29:20D9CDD:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31832/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826C64:20D9D9B:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34526/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826C9A:20D9EC0:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34278/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826CD1:20D9FA1:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29757/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826D09:20DA0AB:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33519/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826D3D:20DA168:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28619/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826D6D:20DA236:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34491/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826DA8:20DA308:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29136/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826DDA:20DA3E2:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/26737/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826E08:20DA4B4:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31718/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826EE9:20DA852:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34487/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826F18:20DA937:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/29692/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826F42:20DA9C7:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30440/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826F74:20DAA7B:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33461/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:826FA0:20DAB50:69D594E1 and timestamp 2026-04-07 23:36:01 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34479/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827026:20DAD91:69D594E1 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33460/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827059:20DAE5B:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31703/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8270ED:20DB0DE:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31786/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827131:20DB1B5:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33435/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827155:20DB251:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33479/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827179:20DB325:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33052/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8271A5:20DB401:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32021/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82722C:20DB641:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32159/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827270:20DB796:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33802/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8272C5:20DB8EE:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34098/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827305:20DB9BC:69D594E2 and timestamp 2026-04-07 23:36:02 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/27092/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8276E8:20DC998:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34418/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82771C:20DCA4D:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33419/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82774D:20DCB09:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34411/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82778D:20DCC16:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/14490/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8277B2:20DCCBF:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32369/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8277DC:20DCD94:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34108/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827805:20DCE88:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31135/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827842:20DCF31:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32084/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82787F:20DD00B:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31330/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8278B1:20DD10B:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33359/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8278EF:20DD1ED:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33103/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82791C:20DD2BA:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34195/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827952:20DD372:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/13739/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827994:20DD452:69D594E3 and timestamp 2026-04-07 23:36:03 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32481/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827D9B:20DE51D:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28926/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827DD1:20DE5F6:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34311/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827E07:20DE6FE:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34202/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827E2E:20DE7FC:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33978/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827E63:20DE8F1:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34308/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827EA7:20DE9E4:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/11881/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827EE6:20DEAC3:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/11972/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827F11:20DEB81:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33324/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827F42:20DEC24:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33319/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827F74:20DECB3:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34279/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827FA2:20DED5A:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/19034/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:827FCD:20DEE11:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34281/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828005:20DEF17:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34282/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828037:20DEFAB:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/30408/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828071:20DF07B:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33204/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828099:20DF125:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33333/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8280C2:20DF1E9:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34211/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8280E9:20DF2BC:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33075/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828118:20DF374:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32915/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82814B:20DF457:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32947/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828186:20DF510:69D594E4 and timestamp 2026-04-07 23:36:04 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31727/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8281B0:20DF5BF:69D594E4 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32261/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8281E4:20DF6CF:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33138/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82820F:20DF798:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33196/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82824B:20DF848:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33174/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82827F:20DF910:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34204/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8285DC:20E06C7:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/21381/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8285FF:20E0741:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/16265/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828629:20E0830:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33175/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828656:20E0928:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/16554/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82868F:20E09D5:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31475/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8286C4:20E0B07:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/31237/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8286F6:20E0BD0:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28885/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828732:20E0CAA:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/28992/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828769:20E0D4F:69D594E5 and timestamp 2026-04-07 23:36:05 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33008/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828790:20E0E44:69D594E5 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/25415/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8287C7:20E0F49:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34180/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8287FB:20E1009:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/34179/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82882C:20E10A0:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33556/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828863:20E11B4:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/19630/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:82888E:20E128F:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/32975/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:8288BE:20E1376:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33169/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828901:20E1456:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/33090/comments"
+          },
+          {
+            "message": "API rate limit exceeded for user ID 71275958. If you reach out to GitHub Support for help, please include the request ID D19B:D8A23:828930:20E1516:69D594E6 and timestamp 2026-04-07 23:36:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)",
+            "remaining": 0,
+            "reset_epoch": 1775607787,
+            "status_code": 403,
+            "url": "https://api.github.com/repos/facebook/react/issues/18229/comments"
+          }
+        ],
+        "issues_written_last_run": 866,
+        "last_fetch_utc": "2026-04-07T23:36:07.304828+00:00",
         "max_pages": 25,
         "pages_fetched_last_run": 25,
         "per_page": 100,
-        "status": "ok",
-        "truncated": true
+        "status": "partial",
+        "truncated": true,
+        "updated_at_utc": "2026-04-07T23:32:10.530937+00:00"
       },
       "schema_version": "1.1"
     },
     "archived": false,
-    "avg_time_to_first_maintainer_response_days": 18.61595781619386,
-    "contributors_count": 1968,
-    "contributors_last_12mo": 27,
-    "days_since_last_push": 0.013526318993055555,
-    "days_since_last_release": 25.156710735532407,
-    "fraction_issues_closed_12mo": 0.7364066193853428,
-    "fraction_open_issues_stale_180d": 0.8051787916152897,
-    "fraction_unanswered_after_30d": 0.6842105263157895,
-    "issues_per_contributor": 0.5762195121951219,
+    "avg_time_to_first_maintainer_response_days": 16.6777634035245,
+    "contributors_count": 1978,
+    "contributors_last_12mo": 39,
+    "days_since_last_push": 0.26215530684027777,
+    "days_since_last_release": 71.21139295436343,
+    "fraction_issues_closed_12mo": 0.7146341463414634,
+    "fraction_open_issues_stale_180d": 0.8026634382566586,
+    "fraction_unanswered_after_30d": 0.7301587301587301,
+    "issues_per_contributor": 0.6167846309403437,
     "license_spdx_id": "MIT",
-    "median_time_to_close_days": 1.1706712962962964,
-    "open_issue_age_p90_days": 274.271582806956,
-    "open_issues_count": 1134,
-    "stargazers_count": 243244,
-    "stars_count": 243244,
-    "top_contributor_fraction_12mo": 0.2993396918561996
+    "median_time_to_close_days": 1.1469502314814815,
+    "open_issue_age_p90_days": 295.0222248069213,
+    "open_issues_count": 1220,
+    "stargazers_count": 244475,
+    "stars_count": 244475,
+    "top_contributor_fraction_12mo": 0.2904040404040404
   },
-  "fetched_at": "2026-02-20T22:19:32.764821+00:00",
+  "fetched_at": "2026-04-07T23:36:08.304959+00:00",
   "full_name": "facebook/react"
 }
