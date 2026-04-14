@@ -4,68 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Insights Dashboard</title>
+  <link rel="stylesheet" href="design-system.css">
   <style>
-    :root{
-      /* Background layers */
-      --bg: #0a0e13;
-      --bg-surface: #0f1419;
-      --bg-elevated: #151b23;
-      --bg-overlay: #1a222c;
-
-      /* Borders */
-      --border: rgba(255, 255, 255, 0.06);
-      --border-subtle: rgba(255, 255, 255, 0.04);
-      --border-emphasis: rgba(255, 255, 255, 0.10);
-
-      /* Text */
-      --text-primary: rgba(255, 255, 255, 0.92);
-      --text-secondary: rgba(255, 255, 255, 0.55);
-      --text-tertiary: rgba(255, 255, 255, 0.35);
-
-      /* Accent */
-      --accent: #3b82f6;
-      --accent-muted: rgba(59, 130, 246, 0.15);
-
-      /* Status colors */
-      --status-high-bg: rgba(239, 68, 68, 0.12);
-      --status-high-text: #ef4444;
-      --status-high-border: rgba(239, 68, 68, 0.35);
-      --status-medium-bg: rgba(234, 179, 8, 0.12);
-      --status-medium-text: #eab308;
-      --status-medium-border: rgba(234, 179, 8, 0.35);
-      --status-low-bg: rgba(34, 197, 94, 0.12);
-      --status-low-text: #22c55e;
-      --status-low-border: rgba(34, 197, 94, 0.35);
-
-      /* Mild status (for signal badges) */
-      --status-mild-bg: rgba(234, 88, 12, 0.12);
-      --status-mild-text: #ea580c;
-
-      /* Spacing scale */
-      --sp-4: 4px;
-      --sp-8: 8px;
-      --sp-12: 12px;
-      --sp-16: 16px;
-      --sp-24: 24px;
-      --sp-32: 32px;
-
-      /* Radius */
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 14px;
-      --radius-pill: 999px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
-      --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
-
-      /* Typography */
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
-    }
-
-    *{ box-sizing: border-box; }
     body{
       margin:0;
       font-family: var(--font-sans);
@@ -505,12 +445,6 @@
       .detail-secondary-meta{ flex-direction: column; }
     }
 
-    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-8) var(--sp-12); margin-bottom:var(--sp-12); border-radius:var(--radius-lg); border:1px solid var(--border); background:var(--bg-elevated); box-shadow:var(--shadow-sm); }
-    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
-    .ds-nav-links { display:flex; gap:var(--sp-4); }
-    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
-    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
-    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
   </style>
 </head>
 
@@ -636,81 +570,9 @@
   </div>
 
 <script src="/ui/config.js"></script>
+<script src="/ui/nav.js"></script>
 <script>
-// --- Navigation helpers (inlined) ---
-function parseRepoParam(searchString) {
-  var params = new URLSearchParams(searchString);
-  var raw = params.get("repo");
-  if (!raw) return null;
-  var decoded = decodeURIComponent(raw);
-  if (!decoded || !decoded.trim()) return null;
-  decoded = decoded.trim();
-  var slashIndex = decoded.indexOf("/");
-  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
-  return decoded;
-}
-function getRepoFromUrl() { return parseRepoParam(window.location.search); }
-function buildPageUrl(page, repo) {
-  if (repo) return page + "?repo=" + encodeURIComponent(repo);
-  return page;
-}
-function getCurrentPageId() {
-  var path = window.location.pathname;
-  if (path.indexOf("insights") !== -1) return "insights";
-  if (path.indexOf("graph") !== -1) return "graph";
-  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
-  return "index";
-}
-function renderNav(currentPageId, repo) {
-  var existing = document.querySelector("nav.ds-nav");
-  if (existing) existing.remove();
-  var nav = document.createElement("nav");
-  nav.className = "ds-nav";
-  nav.setAttribute("aria-label", "Main navigation");
-  var brand = document.createElement("span");
-  brand.className = "ds-nav-brand";
-  brand.textContent = "Deep Signal";
-  nav.appendChild(brand);
-  var linksDiv = document.createElement("div");
-  linksDiv.className = "ds-nav-links";
-  var pages = [
-    { pageId: "index", label: "Home", file: "index.html" },
-    { pageId: "insights", label: "Insights", file: "insights.html" },
-    { pageId: "graph", label: "Graph", file: "graph.html" },
-    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
-  ];
-  for (var i = 0; i < pages.length; i++) {
-    var p = pages[i];
-    var a = document.createElement("a");
-    a.href = buildPageUrl(p.file, repo);
-    a.className = "ds-nav-link";
-    a.textContent = p.label;
-    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
-    linksDiv.appendChild(a);
-  }
-  nav.appendChild(linksDiv);
-  var wrap = document.querySelector(".wrap");
-  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
-}
 renderNav(getCurrentPageId(), getRepoFromUrl());
-// --- End navigation helpers ---
-
-// --- Cross-page links ---
-function getCrossLinks(currentPageId, repo) {
-  if (!repo) return [];
-  var targets = [
-    { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
-    { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
-    { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
-  ];
-  var links = [];
-  for (var i = 0; i < targets.length; i++) {
-    if (targets[i].targetPageId === currentPageId) continue;
-    links.push({ label: targets[i].label, href: buildPageUrl(targets[i].file, repo), targetPageId: targets[i].targetPageId });
-  }
-  return links;
-}
-// --- End cross-page links ---
 
   /* ── Constants ── */
   var API_BASE = window.DS_API_BASE || "";
@@ -1315,58 +1177,67 @@ function getCrossLinks(currentPageId, repo) {
     throw new Error(formatErrorMessage(response.status, responseText));
   }
 
+  /* ── Signal Category Mapping (Task 7.3) ── */
+
+  var SIGNAL_CATEGORIES = {
+    "Dependency Risk": { prefixes: ["cve_", "dependency_", "vulnerable_"], includesRiskyDeps: true },
+    "Maintainer Risk": { prefixes: ["maintainer_", "contributor_", "bus_factor_"], includesRiskyDeps: false },
+    "Release Health": { prefixes: ["release_", "stale_", "version_"], includesRiskyDeps: false }
+  };
+
+  /**
+   * categorizeSignal(signalName)
+   * Maps a signal_name to its category using prefix matching.
+   * Falls back to "Dependency Risk" for unmatched signals.
+   */
+  function categorizeSignal(signalName) {
+    var categories = Object.keys(SIGNAL_CATEGORIES);
+    for (var i = 0; i < categories.length; i++) {
+      var cat = categories[i];
+      var prefixes = SIGNAL_CATEGORIES[cat].prefixes;
+      for (var j = 0; j < prefixes.length; j++) {
+        if (signalName.indexOf(prefixes[j]) === 0) {
+          return cat;
+        }
+      }
+    }
+    return "Dependency Risk";
+  }
+
+  /**
+   * getHighestSeverity(signals)
+   * Returns the highest severity from an array of signal objects.
+   * Priority: high > medium > mild > low
+   */
+  function getHighestSeverity(signals) {
+    var order = { high: 3, medium: 2, mild: 1 };
+    var best = "low";
+    var bestVal = 0;
+    for (var i = 0; i < signals.length; i++) {
+      var sev = (signals[i].severity || "").toLowerCase();
+      if ((order[sev] || 0) > bestVal) {
+        bestVal = order[sev] || 0;
+        best = sev;
+      }
+    }
+    return best;
+  }
+
   /**
    * renderDetailView(detail)
    * Renders the full detail view for a single repo insight.
    */
   function renderDetailView(detail) {
     var el = document.getElementById("detailView");
-    var signalsHtml = "";
-    if (detail.direct_signals && detail.direct_signals.length > 0) {
-      var rows = "";
-      for (var i = 0; i < detail.direct_signals.length; i++) {
-        var sig = detail.direct_signals[i];
-        var badgeClass = "signal-badge";
-        if (sig.severity === "high" || sig.severity === "medium" || sig.severity === "mild") {
-          badgeClass += " signal-" + sig.severity;
-        }
-        rows += "<tr>" +
-          "<td>" + sig.signal_name + "</td>" +
-          "<td><span class=\"" + badgeClass + "\">" + sig.severity + "</span></td>" +
-          "<td style=\"font-family:var(--font-mono);\">" + sig.score_contribution.toFixed(3) + "</td>" +
-          "<td>" + sig.reason + "</td>" +
-          "</tr>";
-      }
-      signalsHtml = "<div class=\"panel\"><div class=\"panel-header\"><h3 class=\"section-title\">Direct Signals</h3><span class=\"panel-subtitle\">" + detail.direct_signals.length + " signals contributing to risk</span></div>" +
-        "<table class=\"signals-table\">" +
-        "<thead><tr>" +
-        "<th scope=\"col\">Signal Name</th>" +
-        "<th scope=\"col\">Severity</th>" +
-        "<th scope=\"col\">Score Contribution</th>" +
-        "<th scope=\"col\">Reason</th>" +
-        "</tr></thead>" +
-        "<tbody>" + rows + "</tbody></table></div>";
-    }
 
-    var reasonsHtml = "";
-    if (detail.reasons && detail.reasons.length > 0) {
-      var lis = "";
-      for (var j = 0; j < detail.reasons.length; j++) {
-        lis += "<li>" + detail.reasons[j] + "</li>";
-      }
-      reasonsHtml = "<div class=\"panel\"><div class=\"panel-header\"><h3 class=\"section-title\">Reasons</h3></div><ul class=\"reasons-list\" style=\"padding-left:var(--sp-16);line-height:1.6;\">" + lis + "</ul></div>";
-    }
-
-    // Build action buttons
+    // Build action buttons (Task 7.5: cross-page navigation links)
     var crossLinks = getCrossLinks("insights", detail.repo_full_name);
-    var actionsHtml = "<button class=\"btn-subtle\" id=\"backToList\">\u2190 Back</button>";
+    var actionsHtml = "<button class=\"ds-btn-subtle\" id=\"backToList\">\u2190 Back</button>";
     for (var cl = 0; cl < crossLinks.length; cl++) {
-      var shortLabel = crossLinks[cl].label.replace("Open in ", "");
-      actionsHtml += "<a href=\"" + crossLinks[cl].href + "\" class=\"btn-subtle\" style=\"text-decoration:none;display:inline-flex;align-items:center;\">" + shortLabel + "</a>";
+      actionsHtml += "<a href=\"" + crossLinks[cl].href + "\" class=\"ds-btn-subtle\" style=\"text-decoration:none;display:inline-flex;align-items:center;\">" + crossLinks[cl].label + "</a>";
     }
 
-    // Build subtitle — human-readable risk summary
-    var labelLower = detail.graph_signal_label.toLowerCase();
+    // Build subtitle
     var subtitleText = "";
     if (detail.graph_signal_label === "HIGH") {
       subtitleText = "High risk \u2014 requires attention";
@@ -1379,45 +1250,135 @@ function getCrossLinks(currentPageId, repo) {
       subtitleText += " \u00b7 " + detail.reasons.length + " contributing factor" + (detail.reasons.length !== 1 ? "s" : "");
     }
 
-    // Score card risk accent class
-    var scoreHeroClass = "detail-score-hero";
-    if (detail.graph_signal_label === "HIGH") {
-      scoreHeroClass += " detail-score-hero-high";
-    } else if (detail.graph_signal_label === "MEDIUM") {
-      scoreHeroClass += " detail-score-hero-medium";
-    } else if (detail.graph_signal_label === "LOW") {
-      scoreHeroClass += " detail-score-hero-low";
+    // Detail Hero Header
+    var html = "<div class=\"detail-hero\">" +
+      "<div class=\"detail-hero-left\">" +
+        "<h1 class=\"detail-title\">" + detail.repo_full_name + "</h1>" +
+        "<p class=\"detail-subtitle\">" + subtitleText + "</p>" +
+      "</div>" +
+      "<div class=\"detail-actions\">" + actionsHtml + "</div>" +
+    "</div>";
+
+    // Task 7.1: Risk Summary Block
+    var maintRisk = (detail.base_maintenance_risk != null) ? detail.base_maintenance_risk.toFixed(3) : "N/A";
+    var maintLabel = (detail.base_maintenance_label != null) ? detail.base_maintenance_label : "N/A";
+    var graphScore = detail.graph_signal_score.toFixed(3);
+    var graphLabel = detail.graph_signal_label;
+
+    html += "<div class=\"risk-summary-block\" style=\"display:flex;gap:var(--sp-12);margin-bottom:var(--sp-16);\">" +
+      "<div class=\"ds-card ds-kpi\" style=\"flex:1;padding:var(--sp-16);\">" +
+        "<div class=\"ds-kpi-value\">" + maintRisk + "</div>" +
+        "<div class=\"ds-kpi-label\">Maintenance Risk</div>" +
+        "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + maintLabel.toLowerCase() + "\">" + maintLabel + "</span></div>" +
+      "</div>" +
+      "<div class=\"ds-card ds-kpi\" style=\"flex:1;padding:var(--sp-16);\">" +
+        "<div class=\"ds-kpi-value\">" + graphScore + "</div>" +
+        "<div class=\"ds-kpi-label\">Graph Signal Risk</div>" +
+        "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + graphLabel.toLowerCase() + "\">" + graphLabel + "</span></div>" +
+      "</div>" +
+    "</div>";
+
+    // Risk insight sentence from reasons[0]
+    if (detail.reasons && detail.reasons.length > 0) {
+      html += "<div class=\"risk-insight\" style=\"font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-16);padding:var(--sp-8) var(--sp-12);border-left:3px solid var(--border);line-height:1.5;\">" + detail.reasons[0] + "</div>";
     }
 
-    // Score context line
-    var labelLc = detail.graph_signal_label.charAt(0) + detail.graph_signal_label.slice(1).toLowerCase();
-    var scoreContext = labelLc + " risk";
+    // Task 7.2: Top Risk Drivers
+    if (detail.reasons && detail.reasons.length > 0) {
+      var driverCount = Math.min(detail.reasons.length, 5);
+      if (driverCount < 3) driverCount = Math.min(detail.reasons.length, 3);
+      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
+        "<div class=\"panel-header\"><h3 class=\"section-title\">Top Risk Drivers</h3></div>" +
+        "<ul style=\"list-style:disc;padding-left:var(--sp-24);margin:0;\">";
+      for (var r = 0; r < driverCount; r++) {
+        html += "<li style=\"color:var(--text-secondary);font-size:13px;margin-bottom:var(--sp-4);line-height:1.5;\">" + detail.reasons[r] + "</li>";
+      }
+      html += "</ul></div>";
+    }
+
+    // Task 7.3: Grouped Insight Sections
+    var categorySignals = {};
+    var categoryNames = Object.keys(SIGNAL_CATEGORIES);
+    for (var cn = 0; cn < categoryNames.length; cn++) {
+      categorySignals[categoryNames[cn]] = [];
+    }
     if (detail.direct_signals && detail.direct_signals.length > 0) {
-      scoreContext += " based on " + detail.direct_signals.length + " signal" + (detail.direct_signals.length !== 1 ? "s" : "");
+      for (var s = 0; s < detail.direct_signals.length; s++) {
+        var sig = detail.direct_signals[s];
+        var cat = categorizeSignal(sig.signal_name);
+        categorySignals[cat].push(sig);
+      }
     }
 
-    el.innerHTML =
-      "<div class=\"detail-hero\">" +
-        "<div class=\"detail-hero-left\">" +
-          "<h1 class=\"detail-title\">" + detail.repo_full_name + "</h1>" +
-          "<p class=\"detail-subtitle\">" + subtitleText + "</p>" +
-        "</div>" +
-        "<div class=\"detail-actions\">" + actionsHtml + "</div>" +
-      "</div>" +
-      "<div class=\"" + scoreHeroClass + "\">" +
-        "<div>" +
-          "<div class=\"meta-label\">Risk Score</div>" +
-          "<div class=\"meta-value\">" + detail.graph_signal_score.toFixed(3) + "</div>" +
-          "<div class=\"score-context\">" + scoreContext + "</div>" +
-        "</div>" +
-      "</div>" +
-      "<div class=\"detail-secondary-meta\">" +
-        "<div class=\"meta-card\"><div class=\"meta-label\">Label</div><div class=\"meta-value\"><span class=\"label-indicator " + labelColorClass(detail.graph_signal_label) + "\">" + detail.graph_signal_label + "</span></div></div>" +
-        "<div class=\"meta-card\"><div class=\"meta-label\">Base Maintenance Risk</div><div class=\"meta-value\" style=\"font-family:var(--font-mono);\">" + detail.base_maintenance_risk.toFixed(3) + "</div></div>" +
-      "</div>" +
-      reasonsHtml +
-      signalsHtml;
+    for (var ci = 0; ci < categoryNames.length; ci++) {
+      var catName = categoryNames[ci];
+      var catConfig = SIGNAL_CATEGORIES[catName];
+      var signals = categorySignals[catName];
+      var catSeverity = signals.length > 0 ? getHighestSeverity(signals) : "low";
+      var severityTagClass = "ds-risk-tag ds-risk-tag--" + catSeverity;
 
+      html += "<details class=\"panel\" style=\"margin-bottom:var(--sp-12);\" " + (signals.length > 0 ? "open" : "") + ">" +
+        "<summary class=\"panel-header\" style=\"cursor:pointer;list-style:none;\">" +
+          "<h3 class=\"section-title\">" + catName + "</h3>" +
+          "<span class=\"" + severityTagClass + "\">" + (signals.length > 0 ? catSeverity.toUpperCase() : "No issues") + "</span>" +
+        "</summary>";
+
+      if (signals.length === 0) {
+        html += "<div style=\"padding:var(--sp-12) var(--sp-16);color:var(--text-secondary);font-size:13px;\">No issues detected</div>";
+      } else {
+        html += "<table class=\"signals-table\">" +
+          "<thead><tr>" +
+            "<th scope=\"col\">Signal Name</th>" +
+            "<th scope=\"col\">Severity</th>" +
+            "<th scope=\"col\">Score Contribution</th>" +
+            "<th scope=\"col\">Reason</th>" +
+          "</tr></thead><tbody>";
+        for (var si = 0; si < signals.length; si++) {
+          var sigItem = signals[si];
+          var badgeClass = "signal-badge";
+          if (sigItem.severity === "high" || sigItem.severity === "medium" || sigItem.severity === "mild") {
+            badgeClass += " signal-" + sigItem.severity;
+          }
+          html += "<tr>" +
+            "<td>" + sigItem.signal_name + "</td>" +
+            "<td><span class=\"" + badgeClass + "\">" + sigItem.severity + "</span></td>" +
+            "<td style=\"font-family:var(--font-mono);\">" + sigItem.score_contribution.toFixed(3) + "</td>" +
+            "<td>" + sigItem.reason + "</td>" +
+          "</tr>";
+        }
+        html += "</tbody></table>";
+
+        // For Dependency Risk: show top_risky_dependencies cards
+        if (catConfig.includesRiskyDeps && detail.top_risky_dependencies && detail.top_risky_dependencies.length > 0) {
+          html += "<div style=\"padding:var(--sp-12) var(--sp-16);\">" +
+            "<h4 style=\"font-size:13px;font-weight:700;color:var(--text-secondary);margin:0 0 var(--sp-8) 0;\">Top Risky Dependencies</h4>" +
+            "<div style=\"display:flex;flex-wrap:wrap;gap:var(--sp-8);\">";
+          for (var d = 0; d < detail.top_risky_dependencies.length; d++) {
+            var dep = detail.top_risky_dependencies[d];
+            var depLabel = (dep.risk_label || "LOW").toLowerCase();
+            html += "<div class=\"ds-card\" style=\"padding:var(--sp-12);flex:1;min-width:200px;max-width:300px;\">" +
+              "<div style=\"font-weight:700;font-size:13px;margin-bottom:var(--sp-4);\">" + dep.package_name + "</div>" +
+              "<div style=\"font-size:11px;color:var(--text-tertiary);margin-bottom:var(--sp-4);\">" + dep.registry_type + "</div>" +
+              "<div style=\"display:flex;align-items:center;gap:var(--sp-8);margin-bottom:var(--sp-4);\">" +
+                "<span style=\"font-family:var(--font-mono);font-size:13px;\">" + dep.risk_score.toFixed(2) + "</span>" +
+                "<span class=\"ds-risk-tag ds-risk-tag--" + depLabel + "\">" + dep.risk_label + "</span>" +
+              "</div>";
+            if (dep.cve_count > 0) {
+              html += "<div style=\"font-size:11px;color:var(--status-high-text);\">" + dep.cve_count + " CVE" + (dep.cve_count !== 1 ? "s" : "") + "</div>";
+            }
+            if (dep.reasons && dep.reasons.length > 0) {
+              html += "<div style=\"font-size:11px;color:var(--text-secondary);margin-top:var(--sp-4);\">" + dep.reasons[0] + "</div>";
+            }
+            html += "</div>";
+          }
+          html += "</div></div>";
+        }
+      }
+
+      html += "</details>";
+    }
+
+    el.innerHTML = html;
     setViewState("detail");
   }
 
@@ -1443,7 +1404,12 @@ function getCrossLinks(currentPageId, repo) {
     appState.mode = "detail";
     appState.repo = repoFullName;
     history.pushState({}, "", "?repo=" + encodeRepoParam(repoFullName));
-    setViewState("loading");
+    // Task 7.4: Show loading skeletons in detail view
+    var detailEl = document.getElementById("detailView");
+    detailEl.innerHTML = '<div class="ds-loading" style="height:80px;margin-bottom:var(--sp-12);"></div>' +
+      '<div class="ds-loading" style="height:120px;margin-bottom:var(--sp-12);"></div>' +
+      '<div class="ds-loading" style="height:200px;"></div>';
+    setViewState("detail");
     var parts = repoFullName.split("/");
     var owner = parts[0];
     var repo = parts[1];
@@ -1485,7 +1451,11 @@ function getCrossLinks(currentPageId, repo) {
       appState.mode = "detail";
       appState.repo = decoded;
       var parts = decoded.split("/");
-      setViewState("loading");
+      var detailEl = document.getElementById("detailView");
+      detailEl.innerHTML = '<div class="ds-loading" style="height:80px;margin-bottom:var(--sp-12);"></div>' +
+        '<div class="ds-loading" style="height:120px;margin-bottom:var(--sp-12);"></div>' +
+        '<div class="ds-loading" style="height:200px;"></div>';
+      setViewState("detail");
       fetchRepoInsight(parts[0], parts[1]).then(function(data) {
         appState.detail = data;
         renderDetailView(data);
@@ -1508,7 +1478,11 @@ function getCrossLinks(currentPageId, repo) {
       appState.mode = "detail";
       appState.repo = decoded;
       var parts = decoded.split("/");
-      setViewState("loading");
+      var detailEl = document.getElementById("detailView");
+      detailEl.innerHTML = '<div class="ds-loading" style="height:80px;margin-bottom:var(--sp-12);"></div>' +
+        '<div class="ds-loading" style="height:120px;margin-bottom:var(--sp-12);"></div>' +
+        '<div class="ds-loading" style="height:200px;"></div>';
+      setViewState("detail");
       fetchRepoInsight(parts[0], parts[1]).then(function(data) {
         appState.detail = data;
         renderDetailView(data);

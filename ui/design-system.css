@@ -1,0 +1,252 @@
+/* ============================================================
+   Deep Signal — Design System
+   Single source of truth for all visual tokens.
+   ============================================================ */
+
+:root {
+  /* Background layers */
+  --bg: #0a0e13;
+  --bg-surface: #0f1419;
+  --bg-elevated: #151b23;
+  --bg-overlay: #1a222c;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-emphasis: rgba(255, 255, 255, 0.10);
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-tertiary: rgba(255, 255, 255, 0.35);
+
+  /* Accent */
+  --accent: #3b82f6;
+  --accent-muted: rgba(59, 130, 246, 0.15);
+
+  /* Status colors */
+  --status-high-bg: rgba(239, 68, 68, 0.12);
+  --status-high-text: #ef4444;
+  --status-high-border: rgba(239, 68, 68, 0.35);
+  --status-medium-bg: rgba(234, 179, 8, 0.12);
+  --status-medium-text: #eab308;
+  --status-medium-border: rgba(234, 179, 8, 0.35);
+  --status-low-bg: rgba(34, 197, 94, 0.12);
+  --status-low-text: #22c55e;
+  --status-low-border: rgba(34, 197, 94, 0.35);
+  --status-mild-bg: rgba(234, 88, 12, 0.12);
+  --status-mild-text: #ea580c;
+
+  /* Spacing scale (4px increments) */
+  --sp-4: 4px; --sp-8: 8px; --sp-12: 12px;
+  --sp-16: 16px; --sp-24: 24px; --sp-32: 32px;
+
+  /* Radius */
+  --radius-sm: 6px; --radius-md: 10px;
+  --radius-lg: 14px; --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  /* Backward-compat aliases */
+  --mono: var(--font-mono);
+  --sans: var(--font-sans);
+  --green: #22c55e; --yellow: #eab308; --red: #ef4444;
+  --orange: #f97316; --indigo: #6366f1;
+  --muted: var(--text-secondary);
+  --muted2: var(--text-tertiary);
+}
+
+/* Global reset */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Component Classes
+   ============================================================ */
+
+/* --- Card --- */
+.ds-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-24);
+  transition: border-color 150ms ease;
+}
+
+.ds-card:hover {
+  border-color: var(--border-emphasis);
+}
+
+/* --- Section --- */
+.ds-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--sp-12);
+}
+
+/* --- KPI --- */
+.ds-kpi {
+  text-align: center;
+}
+
+.ds-kpi-value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ds-kpi-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--sp-4);
+}
+
+/* --- Risk Tag --- */
+.ds-risk-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ds-risk-tag--high {
+  background: var(--status-high-bg);
+  color: var(--status-high-text);
+  border: 1px solid var(--status-high-border);
+}
+
+.ds-risk-tag--medium {
+  background: var(--status-medium-bg);
+  color: var(--status-medium-text);
+  border: 1px solid var(--status-medium-border);
+}
+
+.ds-risk-tag--low {
+  background: var(--status-low-bg);
+  color: var(--status-low-text);
+  border: 1px solid var(--status-low-border);
+}
+
+/* --- Buttons --- */
+.ds-btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.ds-btn-primary:hover {
+  opacity: 0.85;
+}
+
+.ds-btn-subtle {
+  background: transparent;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.ds-btn-subtle:hover {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+/* --- Navigation --- */
+.ds-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  padding: 0 var(--sp-24);
+  height: 52px;
+}
+
+.ds-nav-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.ds-nav-links {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: center;
+}
+
+.ds-nav-link {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.ds-nav-link:hover {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+.ds-nav-link.active {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+/* --- Loading States --- */
+.ds-loading {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-overlay) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: ds-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes ds-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.ds-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--text-primary);
+  border-radius: 50%;
+  animation: ds-spin 0.8s linear infinite;
+}
+
+@keyframes ds-spin {
+  to { transform: rotate(360deg); }
+}

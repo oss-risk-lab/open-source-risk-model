@@ -114,6 +114,24 @@ async function fetchTree(repo) {
 }
 
 // ─── Rendering: Summary ──────────────────────────────────────────────
+function collectTreeStats(node, ecosystemCounts, riskCounts) {
+  if (!node) return;
+  if (node.node_type !== "repository") {
+    if (node.ecosystem) {
+      ecosystemCounts[node.ecosystem] = (ecosystemCounts[node.ecosystem] || 0) + 1;
+    }
+    if (node.risk_metadata && node.risk_metadata.risk_level) {
+      const level = node.risk_metadata.risk_level.toLowerCase();
+      if (riskCounts.hasOwnProperty(level)) {
+        riskCounts[level]++;
+      }
+    }
+  }
+  if (node.children) {
+    node.children.forEach(function(child) { collectTreeStats(child, ecosystemCounts, riskCounts); });
+  }
+}
+
 function renderSummary(data) {
   const m = data.summary_metrics;
   const p = data.provenance;
@@ -129,15 +147,15 @@ function renderSummary(data) {
   ];
 
   summaryGrid.innerHTML = stats.map(s =>
-    `<div class="stat-card">
-      <div class="num" ${s.color ? `style="color:${s.color}"` : ""}>${s.num}</div>
-      <div class="label">${s.label}</div>
+    `<div class="stat-card ds-kpi">
+      <div class="num ds-kpi-value" ${s.color ? `style="color:${s.color}"` : ""}>${s.num}</div>
+      <div class="label ds-kpi-label">${s.label}</div>
     </div>`
   ).join("");
 
   summarySection.style.display = "block";
 
-  // Populate sidebar tree summary with interpretive statements
+  // Populate sidebar tree summary with interpretive statements + breakdowns
   const sidebarSummary = $("treeSummaryContent");
   if (sidebarSummary) {
     const lines = [];
@@ -173,9 +191,37 @@ function renderSummary(data) {
       lines.push("Dependency tree is deep (max " + m.max_depth + ").");
     }
 
-    sidebarSummary.innerHTML = lines.map(l =>
+    let html = lines.map(l =>
       `<div style="font-size:12px;color:var(--text-secondary);line-height:1.5;padding:2px 0;">${l}</div>`
     ).join("");
+
+    // Ecosystem breakdown
+    const ecosystemCounts = {};
+    const riskCounts = { high: 0, medium: 0, low: 0 };
+    collectTreeStats(data.tree, ecosystemCounts, riskCounts);
+
+    const ecosystemEntries = Object.entries(ecosystemCounts).sort((a, b) => b[1] - a[1]);
+    if (ecosystemEntries.length > 0) {
+      html += `<div class="sidebar-ecosystem-breakdown" style="margin-top:var(--sp-8);">`;
+      html += `<div style="font-size:11px;color:var(--text-tertiary);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:var(--sp-4);">Ecosystems</div>`;
+      html += ecosystemEntries.map(([eco, count]) =>
+        `<div style="font-size:12px;color:var(--text-secondary);padding:1px 0;display:flex;justify-content:space-between;"><span>${eco}</span><span style="font-family:var(--font-mono);color:var(--text-tertiary);">${count}</span></div>`
+      ).join("");
+      html += `</div>`;
+    }
+
+    // Risk level distribution
+    const totalRisk = riskCounts.high + riskCounts.medium + riskCounts.low;
+    if (totalRisk > 0) {
+      html += `<div class="sidebar-risk-distribution" style="margin-top:var(--sp-8);">`;
+      html += `<div style="font-size:11px;color:var(--text-tertiary);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:var(--sp-4);">Risk Distribution</div>`;
+      if (riskCounts.high > 0) html += `<div style="font-size:12px;padding:1px 0;display:flex;justify-content:space-between;"><span style="color:var(--status-high-text);">High</span><span style="font-family:var(--font-mono);color:var(--text-tertiary);">${riskCounts.high}</span></div>`;
+      if (riskCounts.medium > 0) html += `<div style="font-size:12px;padding:1px 0;display:flex;justify-content:space-between;"><span style="color:var(--status-medium-text);">Medium</span><span style="font-family:var(--font-mono);color:var(--text-tertiary);">${riskCounts.medium}</span></div>`;
+      if (riskCounts.low > 0) html += `<div style="font-size:12px;padding:1px 0;display:flex;justify-content:space-between;"><span style="color:var(--status-low-text);">Low</span><span style="font-family:var(--font-mono);color:var(--text-tertiary);">${riskCounts.low}</span></div>`;
+      html += `</div>`;
+    }
+
+    sidebarSummary.innerHTML = html;
   }
 }
 

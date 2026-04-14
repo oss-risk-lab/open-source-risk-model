@@ -4,65 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dependency Tree — Deep Signal</title>
+  <link rel="stylesheet" href="design-system.css">
   <style>
-    :root{
-      --bg: #0a0e13;
-      --bg-surface: #0f1419;
-      --bg-elevated: #151b23;
-      --bg-overlay: #1a222c;
-      --border: rgba(255, 255, 255, 0.06);
-      --border-subtle: rgba(255, 255, 255, 0.04);
-      --border-emphasis: rgba(255, 255, 255, 0.10);
-      --text-primary: rgba(255, 255, 255, 0.92);
-      --text-secondary: rgba(255, 255, 255, 0.55);
-      --text-tertiary: rgba(255, 255, 255, 0.35);
-      --accent: #3b82f6;
-      --accent-muted: rgba(59, 130, 246, 0.15);
-      --status-high-bg: rgba(239, 68, 68, 0.12);
-      --status-high-text: #ef4444;
-      --status-high-border: rgba(239, 68, 68, 0.35);
-      --status-medium-bg: rgba(234, 179, 8, 0.12);
-      --status-medium-text: #eab308;
-      --status-medium-border: rgba(234, 179, 8, 0.35);
-      --status-low-bg: rgba(34, 197, 94, 0.12);
-      --status-low-text: #22c55e;
-      --status-low-border: rgba(34, 197, 94, 0.35);
-      --status-mild-bg: rgba(234, 88, 12, 0.12);
-      --status-mild-text: #ea580c;
-      --sp-4: 4px; --sp-8: 8px; --sp-12: 12px; --sp-16: 16px; --sp-24: 24px; --sp-32: 32px;
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 14px;
-      --radius-pill: 999px;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
-      --mono: var(--font-mono);
-      --green: #22c55e; --yellow: #eab308; --red: #ef4444; --orange: #f97316; --indigo: #6366f1;
-      /* Backward-compat aliases for JS inline styles */
-      --muted: var(--text-secondary);
-      --muted2: var(--text-tertiary);
-      --sans: var(--font-sans);
-    }
-    *{ box-sizing: border-box; margin:0; padding:0; }
     body{
-      font-family: var(--font-sans);
-      color: var(--text-primary);
-      background: var(--bg);
       min-height: 100vh;
     }
 
     /* Layout */
     .wrap{ max-width:1600px; margin:var(--sp-8) auto; padding:0 var(--sp-12); }
-
-    /* Navigation */
-    .ds-nav { display:flex; align-items:center; gap:var(--sp-16); padding:var(--sp-4) var(--sp-12); margin-bottom:var(--sp-4); border-radius:var(--radius-md); border:1px solid var(--border); background:var(--bg-elevated); }
-    .ds-nav-brand { font-size:15px; font-weight:800; color:var(--text-primary); margin-right:auto; }
-    .ds-nav-links { display:flex; gap:var(--sp-4); }
-    .ds-nav-link { padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-md); font-size:13px; font-weight:600; color:var(--text-secondary); text-decoration:none; transition:background .15s ease, color .15s ease; }
-    .ds-nav-link:hover { background:var(--bg-overlay); color:var(--text-primary); }
-    .ds-nav-link.active { background:var(--bg-overlay); color:var(--text-primary); }
 
     /* Page Header */
     .graph-page-header{
@@ -260,13 +209,6 @@
       display:none; white-space:pre-wrap;
     }
 
-    .spinner{
-      display:inline-block; width:20px; height:20px;
-      border:3px solid rgba(255,255,255,.1); border-top-color:var(--text-primary);
-      border-radius:50%; animation:spin .8s linear infinite;
-    }
-    @keyframes spin{ to{ transform:rotate(360deg); } }
-
     .refetch-indicator{
       position:absolute; top:8px; right:14px; display:none;
       align-items:center; gap:var(--sp-4); font-size:12px; color:var(--text-tertiary);
@@ -307,7 +249,7 @@
   <!-- Summary metrics (hidden until loaded) -->
   <div id="summarySection" style="display:none;">
     <div class="panel" style="padding:var(--sp-8) var(--sp-12);position:relative;margin-bottom:var(--sp-4);">
-      <div id="refetchIndicator" class="refetch-indicator"><div class="spinner"></div> Updating…</div>
+      <div id="refetchIndicator" class="refetch-indicator"><div class="ds-spinner"></div> Updating…</div>
       <span id="repoNameDisplay" style="display:none;"></span>
       <div id="crossLinks" style="display:none; gap:var(--sp-8); margin-top:var(--sp-4); flex-wrap:wrap;"></div>
       <div class="summary-grid" id="summaryGrid"></div>
@@ -362,7 +304,7 @@
           <div class="msg">Enter a repository above to explore its dependency tree</div>
         </div>
         <div class="state-msg" id="loadingState" style="display:none;">
-          <div class="spinner" style="width:32px;height:32px;border-width:4px;"></div>
+          <div class="ds-spinner" style="width:32px;height:32px;border-width:4px;"></div>
           <div class="msg" style="margin-top:var(--sp-16);">Loading dependency tree…</div>
         </div>
         <div id="emptyState" class="state-msg" style="display:none;">
@@ -401,95 +343,9 @@
 </div>
 
 <script src="/ui/config.js"></script>
+<script src="/ui/nav.js"></script>
 <script>
-// --- Navigation helpers (inlined) ---
-function parseRepoParam(searchString) {
-  var params = new URLSearchParams(searchString);
-  var raw = params.get("repo");
-  if (!raw) return null;
-  var decoded = decodeURIComponent(raw);
-  if (!decoded || !decoded.trim()) return null;
-  decoded = decoded.trim();
-  var slashIndex = decoded.indexOf("/");
-  if (slashIndex === -1 || slashIndex === 0 || slashIndex === decoded.length - 1 || decoded.indexOf("/", slashIndex + 1) !== -1) return null;
-  return decoded;
-}
-function getRepoFromUrl() { return parseRepoParam(window.location.search); }
-function buildPageUrl(page, repo) {
-  if (repo) return page + "?repo=" + encodeURIComponent(repo);
-  return page;
-}
-function getCurrentPageId() {
-  var path = window.location.pathname;
-  if (path.indexOf("insights") !== -1) return "insights";
-  if (path.indexOf("graph") !== -1) return "graph";
-  if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
-  return "index";
-}
-function renderNav(currentPageId, repo) {
-  var existing = document.querySelector("nav.ds-nav");
-  if (existing) existing.remove();
-  var nav = document.createElement("nav");
-  nav.className = "ds-nav";
-  nav.setAttribute("aria-label", "Main navigation");
-  var brand = document.createElement("span");
-  brand.className = "ds-nav-brand";
-  brand.textContent = "Deep Signal";
-  nav.appendChild(brand);
-  var linksDiv = document.createElement("div");
-  linksDiv.className = "ds-nav-links";
-  var pages = [
-    { pageId: "index", label: "Home", file: "index.html" },
-    { pageId: "insights", label: "Insights", file: "insights.html" },
-    { pageId: "graph", label: "Graph", file: "graph.html" },
-    { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
-  ];
-  for (var i = 0; i < pages.length; i++) {
-    var p = pages[i];
-    var a = document.createElement("a");
-    a.href = buildPageUrl(p.file, repo);
-    a.className = "ds-nav-link";
-    a.textContent = p.label;
-    if (p.pageId === currentPageId) { a.classList.add("active"); a.setAttribute("aria-current", "page"); }
-    linksDiv.appendChild(a);
-  }
-  nav.appendChild(linksDiv);
-  var wrap = document.querySelector(".wrap");
-  if (wrap) wrap.insertBefore(nav, wrap.firstChild);
-}
 renderNav(getCurrentPageId(), getRepoFromUrl());
-// --- End navigation helpers ---
-
-// --- Cross-page links ---
-function getCrossLinks(currentPageId, repo) {
-  if (!repo) return [];
-  var targets = [
-    { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
-    { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
-    { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
-  ];
-  var links = [];
-  for (var i = 0; i < targets.length; i++) {
-    if (targets[i].targetPageId === currentPageId) continue;
-    links.push({ label: targets[i].label, href: buildPageUrl(targets[i].file, repo), targetPageId: targets[i].targetPageId });
-  }
-  return links;
-}
-function renderCrossLinks(containerId, repo) {
-  var container = document.getElementById(containerId);
-  if (!container) return;
-  var links = getCrossLinks(getCurrentPageId(), repo);
-  container.innerHTML = "";
-  if (links.length === 0) { container.style.display = "none"; return; }
-  for (var i = 0; i < links.length; i++) {
-    var a = document.createElement("a");
-    a.href = links[i].href;
-    a.className = "btn-subtle";
-    a.textContent = links[i].label;
-    container.appendChild(a);
-  }
-  container.style.display = "flex";
-}
 
 // Show cross-links when tree loads
 var _treeObserver = new MutationObserver(function(mutations) {

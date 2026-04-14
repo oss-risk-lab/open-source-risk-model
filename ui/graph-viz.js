@@ -72,6 +72,17 @@ function setLoading(isLoading) {
   btn.textContent = isLoading ? "Loading…" : "Load Graph";
   btn.disabled = !!isLoading;
   el("refreshBtn").disabled = !!isLoading;
+  
+  // Show/hide spinner in graph container
+  const container = el("graph-container");
+  if (isLoading) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ds-spinner" style="width:32px;height:32px;margin-bottom:var(--sp-16);"></div>
+        <div>Loading graph data…</div>
+      </div>
+    `;
+  }
 }
 
 function getConfidenceBadge(confidence) {
@@ -455,8 +466,10 @@ function renderGraph(graphData) {
     nodes: {
       size: 25,
       font: {
-        size: 14,
-        color: "#ffffff"
+        size: 11,
+        color: "rgba(255, 255, 255, 0.55)",
+        face: "ui-sans-serif, system-ui",
+        vadjust: 20
       }
     },
     edges: {
@@ -526,6 +539,15 @@ function showNodeDetails(nodeId) {
   
   const showProvenance = el("showProvenance").checked;
   
+  // Helper to render risk-relevant values with ds-risk-tag
+  function riskTag(label) {
+    const l = String(label).toUpperCase();
+    if (l === "HIGH" || l === "CRITICAL") return `<span class="ds-risk-tag ds-risk-tag--high">${label}</span>`;
+    if (l === "MEDIUM") return `<span class="ds-risk-tag ds-risk-tag--medium">${label}</span>`;
+    if (l === "LOW") return `<span class="ds-risk-tag ds-risk-tag--low">${label}</span>`;
+    return null;
+  }
+
   let html = `
     <div class="detail-section">
       <h4>Basic Info</h4>
@@ -550,10 +572,19 @@ function showNodeDetails(nodeId) {
     
     Object.entries(node.metadata).forEach(([key, value]) => {
       if (value != null && value !== "") {
+        // Use ds-risk-tag for risk-relevant metadata
+        const keyLower = key.toLowerCase();
+        let displayValue;
+        if (keyLower === "severity" || keyLower === "risk_label") {
+          const tag = riskTag(value);
+          displayValue = tag || formatValue(value);
+        } else {
+          displayValue = formatValue(value);
+        }
         html += `
           <div class="detail-item">
             <div class="label">${key.replace(/_/g, " ")}</div>
-            <div class="value">${formatValue(value)}</div>
+            <div class="value">${displayValue}</div>
           </div>
         `;
       }
