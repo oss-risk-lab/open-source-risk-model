@@ -300,7 +300,7 @@
     <div class="tree-column">
       <div class="tree-container" id="treeContainer">
         <div class="state-msg" id="initialState">
-          <div class="icon">🌳</div>
+          <div class="icon" style="opacity:0.4;"><i data-lucide="network" style="width:36px;height:36px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
           <div class="msg">Enter a repository above to explore its dependency tree</div>
         </div>
         <div class="state-msg" id="loadingState" style="display:none;">
@@ -308,7 +308,7 @@
           <div class="msg" style="margin-top:var(--sp-16);">Loading dependency tree…</div>
         </div>
         <div id="emptyState" class="state-msg" style="display:none;">
-          <div class="icon">📦</div>
+          <div class="icon" style="opacity:0.4;"><i data-lucide="package" style="width:36px;height:36px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
           <div class="msg">No dependencies found for this repository.</div>
           <div class="sub">This repo has zero declared dependencies.</div>
         </div>
@@ -393,5 +393,7 @@ if (_summaryEl) _treeObserver.observe(_summaryEl, { attributes: true, attributeF
 })();
 </script>
 <script src="/ui/dependency-tree.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>

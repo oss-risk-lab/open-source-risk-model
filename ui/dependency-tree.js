@@ -442,7 +442,6 @@ function selectNode(key, node) {
 function renderDetailPanel(node) {
   if (!node) {
     detailContent.innerHTML = `<div class="state-msg" style="padding:30px 10px;">
-      <div class="icon" style="font-size:28px;">👆</div>
       <div class="msg">Click a node to inspect its metadata</div>
     </div>`;
     return;

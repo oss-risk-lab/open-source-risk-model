@@ -789,7 +789,7 @@ async function loadGraph(refresh = false) {
     const container = el("graph-container");
     container.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state-icon">❌</div>
+        <div class="empty-state-icon" style="font-size:24px;opacity:0.4;color:var(--status-high-text);">✕</div>
         <div>Failed to load graph</div>
       </div>
     `;
