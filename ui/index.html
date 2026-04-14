@@ -6,89 +6,157 @@
   <title>Deep Signal — Open Source Risk Intelligence</title>
   <link rel="stylesheet" href="/ui/design-system.css">
   <style>
-    body{
-      min-height: 100vh;
-    }
-    .wrap{ max-width: 1100px; margin: var(--sp-8) auto; padding: 0 var(--sp-12); }
+    body{ min-height: 100vh; }
+    .wrap{ max-width: 1060px; margin: 0 auto; padding: 0 var(--sp-16); }
 
-    /* Panel */
-    .panel{
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      padding: var(--sp-24);
-      margin-bottom: var(--sp-16);
-      transition: border-color 0.15s ease;
-    }
-    .panel:hover{ border-color: var(--border-emphasis); }
-    .section-title{
-      font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;
-    }
-    .panel-header{
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: var(--sp-12); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--sp-16);
-    }
-
-    /* Hero */
+    /* ── Hero ── */
     .hero{
       text-align: center;
-      padding: 48px var(--sp-24) 40px;
-      margin-bottom: var(--sp-24);
+      padding: 56px var(--sp-32) 48px;
+      margin-bottom: var(--sp-32);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
     }
     .hero-title{
-      font-size: 32px; font-weight: 800; letter-spacing: -0.3px;
-      color: var(--text-primary); margin-bottom: var(--sp-12);
+      font-size: 36px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text-primary); margin: 0 0 var(--sp-16);
+      line-height: 1.15;
     }
     .hero-subtitle{
-      font-size: 15px; color: var(--text-secondary); line-height: 1.6;
-      max-width: 600px; margin: 0 auto var(--sp-24);
+      font-size: 15px; color: var(--text-secondary); line-height: 1.65;
+      max-width: 520px; margin: 0 auto var(--sp-32);
     }
-
-    /* Analyze input */
     .analyze-bar{
-      display: flex; gap: var(--sp-8); max-width: 560px; margin: 0 auto;
+      display: flex; gap: var(--sp-8); max-width: 520px; margin: 0 auto;
     }
     .analyze-bar input{
-      flex: 1; padding: var(--sp-12) var(--sp-16);
+      flex: 1; padding: 14px var(--sp-16);
       border-radius: var(--radius-md); border: 1px solid var(--border);
       background: var(--bg-surface); color: var(--text-primary);
       font-size: 14px; outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .analyze-bar input::placeholder{ color: var(--text-tertiary); }
-    .analyze-bar input:focus{ border-color: var(--border-emphasis); }
-    .btn-primary{
-      padding: var(--sp-12) var(--sp-24);
+    .analyze-bar input:focus{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
+    }
+    .hero .btn-primary{
+      padding: 14px var(--sp-24);
       border-radius: var(--radius-md); border: none;
       background: var(--accent); color: #fff;
       font-size: 14px; font-weight: 700; cursor: pointer;
       transition: opacity .15s ease;
       white-space: nowrap;
     }
-    .btn-primary:hover{ opacity: 0.9; }
-
-    /* Quick actions */
-    .actions-grid{
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-12); margin-bottom: var(--sp-24);
+    .hero .btn-primary:hover{ opacity: 0.88; }
+    .hero-proof{
+      font-size: 12px; color: var(--text-tertiary); text-align: center;
+      margin-top: var(--sp-16); letter-spacing: 0.1px;
     }
-    .action-card{
-      background: var(--bg-elevated); border: 1px solid var(--border);
+
+    /* ── Section spacing ── */
+    .hp-section{ margin-bottom: 48px; }
+    .hp-section-title{
+      font-size: 14px; font-weight: 700; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.6px;
+      margin: 0 0 var(--sp-16);
+    }
+
+    /* ── Capabilities ── */
+    .cap-row-primary{ display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-12); margin-bottom: var(--sp-12); }
+    .cap-row-secondary{ display: grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-12); }
+    .cap-card{
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: var(--sp-24);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .cap-card:hover{
+      border-color: var(--border-emphasis);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .cap-card .cap-title{ font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+    .cap-card .cap-desc{ font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── How It Works ── */
+    .hiw-flow{ display: flex; align-items: stretch; gap: 0; }
+    .hiw-step{
+      flex: 1; text-align: center; padding: var(--sp-24) var(--sp-16);
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .hiw-step:hover{ border-color: var(--border-emphasis); }
+    .hiw-step.hiw-emphasis{
+      border-color: rgba(59,130,246,0.25);
+      background: linear-gradient(180deg, var(--bg-elevated) 0%, rgba(59,130,246,0.03) 100%);
+      box-shadow: 0 1px 6px rgba(59,130,246,0.08);
+    }
+    .hiw-step-num{ font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--sp-8); }
+    .hiw-step-title{ font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--sp-8); }
+    .hiw-step-desc{ font-size: 13px; color: var(--text-secondary); line-height: 1.5; max-width: 220px; margin: 0 auto; }
+    .hiw-arrow{
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; flex-shrink: 0; color: var(--text-tertiary); font-size: 16px;
+    }
+
+    /* ── KPI / Credibility ── */
+    .kpi-row{ display: flex; gap: var(--sp-12); }
+    .kpi-card{
+      flex: 1; text-align: center; padding: var(--sp-24) var(--sp-16);
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      transition: border-color 0.15s ease;
+    }
+    .kpi-card:hover{ border-color: var(--border-emphasis); }
+    .kpi-card .kpi-num{
+      font-size: 28px; font-weight: 800; font-family: var(--font-mono);
+      color: var(--text-primary); line-height: 1; margin-bottom: var(--sp-8);
+    }
+    .kpi-card .kpi-label{
+      font-size: 11px; color: var(--text-tertiary); text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Product navigation cards ── */
+    .product-grid{ display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-12); margin-bottom: 48px; }
+    .product-card{
+      display: flex; flex-direction: column; gap: var(--sp-8);
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg); padding: var(--sp-24);
       text-decoration: none; color: var(--text-primary);
-      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-      display: flex; flex-direction: column; gap: var(--sp-8);
-      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+      cursor: pointer; position: relative;
     }
-    .action-card:hover{ border-color: var(--border-emphasis); background: var(--bg-overlay); box-shadow: var(--shadow-md); }
-    .action-label{ font-size: 14px; font-weight: 700; }
-    .action-desc{ font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+    .product-card:hover{
+      border-color: var(--accent); box-shadow: 0 2px 12px rgba(59,130,246,0.1);
+      transform: translateY(-1px);
+    }
+    .product-card .product-title{
+      font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: var(--sp-8);
+    }
+    .product-card .product-title .arrow{
+      font-size: 14px; color: var(--text-tertiary); transition: transform 0.15s ease, color 0.15s ease;
+    }
+    .product-card:hover .product-title .arrow{ transform: translateX(3px); color: var(--accent); }
+    .product-card .product-desc{ font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
-    /* Explore repos */
+    /* ── Explore repos ── */
+    .panel{
+      background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+      padding: var(--sp-24); margin-bottom: var(--sp-16);
+    }
+    .panel-header{
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: var(--sp-12); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--sp-16);
+    }
+    .section-title{ font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
     .repo-group-title{
       font-size: 11px; font-weight: 700; color: var(--text-tertiary);
-      text-transform: uppercase; letter-spacing: 0.5px;
-      margin-bottom: var(--sp-8);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--sp-8);
     }
     .repo-grid{
       display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -97,53 +165,30 @@
     .repo-chip{
       display: flex; align-items: center; gap: var(--sp-8);
       padding: var(--sp-8) var(--sp-12);
-      border-radius: var(--radius-md); border: 1px solid var(--border);
+      border-radius: var(--radius-md); border: 1px solid var(--border-subtle);
       background: var(--bg-surface); text-decoration: none;
       color: var(--text-primary); font-size: 13px; font-weight: 600;
       transition: border-color 0.15s ease, background 0.15s ease;
     }
     .repo-chip:hover{ border-color: var(--border-emphasis); background: var(--bg-overlay); }
-    .repo-chip .risk-dot{
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    }
+    .repo-chip .risk-dot{ width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .risk-high{ background: var(--status-high-text); }
     .risk-medium{ background: var(--status-medium-text); }
     .risk-low{ background: var(--status-low-text); }
     .risk-neutral{ background: var(--text-tertiary); }
+    .explore-error{ font-size: 14px; color: var(--text-secondary); text-align: center; padding: var(--sp-24) 0; }
 
-    .trust-signal{
-      font-size: 13px; color: var(--text-tertiary); text-align: center;
-      margin-top: var(--sp-8);
-    }
-    .explore-error{
-      font-size: 14px; color: var(--text-secondary); text-align: center;
-      padding: var(--sp-24) 0;
-    }
-
-    /* Capabilities section */
-    .capabilities-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-12); margin-bottom:var(--sp-24); }
-    .capability-card .cap-title{ font-size:14px; font-weight:700; margin-bottom:var(--sp-4); }
-    .capability-card .cap-desc{ font-size:12px; color:var(--text-secondary); line-height:1.4; }
-
-    /* How It Works section */
-    .how-it-works{ display:flex; align-items:flex-start; gap:var(--sp-8); margin-bottom:var(--sp-24); }
-    .step-card{ flex:1; text-align:center; padding:var(--sp-24); }
-    .step-number{ font-size:11px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:var(--sp-8); }
-    .step-title{ font-size:16px; font-weight:700; margin-bottom:var(--sp-8); }
-    .step-desc{ font-size:12px; color:var(--text-secondary); line-height:1.4; }
-    .step-arrow{ display:flex; align-items:center; color:var(--text-tertiary); font-size:20px; padding-top:var(--sp-24); }
-
-    /* Credibility section */
-    .credibility-grid{ display:flex; gap:var(--sp-12); }
-    .credibility-grid .ds-kpi{ flex:1; padding:var(--sp-24); }
-
+    /* ── Responsive ── */
     @media (max-width: 700px){
-      .actions-grid{ grid-template-columns: 1fr; }
+      .hero{ padding: 40px var(--sp-16) 36px; }
+      .hero-title{ font-size: 26px; }
+      .analyze-bar{ flex-direction: column; }
+      .cap-row-primary, .cap-row-secondary{ grid-template-columns: 1fr; }
+      .hiw-flow{ flex-direction: column; gap: var(--sp-8); }
+      .hiw-arrow{ display: none; }
+      .kpi-row{ flex-direction: column; }
+      .product-grid{ grid-template-columns: 1fr; }
       .repo-grid{ grid-template-columns: 1fr 1fr; }
-      .hero-title{ font-size: 24px; }
-      .capabilities-grid{ grid-template-columns: 1fr; }
-      .how-it-works{ flex-direction:column; }
-      .step-arrow{ display:none; }
     }
   </style>
   <script src="/ui/config.js"></script>
@@ -151,45 +196,47 @@
 </head>
 <body>
 <div class="wrap">
+
   <!-- Hero -->
-  <div class="panel ds-card hero">
-    <h1 class="hero-title">Open Source Risk Intelligence</h1>
+  <div class="hero">
+    <h1 class="hero-title">Understand Open Source Risk<br>Before You Ship</h1>
     <div class="hero-subtitle">
-      Analyze open source repositories for maintenance risk, supply chain vulnerabilities, and dependency health. Understand what you're shipping before it ships.
+      Analyze repositories for maintenance risk, supply chain vulnerabilities, and dependency health. Know what you're shipping.
     </div>
-    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:var(--sp-24);">Analyze any public GitHub repository in seconds.</div>
     <div class="analyze-bar">
       <input id="repoInput" type="text" placeholder="numpy/numpy" aria-label="Repository name" />
       <button id="analyzeBtn" class="btn-primary ds-btn-primary">Scan a Repository</button>
     </div>
-    <div id="trustSignal" class="trust-signal" style="margin-top:var(--sp-16);"></div>
+    <div class="hero-proof" id="trustSignal">Powered by repository graphs, dependency analysis, and vulnerability intelligence.</div>
   </div>
 
   <!-- Capabilities -->
-  <div id="capabilitiesSection" style="margin-bottom:var(--sp-24);">
-    <div class="section-title" style="margin-bottom:var(--sp-12);">What Deep Signal Detects</div>
-    <div class="capabilities-grid">
-      <div class="ds-card capability-card">
+  <div class="hp-section" id="capabilitiesSection">
+    <div class="hp-section-title">What Deep Signal Detects</div>
+    <div class="cap-row-primary">
+      <div class="cap-card">
         <div class="ds-icon"><i data-lucide="shield-alert"></i></div>
         <div class="cap-title">Vulnerable Dependencies</div>
         <div class="cap-desc">Identify known CVEs across your transitive dependency chain</div>
       </div>
-      <div class="ds-card capability-card">
+      <div class="cap-card">
         <div class="ds-icon"><i data-lucide="users"></i></div>
         <div class="cap-title">Maintainer Risk</div>
         <div class="cap-desc">Detect single-maintainer bottlenecks and contributor concentration</div>
       </div>
-      <div class="ds-card capability-card">
+      <div class="cap-card">
         <div class="ds-icon"><i data-lucide="git-branch"></i></div>
         <div class="cap-title">Dependency Chain Analysis</div>
         <div class="cap-desc">Map the full supply chain from direct to deep transitive dependencies</div>
       </div>
-      <div class="ds-card capability-card">
+    </div>
+    <div class="cap-row-secondary">
+      <div class="cap-card">
         <div class="ds-icon"><i data-lucide="activity"></i></div>
         <div class="cap-title">Release Health</div>
         <div class="cap-desc">Monitor release freshness and detect stale or abandoned packages</div>
       </div>
-      <div class="ds-card capability-card">
+      <div class="cap-card">
         <div class="ds-icon"><i data-lucide="bar-chart-3"></i></div>
         <div class="cap-title">Risk Scoring</div>
         <div class="cap-desc">Quantify overall maintenance risk with a composite signal-based score</div>
@@ -198,65 +245,68 @@
   </div>
 
   <!-- How It Works -->
-  <div id="howItWorksSection" style="margin-bottom:var(--sp-24);">
-    <div class="section-title" style="margin-bottom:var(--sp-12);">How It Works</div>
-    <div class="how-it-works">
-      <div class="ds-card step-card">
-        <div class="step-number">Step 1</div>
-        <div class="step-title">Analyze</div>
-        <div class="step-desc">Point Deep Signal at any public GitHub repository</div>
+  <div class="hp-section" id="howItWorksSection">
+    <div class="hp-section-title">How It Works</div>
+    <div class="hiw-flow">
+      <div class="hiw-step">
+        <div class="hiw-step-num">Step 1</div>
+        <div class="hiw-step-title">Analyze</div>
+        <div class="hiw-step-desc">Point Deep Signal at any public GitHub repository</div>
       </div>
-      <div class="step-arrow">→</div>
-      <div class="ds-card step-card">
-        <div class="step-number">Step 2</div>
-        <div class="step-title">Evaluate</div>
-        <div class="step-desc">We assess dependencies, maintainers, CVEs, and release patterns</div>
+      <div class="hiw-arrow">→</div>
+      <div class="hiw-step hiw-emphasis">
+        <div class="hiw-step-num">Step 2</div>
+        <div class="hiw-step-title">Evaluate</div>
+        <div class="hiw-step-desc">We assess dependencies, maintainers, CVEs, and release patterns</div>
       </div>
-      <div class="step-arrow">→</div>
-      <div class="ds-card step-card">
-        <div class="step-number">Step 3</div>
-        <div class="step-title">Surface</div>
-        <div class="step-desc">Get actionable risk scores and prioritized insights</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Credibility -->
-  <div id="credibilitySection" style="margin-bottom:var(--sp-24);">
-    <div class="section-title" style="margin-bottom:var(--sp-12);">Platform at a Glance</div>
-    <div class="credibility-grid">
-      <div class="ds-card ds-kpi">
-        <div class="ds-kpi-value" id="kpiRepos">—</div>
-        <div class="ds-kpi-label">Repositories Analyzed</div>
-      </div>
-      <div class="ds-card ds-kpi">
-        <div class="ds-kpi-value" id="kpiDeps">—</div>
-        <div class="ds-kpi-label">Dependencies Mapped</div>
-      </div>
-      <div class="ds-card ds-kpi">
-        <div class="ds-kpi-value" id="kpiPackages">—</div>
-        <div class="ds-kpi-label">Packages Evaluated</div>
+      <div class="hiw-arrow">→</div>
+      <div class="hiw-step">
+        <div class="hiw-step-num">Step 3</div>
+        <div class="hiw-step-title">Surface</div>
+        <div class="hiw-step-desc">Get actionable risk scores and prioritized insights</div>
       </div>
     </div>
   </div>
 
-  <!-- Quick actions -->
-  <div class="actions-grid">
-    <a class="action-card" href="insights.html">
-      <div class="ds-icon"><i data-lucide="bar-chart-3"></i></div>
-      <span class="action-label">Insights Dashboard</span>
-      <span class="action-desc">Risk scores, signals, and trends across all analyzed repositories.</span>
-    </a>
-    <a class="action-card" href="graph.html">
-      <div class="ds-icon"><i data-lucide="share-2"></i></div>
-      <span class="action-label">Supply Chain Graph</span>
-      <span class="action-desc">Visualize maintainers, releases, CVEs, and registry connections.</span>
-    </a>
-    <a class="action-card" href="dependency-tree.html">
-      <div class="ds-icon"><i data-lucide="network"></i></div>
-      <span class="action-label">Dependency Tree</span>
-      <span class="action-desc">Explore transitive dependencies and identify high-risk branches.</span>
-    </a>
+  <!-- Platform at a Glance -->
+  <div class="hp-section" id="credibilitySection">
+    <div class="hp-section-title">Platform at a Glance</div>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-num" id="kpiRepos">&mdash;</div>
+        <div class="kpi-label">Repositories Analyzed</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" id="kpiDeps">&mdash;</div>
+        <div class="kpi-label">Dependencies Mapped</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" id="kpiPackages">&mdash;</div>
+        <div class="kpi-label">Packages Evaluated</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product areas -->
+  <div class="hp-section">
+    <div class="hp-section-title">Go Deeper</div>
+    <div class="product-grid">
+      <a class="product-card" href="insights.html">
+        <div class="ds-icon"><i data-lucide="bar-chart-3"></i></div>
+        <span class="product-title">Insights Dashboard <span class="arrow">→</span></span>
+        <span class="product-desc">Risk scores, signals, and trends across all analyzed repositories.</span>
+      </a>
+      <a class="product-card" href="graph.html">
+        <div class="ds-icon"><i data-lucide="share-2"></i></div>
+        <span class="product-title">Supply Chain Graph <span class="arrow">→</span></span>
+        <span class="product-desc">Visualize maintainers, releases, CVEs, and registry connections.</span>
+      </a>
+      <a class="product-card" href="dependency-tree.html">
+        <div class="ds-icon"><i data-lucide="network"></i></div>
+        <span class="product-title">Dependency Tree <span class="arrow">→</span></span>
+        <span class="product-desc">Explore transitive dependencies and identify high-risk branches.</span>
+      </a>
+    </div>
   </div>
 
   <!-- Explore section -->
@@ -264,23 +314,18 @@
     <div class="panel-header">
       <h3 class="section-title">Explore Repositories</h3>
     </div>
-
     <div class="repo-group-title">Higher Risk</div>
     <div class="repo-grid" id="highRiskRepos"></div>
-
     <div class="repo-group-title">Well Maintained</div>
     <div class="repo-grid" id="lowRiskRepos"></div>
-
     <div class="repo-group-title">Popular Libraries</div>
     <div class="repo-grid" id="popularRepos"></div>
   </div>
 </div>
 
 <script>
-// --- Render navigation ---
 renderNav(getCurrentPageId(), getRepoFromUrl());
 
-// --- Analyze action ---
 function goAnalyze() {
   var repo = document.getElementById("repoInput").value.trim();
   if (!repo) { document.getElementById("repoInput").focus(); return; }
@@ -291,7 +336,6 @@ document.getElementById("repoInput").addEventListener("keydown", function(e) {
   if (e.key === "Enter") goAnalyze();
 });
 
-// --- Explore repos (fetched from API) ---
 function riskDotClass(riskLabel) {
   if (riskLabel === "HIGH") return "risk-high";
   if (riskLabel === "MEDIUM") return "risk-medium";
@@ -315,32 +359,19 @@ function renderRepoChips(containerId, repos) {
 }
 
 function groupAndRenderRepos(repos) {
-  var highRisk = [];
-  var wellMaintained = [];
-  var popular = [];
-  var usedRepos = {};
-
+  var highRisk = [], wellMaintained = [], popular = [], usedRepos = {};
   for (var i = 0; i < repos.length; i++) {
     var r = repos[i];
-    if (r.tags && r.tags.indexOf("high-risk") !== -1) {
-      highRisk.push(r);
-      usedRepos[r.repo] = true;
-    }
+    if (r.tags && r.tags.indexOf("high-risk") !== -1) { highRisk.push(r); usedRepos[r.repo] = true; }
   }
   for (var i = 0; i < repos.length; i++) {
     var r = repos[i];
-    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("well-maintained") !== -1) {
-      wellMaintained.push(r);
-      usedRepos[r.repo] = true;
-    }
+    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("well-maintained") !== -1) { wellMaintained.push(r); usedRepos[r.repo] = true; }
   }
   for (var i = 0; i < repos.length; i++) {
     var r = repos[i];
-    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("popular") !== -1) {
-      popular.push(r);
-    }
+    if (!usedRepos[r.repo] && r.tags && r.tags.indexOf("popular") !== -1) { popular.push(r); }
   }
-
   renderRepoChips("highRiskRepos", highRisk);
   renderRepoChips("lowRiskRepos", wellMaintained);
   renderRepoChips("popularRepos", popular);
@@ -357,7 +388,6 @@ function showExploreError(message) {
   container.parentNode.insertBefore(div, container);
 }
 
-// Fetch stats for trust signal and credibility KPIs
 var apiBase = window.DS_API_BASE || "";
 fetch(apiBase + "/api/stats")
   .then(function(res) { return res.ok ? res.json() : Promise.reject("stats-failed"); })
@@ -365,32 +395,20 @@ fetch(apiBase + "/api/stats")
     document.getElementById("kpiRepos").textContent = (data.total_repos || 0) + "+";
     document.getElementById("kpiDeps").textContent = (data.fully_analyzed_repos || 0) + "+";
     document.getElementById("kpiPackages").textContent = ((data.total_repos || 0) * 10) + "+";
-    // Also update trust signal
-    var count = data.total_repos || "100+";
-    document.getElementById("trustSignal").textContent =
-      "Analyzing " + count + "+ open-source repositories across dependency graphs, contributors, and vulnerability data.";
   })
   .catch(function() {
     document.getElementById("kpiRepos").textContent = "100+";
     document.getElementById("kpiDeps").textContent = "500+";
     document.getElementById("kpiPackages").textContent = "1000+";
-    document.getElementById("trustSignal").textContent =
-      "Analyzing 100+ open-source repositories across dependency graphs, contributors, and vulnerability data.";
   });
 
-// Fetch demo repos
 fetch(apiBase + "/api/demo-repos")
   .then(function(res) { return res.ok ? res.json() : Promise.reject("demo-repos-failed"); })
   .then(function(data) {
-    if (data.repos && data.repos.length > 0) {
-      groupAndRenderRepos(data.repos);
-    } else {
-      showExploreError("Unable to load repositories");
-    }
+    if (data.repos && data.repos.length > 0) { groupAndRenderRepos(data.repos); }
+    else { showExploreError("Unable to load repositories"); }
   })
-  .catch(function() {
-    showExploreError("Unable to load repositories");
-  });
+  .catch(function() { showExploreError("Unable to load repositories"); });
 </script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>lucide.createIcons();</script>

@@ -256,13 +256,14 @@ body {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-md);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.18);
   color: var(--accent);
   margin-bottom: var(--sp-8);
+  flex-shrink: 0;
 }
 
 .ds-icon svg {
