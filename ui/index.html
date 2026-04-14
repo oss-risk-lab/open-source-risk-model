@@ -123,7 +123,6 @@
 
     /* Capabilities section */
     .capabilities-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-12); margin-bottom:var(--sp-24); }
-    .capability-card .cap-icon{ font-size:24px; margin-bottom:var(--sp-8); }
     .capability-card .cap-title{ font-size:14px; font-weight:700; margin-bottom:var(--sp-4); }
     .capability-card .cap-desc{ font-size:12px; color:var(--text-secondary); line-height:1.4; }
 
@@ -172,27 +171,27 @@
     <div class="section-title" style="margin-bottom:var(--sp-12);">What Deep Signal Detects</div>
     <div class="capabilities-grid">
       <div class="ds-card capability-card">
-        <div class="cap-icon">🛡️</div>
+        <div class="ds-icon"><i data-lucide="shield-alert"></i></div>
         <div class="cap-title">Vulnerable Dependencies</div>
         <div class="cap-desc">Identify known CVEs across your transitive dependency chain</div>
       </div>
       <div class="ds-card capability-card">
-        <div class="cap-icon">👤</div>
+        <div class="ds-icon"><i data-lucide="users"></i></div>
         <div class="cap-title">Maintainer Risk</div>
         <div class="cap-desc">Detect single-maintainer bottlenecks and contributor concentration</div>
       </div>
       <div class="ds-card capability-card">
-        <div class="cap-icon">🔗</div>
+        <div class="ds-icon"><i data-lucide="git-branch"></i></div>
         <div class="cap-title">Dependency Chain Analysis</div>
         <div class="cap-desc">Map the full supply chain from direct to deep transitive dependencies</div>
       </div>
       <div class="ds-card capability-card">
-        <div class="cap-icon">📦</div>
+        <div class="ds-icon"><i data-lucide="activity"></i></div>
         <div class="cap-title">Release Health</div>
         <div class="cap-desc">Monitor release freshness and detect stale or abandoned packages</div>
       </div>
       <div class="ds-card capability-card">
-        <div class="cap-icon">📊</div>
+        <div class="ds-icon"><i data-lucide="bar-chart-3"></i></div>
         <div class="cap-title">Risk Scoring</div>
         <div class="cap-desc">Quantify overall maintenance risk with a composite signal-based score</div>
       </div>
@@ -394,5 +393,7 @@ fetch(apiBase + "/api/demo-repos")
     showExploreError("Unable to load repositories");
   });
 </script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
