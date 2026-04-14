@@ -313,7 +313,7 @@ function buildNodeEl(node, parentKey, siblingIndex) {
   // Icon
   const icon = document.createElement("span");
   icon.className = "node-icon" + (isRepo ? " repo" : isError ? " error" : " pkg");
-  icon.textContent = isRepo ? "📦" : isError ? "⚠" : "📄";
+  icon.textContent = isRepo ? "◆" : isError ? "!" : "·";
 
   // Name
   const name = document.createElement("span");

@@ -21,37 +21,37 @@ const NODE_TYPES = {
     label: "Repository",
     color: "#2563eb",
     shape: "box",
-    icon: "📦"
+    icon: ""
   },
   release: {
     label: "Release",
     color: "#16a34a",
     shape: "diamond",
-    icon: "🏷️"
+    icon: ""
   },
   maintainer: {
     label: "Maintainer",
     color: "#9333ea",
     shape: "dot",
-    icon: "👤"
+    icon: ""
   },
   cve: {
     label: "CVE",
     color: "#dc2626",
     shape: "triangle",
-    icon: "⚠️"
+    icon: ""
   },
   registry: {
     label: "Registry",
     color: "#ea580c",
     shape: "hexagon",
-    icon: "📚"
+    icon: ""
   },
   risk_factor: {
     label: "Risk Factor",
     color: "#ca8a04",
     shape: "dot",
-    icon: "⚡",
+    icon: "",
     size: 18
   }
 };
