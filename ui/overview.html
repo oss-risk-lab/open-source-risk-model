@@ -411,17 +411,32 @@ if (!scopeId) {
 
 function loadScopeData(id) {
   var apiBase = window.DS_API_BASE || "";
-  fetch(apiBase + "/api/scope/" + encodeURIComponent(id))
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function() { controller.abort(); }, 45000); // 45s timeout
+
+  fetch(apiBase + "/api/scope/" + encodeURIComponent(id), { signal: controller.signal })
     .then(function(res) {
-      if (res.status === 404) throw new Error("Scope not found");
-      if (!res.ok) throw new Error("Failed to load scope data");
+      clearTimeout(timeoutId);
+      if (res.status === 404) throw new Error("Scope not found. The analysis may have expired — scopes are stored in memory and lost on server restart.");
+      if (!res.ok) throw new Error("Failed to load scope data (status " + res.status + ")");
       return res.json();
     })
     .then(function(data) {
-      renderOverview(data);
+      try {
+        renderOverview(data);
+      } catch (renderErr) {
+        showError("Failed to render scope data: " + renderErr.message + '. <a href="/">Return to homepage</a>');
+      }
     })
     .catch(function(err) {
-      showError(err.message + '. <a href="/">Return to homepage</a>');
+      clearTimeout(timeoutId);
+      var msg = err.message || "Unknown error";
+      if (err.name === "AbortError") {
+        msg = "Request timed out. The server may be processing a large scope — try again with fewer repos.";
+      } else if (msg.indexOf("Failed to fetch") !== -1 || msg.indexOf("NetworkError") !== -1) {
+        msg = "Could not reach the API. The server may be starting up — try again in a moment.";
+      }
+      showError(msg + ' <a href="/">Return to homepage</a>');
     });
 }
 
