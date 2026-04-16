@@ -3,9 +3,10 @@ from __future__ import annotations
 import os
 import re
 import time
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional, Tuple
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 
 from open_source_risk_model.service.score_repo import score_repo
 from open_source_risk_model.graph.builder import build_graph
-from open_source_risk_model.graph.schema import GraphConfig
+from open_source_risk_model.graph.schema import Graph, GraphConfig
 from open_source_risk_model.graph.cache import GraphCache
 from open_source_risk_model.utils.logging_utils import (
     StructuredLogger,
@@ -77,6 +78,25 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# In-memory scope store — module-level dict
+SCOPE_STORE: Dict[str, dict] = {}
+
+# Best-effort dependency-to-repo mapping (hardcoded for MVP)
+PACKAGE_TO_REPO: Dict[str, str] = {
+    "flask": "pallets/flask",
+    "requests": "psf/requests",
+    "sqlalchemy": "sqlalchemy/sqlalchemy",
+    "django": "django/django",
+    "numpy": "numpy/numpy",
+    "pandas": "pandas-dev/pandas",
+    "fastapi": "tiangolo/fastapi",
+    "express": "expressjs/express",
+    "react": "facebook/react",
+    "lodash": "lodash/lodash",
+    "axios": "axios/axios",
+    "scikit-learn": "scikit-learn/scikit-learn",
+}
 
 # Root route — serves homepage at /
 @app.get("/")
@@ -816,8 +836,398 @@ def _normalize_repo_name(repo: str) -> str:
     
     # Invalid format
     return ""
+
+
+def _risk_label_from_score(score: float) -> str:
+    """Return LOW / MEDIUM / HIGH label based on risk score thresholds."""
+    if score < 0.30:
+        return "LOW"
+    elif score < 0.60:
+        return "MEDIUM"
+    return "HIGH"
+
+
+def _generate_scope_id() -> str:
+    """Generate a unique scope identifier."""
+    return f"scope_{uuid.uuid4().hex[:12]}"
+
+
 from pydantic import BaseModel
 from typing import List, Optional, Any
+
+
+class IngestScopeRequest(BaseModel):
+    """Request model for multi-repo scope ingestion."""
+    name: str
+    repos: List[str]
+    dependencies: Optional[List[str]] = []
+
+
+class IngestScopeResponse(BaseModel):
+    """Response model for multi-repo scope ingestion."""
+    scope_id: str
+    status: str
+    system_risk_summary: dict
+    priority_risks: List[dict]
+    top_risk_drivers: List[dict]
+    top_risky_dependencies: List[dict]
+    graph: dict
+    errors: dict
+
+
+def resolve_dependency_input(dep: str) -> dict:
+    """Resolve a dependency name to a repo mapping or a package-only entry.
+
+    Looks up the dependency in PACKAGE_TO_REPO. If found, returns a repo-backed
+    entry; otherwise returns a package-only entry with no repo association.
+    """
+    repo = PACKAGE_TO_REPO.get(dep)
+    if repo:
+        return {"kind": "repo", "repo": repo, "package_name": dep, "mapped": True}
+    return {"kind": "package_only", "repo": None, "package_name": dep, "mapped": False}
+
+
+def merge_graphs(graphs: List[Tuple[str, Graph]], unmapped_nodes: List[dict]) -> dict:
+    """Merge multiple repo graphs into a single merged graph dict.
+
+    Deduplicates nodes by node.id (first occurrence wins for properties),
+    tracks contributing repos via source_repos on each node, deduplicates
+    edges by (source, target, relationship_type) tuple while preserving
+    different relationship types between the same node pair, and appends
+    unmapped dependency nodes as standalone package nodes.
+
+    Args:
+        graphs: List of (repo_name, Graph) tuples to merge.
+        unmapped_nodes: List of dicts with id, type, label for unmapped deps.
+
+    Returns:
+        Dict with "nodes" and "edges" lists of plain dicts.
+    """
+    merged_nodes: Dict[str, dict] = {}  # keyed by node.id
+    seen_edges: set = set()  # (source, target, relationship_type) tuples
+    merged_edges: List[dict] = []
+
+    for repo_name, graph_obj in graphs:
+        for node in graph_obj.nodes:
+            if node.id not in merged_nodes:
+                node_dict = node.to_dict()
+                node_dict["source_repos"] = [repo_name]
+                merged_nodes[node.id] = node_dict
+            else:
+                if repo_name not in merged_nodes[node.id]["source_repos"]:
+                    merged_nodes[node.id]["source_repos"].append(repo_name)
+
+        for edge in graph_obj.edges:
+            edge_key = (edge.source, edge.target, edge.relationship_type.value)
+            if edge_key not in seen_edges:
+                seen_edges.add(edge_key)
+                merged_edges.append(edge.to_dict())
+
+    # Append unmapped dependency nodes as standalone package nodes
+    for unode in unmapped_nodes:
+        node_id = unode.get("id", "")
+        if node_id and node_id not in merged_nodes:
+            merged_nodes[node_id] = {
+                "id": node_id,
+                "type": unode.get("type", "package"),
+                "label": unode.get("label", ""),
+                "metadata": {},
+                "provenance": {},
+                "source_repos": [],
+            }
+
+    return {"nodes": list(merged_nodes.values()), "edges": merged_edges}
+
+
+def compute_system_risk_summary(per_repo_results: List[dict], merged_graph: dict) -> dict:
+    """Compute aggregated system risk summary from per-repo results and merged graph.
+
+    Args:
+        per_repo_results: List of dicts, each with repo (str), risk_score (float|None),
+                          risk_label (str|None), error (str|None).
+        merged_graph: Dict with "nodes" and "edges" lists (output of merge_graphs()).
+
+    Returns:
+        Dict with repo-level metrics, dependency-level metrics, aggregate score/label,
+        system_summary sentence, and per_repo_results.
+    """
+    total_repos = len(per_repo_results)
+
+    # Repo-level metrics from non-error repos
+    high_risk_repos = 0
+    medium_risk_repos = 0
+    low_risk_repos = 0
+    valid_scores = []
+
+    for r in per_repo_results:
+        if r.get("error") is not None:
+            continue
+        label = (r.get("risk_label") or "").upper()
+        if label == "HIGH":
+            high_risk_repos += 1
+        elif label == "MEDIUM":
+            medium_risk_repos += 1
+        elif label == "LOW":
+            low_risk_repos += 1
+        score = r.get("risk_score")
+        if score is not None:
+            valid_scores.append(score)
+
+    # Aggregate risk score: arithmetic mean of non-error repo risk scores
+    aggregate_risk_score = sum(valid_scores) / len(valid_scores) if valid_scores else 0.0
+    aggregate_label = _risk_label_from_score(aggregate_risk_score)
+
+    # Dependency-level metrics from merged graph nodes
+    nodes = merged_graph.get("nodes", [])
+    total_unique_dependencies = 0
+    dependencies_used_by_multiple_repos = 0
+    high_risk_dependencies = 0
+    vulnerable_dependencies = 0
+
+    for node in nodes:
+        node_type = (node.get("type") or "").lower()
+        if node_type not in ("package", "dependency"):
+            continue
+        total_unique_dependencies += 1
+        source_repos = node.get("source_repos", [])
+        if len(source_repos) > 1:
+            dependencies_used_by_multiple_repos += 1
+        metadata = node.get("metadata", {}) or {}
+        risk_score = metadata.get("risk_score")
+        if risk_score is not None and risk_score >= 0.60:
+            high_risk_dependencies += 1
+        cve_count = metadata.get("cve_count", 0) or 0
+        if cve_count > 0:
+            vulnerable_dependencies += 1
+
+    # System summary sentence
+    system_summary = (
+        f"Your system shows {aggregate_label.lower()} risk across "
+        f"{total_repos} repositor{'y' if total_repos == 1 else 'ies'}"
+    )
+    detail_parts = []
+    if high_risk_dependencies > 0:
+        detail_parts.append(f"{high_risk_dependencies} high-risk dependenc{'y' if high_risk_dependencies == 1 else 'ies'}")
+    if vulnerable_dependencies > 0:
+        detail_parts.append(f"{vulnerable_dependencies} vulnerable dependenc{'y' if vulnerable_dependencies == 1 else 'ies'}")
+    if detail_parts:
+        system_summary += " with " + " and ".join(detail_parts)
+    system_summary += "."
+
+    return {
+        "total_repos": total_repos,
+        "high_risk_repos": high_risk_repos,
+        "medium_risk_repos": medium_risk_repos,
+        "low_risk_repos": low_risk_repos,
+        "total_unique_dependencies": total_unique_dependencies,
+        "dependencies_used_by_multiple_repos": dependencies_used_by_multiple_repos,
+        "high_risk_dependencies": high_risk_dependencies,
+        "vulnerable_dependencies": vulnerable_dependencies,
+        "aggregate_risk_score": aggregate_risk_score,
+        "aggregate_label": aggregate_label,
+        "system_summary": system_summary,
+        "per_repo_results": per_repo_results,
+    }
+
+
+# Severity base scores for priority risk computation
+SEVERITY_BASE = {"high": 3.0, "medium": 2.0, "low": 1.0}
+
+
+def compute_priority_risks(per_repo_results: List[dict], merged_graph: dict) -> List[dict]:
+    """Compute prioritized risk items across the entire analysis scope.
+
+    Gathers candidates from high-risk repos, dependencies with CVEs, and
+    dependencies used by many repos. Scores each candidate using:
+        priority_score = SEVERITY_BASE[severity] + (usage_count * 0.5) + (cve_count * 1.0)
+
+    Deduplicates by name, sorts descending by priority_score, returns top 5.
+
+    Args:
+        per_repo_results: List of dicts with repo, risk_score, risk_label, error.
+        merged_graph: Dict with "nodes" and "edges" lists (output of merge_graphs()).
+
+    Returns:
+        List of dicts, each with name, type, reason, severity, priority_score, used_by_repos.
+    """
+    candidates: Dict[str, dict] = {}  # keyed by name for deduplication
+
+    # Source 1: High-risk repos (risk_label == "HIGH")
+    for r in per_repo_results:
+        if r.get("error") is not None:
+            continue
+        label = (r.get("risk_label") or "").upper()
+        if label == "HIGH":
+            repo_name = r.get("repo", "")
+            severity = "high"
+            usage_count = 0
+            cve_count = 0
+            score = SEVERITY_BASE[severity] + (usage_count * 0.5) + (cve_count * 1.0)
+            candidates[repo_name] = {
+                "name": repo_name,
+                "type": "repo",
+                "reason": "High-risk repository",
+                "severity": severity,
+                "priority_score": score,
+                "used_by_repos": [],
+            }
+
+    # Process dependency nodes from merged graph
+    nodes = merged_graph.get("nodes", [])
+    for node in nodes:
+        node_type = (node.get("type") or "").lower()
+        if node_type not in ("package", "dependency"):
+            continue
+
+        node_name = node.get("label") or node.get("id", "")
+        metadata = node.get("metadata", {}) or {}
+        source_repos = node.get("source_repos", [])
+        cve_count = metadata.get("cve_count", 0) or 0
+        usage_count = len(source_repos)
+
+        # Source 2: Dependencies with CVEs (cve_count > 0)
+        if cve_count > 0:
+            severity = "high" if cve_count >= 3 else "medium"
+            score = SEVERITY_BASE[severity] + (usage_count * 0.5) + (cve_count * 1.0)
+            # Keep the higher score if already a candidate
+            if node_name not in candidates or score > candidates[node_name]["priority_score"]:
+                candidates[node_name] = {
+                    "name": node_name,
+                    "type": "dependency",
+                    "reason": f"Has {cve_count} known CVE{'s' if cve_count != 1 else ''}, used by {usage_count} repo{'s' if usage_count != 1 else ''}",
+                    "severity": severity,
+                    "priority_score": score,
+                    "used_by_repos": list(source_repos),
+                }
+
+        # Source 3: Dependencies used by many repos (>= 2)
+        if usage_count >= 2:
+            severity = "medium"
+            score = SEVERITY_BASE[severity] + (usage_count * 0.5) + (cve_count * 1.0)
+            if node_name not in candidates or score > candidates[node_name]["priority_score"]:
+                candidates[node_name] = {
+                    "name": node_name,
+                    "type": "dependency",
+                    "reason": f"Used by {usage_count} repos (concentration risk)",
+                    "severity": severity,
+                    "priority_score": score,
+                    "used_by_repos": list(source_repos),
+                }
+
+    # Sort descending by priority_score, return top 5
+    sorted_risks = sorted(candidates.values(), key=lambda x: x["priority_score"], reverse=True)
+    return sorted_risks[:5]
+
+
+def compute_top_risky_dependencies(merged_graph: dict) -> List[dict]:
+    """Compute top risky dependencies for UI dependency cards.
+
+    Extracts dependency/package nodes from the merged graph, scores each by
+    a combined formula prioritising severity, CVE count, then breadth of usage,
+    and returns the top 10 sorted descending.
+
+    Combined score: (risk_score or 0) * 3.0 + (cve_count * 1.0) + (len(source_repos) * 0.5)
+
+    Args:
+        merged_graph: Dict with "nodes" and "edges" lists (output of merge_graphs()).
+
+    Returns:
+        List of dicts, each with package_name, risk_score, risk_label,
+        used_by_repos, cve_count, priority_score.
+    """
+    deps: List[dict] = []
+    for node in merged_graph.get("nodes", []):
+        node_type = (node.get("type") or "").lower()
+        if node_type not in ("package", "dependency"):
+            continue
+        metadata = node.get("metadata", {}) or {}
+        risk_score = metadata.get("risk_score") or 0
+        cve_count = metadata.get("cve_count", 0) or 0
+        source_repos = node.get("source_repos", [])
+        combined = (risk_score * 3.0) + (cve_count * 1.0) + (len(source_repos) * 0.5)
+        deps.append({
+            "package_name": node.get("label") or node.get("id", ""),
+            "risk_score": risk_score,
+            "risk_label": _risk_label_from_score(risk_score),
+            "used_by_repos": list(source_repos),
+            "cve_count": cve_count,
+            "priority_score": combined,
+        })
+    deps.sort(key=lambda x: x["priority_score"], reverse=True)
+    return deps[:10]
+
+
+def compute_scope_status(per_repo_results: List[dict]) -> str:
+    """Derive scope status from per-repo processing outcomes.
+
+    Args:
+        per_repo_results: List of dicts, each with an optional "error" key.
+
+    Returns:
+        "complete" if all succeed (or empty list), "failed" if all fail,
+        "partial" if mixed.
+    """
+    if not per_repo_results:
+        return "complete"
+    errors = sum(1 for r in per_repo_results if r.get("error") is not None)
+    if errors == 0:
+        return "complete"
+    if errors == len(per_repo_results):
+        return "failed"
+    return "partial"
+
+
+def get_top_risk_drivers(per_repo_results: List[dict]) -> List[dict]:
+    """Return the top 5 repos by descending risk score.
+
+    Filters out error results, sorts by risk_score descending, and returns
+    at most 5 items each containing repo, risk_score, and risk_label.
+
+    Args:
+        per_repo_results: List of dicts with repo, risk_score, risk_label, error.
+
+    Returns:
+        List of dicts with repo, risk_score, risk_label (max 5).
+    """
+    valid = [r for r in per_repo_results if r.get("error") is None]
+    valid.sort(key=lambda x: x.get("risk_score") or 0, reverse=True)
+    return [
+        {"repo": r["repo"], "risk_score": r.get("risk_score", 0), "risk_label": r.get("risk_label", "LOW")}
+        for r in valid[:5]
+    ]
+
+
+def build_scope_response(
+    scope_id: str,
+    name: str,
+    status: str,
+    system_risk_summary: dict,
+    priority_risks: List[dict],
+    top_risk_drivers: List[dict],
+    top_risky_dependencies: List[dict],
+    graph: dict,
+    errors: dict,
+) -> dict:
+    """Build the canonical scope response dict.
+
+    This is the single contract between backend and frontend — both
+    POST /api/ingest-scope and GET /api/scope/{scope_id} return this shape.
+
+    Returns:
+        Dict with scope_id, name, status, system_risk_summary, priority_risks,
+        top_risk_drivers, top_risky_dependencies, graph, errors.
+    """
+    return {
+        "scope_id": scope_id,
+        "name": name,
+        "status": status,
+        "system_risk_summary": system_risk_summary,
+        "priority_risks": priority_risks,
+        "top_risk_drivers": top_risk_drivers,
+        "top_risky_dependencies": top_risky_dependencies,
+        "graph": graph,
+        "errors": errors,
+    }
 
 
 class IngestRequest(BaseModel):
@@ -2309,3 +2719,206 @@ def list_insights(
     except Exception as e:
         logger.error(f"Error listing insights: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal error listing insights")
+
+
+# ============================================================================
+# Multi-Repo Scope Ingestion Endpoints
+# ============================================================================
+
+
+@app.post("/api/ingest-scope")
+def ingest_scope(request: IngestScopeRequest):
+    """Ingest multiple repos and optional dependencies into an analysis scope.
+
+    Validates input, processes each repo synchronously through the existing
+    score_repo / build_graph / compute_repo_insight pipeline, resolves
+    dependencies, merges graphs, and returns a complete risk overview.
+
+    Returns HTTP 200 with full results (synchronous, no polling).
+    """
+    repos = request.repos or []
+    dependencies = request.dependencies or []
+
+    # --- Validation ---
+    if not repos and not dependencies:
+        raise HTTPException(status_code=422, detail="At least one repo or dependency required")
+
+    if len(repos) > 10:
+        raise HTTPException(status_code=422, detail="Maximum 10 repos allowed (MVP performance constraint)")
+
+    # Validate and normalize each repo name
+    normalized_repos: List[str] = []
+    for repo in repos:
+        norm = _normalize_repo_name(repo)
+        if not norm:
+            raise HTTPException(status_code=422, detail=f"Invalid repo format: {repo}")
+        normalized_repos.append(norm)
+
+    # --- Create scope ---
+    scope_id = _generate_scope_id()
+    created_at = datetime.now(timezone.utc).isoformat()
+    SCOPE_STORE[scope_id] = {
+        "scope_id": scope_id,
+        "name": request.name,
+        "repos": normalized_repos,
+        "dependencies": dependencies,
+        "status": "processing",
+        "created_at": created_at,
+    }
+
+    try:
+        return _process_scope(scope_id, request.name, normalized_repos, dependencies, created_at)
+    except HTTPException:
+        raise  # Let validation errors through
+    except Exception as e:
+        # Absolute last resort — never let the endpoint crash
+        logger.error(f"Unhandled error in ingest_scope for {scope_id}: {e}", exc_info=True)
+        fallback = build_scope_response(
+            scope_id=scope_id,
+            name=request.name,
+            status="failed",
+            system_risk_summary={
+                "total_repos": len(normalized_repos),
+                "high_risk_repos": 0, "medium_risk_repos": 0, "low_risk_repos": 0,
+                "total_unique_dependencies": 0, "dependencies_used_by_multiple_repos": 0,
+                "high_risk_dependencies": 0, "vulnerable_dependencies": 0,
+                "aggregate_risk_score": 0.0, "aggregate_label": "LOW",
+                "system_summary": "Analysis failed due to an internal error.",
+                "per_repo_results": [],
+            },
+            priority_risks=[],
+            top_risk_drivers=[],
+            top_risky_dependencies=[],
+            graph={"nodes": [], "edges": []},
+            errors={"_internal": str(e)},
+        )
+        SCOPE_STORE[scope_id] = {**fallback, "created_at": created_at}
+        return fallback
+
+
+def _process_scope(scope_id: str, name: str, normalized_repos: List[str], dependencies: List[str], created_at: str) -> dict:
+    """Core processing logic for ingest_scope, extracted for error isolation."""
+    # --- Process repos ---
+    per_repo_results: List[dict] = []
+    graphs: List[Tuple[str, Graph]] = []
+    errors: Dict[str, str] = {}
+    config = GraphConfig()
+
+    for repo_name in normalized_repos:
+        try:
+            score_data = score_repo(repo_name)
+            graph_obj = build_graph(repo_name, score_data, config)
+            # Attempt to compute insight (best-effort, needs graph_repo)
+            insight = None
+            if graph_repo is not None:
+                try:
+                    insight = compute_repo_insight(repo_name, graph_repo)
+                except Exception:
+                    pass
+            # Extract risk score from score_repo's nested response
+            overall = score_data.get("overall", {}) if isinstance(score_data, dict) else {}
+            risk_score = overall.get("maintenance_risk", 0) or 0
+            risk_label = _risk_label_from_score(risk_score)
+            per_repo_results.append({
+                "repo": repo_name,
+                "risk_score": risk_score,
+                "risk_label": risk_label,
+                "error": None,
+            })
+            graphs.append((repo_name, graph_obj))
+        except Exception as e:
+            error_msg = str(e)
+            # Make error messages more user-friendly
+            if "404" in error_msg or "Not Found" in error_msg:
+                error_msg = f"Repository '{repo_name}' not found on GitHub"
+            elif "403" in error_msg or "rate limit" in error_msg.lower():
+                error_msg = f"GitHub API rate limit reached while processing '{repo_name}'"
+            elif "timeout" in error_msg.lower() or "connection" in error_msg.lower():
+                error_msg = f"Network error while processing '{repo_name}'"
+            per_repo_results.append({
+                "repo": repo_name,
+                "risk_score": None,
+                "risk_label": None,
+                "error": error_msg,
+            })
+            errors[repo_name] = error_msg
+
+    # --- Process dependencies ---
+    unmapped_nodes: List[dict] = []
+    for dep in dependencies:
+        resolution = resolve_dependency_input(dep)
+        if resolution["mapped"]:
+            mapped_repo = resolution["repo"]
+            try:
+                score_data = score_repo(mapped_repo)
+                graph_obj = build_graph(mapped_repo, score_data, config)
+                graphs.append((mapped_repo, graph_obj))
+                # Add to per_repo_results if not already present
+                already_present = any(r["repo"] == mapped_repo for r in per_repo_results)
+                if not already_present:
+                    overall = score_data.get("overall", {}) if isinstance(score_data, dict) else {}
+                    risk_score = overall.get("maintenance_risk", 0) or 0
+                    risk_label = _risk_label_from_score(risk_score)
+                    per_repo_results.append({
+                        "repo": mapped_repo,
+                        "risk_score": risk_score,
+                        "risk_label": risk_label,
+                        "error": None,
+                    })
+            except Exception:
+                pass  # Best-effort for dependencies
+        else:
+            unmapped_nodes.append({
+                "id": f"pkg:{dep}",
+                "type": "package",
+                "label": dep,
+            })
+
+    # --- Aggregate results ---
+    try:
+        merged_graph = merge_graphs(graphs, unmapped_nodes)
+        system_risk_summary = compute_system_risk_summary(per_repo_results, merged_graph)
+        priority_risks = compute_priority_risks(per_repo_results, merged_graph)
+        top_risky_deps = compute_top_risky_dependencies(merged_graph)
+        status = compute_scope_status(per_repo_results)
+        top_drivers = get_top_risk_drivers(per_repo_results)
+    except Exception as e:
+        # If aggregation fails, still return a valid response with what we have
+        logger.error(f"Aggregation error for scope {scope_id}: {e}")
+        merged_graph = {"nodes": [], "edges": []}
+        system_risk_summary = compute_system_risk_summary(per_repo_results, merged_graph)
+        priority_risks = []
+        top_risky_deps = []
+        status = "failed" if not any(r.get("error") is None for r in per_repo_results) else "partial"
+        top_drivers = get_top_risk_drivers(per_repo_results)
+        errors["_aggregation"] = str(e)
+
+    # --- Build and store response ---
+    response = build_scope_response(
+        scope_id=scope_id,
+        name=name,
+        status=status,
+        system_risk_summary=system_risk_summary,
+        priority_risks=priority_risks,
+        top_risk_drivers=top_drivers,
+        top_risky_dependencies=top_risky_deps,
+        graph=merged_graph,
+        errors=errors,
+    )
+
+    SCOPE_STORE[scope_id] = {**response, "created_at": created_at}
+
+    return response
+
+
+@app.get("/api/scope/{scope_id}")
+def get_scope(scope_id: str):
+    """Retrieve a previously created analysis scope by ID.
+
+    Returns the full scope object from the in-memory store.
+    Returns 404 if the scope_id is not found.
+    """
+    scope = SCOPE_STORE.get(scope_id)
+    if scope is None:
+        raise HTTPException(status_code=404, detail=f"Scope not found: {scope_id}")
+    return scope

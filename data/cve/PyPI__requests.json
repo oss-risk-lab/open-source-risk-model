@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-02-20T19:50:45.222828+00:00",
-  "expires_at": "2026-02-21T19:50:45.222828+00:00",
+  "fetched_at": "2026-04-16T16:51:59.185769+00:00",
+  "expires_at": "2026-04-17T16:51:59.185769+00:00",
   "ecosystem": "PyPI",
   "package": "requests",
   "cves": [
@@ -24,7 +24,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-652x-xj99-gmcc",
+      "cve_id": "CVE-2014-1830",
+      "aliases": [
+        "CVE-2014-1830",
+        "PYSEC-2014-14"
+      ]
     },
     {
       "id": "GHSA-9hjg-9r4m-mvj7",
@@ -46,7 +52,12 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-9hjg-9r4m-mvj7",
+      "cve_id": "CVE-2024-47081",
+      "aliases": [
+        "CVE-2024-47081"
+      ]
     },
     {
       "id": "GHSA-9wx4-h78v-vm56",
@@ -68,7 +79,12 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-9wx4-h78v-vm56",
+      "cve_id": "CVE-2024-35195",
+      "aliases": [
+        "CVE-2024-35195"
+      ]
     },
     {
       "id": "GHSA-cfj3-7x9c-4p3h",
@@ -90,7 +106,40 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-cfj3-7x9c-4p3h",
+      "cve_id": "CVE-2014-1829",
+      "aliases": [
+        "CVE-2014-1829",
+        "PYSEC-2014-13"
+      ]
+    },
+    {
+      "id": "GHSA-gc5v-m9x4-r6x2",
+      "severity": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:N/I:H/A:N",
+      "cvss_score": null,
+      "summary": "Requests has Insecure Temp File Reuse in its extract_zipped_paths() utility function",
+      "published": "2026-03-25T16:56:28Z",
+      "fixed_in": "2.33.0",
+      "affected_ranges": [
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.33.0"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-gc5v-m9x4-r6x2",
+      "cve_id": "CVE-2026-25645",
+      "aliases": [
+        "CVE-2026-25645"
+      ]
     },
     {
       "id": "GHSA-j8r2-6x86-q33q",
@@ -112,7 +161,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-j8r2-6x86-q33q",
+      "cve_id": "CVE-2023-32681",
+      "aliases": [
+        "CVE-2023-32681",
+        "PYSEC-2023-74"
+      ]
     },
     {
       "id": "GHSA-pg2w-x9wp-vw92",
@@ -134,7 +189,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-pg2w-x9wp-vw92",
+      "cve_id": "CVE-2015-2296",
+      "aliases": [
+        "CVE-2015-2296",
+        "PYSEC-2015-17"
+      ]
     },
     {
       "id": "GHSA-x84v-xcm2-53pg",
@@ -156,7 +217,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-x84v-xcm2-53pg",
+      "cve_id": "CVE-2018-18074",
+      "aliases": [
+        "CVE-2018-18074",
+        "PYSEC-2018-28"
+      ]
     },
     {
       "id": "PYSEC-2014-13",
@@ -178,7 +245,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-cfj3-7x9c-4p3h",
+      "cve_id": "CVE-2014-1829",
+      "aliases": [
+        "CVE-2014-1829",
+        "GHSA-cfj3-7x9c-4p3h"
+      ]
     },
     {
       "id": "PYSEC-2014-14",
@@ -200,7 +273,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-652x-xj99-gmcc",
+      "cve_id": "CVE-2014-1830",
+      "aliases": [
+        "CVE-2014-1830",
+        "GHSA-652x-xj99-gmcc"
+      ]
     },
     {
       "id": "PYSEC-2015-17",
@@ -234,7 +313,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-pg2w-x9wp-vw92",
+      "cve_id": "CVE-2015-2296",
+      "aliases": [
+        "CVE-2015-2296",
+        "GHSA-pg2w-x9wp-vw92"
+      ]
     },
     {
       "id": "PYSEC-2018-28",
@@ -268,7 +353,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-x84v-xcm2-53pg",
+      "cve_id": "CVE-2018-18074",
+      "aliases": [
+        "CVE-2018-18074",
+        "GHSA-x84v-xcm2-53pg"
+      ]
     },
     {
       "id": "PYSEC-2023-74",
@@ -302,7 +393,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-j8r2-6x86-q33q",
+      "cve_id": "CVE-2023-32681",
+      "aliases": [
+        "CVE-2023-32681",
+        "GHSA-j8r2-6x86-q33q"
+      ]
     }
   ]
 }

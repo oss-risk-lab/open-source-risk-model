@@ -33,21 +33,41 @@ function getRepoFromUrl() {
 }
 
 /**
- * buildPageUrl(page, repo) → string
- * Builds a URL for a target page, optionally including ?repo= param.
+ * parseScopeParam(searchString) → string|null
+ * Parse ?scope_id= from a query string.
+ * Returns the decoded scope_id string or null if missing.
  */
-function buildPageUrl(page, repo) {
-  if (repo) return page + "?repo=" + encodeURIComponent(repo);
+function parseScopeParam(searchString) {
+  var params = new URLSearchParams(searchString);
+  var raw = params.get("scope_id");
+  if (!raw) return null;
+  var decoded = decodeURIComponent(raw);
+  if (!decoded || !decoded.trim()) return null;
+  return decoded.trim();
+}
+
+/**
+ * buildPageUrl(page, repo, scopeId) → string
+ * Builds a URL for a target page, optionally including ?repo= and/or ?scope_id= params.
+ * If both repo and scopeId are provided, uses ?repo=...&scope_id=...
+ * Backward compatible: existing calls with just (page, repo) still work.
+ */
+function buildPageUrl(page, repo, scopeId) {
+  var params = [];
+  if (repo) params.push("repo=" + encodeURIComponent(repo));
+  if (scopeId) params.push("scope_id=" + encodeURIComponent(scopeId));
+  if (params.length > 0) return page + "?" + params.join("&");
   return page;
 }
 
 /**
  * getCurrentPageId() → string
  * Returns the current page identifier based on window.location.pathname.
- * Returns one of: "index", "insights", "graph", "dependency-tree"
+ * Returns one of: "index", "overview", "insights", "graph", "dependency-tree"
  */
 function getCurrentPageId() {
   var path = window.location.pathname;
+  if (path.indexOf("overview") !== -1) return "overview";
   if (path.indexOf("insights") !== -1) return "insights";
   if (path.indexOf("graph") !== -1) return "graph";
   if (path.indexOf("dependency-tree") !== -1) return "dependency-tree";
@@ -56,6 +76,7 @@ function getCurrentPageId() {
 
 module.exports = {
   parseRepoParam: parseRepoParam,
+  parseScopeParam: parseScopeParam,
   getRepoFromUrl: getRepoFromUrl,
   buildPageUrl: buildPageUrl,
   getCurrentPageId: getCurrentPageId

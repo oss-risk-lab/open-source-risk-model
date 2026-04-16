@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-03-30T19:42:49.451746+00:00",
+  "cached_at": "2026-04-16T16:59:42.740409+00:00",
   "cache_key": "contributors:lodash/lodash",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 6567
+      "contributions": 6568
     },
     {
       "login": "jashkenas",

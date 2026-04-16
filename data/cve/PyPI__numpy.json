@@ -1,6 +1,6 @@
 {
-  "fetched_at": "2026-02-23T19:26:17.950271+00:00",
-  "expires_at": "2026-02-24T19:26:17.950271+00:00",
+  "fetched_at": "2026-04-16T16:59:42.202532+00:00",
+  "expires_at": "2026-04-17T16:59:42.202532+00:00",
   "ecosystem": "PyPI",
   "package": "numpy",
   "cves": [
@@ -24,7 +24,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-2fc2-6r4j-p65h",
+      "cve_id": "CVE-2014-1859",
+      "aliases": [
+        "CVE-2014-1859",
+        "PYSEC-2018-34"
+      ]
     },
     {
       "id": "GHSA-5545-2q6w-2gh6",
@@ -46,7 +52,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-5545-2q6w-2gh6",
+      "cve_id": "CVE-2021-41495",
+      "aliases": [
+        "CVE-2021-41495",
+        "PYSEC-2021-856"
+      ]
     },
     {
       "id": "GHSA-6p56-wp2h-9hxr",
@@ -68,7 +80,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-6p56-wp2h-9hxr",
+      "cve_id": "CVE-2021-33430",
+      "aliases": [
+        "CVE-2021-33430",
+        "PYSEC-2021-854"
+      ]
     },
     {
       "id": "GHSA-9fq2-x9r6-wfmf",
@@ -90,7 +108,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-9fq2-x9r6-wfmf",
+      "cve_id": "CVE-2019-6446",
+      "aliases": [
+        "CVE-2019-6446",
+        "PYSEC-2019-108"
+      ]
     },
     {
       "id": "GHSA-cw6w-4rcx-xphc",
@@ -112,7 +136,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-cw6w-4rcx-xphc",
+      "cve_id": "CVE-2014-1858",
+      "aliases": [
+        "CVE-2014-1858",
+        "PYSEC-2018-33"
+      ]
     },
     {
       "id": "GHSA-f7c7-j99h-c22f",
@@ -134,7 +164,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-f7c7-j99h-c22f",
+      "cve_id": "CVE-2021-41496",
+      "aliases": [
+        "CVE-2021-41496",
+        "PYSEC-2021-857"
+      ]
     },
     {
       "id": "GHSA-fpfv-jqm9-f5jm",
@@ -156,7 +192,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-fpfv-jqm9-f5jm",
+      "cve_id": "CVE-2021-34141",
+      "aliases": [
+        "CVE-2021-34141",
+        "PYSEC-2021-855"
+      ]
     },
     {
       "id": "GHSA-frgw-fgh6-9g52",
@@ -178,7 +220,13 @@
           ]
         }
       ],
-      "source": "github_advisory"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-frgw-fgh6-9g52",
+      "cve_id": "CVE-2017-12852",
+      "aliases": [
+        "CVE-2017-12852",
+        "PYSEC-2017-1"
+      ]
     },
     {
       "id": "PYSEC-2017-1",
@@ -200,7 +248,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-frgw-fgh6-9g52",
+      "cve_id": "CVE-2017-12852",
+      "aliases": [
+        "CVE-2017-12852",
+        "GHSA-frgw-fgh6-9g52"
+      ]
     },
     {
       "id": "PYSEC-2018-33",
@@ -234,7 +288,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-cw6w-4rcx-xphc",
+      "cve_id": "CVE-2014-1858",
+      "aliases": [
+        "CVE-2014-1858",
+        "GHSA-cw6w-4rcx-xphc"
+      ]
     },
     {
       "id": "PYSEC-2018-34",
@@ -268,7 +328,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-2fc2-6r4j-p65h",
+      "cve_id": "CVE-2014-1859",
+      "aliases": [
+        "CVE-2014-1859",
+        "GHSA-2fc2-6r4j-p65h"
+      ]
     },
     {
       "id": "PYSEC-2019-108",
@@ -290,7 +356,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-9fq2-x9r6-wfmf",
+      "cve_id": "CVE-2019-6446",
+      "aliases": [
+        "CVE-2019-6446",
+        "GHSA-9fq2-x9r6-wfmf"
+      ]
     },
     {
       "id": "PYSEC-2021-854",
@@ -312,7 +384,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-6p56-wp2h-9hxr",
+      "cve_id": "CVE-2021-33430",
+      "aliases": [
+        "CVE-2021-33430",
+        "GHSA-6p56-wp2h-9hxr"
+      ]
     },
     {
       "id": "PYSEC-2021-855",
@@ -334,7 +412,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-fpfv-jqm9-f5jm",
+      "cve_id": "CVE-2021-34141",
+      "aliases": [
+        "CVE-2021-34141",
+        "GHSA-fpfv-jqm9-f5jm"
+      ]
     },
     {
       "id": "PYSEC-2021-856",
@@ -356,7 +440,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-5545-2q6w-2gh6",
+      "cve_id": "CVE-2021-41495",
+      "aliases": [
+        "CVE-2021-41495",
+        "GHSA-5545-2q6w-2gh6"
+      ]
     },
     {
       "id": "PYSEC-2021-857",
@@ -378,7 +468,13 @@
           ]
         }
       ],
-      "source": "osv"
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-f7c7-j99h-c22f",
+      "cve_id": "CVE-2021-41496",
+      "aliases": [
+        "CVE-2021-41496",
+        "GHSA-f7c7-j99h-c22f"
+      ]
     }
   ]
 }

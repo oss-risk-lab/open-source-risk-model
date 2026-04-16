@@ -1,0 +1,641 @@
+{
+  "fetched_at": "2026-04-16T16:59:43.981568+00:00",
+  "expires_at": "2026-04-17T16:59:43.981568+00:00",
+  "ecosystem": "npm",
+  "package": "lodash",
+  "cves": [
+    {
+      "id": "GHSA-29mw-wpgm-hmr9",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+      "cvss_score": null,
+      "summary": "Regular Expression Denial of Service (ReDoS) in lodash",
+      "published": "2022-01-06T20:30:46Z",
+      "fixed_in": "4.17.21",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "last_affected": "4.5.1"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "last_affected": "4.5.1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-29mw-wpgm-hmr9",
+      "cve_id": "CVE-2020-28500",
+      "aliases": [
+        "CVE-2020-28500"
+      ]
+    },
+    {
+      "id": "GHSA-35jh-r3h4-6jhm",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+      "cvss_score": null,
+      "summary": "Command Injection in lodash",
+      "published": "2021-05-06T16:05:51Z",
+      "fixed_in": "4.17.21",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "4.5.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "1.0.0"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.21"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-35jh-r3h4-6jhm",
+      "cve_id": "CVE-2021-23337",
+      "aliases": [
+        "CVE-2021-23337"
+      ]
+    },
+    {
+      "id": "GHSA-4xc9-xhrj-v574",
+      "severity": "UNKNOWN",
+      "cvss_score": null,
+      "summary": "Prototype Pollution in lodash",
+      "published": "2019-02-07T18:16:48Z",
+      "fixed_in": "4.17.11",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-4xc9-xhrj-v574",
+      "cve_id": "CVE-2018-16487",
+      "aliases": [
+        "CVE-2018-16487"
+      ]
+    },
+    {
+      "id": "GHSA-f23m-r3pf-42rh",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+      "cvss_score": null,
+      "summary": "lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`",
+      "published": "2026-04-01T23:50:27Z",
+      "fixed_in": "4.18.0",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-f23m-r3pf-42rh",
+      "cve_id": "CVE-2026-2950",
+      "aliases": [
+        "CVE-2026-2950"
+      ]
+    },
+    {
+      "id": "GHSA-fvqr-27wr-82fm",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+      "cvss_score": null,
+      "summary": "Prototype Pollution in lodash",
+      "published": "2018-07-26T15:14:52Z",
+      "fixed_in": "4.17.5",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.5"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.5"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-fvqr-27wr-82fm",
+      "cve_id": "CVE-2018-3721",
+      "aliases": [
+        "CVE-2018-3721"
+      ]
+    },
+    {
+      "id": "GHSA-jf85-cpcp-j695",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+      "cvss_score": null,
+      "summary": "Prototype Pollution in lodash",
+      "published": "2019-07-10T19:45:23Z",
+      "fixed_in": "4.17.12",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.12"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.14"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.13"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.6.1"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "4.17.12"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-jf85-cpcp-j695",
+      "cve_id": "CVE-2019-10744",
+      "aliases": [
+        "CVE-2019-10744"
+      ]
+    },
+    {
+      "id": "GHSA-p6mc-m468-83gw",
+      "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+      "cvss_score": null,
+      "summary": "Prototype Pollution in lodash",
+      "published": "2020-07-15T19:15:48Z",
+      "fixed_in": "4.17.19",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "3.7.0"
+            },
+            {
+              "fixed": "4.17.19"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "3.7.0"
+            },
+            {
+              "fixed": "4.17.20"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "last_affected": "4.4.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "3.7.0"
+            },
+            {
+              "last_affected": "4.3.2"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "4.3.2"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "4.10.2"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "4.10.2"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "3.7.0"
+            },
+            {
+              "fixed": "4.17.19"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-p6mc-m468-83gw",
+      "cve_id": "CVE-2020-8203",
+      "aliases": [
+        "CVE-2020-8203"
+      ]
+    },
+    {
+      "id": "GHSA-r5fr-rjxr-66jc",
+      "severity": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "cvss_score": null,
+      "summary": "lodash vulnerable to Code Injection via `_.template` imports key names",
+      "published": "2026-04-01T23:51:12Z",
+      "fixed_in": "4.18.0",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.18.0"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-r5fr-rjxr-66jc",
+      "cve_id": "CVE-2026-4800",
+      "aliases": [
+        "CVE-2026-4800"
+      ]
+    },
+    {
+      "id": "GHSA-x5rq-j2xg-h7qm",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+      "cvss_score": null,
+      "summary": "Regular Expression Denial of Service (ReDoS) in lodash",
+      "published": "2019-07-19T16:13:07Z",
+      "fixed_in": "4.17.11",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.7.0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.7.0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.7.0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        },
+        {
+          "type": "ECOSYSTEM",
+          "events": [
+            {
+              "introduced": "4.7.0"
+            },
+            {
+              "fixed": "4.17.11"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-x5rq-j2xg-h7qm",
+      "cve_id": "CVE-2019-1010266",
+      "aliases": [
+        "CVE-2019-1010266"
+      ]
+    },
+    {
+      "id": "GHSA-xxjr-mmjv-4gpg",
+      "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+      "cvss_score": null,
+      "summary": "Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions",
+      "published": "2026-01-21T23:01:22Z",
+      "fixed_in": "4.17.23",
+      "affected_ranges": [
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.23"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "last_affected": "4.5.2"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.23"
+            }
+          ]
+        },
+        {
+          "type": "SEMVER",
+          "events": [
+            {
+              "introduced": "4.0.0"
+            },
+            {
+              "fixed": "4.17.23"
+            }
+          ]
+        }
+      ],
+      "source": "github_advisory",
+      "ghsa_id": "GHSA-xxjr-mmjv-4gpg",
+      "cve_id": "CVE-2025-13465",
+      "aliases": [
+        "CVE-2025-13465"
+      ]
+    }
+  ]
+}

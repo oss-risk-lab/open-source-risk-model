@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-03-30T19:46:28.870840+00:00",
+  "cached_at": "2026-04-16T16:51:57.945689+00:00",
   "cache_key": "releases:psf/requests",
   "data": [
     {
@@ -71,7 +71,7 @@
           "state": "uploaded",
           "size": 64947,
           "digest": "sha256:4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a",
-          "download_count": 0,
+          "download_count": 63,
           "created_at": "2026-03-30T16:11:41Z",
           "updated_at": "2026-03-30T16:11:42Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.33.1/requests-2.33.1-py3-none-any.whl"
@@ -107,7 +107,7 @@
           "state": "uploaded",
           "size": 134120,
           "digest": "sha256:18817f8c57c6263968bc123d237e3b8b08ac046f5456bd1e307ee8f4250d3517",
-          "download_count": 6,
+          "download_count": 86,
           "created_at": "2026-03-30T16:11:43Z",
           "updated_at": "2026-03-30T16:11:44Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.33.1/requests-2.33.1.tar.gz"
@@ -118,11 +118,11 @@
       "body": "2.33.1 (2026-03-30)\r\n-------------------\r\n\r\n**Bugfixes**\r\n- Fixed test cleanup for CVE-2026-25645 to avoid leaving unnecessary\r\n  files in the tmp directory. (#7305)\r\n- Fixed Content-Type header parsing for malformed values. (#7309)\r\n- Improved error consistency for malformed header values. (#7308)\r\n\r\n## New Contributors\r\n* @ferdnyc made their first contribution in https://github.com/psf/requests/pull/7277\r\n\r\n**Full Changelog**: https://github.com/psf/requests/blob/main/HISTORY.md#2331-2026-03-30",
       "reactions": {
         "url": "https://api.github.com/repos/psf/requests/releases/303273336/reactions",
-        "total_count": 2,
-        "+1": 0,
+        "total_count": 4,
+        "+1": 1,
         "-1": 0,
         "laugh": 0,
-        "hooray": 0,
+        "hooray": 1,
         "confused": 0,
         "heart": 2,
         "rocket": 0,
@@ -199,7 +199,7 @@
           "state": "uploaded",
           "size": 65017,
           "digest": "sha256:3324635456fa185245e24865e810cecec7b4caf933d7eb133dcde67d48cee69b",
-          "download_count": 23,
+          "download_count": 26,
           "created_at": "2026-03-25T16:38:14Z",
           "updated_at": "2026-03-25T16:38:14Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.33.0/requests-2.33.0-py3-none-any.whl"
@@ -235,7 +235,7 @@
           "state": "uploaded",
           "size": 134232,
           "digest": "sha256:c7ebc5e8b0f21837386ad0e1c8fe8b829fa5f544d8df3b2253bff14ef29d7652",
-          "download_count": 34,
+          "download_count": 38,
           "created_at": "2026-03-25T16:38:08Z",
           "updated_at": "2026-03-25T16:38:08Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.33.0/requests-2.33.0.tar.gz"
@@ -246,11 +246,11 @@
       "body": "2.33.0 (2026-03-25)\r\n--------------------\r\n\r\n**Announcements**\r\n- \ud83d\udce3 Requests is adding inline types. If you have a typed code base that uses Requests, please take a look at #7271. Give it a try, and report any gaps or feedback you may have in the issue. \ud83d\udce3\r\n\r\n**Security**\r\n- CVE-2026-25645 ``requests.utils.extract_zipped_paths`` now extracts contents to a non-deterministic location to prevent malicious file replacement. This does not affect default usage of Requests, only applications calling the utility function directly.\r\n\r\n**Improvements**\r\n- Migrated to a PEP 517 build system using setuptools. (#7012)\r\n\r\n**Bugfixes**\r\n- Fixed an issue where an empty netrc entry could cause malformed authentication to be applied to Requests on Python 3.11+. (#7205)\r\n\r\n**Deprecations**\r\n- Dropped support for Python 3.9 following its end of support. (#7196)\r\n\r\n**Documentation**\r\n- Various typo fixes and doc improvements.\r\n\r\n## New Contributors\r\n* @M0d3v1 made their first contribution in https://github.com/psf/requests/pull/6865\r\n* @aminvakil made their first contribution in https://github.com/psf/requests/pull/7220\r\n* @E8Price made their first contribution in https://github.com/psf/requests/pull/6960\r\n* @mitre88 made their first contribution in https://github.com/psf/requests/pull/7244\r\n* @magsen made their first contribution in https://github.com/psf/requests/pull/6553\r\n* @Rohan5commit made their first contribution in https://github.com/psf/requests/pull/7227\r\n\r\n**Full Changelog**: https://github.com/psf/requests/blob/main/HISTORY.md#2330-2026-03-25",
       "reactions": {
         "url": "https://api.github.com/repos/psf/requests/releases/301316725/reactions",
-        "total_count": 9,
+        "total_count": 10,
         "+1": 3,
         "-1": 0,
         "laugh": 0,
-        "hooray": 6,
+        "hooray": 7,
         "confused": 0,
         "heart": 0,
         "rocket": 0,
@@ -327,7 +327,7 @@
           "state": "uploaded",
           "size": 64738,
           "digest": "sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6",
-          "download_count": 775,
+          "download_count": 777,
           "created_at": "2025-08-18T20:55:21Z",
           "updated_at": "2025-08-18T20:55:22Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.5/requests-2.32.5-py3-none-any.whl"
@@ -363,7 +363,7 @@
           "state": "uploaded",
           "size": 134517,
           "digest": "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf",
-          "download_count": 640,
+          "download_count": 648,
           "created_at": "2025-08-18T20:55:25Z",
           "updated_at": "2025-08-18T20:55:26Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.5/requests-2.32.5.tar.gz"
@@ -454,7 +454,7 @@
           "state": "uploaded",
           "size": 64847,
           "digest": "sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c",
-          "download_count": 233,
+          "download_count": 235,
           "created_at": "2025-06-09T18:22:02Z",
           "updated_at": "2025-06-09T18:22:02Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.4/requests-2.32.4-py3-none-any.whl"
@@ -490,7 +490,7 @@
           "state": "uploaded",
           "size": 135258,
           "digest": "sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422",
-          "download_count": 263,
+          "download_count": 265,
           "created_at": "2025-06-09T18:22:04Z",
           "updated_at": "2025-06-09T18:22:04Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.4/requests-2.32.4.tar.gz"
@@ -581,7 +581,7 @@
           "state": "uploaded",
           "size": 64928,
           "digest": null,
-          "download_count": 1194,
+          "download_count": 1200,
           "created_at": "2024-05-29T15:39:37Z",
           "updated_at": "2024-05-29T15:39:37Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.3/requests-2.32.3-py3-none-any.whl"
@@ -617,7 +617,7 @@
           "state": "uploaded",
           "size": 131218,
           "digest": null,
-          "download_count": 1938,
+          "download_count": 1950,
           "created_at": "2024-05-29T15:39:35Z",
           "updated_at": "2024-05-29T15:39:36Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.3/requests-2.32.3.tar.gz"
@@ -708,7 +708,7 @@
           "state": "uploaded",
           "size": 63902,
           "digest": null,
-          "download_count": 94,
+          "download_count": 95,
           "created_at": "2024-05-21T18:53:45Z",
           "updated_at": "2024-05-21T18:53:45Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.2/requests-2.32.2-py3-none-any.whl"
@@ -744,7 +744,7 @@
           "state": "uploaded",
           "size": 130327,
           "digest": null,
-          "download_count": 2659,
+          "download_count": 2664,
           "created_at": "2024-05-21T18:53:43Z",
           "updated_at": "2024-05-21T18:53:43Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.2/requests-2.32.2.tar.gz"
@@ -835,7 +835,7 @@
           "state": "uploaded",
           "size": 63711,
           "digest": null,
-          "download_count": 40,
+          "download_count": 41,
           "created_at": "2024-05-21T18:53:00Z",
           "updated_at": "2024-05-21T18:53:00Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.1/requests-2.32.1-py3-none-any.whl"
@@ -871,7 +871,7 @@
           "state": "uploaded",
           "size": 129920,
           "digest": null,
-          "download_count": 34,
+          "download_count": 35,
           "created_at": "2024-05-21T18:52:57Z",
           "updated_at": "2024-05-21T18:52:58Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.1/requests-2.32.1.tar.gz"
@@ -962,7 +962,7 @@
           "state": "uploaded",
           "size": 63695,
           "digest": null,
-          "download_count": 62,
+          "download_count": 63,
           "created_at": "2024-05-20T16:20:54Z",
           "updated_at": "2024-05-20T16:20:54Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.0/requests-2.32.0-py3-none-any.whl"
@@ -998,7 +998,7 @@
           "state": "uploaded",
           "size": 114373,
           "digest": null,
-          "download_count": 78,
+          "download_count": 80,
           "created_at": "2024-05-20T16:22:20Z",
           "updated_at": "2024-05-20T16:22:20Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.32.0/requests-2.32.0.tar.gz"
@@ -1090,7 +1090,7 @@
           "state": "uploaded",
           "size": 62574,
           "digest": null,
-          "download_count": 15006,
+          "download_count": 15778,
           "created_at": "2023-05-22T15:26:18Z",
           "updated_at": "2023-05-22T15:26:19Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.31.0/requests-2.31.0-py3-none-any.whl"
@@ -1126,7 +1126,7 @@
           "state": "uploaded",
           "size": 110794,
           "digest": null,
-          "download_count": 1768,
+          "download_count": 1780,
           "created_at": "2023-05-22T15:26:09Z",
           "updated_at": "2023-05-22T15:26:10Z",
           "browser_download_url": "https://github.com/psf/requests/releases/download/v2.31.0/requests-2.31.0.tar.gz"

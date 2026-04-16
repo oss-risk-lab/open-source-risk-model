@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>System Risk Overview</title>
+  <link rel="stylesheet" href="/ui/design-system.css">
+  <style>
+    body{
+      margin:0;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Layout */
+    .wrap{
+      max-width: 1100px;
+      margin: var(--sp-32) auto;
+      padding: 0 var(--sp-16);
+    }
+
+    /* Panel */
+    .panel{
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-24);
+      margin-bottom: var(--sp-16);
+      transition: border-color 0.15s ease;
+    }
+    .panel:hover{
+      border-color: var(--border-emphasis);
+    }
+    .panel-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--sp-16);
+    }
+    .section-title{
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    /* Loading & Error States */
+    .loading-state{
+      text-align: center;
+      padding: var(--sp-32) var(--sp-16);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .loading-state .ds-spinner{
+      margin-bottom: var(--sp-12);
+    }
+    .error-state{
+      text-align: center;
+      padding: var(--sp-32) var(--sp-16);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .error-state a{
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .error-state a:hover{
+      text-decoration: underline;
+    }
+
+    /* Partial Banner */
+    .partial-banner{
+      padding: var(--sp-12) var(--sp-16);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--status-medium-border);
+      background: var(--status-medium-bg);
+      color: var(--status-medium-text);
+      font-size: 13px;
+      margin-bottom: var(--sp-16);
+      line-height: 1.5;
+    }
+
+    /* Risk Summary Section */
+    .risk-summary-section{
+      text-align: center;
+      padding: var(--sp-32) var(--sp-24);
+      margin-bottom: var(--sp-16);
+      background: var(--bg-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .risk-badge{
+      display: inline-block;
+      padding: var(--sp-8) var(--sp-24);
+      border-radius: var(--radius-pill);
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: var(--sp-12);
+    }
+    .risk-badge-low{
+      background: var(--status-low-bg);
+      color: var(--status-low-text);
+      border: 1px solid var(--status-low-border);
+    }
+    .risk-badge-medium{
+      background: var(--status-medium-bg);
+      color: var(--status-medium-text);
+      border: 1px solid var(--status-medium-border);
+    }
+    .risk-badge-high{
+      background: var(--status-high-bg);
+      color: var(--status-high-text);
+      border: 1px solid var(--status-high-border);
+    }
+    .system-summary-text{
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* KPI Row */
+    .kpi-row{
+      display: flex;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-16);
+    }
+    .kpi-card{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--sp-16) var(--sp-12);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: border-color 0.15s ease;
+    }
+    .kpi-card:hover{
+      border-color: var(--border-emphasis);
+    }
+    .kpi-card .ds-kpi-value{
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .kpi-card .ds-kpi-label{
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: var(--sp-4);
+      text-align: center;
+    }
+
+    /* Priority Risk Items */
+    .priority-risk-item{
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-12);
+      padding: var(--sp-12) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .priority-risk-item:last-child{
+      border-bottom: none;
+    }
+    .priority-risk-info{
+      flex: 1;
+    }
+    .priority-risk-name{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--sp-4);
+    }
+    .priority-risk-reason{
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .priority-risk-meta{
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: var(--sp-4);
+    }
+    .type-badge{
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .type-badge-dependency{ background: rgba(99,102,241,0.12); color: #818cf8; }
+    .type-badge-repo{ background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .type-badge-maintainer{ background: rgba(234,88,12,0.12); color: #fb923c; }
+    .type-badge-cve{ background: var(--status-high-bg); color: var(--status-high-text); }
+    .severity-badge{
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .severity-high{ background: var(--status-high-bg); color: var(--status-high-text); }
+    .severity-medium{ background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .severity-low{ background: var(--status-low-bg); color: var(--status-low-text); }
+
+    /* Risk Driver Items */
+    .risk-driver-item{
+      display: flex;
+      align-items: center;
+      gap: var(--sp-12);
+      padding: var(--sp-12) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .risk-driver-item:last-child{
+      border-bottom: none;
+    }
+    .risk-driver-name{
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .risk-driver-name:hover{
+      text-decoration: underline;
+    }
+    .risk-driver-score{
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .risk-driver-label{
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .risk-driver-label-high{ background: var(--status-high-bg); color: var(--status-high-text); }
+    .risk-driver-label-medium{ background: var(--status-medium-bg); color: var(--status-medium-text); }
+    .risk-driver-label-low{ background: var(--status-low-bg); color: var(--status-low-text); }
+
+    /* Risky Dependency Items */
+    .risky-dep-item{
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-12);
+      padding: var(--sp-12) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .risky-dep-item:last-child{
+      border-bottom: none;
+    }
+    .risky-dep-info{
+      flex: 1;
+    }
+    .risky-dep-name{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      margin-bottom: var(--sp-4);
+    }
+    .risky-dep-repos{
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .risky-dep-cve{
+      font-size: 11px;
+      color: var(--status-high-text);
+      margin-top: var(--sp-4);
+    }
+    .risky-dep-score{
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+
+    /* Action Links */
+    .action-links{
+      display: flex;
+      gap: var(--sp-12);
+      margin-top: var(--sp-8);
+      margin-bottom: var(--sp-16);
+    }
+    .action-links a{
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-8);
+      padding: var(--sp-8) var(--sp-16);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .action-links a:hover{
+      background: var(--bg-overlay);
+      border-color: var(--border-emphasis);
+    }
+
+    /* Empty section */
+    .empty-section{
+      text-align: center;
+      padding: var(--sp-16);
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px){
+      .kpi-row{ flex-direction: column; }
+      .action-links{ flex-direction: column; }
+      .risk-summary-section{ padding: var(--sp-24) var(--sp-16); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Nav rendered by JS -->
+
+    <!-- Loading spinner -->
+    <div id="loadingState" class="loading-state">
+      <div class="ds-spinner"></div>
+      <div>Loading scope data...</div>
+    </div>
+
+    <!-- Error state -->
+    <div id="errorState" class="error-state" style="display:none"></div>
+
+    <!-- Main content (hidden until data loads) -->
+    <div id="mainContent" style="display:none">
+      <!-- Partial results warning banner (Task 7.8) -->
+      <div id="partialBanner" class="partial-banner" style="display:none"></div>
+
+      <!-- System Risk Summary (Task 7.2) -->
+      <div class="risk-summary-section">
+        <div id="riskBadge" class="risk-badge"></div>
+        <div id="systemSummary" class="system-summary-text"></div>
+      </div>
+
+      <!-- KPI Cards (Task 7.3) -->
+      <div class="kpi-row" id="kpiSection"></div>
+
+      <!-- Priority Risks (Task 7.4) -->
+      <div class="panel" id="priorityRisksPanel">
+        <div class="panel-header"><h3 class="section-title">Priority Risks</h3></div>
+        <div id="priorityRisksList"></div>
+      </div>
+
+      <!-- Top Risk Drivers (Task 7.5) -->
+      <div class="panel" id="riskDriversPanel">
+        <div class="panel-header"><h3 class="section-title">Top Risk Drivers</h3></div>
+        <div id="riskDriversList"></div>
+      </div>
+
+      <!-- Risky Dependencies (Task 7.6) -->
+      <div class="panel" id="riskyDepsPanel">
+        <div class="panel-header"><h3 class="section-title">Risky Dependencies</h3></div>
+        <div id="riskyDepsList"></div>
+      </div>
+
+      <!-- Action Links (Task 7.7) -->
+      <div class="action-links" id="actionLinks"></div>
+    </div>
+  </div>
+
+<script src="/ui/config.js"></script>
+<script src="/ui/nav.js"></script>
+<script>
+/* ── Task 7.1: Page init, scope param, nav, data loading ── */
+
+var scopeId = parseScopeParam(window.location.search);
+var repo = getRepoFromUrl();
+renderNav("overview", repo, scopeId);
+
+if (!scopeId) {
+  showError('No scope ID provided. <a href="/">Return to homepage</a>');
+} else {
+  loadScopeData(scopeId);
+}
+
+function loadScopeData(id) {
+  var apiBase = window.DS_API_BASE || "";
+  fetch(apiBase + "/api/scope/" + encodeURIComponent(id))
+    .then(function(res) {
+      if (res.status === 404) throw new Error("Scope not found");
+      if (!res.ok) throw new Error("Failed to load scope data");
+      return res.json();
+    })
+    .then(function(data) {
+      renderOverview(data);
+    })
+    .catch(function(err) {
+      showError(err.message + '. <a href="/">Return to homepage</a>');
+    });
+}
+
+function showError(html) {
+  document.getElementById("loadingState").style.display = "none";
+  var el = document.getElementById("errorState");
+  el.innerHTML = html;
+  el.style.display = "block";
+}
+
+function renderOverview(data) {
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+  renderPartialBanner(data);
+  renderRiskSummary(data);
+  renderKPIs(data);
+  renderPriorityRisks(data);
+  renderRiskDrivers(data);
+  renderRiskyDeps(data);
+  renderActionLinks(data);
+}
+
+/* ── Task 7.2: System Risk Summary ── */
+
+function renderRiskSummary(data) {
+  var summary = data.system_risk_summary || {};
+  var label = (summary.aggregate_label || "LOW").toUpperCase();
+  var badgeEl = document.getElementById("riskBadge");
+  badgeEl.textContent = label;
+  badgeEl.className = "risk-badge risk-badge-" + label.toLowerCase();
+
+  var summaryText = summary.system_summary || "";
+  document.getElementById("systemSummary").textContent = summaryText;
+}
+
+/* ── Task 7.3: KPI Cards ── */
+
+function renderKPIs(data) {
+  var summary = data.system_risk_summary || {};
+  var kpis = [
+    { value: summary.total_repos != null ? summary.total_repos : 0, label: "Repos Analyzed" },
+    { value: summary.total_unique_dependencies != null ? summary.total_unique_dependencies : 0, label: "Unique Dependencies" },
+    { value: summary.high_risk_dependencies != null ? summary.high_risk_dependencies : 0, label: "High-Risk Deps" },
+    { value: summary.vulnerable_dependencies != null ? summary.vulnerable_dependencies : 0, label: "Vulnerable Deps" },
+    { value: summary.aggregate_risk_score != null ? summary.aggregate_risk_score.toFixed(2) : "N/A", label: "Aggregate Score (" + (summary.aggregate_label || "N/A") + ")" }
+  ];
+
+  var container = document.getElementById("kpiSection");
+  container.innerHTML = "";
+  for (var i = 0; i < kpis.length; i++) {
+    var card = document.createElement("div");
+    card.className = "kpi-card";
+    var valDiv = document.createElement("div");
+    valDiv.className = "ds-kpi-value";
+    valDiv.textContent = kpis[i].value;
+    var labelDiv = document.createElement("div");
+    labelDiv.className = "ds-kpi-label";
+    labelDiv.textContent = kpis[i].label;
+    card.appendChild(valDiv);
+    card.appendChild(labelDiv);
+    container.appendChild(card);
+  }
+}
+
+/* ── Task 7.4: Priority Risks ── */
+
+function renderPriorityRisks(data) {
+  var risks = data.priority_risks || [];
+  var container = document.getElementById("priorityRisksList");
+  container.innerHTML = "";
+
+  if (risks.length === 0) {
+    container.innerHTML = '<div class="empty-section">No priority risks identified.</div>';
+    return;
+  }
+
+  for (var i = 0; i < risks.length; i++) {
+    var risk = risks[i];
+    var item = document.createElement("div");
+    item.className = "priority-risk-item";
+
+    var badges = document.createElement("div");
+    badges.style.display = "flex";
+    badges.style.flexDirection = "column";
+    badges.style.gap = "4px";
+    badges.style.flexShrink = "0";
+
+    var typeBadge = document.createElement("span");
+    typeBadge.className = "type-badge type-badge-" + (risk.type || "repo");
+    typeBadge.textContent = risk.type || "repo";
+    badges.appendChild(typeBadge);
+
+    var sevBadge = document.createElement("span");
+    sevBadge.className = "severity-badge severity-" + (risk.severity || "low");
+    sevBadge.textContent = risk.severity || "low";
+    badges.appendChild(sevBadge);
+
+    var info = document.createElement("div");
+    info.className = "priority-risk-info";
+
+    var nameEl = document.createElement("div");
+    nameEl.className = "priority-risk-name";
+    nameEl.textContent = risk.name || "";
+    info.appendChild(nameEl);
+
+    var reasonEl = document.createElement("div");
+    reasonEl.className = "priority-risk-reason";
+    reasonEl.textContent = risk.reason || "";
+    info.appendChild(reasonEl);
+
+    var usedBy = risk.used_by_repos || [];
+    if (usedBy.length > 0) {
+      var metaEl = document.createElement("div");
+      metaEl.className = "priority-risk-meta";
+      metaEl.textContent = "Used by " + usedBy.length + " repo" + (usedBy.length !== 1 ? "s" : "") + ": " + usedBy.join(", ");
+      info.appendChild(metaEl);
+    }
+
+    item.appendChild(badges);
+    item.appendChild(info);
+    container.appendChild(item);
+  }
+}
+
+/* ── Task 7.5: Top Risk Drivers ── */
+
+function renderRiskDrivers(data) {
+  var drivers = data.top_risk_drivers || [];
+  var container = document.getElementById("riskDriversList");
+  container.innerHTML = "";
+
+  if (drivers.length === 0) {
+    container.innerHTML = '<div class="empty-section">No risk drivers identified.</div>';
+    return;
+  }
+
+  for (var i = 0; i < drivers.length; i++) {
+    var d = drivers[i];
+    var item = document.createElement("div");
+    item.className = "risk-driver-item";
+
+    var nameLink = document.createElement("a");
+    nameLink.className = "risk-driver-name";
+    nameLink.textContent = d.repo || "";
+    nameLink.href = buildPageUrl("insights.html", d.repo, scopeId);
+    item.appendChild(nameLink);
+
+    var labelBadge = document.createElement("span");
+    var riskLabel = (d.risk_label || "LOW").toUpperCase();
+    labelBadge.className = "risk-driver-label risk-driver-label-" + riskLabel.toLowerCase();
+    labelBadge.textContent = riskLabel;
+    item.appendChild(labelBadge);
+
+    var scoreEl = document.createElement("span");
+    scoreEl.className = "risk-driver-score";
+    scoreEl.textContent = d.risk_score != null ? d.risk_score.toFixed(2) : "N/A";
+    item.appendChild(scoreEl);
+
+    container.appendChild(item);
+  }
+}
+
+/* ── Task 7.6: Risky Dependencies ── */
+
+function renderRiskyDeps(data) {
+  var deps = data.top_risky_dependencies || [];
+  var container = document.getElementById("riskyDepsList");
+  container.innerHTML = "";
+
+  if (deps.length === 0) {
+    container.innerHTML = '<div class="empty-section">No risky dependencies identified.</div>';
+    return;
+  }
+
+  for (var i = 0; i < deps.length; i++) {
+    var dep = deps[i];
+    var item = document.createElement("div");
+    item.className = "risky-dep-item";
+
+    var info = document.createElement("div");
+    info.className = "risky-dep-info";
+
+    var nameEl = document.createElement("div");
+    nameEl.className = "risky-dep-name";
+    nameEl.textContent = dep.package_name || "";
+    info.appendChild(nameEl);
+
+    var usedBy = dep.used_by_repos || [];
+    if (usedBy.length > 0) {
+      var reposEl = document.createElement("div");
+      reposEl.className = "risky-dep-repos";
+      reposEl.textContent = "Used by " + usedBy.length + " repo" + (usedBy.length !== 1 ? "s" : "") + ": " + usedBy.join(", ");
+      info.appendChild(reposEl);
+    }
+
+    var cveCount = dep.cve_count || 0;
+    if (cveCount > 0) {
+      var cveEl = document.createElement("div");
+      cveEl.className = "risky-dep-cve";
+      cveEl.textContent = cveCount + " known CVE" + (cveCount !== 1 ? "s" : "");
+      info.appendChild(cveEl);
+    }
+
+    var riskLabel = dep.risk_label || "";
+    if (riskLabel) {
+      var labelBadge = document.createElement("span");
+      labelBadge.className = "risk-driver-label risk-driver-label-" + riskLabel.toLowerCase();
+      labelBadge.textContent = riskLabel;
+      info.insertBefore(labelBadge, info.children[1] || null);
+    }
+
+    item.appendChild(info);
+
+    var scoreEl = document.createElement("span");
+    scoreEl.className = "risky-dep-score";
+    scoreEl.textContent = dep.risk_score != null ? dep.risk_score.toFixed(2) : "N/A";
+    item.appendChild(scoreEl);
+
+    container.appendChild(item);
+  }
+}
+
+/* ── Task 7.7: Action Links ── */
+
+function renderActionLinks(data) {
+  var container = document.getElementById("actionLinks");
+  container.innerHTML = "";
+  var id = data.scope_id || scopeId;
+
+  var graphLink = document.createElement("a");
+  graphLink.href = buildPageUrl("graph.html", null, id);
+  graphLink.textContent = "\u{1F4CA} Open Graph";
+  container.appendChild(graphLink);
+
+  var treeLink = document.createElement("a");
+  treeLink.href = buildPageUrl("dependency-tree.html", null, id);
+  treeLink.textContent = "\u{1F333} Open Dependency Tree";
+  container.appendChild(treeLink);
+}
+
+/* ── Task 7.8: Partial Results Banner ── */
+
+function renderPartialBanner(data) {
+  var banner = document.getElementById("partialBanner");
+  if (data.status !== "partial") {
+    banner.style.display = "none";
+    return;
+  }
+
+  var errors = data.errors || {};
+  var failedRepos = Object.keys(errors);
+  var msg = "\u26A0\uFE0F Partial results: ";
+  if (failedRepos.length > 0) {
+    msg += "Analysis failed for " + failedRepos.length + " repo" + (failedRepos.length !== 1 ? "s" : "") + ": " + failedRepos.join(", ") + ". ";
+    msg += "Results below are based on successfully analyzed repositories only.";
+  } else {
+    msg += "Some repositories could not be analyzed. Results may be incomplete.";
+  }
+  banner.textContent = msg;
+  banner.style.display = "block";
+}
+</script>
+</body>
+</html>

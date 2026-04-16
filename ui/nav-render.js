@@ -11,25 +11,28 @@ var buildPageUrl = helpers.buildPageUrl;
 
 var NAV_PAGES = [
   { pageId: "index", label: "Home", file: "index.html" },
+  { pageId: "overview", label: "Overview", file: "overview.html" },
   { pageId: "insights", label: "Insights", file: "insights.html" },
   { pageId: "graph", label: "Graph", file: "graph.html" },
   { pageId: "dependency-tree", label: "Dependency Tree", file: "dependency-tree.html" }
 ];
 
 var CROSS_LINK_TARGETS = [
+  { targetPageId: "overview", label: "Open in Overview", file: "overview.html" },
   { targetPageId: "insights", label: "Open in Insights", file: "insights.html" },
   { targetPageId: "graph", label: "Open in Graph", file: "graph.html" },
   { targetPageId: "dependency-tree", label: "Open in Dependency Tree", file: "dependency-tree.html" }
 ];
 
 /**
- * renderNav(currentPageId, repo) → void
+ * renderNav(currentPageId, repo, scopeId) → void
  * Creates the <nav> element and inserts it as the first child of .wrap.
  * Applies aria-current="page" and active class to the link matching currentPageId.
  * If repo is non-null, all nav links include ?repo= param via buildPageUrl.
+ * If scopeId is non-null, propagates scope_id to Overview, Graph, and Tree links.
  * Idempotent: removes any existing nav.ds-nav before inserting.
  */
-function renderNav(currentPageId, repo) {
+function renderNav(currentPageId, repo, scopeId) {
   var existing = document.querySelector("nav.ds-nav");
   if (existing) existing.remove();
 
@@ -45,10 +48,15 @@ function renderNav(currentPageId, repo) {
   var linksDiv = document.createElement("div");
   linksDiv.className = "ds-nav-links";
 
+  // Pages that should receive scope_id when present
+  var scopePages = { "overview": true, "graph": true, "dependency-tree": true };
+
   for (var i = 0; i < NAV_PAGES.length; i++) {
     var page = NAV_PAGES[i];
     var a = document.createElement("a");
-    a.href = buildPageUrl(page.file, repo);
+    // Propagate scope_id to scope-aware pages, repo to all pages
+    var linkScopeId = (scopeId && scopePages[page.pageId]) ? scopeId : null;
+    a.href = buildPageUrl(page.file, repo, linkScopeId);
     a.className = "ds-nav-link";
     a.textContent = page.label;
     if (page.pageId === currentPageId) {
@@ -67,21 +75,26 @@ function renderNav(currentPageId, repo) {
 }
 
 /**
- * getCrossLinks(currentPageId, repo) → Array<{label, href, targetPageId}>
+ * getCrossLinks(currentPageId, repo, scopeId) → Array<{label, href, targetPageId}>
  * Returns data objects for cross-page links, filtering out the link whose
- * targetPageId matches currentPageId. Returns empty array when repo is
- * null/empty (no cross-links without repo context).
+ * targetPageId matches currentPageId. Returns empty array when both repo and
+ * scopeId are null/empty (no cross-links without context).
+ * When scopeId is present, propagates it to scope-aware pages (overview, graph, dependency-tree).
  */
-function getCrossLinks(currentPageId, repo) {
-  if (!repo) return [];
+function getCrossLinks(currentPageId, repo, scopeId) {
+  if (!repo && !scopeId) return [];
+
+  // Pages that should receive scope_id when present
+  var scopePages = { "overview": true, "graph": true, "dependency-tree": true };
 
   var links = [];
   for (var i = 0; i < CROSS_LINK_TARGETS.length; i++) {
     var target = CROSS_LINK_TARGETS[i];
     if (target.targetPageId === currentPageId) continue;
+    var linkScopeId = (scopeId && scopePages[target.targetPageId]) ? scopeId : null;
     links.push({
       label: target.label,
-      href: buildPageUrl(target.file, repo),
+      href: buildPageUrl(target.file, repo, linkScopeId),
       targetPageId: target.targetPageId
     });
   }

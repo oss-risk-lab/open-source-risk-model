@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-03-30T19:45:01.974954+00:00",
+  "cached_at": "2026-04-16T16:59:40.733626+00:00",
   "cache_key": "releases:numpy/numpy",
   "data": [
     {
@@ -71,7 +71,7 @@
           "state": "uploaded",
           "size": 1205,
           "digest": "sha256:fcd4c0692edff8fe13516d298d84230dbd5793cb919999094fa93e680115609a",
-          "download_count": 19,
+          "download_count": 170,
           "created_at": "2026-03-29T13:37:39Z",
           "updated_at": "2026-03-29T13:37:39Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.4/2.4.4-changelog.rst"
@@ -107,7 +107,7 @@
           "state": "uploaded",
           "size": 20731587,
           "digest": "sha256:2d390634c5182175533585cc89f3608a4682ccb173cc9bb940b2881c8d6f8fa0",
-          "download_count": 141,
+          "download_count": 1077,
           "created_at": "2026-03-29T13:36:33Z",
           "updated_at": "2026-03-29T13:37:02Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.4/numpy-2.4.4.tar.gz"
@@ -143,7 +143,7 @@
           "state": "uploaded",
           "size": 1524,
           "digest": "sha256:be9e4a72e7686fe8f723eeeb0626e8252c2a17631c5266935a4799d8c23b62b4",
-          "download_count": 6,
+          "download_count": 119,
           "created_at": "2026-03-29T13:37:08Z",
           "updated_at": "2026-03-29T13:37:08Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.4/README.rst"
@@ -154,13 +154,13 @@
       "body": "# NumPy 2.4.4 Release Notes\r\n\r\nThe NumPy 2.4.4 is a patch release that fixes bugs discovered after the 2.4.3\r\nrelease. It should finally close issue #30816, the OpenBLAS threading problem\r\non ARM.\r\n\r\nThis release supports Python versions 3.11-3.14\r\n\r\n## Contributors\r\n\r\nA total of 8 people contributed to this release. People with a \\\"+\\\" by their\r\nnames contributed a patch for the first time.\r\n\r\n- Charles Harris\r\n- Daniel Haag +\r\n- Denis Prokopenko +\r\n- Harshith J +\r\n- Koki Watanabe\r\n- Marten van Kerkwijk\r\n- Matti Picus\r\n- Nathan Goldbaum\r\n\r\n## Pull requests merged\r\n\r\nA total of 7 pull requests were merged for this release.\r\n\r\n- [#30978](https://github.com/numpy/numpy/pull/30978): MAINT: Prepare 2.4.x for further development\r\n- [#31049](https://github.com/numpy/numpy/pull/31049): BUG: Add test to reproduce problem described in #30816 (#30818)\r\n- [#31052](https://github.com/numpy/numpy/pull/31052): BUG: fix FNV-1a 64-bit selection by using NPY_SIZEOF_UINTP (#31035)\r\n- [#31053](https://github.com/numpy/numpy/pull/31053): BUG: avoid warning on ufunc with where=True and no output\r\n- [#31058](https://github.com/numpy/numpy/pull/31058): DOC: document caveats of ndarray.resize on 3.14 and newer\r\n- [#31079](https://github.com/numpy/numpy/pull/31079): TST: fix POWER VSX feature mapping (#30801)\r\n- [#31084](https://github.com/numpy/numpy/pull/31084): MAINT: numpy.i: Replace deprecated `sprintf` with `snprintf`\\...\r\n",
       "reactions": {
         "url": "https://api.github.com/repos/numpy/numpy/releases/302853500/reactions",
-        "total_count": 11,
-        "+1": 0,
+        "total_count": 14,
+        "+1": 2,
         "-1": 0,
         "laugh": 0,
         "hooray": 2,
         "confused": 0,
-        "heart": 9,
+        "heart": 10,
         "rocket": 0,
         "eyes": 0
       }
@@ -234,7 +234,7 @@
           "state": "uploaded",
           "size": 2026,
           "digest": "sha256:cdb5956579a246af59d719d6bf1dc2dc914074b6160f89c395fcac15b7d350b0",
-          "download_count": 69,
+          "download_count": 76,
           "created_at": "2026-03-09T17:04:18Z",
           "updated_at": "2026-03-09T17:04:18Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.3/2.4.3-changelog.rst"
@@ -270,7 +270,7 @@
           "state": "uploaded",
           "size": 20727743,
           "digest": "sha256:483a201202b73495f00dbc83796c6ae63137a9bdade074f7648b3e32613412dd",
-          "download_count": 1905,
+          "download_count": 3022,
           "created_at": "2026-03-09T17:06:31Z",
           "updated_at": "2026-03-09T17:07:01Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.3/numpy-2.4.3.tar.gz"
@@ -306,7 +306,7 @@
           "state": "uploaded",
           "size": 2362,
           "digest": "sha256:eb5c657927904cc5d960fbf12a8f20117ff3faf47dfec560dc763dbe7ff2b6ce",
-          "download_count": 62,
+          "download_count": 67,
           "created_at": "2026-03-09T17:04:40Z",
           "updated_at": "2026-03-09T17:04:41Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.3/README.rst"
@@ -397,7 +397,7 @@
           "state": "uploaded",
           "size": 1752,
           "digest": "sha256:67116d6c0f89f4ec8d03a36e797294ed51e2c2ca4d42060515a9366a929b41a0",
-          "download_count": 231,
+          "download_count": 232,
           "created_at": "2026-02-01T16:19:02Z",
           "updated_at": "2026-02-01T16:19:02Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.2/2.4.2-changelog.rst"
@@ -433,7 +433,7 @@
           "state": "uploaded",
           "size": 20723651,
           "digest": "sha256:659a6107e31a83c4e33f763942275fd278b21d095094044eb35569e86a21ddae",
-          "download_count": 3204,
+          "download_count": 3583,
           "created_at": "2026-02-01T16:17:56Z",
           "updated_at": "2026-02-01T16:18:25Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.2/numpy-2.4.2.tar.gz"
@@ -469,7 +469,7 @@
           "state": "uploaded",
           "size": 2065,
           "digest": "sha256:6e23dc0cad18fa321b688b2df1ea6e657e38c7735d4c48166aed5536649fa861",
-          "download_count": 231,
+          "download_count": 232,
           "created_at": "2026-02-01T16:17:46Z",
           "updated_at": "2026-02-01T16:17:47Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.2/README.rst"
@@ -560,7 +560,7 @@
           "state": "uploaded",
           "size": 2100,
           "digest": "sha256:3111449e6118f5afea049cdb664ad51b9ca4f165d8cc3c3cad2cbf9ff165b138",
-          "download_count": 165,
+          "download_count": 167,
           "created_at": "2026-01-10T17:56:56Z",
           "updated_at": "2026-01-10T17:56:57Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.1/2.4.1-changelog.rst"
@@ -596,7 +596,7 @@
           "state": "uploaded",
           "size": 20721320,
           "digest": "sha256:a1ceafc5042451a858231588a104093474c6a5c57dcc724841f5c888d237d690",
-          "download_count": 1224,
+          "download_count": 1300,
           "created_at": "2026-01-10T17:59:06Z",
           "updated_at": "2026-01-10T17:59:35Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.1/numpy-2.4.1.tar.gz"
@@ -632,7 +632,7 @@
           "state": "uploaded",
           "size": 2473,
           "digest": "sha256:4302bbdd01a4e3d7c9a6ed5b60e9f3c1e52f3040dd830eef885be9facc391a58",
-          "download_count": 148,
+          "download_count": 149,
           "created_at": "2026-01-10T17:59:42Z",
           "updated_at": "2026-01-10T17:59:43Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.1/README.rst"
@@ -723,7 +723,7 @@
           "state": "uploaded",
           "size": 76776,
           "digest": "sha256:b8a0532d44c5ae45a7ed4f7844b2b6d13b3244a91229f95692d9fa3038e657e5",
-          "download_count": 72,
+          "download_count": 74,
           "created_at": "2025-12-20T18:15:10Z",
           "updated_at": "2025-12-20T18:15:10Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0/2.4.0-changelog.rst"
@@ -759,7 +759,7 @@
           "state": "uploaded",
           "size": 20685720,
           "digest": "sha256:6e504f7b16118198f138ef31ba24d985b124c2c469fe8467007cf30fd992f934",
-          "download_count": 747,
+          "download_count": 772,
           "created_at": "2025-12-20T18:14:04Z",
           "updated_at": "2025-12-20T18:14:33Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0/numpy-2.4.0.tar.gz"
@@ -795,7 +795,7 @@
           "state": "uploaded",
           "size": 30676,
           "digest": "sha256:ce19c83ec61d0aeb5726dc0bca3eef156020e44aa1651ace2120a30ced5138a2",
-          "download_count": 64,
+          "download_count": 65,
           "created_at": "2025-12-20T18:18:50Z",
           "updated_at": "2025-12-20T18:18:51Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0/README.rst"
@@ -886,7 +886,7 @@
           "state": "uploaded",
           "size": 75263,
           "digest": "sha256:49ca8f53ece7e787a26512a93c963e9dab80fa7bea304035da2dc224b3ff7227",
-          "download_count": 16,
+          "download_count": 17,
           "created_at": "2025-12-03T15:58:57Z",
           "updated_at": "2025-12-03T15:58:58Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0rc1/2.4.0-changelog.rst"
@@ -922,7 +922,7 @@
           "state": "uploaded",
           "size": 20658299,
           "digest": "sha256:658096d9a274d5a44ed22f4ccf6ca1e59e098decc0f6040e9ae7d5a932ec3168",
-          "download_count": 74,
+          "download_count": 75,
           "created_at": "2025-12-03T15:57:43Z",
           "updated_at": "2025-12-03T15:58:12Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0rc1/numpy-2.4.0rc1.tar.gz"
@@ -958,7 +958,7 @@
           "state": "uploaded",
           "size": 30701,
           "digest": "sha256:ef3fa0a344a5936ee5bca726c42810972716254fd1a46d73fb13c0133ede7adc",
-          "download_count": 14,
+          "download_count": 15,
           "created_at": "2025-12-03T15:58:28Z",
           "updated_at": "2025-12-03T15:58:28Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.4.0rc1/README.rst"
@@ -1049,7 +1049,7 @@
           "state": "uploaded",
           "size": 2226,
           "digest": "sha256:6f9a24db8e15d9bcc6e064ff9f6811d23cfe4d1a43198692fee674bf0bb5e621",
-          "download_count": 302,
+          "download_count": 303,
           "created_at": "2025-11-16T23:13:00Z",
           "updated_at": "2025-11-16T23:13:01Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.5/2.3.5-changelog.rst"
@@ -1085,7 +1085,7 @@
           "state": "uploaded",
           "size": 20584950,
           "digest": "sha256:784db1dcdab56bf0517743e746dfb0f885fc68d948aba86eeec2cba234bdf1c0",
-          "download_count": 4819,
+          "download_count": 5035,
           "created_at": "2025-11-16T23:14:27Z",
           "updated_at": "2025-11-16T23:14:56Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.5/numpy-2.3.5.tar.gz"
@@ -1121,7 +1121,7 @@
           "state": "uploaded",
           "size": 2486,
           "digest": "sha256:04e84add714792e288e31920ee8c53da9cc75d83677540cee5d50bbc626c5a92",
-          "download_count": 280,
+          "download_count": 281,
           "created_at": "2025-11-16T23:13:21Z",
           "updated_at": "2025-11-16T23:13:21Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.5/README.rst"
@@ -1212,7 +1212,7 @@
           "state": "uploaded",
           "size": 3815,
           "digest": "sha256:edb745f46a424ea1ba3133621b57875617042fc04c116829b29135acfdc161c7",
-          "download_count": 258,
+          "download_count": 260,
           "created_at": "2025-10-15T22:52:10Z",
           "updated_at": "2025-10-15T22:52:11Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.4/2.3.4-changelog.rst"
@@ -1248,7 +1248,7 @@
           "state": "uploaded",
           "size": 20582187,
           "digest": "sha256:a7d018bfedb375a8d979ac758b120ba846a7fe764911a64465fd87b8729f4a6a",
-          "download_count": 5649,
+          "download_count": 6160,
           "created_at": "2025-10-15T23:14:32Z",
           "updated_at": "2025-10-15T23:15:02Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.4/numpy-2.3.4.tar.gz"
@@ -1284,7 +1284,7 @@
           "state": "uploaded",
           "size": 4569,
           "digest": "sha256:bb8251b23f0c8495f9411d48b2ce44d5c7319fa7a6bcfb000e559162d487f4cc",
-          "download_count": 241,
+          "download_count": 242,
           "created_at": "2025-10-15T22:52:52Z",
           "updated_at": "2025-10-15T22:52:52Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.4/README.rst"
@@ -1295,13 +1295,13 @@
       "body": "# NumPy 2.3.4 Release Notes\r\n\r\nThe NumPy 2.3.4 release is a patch release split between a number of maintenance\r\nupdates and bug fixes. This release supports Python versions 3.11-3.14. This\r\nrelease is based on Python 3.14.0 final.\r\n\r\n## Changes\r\n\r\nThe `npymath` and `npyrandom` libraries now have a `.lib` rather than a\r\n`.a` file extension on win-arm64, for compatibility for building with MSVC and\r\n`setuptools`. Please note that using these static libraries is discouraged\r\nand for existing projects using it, it\\'s best to use it with a matching\r\ncompiler toolchain, which is `clang-cl` on Windows on Arm.\r\n\r\n([gh-29750](https://github.com/numpy/numpy/pull/29750))\r\n\r\n## Contributors\r\n\r\nA total of 17 people contributed to this release. People with a \\\"+\\\" by their\r\nnames contributed a patch for the first time.\r\n\r\n-   !DWesl\r\n-   Charles Harris\r\n-   Christian Barbia +\r\n-   Evgeni Burovski\r\n-   Joren Hammudoglu\r\n-   Maaz +\r\n-   Mateusz Sok\u00f3\u0142\r\n-   Matti Picus\r\n-   Nathan Goldbaum\r\n-   Ralf Gommers\r\n-   Riku Sakamoto +\r\n-   Sandeep Gupta +\r\n-   Sayed Awad\r\n-   Sebastian Berg\r\n-   Sergey Fedorov +\r\n-   Warren Weckesser\r\n-   dependabot\\[bot\\]\r\n\r\n## Pull requests merged\r\n\r\nA total of 30 pull requests were merged for this release.\r\n\r\n-   [#29725](https://github.com/numpy/numpy/pull/29725): MAINT: Prepare 2.3.x for further development\r\n-   [#29781](https://github.com/numpy/numpy/pull/29781): MAINT: Pin some upstream dependences\r\n-   [#29782](https://github.com/numpy/numpy/pull/29782): BLD: enable x86-simd-sort to build on KNL with -mavx512f\r\n-   [#29783](https://github.com/numpy/numpy/pull/29783): BUG: Include python-including headers first (#29281)\r\n-   [#29784](https://github.com/numpy/numpy/pull/29784): TYP: fix np.number and np.\\*integer method declaration\r\n-   [#29785](https://github.com/numpy/numpy/pull/29785): TYP: mypy 1.18.1\r\n-   [#29788](https://github.com/numpy/numpy/pull/29788): TYP: replace scalar type \\_\\_init\\_\\_ with \\_\\_new\\_\\_\r\n-   [#29790](https://github.com/numpy/numpy/pull/29790): BUG: Fix `dtype` refcount in `__array__` (#29715)\r\n-   [#29791](https://github.com/numpy/numpy/pull/29791): TYP: fix method declarations in floating, timedelta64, and datetime64Backport\r\n-   [#29792](https://github.com/numpy/numpy/pull/29792): MAINT: delete unused variables in unary logical dispatch\r\n-   [#29797](https://github.com/numpy/numpy/pull/29797): BUG: Fix pocketfft umath strides for AIX compatibility (#29768)\r\n-   [#29798](https://github.com/numpy/numpy/pull/29798): BUG: np.setbufsize should raise ValueError for negative input\r\n-   [#29799](https://github.com/numpy/numpy/pull/29799): BUG: Fix assert in nditer buffer setup\r\n-   [#29800](https://github.com/numpy/numpy/pull/29800): BUG: Stable ScalarType ordering\r\n-   [#29838](https://github.com/numpy/numpy/pull/29838): TST: Pin pyparsing to avoid matplotlib errors.\r\n-   [#29839](https://github.com/numpy/numpy/pull/29839): BUG: linalg: emit a MemoryError on a malloc failure (#29811)\r\n-   [#29840](https://github.com/numpy/numpy/pull/29840): BLD: change file extension for libnpymath on win-arm64 from .a\\...\r\n-   [#29864](https://github.com/numpy/numpy/pull/29864): CI: Fix loongarch64 CI (#29856)\r\n-   [#29865](https://github.com/numpy/numpy/pull/29865): TYP: Various typing fixes\r\n-   [#29910](https://github.com/numpy/numpy/pull/29910): BUG: Fix float16-sort failures on 32-bit x86 MSVC (#29908)\r\n-   [#29911](https://github.com/numpy/numpy/pull/29911): TYP: add missing `__slots__` (#29901)\r\n-   [#29913](https://github.com/numpy/numpy/pull/29913): TYP: wrong argument defaults in `testing._private` (#29902)\r\n-   [#29920](https://github.com/numpy/numpy/pull/29920): BUG: avoid segmentation fault in string_expandtabs_length_promoter\r\n-   [#29921](https://github.com/numpy/numpy/pull/29921): BUG: Fix INT_MIN % -1 to return 0 for all signed integer types\\...\r\n-   [#29922](https://github.com/numpy/numpy/pull/29922): TYP: minor fixes related to `errstate` (#29914)\r\n-   [#29923](https://github.com/numpy/numpy/pull/29923): TST: use requirements/test_requirements across CI (#29919)\r\n-   [#29926](https://github.com/numpy/numpy/pull/29926): BUG: fix negative samples generated by Wald distribution (#29609)\r\n-   [#29940](https://github.com/numpy/numpy/pull/29940): MAINT: Bump pypa/cibuildwheel from 3.1.4 to 3.2.1\r\n-   [#29949](https://github.com/numpy/numpy/pull/29949): STY: rename `@classmethod` arg to cls\r\n-   [#29950](https://github.com/numpy/numpy/pull/29950): MAINT: Simplify string arena growth strategy (#29885)\r\n",
       "reactions": {
         "url": "https://api.github.com/repos/numpy/numpy/releases/254846719/reactions",
-        "total_count": 21,
-        "+1": 12,
+        "total_count": 19,
+        "+1": 11,
         "-1": 0,
         "laugh": 0,
         "hooray": 6,
         "confused": 0,
-        "heart": 3,
+        "heart": 2,
         "rocket": 0,
         "eyes": 0
       }
@@ -1375,7 +1375,7 @@
           "state": "uploaded",
           "size": 2991,
           "digest": "sha256:d728739291462070a1c0997b7feb07eb86af1794a7fdd95c82a73aa500232b0d",
-          "download_count": 337,
+          "download_count": 338,
           "created_at": "2025-09-09T17:37:08Z",
           "updated_at": "2025-09-09T17:37:09Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.3/2.3.3-changelog.rst"
@@ -1411,7 +1411,7 @@
           "state": "uploaded",
           "size": 20576648,
           "digest": "sha256:ddc7c39727ba62b80dfdbedf400d1c10ddfa8eefbd7ec8dcb118be8b56d31029",
-          "download_count": 2384,
+          "download_count": 2398,
           "created_at": "2025-09-10T08:25:46Z",
           "updated_at": "2025-09-10T08:25:56Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.3/numpy-2.3.3.tar.gz"
@@ -1447,7 +1447,7 @@
           "state": "uploaded",
           "size": 3400,
           "digest": "sha256:1a23a3adfa607650a989585c3dc44e67c1528ec4999ea20ec8d0fa923aba91d6",
-          "download_count": 357,
+          "download_count": 358,
           "created_at": "2025-09-09T17:37:37Z",
           "updated_at": "2025-09-09T17:37:38Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.3/README.rst"
@@ -1538,7 +1538,7 @@
           "state": "uploaded",
           "size": 2186,
           "digest": "sha256:da3f28b70f7fe39b6ecbeb4e88909fa32bbea5494a044ba19174c1b3ab776170",
-          "download_count": 213,
+          "download_count": 214,
           "created_at": "2025-07-24T21:44:28Z",
           "updated_at": "2025-07-24T21:44:28Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.2/2.3.2-changelog.rst"
@@ -1574,7 +1574,7 @@
           "state": "uploaded",
           "size": 20489306,
           "digest": "sha256:e0486a11ec30cdecb53f184d496d1c6a20786c81e55e41640270130056f8ee48",
-          "download_count": 2678,
+          "download_count": 2696,
           "created_at": "2025-07-24T21:43:21Z",
           "updated_at": "2025-07-24T21:43:50Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.2/numpy-2.3.2.tar.gz"
@@ -1610,7 +1610,7 @@
           "state": "uploaded",
           "size": 18033,
           "digest": "sha256:dd964d653c9578a20ed008832412a692a0c28a2cdd008c2ed2c1abbbd8f83776",
-          "download_count": 264,
+          "download_count": 265,
           "created_at": "2025-07-24T21:43:04Z",
           "updated_at": "2025-07-24T21:43:07Z",
           "browser_download_url": "https://github.com/numpy/numpy/releases/download/v2.3.2/README.rst"

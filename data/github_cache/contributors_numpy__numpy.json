@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-03-30T19:45:01.389663+00:00",
+  "cached_at": "2026-04-16T16:59:40.367939+00:00",
   "cache_key": "contributors:numpy/numpy",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 7179
+      "contributions": 7204
     },
     {
       "login": "mattip",
@@ -44,7 +44,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 2975
+      "contributions": 2976
     },
     {
       "login": "seberg",
@@ -66,7 +66,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 2945
+      "contributions": 2950
     },
     {
       "login": "teoliphant",

@@ -178,6 +178,84 @@
     .risk-neutral{ background: var(--text-tertiary); }
     .explore-error{ font-size: 14px; color: var(--text-secondary); text-align: center; padding: var(--sp-24) 0; }
 
+    /* ── Mode Toggle ── */
+    .mode-toggle{
+      display: flex; justify-content: center; gap: 0;
+      margin: 0 auto var(--sp-24); max-width: 280px;
+      background: var(--bg-surface); border-radius: var(--radius-md);
+      border: 1px solid var(--border); padding: 3px;
+    }
+    .mode-toggle-btn{
+      flex: 1; padding: 8px var(--sp-16);
+      border: none; border-radius: calc(var(--radius-md) - 2px);
+      background: transparent; color: var(--text-tertiary);
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .mode-toggle-btn:hover{ color: var(--text-secondary); }
+    .mode-toggle-btn.active{
+      background: var(--accent); color: #fff;
+    }
+
+    /* ── Multi-Repo Group ── */
+    .multi-repo-group{
+      display: none; max-width: 520px; margin: 0 auto;
+      text-align: left;
+    }
+    .multi-repo-group.visible{ display: block; }
+    .multi-repo-group label{
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--text-secondary); margin-bottom: var(--sp-4);
+      text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .multi-repo-group input{
+      width: 100%; padding: 12px var(--sp-16);
+      border-radius: var(--radius-md); border: 1px solid var(--border);
+      background: var(--bg-surface); color: var(--text-primary);
+      font-size: 14px; outline: none; margin-bottom: var(--sp-12);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .multi-repo-group input::placeholder{ color: var(--text-tertiary); }
+    .multi-repo-group input:focus{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
+    }
+    .multi-repo-group textarea{
+      width: 100%; padding: 12px var(--sp-16);
+      border-radius: var(--radius-md); border: 1px solid var(--border);
+      background: var(--bg-surface); color: var(--text-primary);
+      font-size: 13px; font-family: var(--font-mono);
+      line-height: 1.6; outline: none; resize: vertical;
+      min-height: 90px; margin-bottom: var(--sp-12);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .multi-repo-group textarea::placeholder{ color: var(--text-tertiary); }
+    .multi-repo-group textarea:focus{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-muted);
+    }
+    .multi-repo-group .btn-primary{
+      width: 100%; padding: 14px var(--sp-24);
+      border-radius: var(--radius-md); border: none;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: opacity .15s ease;
+    }
+    .multi-repo-group .btn-primary:hover{ opacity: 0.88; }
+    .multi-repo-group .btn-primary:disabled{
+      opacity: 0.55; cursor: not-allowed;
+    }
+    .multi-repo-error{
+      font-size: 13px; color: var(--status-high-text);
+      background: var(--status-high-bg);
+      border: 1px solid var(--status-high-border);
+      border-radius: var(--radius-md);
+      padding: var(--sp-8) var(--sp-12);
+      margin-bottom: var(--sp-12);
+      display: none;
+    }
+    .multi-repo-error.visible{ display: block; }
+
     /* ── Responsive ── */
     @media (max-width: 700px){
       .hero{ padding: 40px var(--sp-16) 36px; }
@@ -203,9 +281,23 @@
     <div class="hero-subtitle">
       Analyze repositories for maintenance risk, supply chain vulnerabilities, and dependency health. Know what you're shipping.
     </div>
-    <div class="analyze-bar">
+    <div class="mode-toggle">
+      <button class="mode-toggle-btn active" id="singleModeBtn">Single Repo</button>
+      <button class="mode-toggle-btn" id="multiModeBtn">Multi-Repo</button>
+    </div>
+    <div class="analyze-bar" id="singleRepoGroup">
       <input id="repoInput" type="text" placeholder="numpy/numpy" aria-label="Repository name" />
       <button id="analyzeBtn" class="btn-primary ds-btn-primary">Scan a Repository</button>
+    </div>
+    <div class="multi-repo-group" id="multiRepoGroup">
+      <label for="scopeNameInput">Scope Name</label>
+      <input id="scopeNameInput" type="text" placeholder="My Project Stack" aria-label="Scope name" />
+      <label for="multiRepoInput">Repositories (one per line)</label>
+      <textarea id="multiRepoInput" rows="4" placeholder="numpy/numpy&#10;pandas-dev/pandas" aria-label="Repository list"></textarea>
+      <label for="multiDepsInput">Dependencies — optional (one per line)</label>
+      <textarea id="multiDepsInput" rows="3" placeholder="flask&#10;sqlalchemy" aria-label="Dependency list"></textarea>
+      <div class="multi-repo-error" id="multiRepoError"></div>
+      <button id="analyzeSystemBtn" class="btn-primary ds-btn-primary">Analyze System</button>
     </div>
     <div class="hero-proof" id="trustSignal">Powered by repository graphs, dependency analysis, and vulnerability intelligence.</div>
   </div>
@@ -334,6 +426,104 @@ function goAnalyze() {
 document.getElementById("analyzeBtn").addEventListener("click", goAnalyze);
 document.getElementById("repoInput").addEventListener("keydown", function(e) {
   if (e.key === "Enter") goAnalyze();
+});
+
+/* ── Mode Toggle Logic (Task 5.1) ── */
+var singleModeBtn = document.getElementById("singleModeBtn");
+var multiModeBtn = document.getElementById("multiModeBtn");
+var singleRepoGroup = document.getElementById("singleRepoGroup");
+var multiRepoGroup = document.getElementById("multiRepoGroup");
+
+function setMode(mode) {
+  if (mode === "single") {
+    singleModeBtn.classList.add("active");
+    multiModeBtn.classList.remove("active");
+    singleRepoGroup.style.display = "flex";
+    multiRepoGroup.classList.remove("visible");
+  } else {
+    multiModeBtn.classList.add("active");
+    singleModeBtn.classList.remove("active");
+    singleRepoGroup.style.display = "none";
+    multiRepoGroup.classList.add("visible");
+  }
+  // Clear any error when switching modes
+  var errEl = document.getElementById("multiRepoError");
+  errEl.textContent = "";
+  errEl.classList.remove("visible");
+}
+
+singleModeBtn.addEventListener("click", function() { setMode("single"); });
+multiModeBtn.addEventListener("click", function() { setMode("multi"); });
+
+/* ── Multi-Repo Submission Logic (Task 5.2) ── */
+document.getElementById("analyzeSystemBtn").addEventListener("click", function() {
+  var btn = this;
+  var errEl = document.getElementById("multiRepoError");
+  errEl.textContent = "";
+  errEl.classList.remove("visible");
+
+  var scopeName = document.getElementById("scopeNameInput").value.trim();
+  var reposRaw = document.getElementById("multiRepoInput").value;
+  var depsRaw = document.getElementById("multiDepsInput").value;
+
+  var repos = reposRaw.split("\n").map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+  var dependencies = depsRaw.split("\n").map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+
+  if (repos.length === 0 && dependencies.length === 0) {
+    errEl.textContent = "Enter at least one repository or dependency.";
+    errEl.classList.add("visible");
+    return;
+  }
+
+  if (!scopeName) {
+    scopeName = repos.length > 0 ? repos[0] + " + " + (repos.length - 1 + dependencies.length) + " more" : "Analysis Scope";
+  }
+
+  // Loading state
+  var originalText = btn.textContent;
+  btn.textContent = "Analyzing…";
+  btn.disabled = true;
+
+  var apiBase = window.DS_API_BASE || "";
+  fetch(apiBase + "/api/ingest-scope", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: scopeName, repos: repos, dependencies: dependencies })
+  })
+  .then(function(res) {
+    if (!res.ok) {
+      return res.json().catch(function() { return {}; }).then(function(data) {
+        var msg = data.detail || "";
+        if (res.status === 422) {
+          throw new Error(msg || "Invalid input. Check your repository names.");
+        }
+        throw new Error("Analysis failed (status " + res.status + "). " + (msg ? msg : "Please try again."));
+      });
+    }
+    return res.json();
+  })
+  .then(function(data) {
+    if (data.scope_id) {
+      window.location.href = "overview.html?scope_id=" + encodeURIComponent(data.scope_id);
+    } else {
+      throw new Error("No scope_id returned from server.");
+    }
+  })
+  .catch(function(err) {
+    var msg = err.message || "Failed to analyze system. Please try again.";
+    // Replace raw HTTP error messages with user-friendly ones
+    if (msg.indexOf("Not Found") !== -1 || msg.indexOf("404") !== -1) {
+      msg = "Some repositories could not be found. Check the names and try again.";
+    } else if (msg.indexOf("Failed to fetch") !== -1 || msg.indexOf("NetworkError") !== -1) {
+      msg = "Network error. Make sure the server is running and try again.";
+    } else if (msg.indexOf("rate limit") !== -1 || msg.indexOf("403") !== -1) {
+      msg = "GitHub API rate limit reached. Wait a moment and try again.";
+    }
+    errEl.textContent = msg;
+    errEl.classList.add("visible");
+    btn.textContent = originalText;
+    btn.disabled = false;
+  });
 });
 
 function riskDotClass(riskLabel) {

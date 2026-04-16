@@ -619,3 +619,86 @@ $("resetBtn").addEventListener("click", resetFilters);
 // ─── Init from URL ───────────────────────────────────────────────────
 applyUrlState();
 if (repoInput.value.trim()) loadTree(false);
+
+
+// ── Scope-aware mode ──
+(function() {
+  var scopeId = parseScopeParam(window.location.search);
+  if (scopeId) {
+    // Hide single-repo input controls
+    var topbar = document.querySelector('.topbar');
+    if (topbar) topbar.style.display = 'none';
+    
+    // Fetch scope data
+    var apiBase = window.DS_API_BASE || '';
+    fetch(apiBase + '/api/scope/' + encodeURIComponent(scopeId))
+      .then(function(res) {
+        if (!res.ok) throw new Error('Failed to load scope: ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        document.title = (data.name || 'Scope') + ' — Dependency Tree';
+        
+        // Build tree from merged graph data
+        // Adapt the scope graph data to the tree format expected by the existing rendering
+        var graph = data.graph || { nodes: [], edges: [] };
+        renderScopeTree(graph, data.name || 'Analysis Scope');
+      })
+      .catch(function(err) {
+        // Show error in the tree container
+        var container = document.getElementById('tree-container') || document.getElementById('treeContainer');
+        if (container) {
+          container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-secondary);">' + err.message + '</div>';
+        }
+      });
+  }
+})();
+
+function renderScopeTree(graph, scopeName) {
+  // Build a simple tree view from the merged graph nodes
+  var container = document.getElementById('tree-container') || document.getElementById('treeContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  var title = document.createElement('h3');
+  title.style.cssText = 'font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary);';
+  title.textContent = scopeName + ' — Merged Dependencies';
+  container.appendChild(title);
+  
+  var nodes = graph.nodes || [];
+  // Group nodes by type
+  var repos = nodes.filter(function(n) { return n.type === 'repo'; });
+  var packages = nodes.filter(function(n) { return n.type === 'package' || n.type === 'dependency'; });
+  
+  if (repos.length > 0) {
+    var repoHeader = document.createElement('div');
+    repoHeader.style.cssText = 'font-size:12px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 8px;';
+    repoHeader.textContent = 'Repositories (' + repos.length + ')';
+    container.appendChild(repoHeader);
+    repos.forEach(function(n) {
+      var el = document.createElement('div');
+      el.style.cssText = 'padding:6px 12px;font-size:13px;color:var(--text-primary);border-left:2px solid var(--accent);margin-bottom:4px;';
+      el.textContent = n.label || n.id;
+      container.appendChild(el);
+    });
+  }
+  
+  if (packages.length > 0) {
+    var pkgHeader = document.createElement('div');
+    pkgHeader.style.cssText = 'font-size:12px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 8px;';
+    pkgHeader.textContent = 'Dependencies (' + packages.length + ')';
+    container.appendChild(pkgHeader);
+    packages.forEach(function(n) {
+      var el = document.createElement('div');
+      el.style.cssText = 'padding:6px 12px;font-size:13px;color:var(--text-secondary);border-left:2px solid var(--border);margin-bottom:4px;';
+      var usedBy = (n.source_repos || []).length;
+      el.textContent = (n.label || n.id) + (usedBy > 0 ? ' (used by ' + usedBy + ' repos)' : '');
+      container.appendChild(el);
+    });
+  }
+  
+  if (nodes.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-tertiary);">No dependency data available for this scope.</div>';
+  }
+}

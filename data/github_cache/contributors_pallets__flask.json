@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-03-30T19:45:28.837772+00:00",
+  "cached_at": "2026-04-16T16:55:43.119399+00:00",
   "cache_key": "contributors:pallets/flask",
   "data": [
     {
@@ -22,7 +22,7 @@
       "type": "User",
       "user_view_type": "public",
       "site_admin": false,
-      "contributions": 1826
+      "contributions": 1833
     },
     {
       "login": "mitsuhiko",

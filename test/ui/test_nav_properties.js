@@ -7,7 +7,7 @@ const { renderNav, getCrossLinks } = require('../../ui/nav-render.js');
 
 // ── Generators ──
 
-const validPageIds = fc.constantFrom('index', 'insights', 'graph', 'dependency-tree');
+const validPageIds = fc.constantFrom('index', 'overview', 'insights', 'graph', 'dependency-tree');
 
 // owner/name segments: alphanumeric + safe chars (avoid % which causes double-decode issues in parseRepoParam)
 const safeChar = fc.char().filter(c => c !== '/' && c !== '\0' && c !== '%' && c.trim().length > 0);
@@ -17,18 +17,19 @@ const validRepoArb = fc.tuple(ownerNameSegment, ownerNameSegment).map(([o, n]) =
 
 const repoOrNull = fc.oneof(validRepoArb, fc.constant(null));
 
-const pageStringArb = fc.constantFrom('index.html', 'insights.html', 'graph.html', 'dependency-tree.html');
+const pageStringArb = fc.constantFrom('index.html', 'overview.html', 'insights.html', 'graph.html', 'dependency-tree.html');
 
 // ── Helpers ──
 
 const PAGE_ID_TO_LABEL = {
   'index': 'Home',
+  'overview': 'Overview',
   'insights': 'Insights',
   'graph': 'Graph',
   'dependency-tree': 'Dependency Tree'
 };
 
-const EXPECTED_LABELS = ['Home', 'Insights', 'Graph', 'Dependency Tree'];
+const EXPECTED_LABELS = ['Home', 'Overview', 'Insights', 'Graph', 'Dependency Tree'];
 
 // ── Tests ──
 
@@ -41,7 +42,7 @@ describe('Property 1 — Nav bar link labels', () => {
     document.body.innerHTML = '<div class="wrap"></div>';
   });
 
-  it('renderNav produces exactly 4 links with labels Home, Insights, Graph, Dependency Tree in order', () => {
+  it('renderNav produces exactly 5 links with labels Home, Overview, Insights, Graph, Dependency Tree in order', () => {
     fc.assert(
       fc.property(
         validPageIds,
@@ -50,7 +51,7 @@ describe('Property 1 — Nav bar link labels', () => {
           document.body.innerHTML = '<div class="wrap"></div>';
           renderNav(pageId, repo);
           const links = document.querySelectorAll('nav.ds-nav .ds-nav-links a.ds-nav-link');
-          expect(links.length).toBe(4);
+          expect(links.length).toBe(5);
           const labels = Array.from(links).map(a => a.textContent);
           expect(labels).toEqual(EXPECTED_LABELS);
         }
@@ -186,12 +187,13 @@ describe('Property 6 — Cross-page link labels', () => {
    */
   it('for any target page ID, the generated label matches the defined mapping', () => {
     const LABEL_MAP = {
+      'overview': 'Open in Overview',
       'insights': 'Open in Insights',
       'graph': 'Open in Graph',
       'dependency-tree': 'Open in Dependency Tree'
     };
 
-    const targetPageIds = fc.constantFrom('insights', 'graph', 'dependency-tree');
+    const targetPageIds = fc.constantFrom('overview', 'insights', 'graph', 'dependency-tree');
 
     fc.assert(
       fc.property(
@@ -235,8 +237,8 @@ describe('Property 8 — Cross-links exclude current page', () => {
   /**
    * **Validates: Requirements 6.1, 7.1, 8.1, 9.2**
    */
-  it('for insights/graph/dependency-tree, no cross-link targets the current page; on index, all three links rendered', () => {
-    const nonIndexPages = fc.constantFrom('insights', 'graph', 'dependency-tree');
+  it('for insights/graph/dependency-tree/overview, no cross-link targets the current page; on index, all four links rendered', () => {
+    const nonIndexPages = fc.constantFrom('overview', 'insights', 'graph', 'dependency-tree');
 
     fc.assert(
       fc.property(
@@ -247,22 +249,22 @@ describe('Property 8 — Cross-links exclude current page', () => {
           // No link should target the current page
           const selfLink = links.find(l => l.targetPageId === pageId);
           expect(selfLink).toBeUndefined();
-          // Should have exactly 2 links (3 targets minus current)
-          expect(links.length).toBe(2);
+          // Should have exactly 3 links (4 targets minus current)
+          expect(links.length).toBe(3);
         }
       ),
       { numRuns: 100 }
     );
 
-    // On index, all three links are rendered
+    // On index, all four links are rendered
     fc.assert(
       fc.property(
         validRepoArb,
         (repo) => {
           const links = getCrossLinks('index', repo);
-          expect(links.length).toBe(3);
+          expect(links.length).toBe(4);
           const targetIds = links.map(l => l.targetPageId).sort();
-          expect(targetIds).toEqual(['dependency-tree', 'graph', 'insights']);
+          expect(targetIds).toEqual(['dependency-tree', 'graph', 'insights', 'overview']);
         }
       ),
       { numRuns: 100 }

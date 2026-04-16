@@ -808,3 +808,38 @@ el("repoInput").addEventListener("keydown", (ev) => {
 // Initialize
 initializeFilters();
 el("repoInput").value = "numpy/numpy";
+
+
+// ── Scope-aware mode ──
+// When scope_id is present in URL, fetch merged graph from scope endpoint
+(function() {
+  var scopeId = parseScopeParam(window.location.search);
+  if (scopeId) {
+    // Hide single-repo input controls
+    var topbar = document.querySelector('.topbar');
+    if (topbar) topbar.style.display = 'none';
+    
+    // Fetch scope data and render merged graph
+    var apiBase = window.DS_API_BASE || API_BASE || '';
+    fetch(apiBase + '/api/scope/' + encodeURIComponent(scopeId))
+      .then(function(res) {
+        if (!res.ok) throw new Error('Failed to load scope: ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        // Set page title to scope name
+        document.title = (data.name || 'Scope') + ' — Graph';
+        
+        // Render the merged graph using existing renderGraph function
+        // The renderGraph function expects { graph: { nodes: [...], edges: [...] } }
+        var graphData = {
+          graph: data.graph || { nodes: [], edges: [] },
+          metadata: { node_count: (data.graph.nodes || []).length, edge_count: (data.graph.edges || []).length }
+        };
+        renderGraph(graphData);
+      })
+      .catch(function(err) {
+        showError(String(err));
+      });
+  }
+})();
