@@ -4,6 +4,9 @@
 # Kiro IDE specs (internal development tooling)
 .kiro/
 
+# VS Code settings (local editor config)
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
