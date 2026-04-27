@@ -59,6 +59,10 @@ class TreeNode:
     # Risk metadata
     risk_metadata: Optional[RiskMetadata] = None
 
+    # Scope classification (Phase 1 — direct deps only)
+    dependency_scope: Optional[str] = None
+    scope_confidence: Optional[str] = None
+
     # Resolution status
     resolution_status: str = "resolved"  # "resolved" or "error"
     error_reason: Optional[str] = None
@@ -104,6 +108,12 @@ class TreeNode:
         elif self.resolution_status != "resolved":
             d["resolution_status"] = self.resolution_status
 
+        # Scope classification — include only when set
+        if self.dependency_scope is not None:
+            d["dependency_scope"] = self.dependency_scope
+        if self.scope_confidence is not None:
+            d["scope_confidence"] = self.scope_confidence
+
         return d
 
 
@@ -120,6 +130,19 @@ class SummaryMetrics:
     riskiest_branch: Optional[Dict[str, Any]] = None
     filters_applied: List[str] = field(default_factory=list)
 
+    # Phase 1 — Direct dependency scope counts
+    direct_runtime_dependency_count: int = 0
+    direct_dev_dependency_count: int = 0
+    direct_test_dependency_count: int = 0
+    direct_build_dependency_count: int = 0
+    direct_optional_dependency_count: int = 0
+    direct_peer_dependency_count: int = 0
+    direct_unknown_dependency_count: int = 0
+    direct_total_dependency_count: int = 0
+    scope_counts_are_direct_only: bool = True
+    scope_classification_label: str = "Direct dependencies, classified from manifests"
+    scope_note: str = "Dependency scope is classified from manifests and may not reflect actual runtime usage."
+
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dict."""
         d: Dict[str, Any] = {
@@ -133,6 +156,18 @@ class SummaryMetrics:
         if self.riskiest_branch is not None:
             d["riskiest_branch"] = self.riskiest_branch
         d["filters_applied"] = self.filters_applied
+        # Phase 1 — Direct dependency scope counts
+        d["direct_runtime_dependency_count"] = self.direct_runtime_dependency_count
+        d["direct_dev_dependency_count"] = self.direct_dev_dependency_count
+        d["direct_test_dependency_count"] = self.direct_test_dependency_count
+        d["direct_build_dependency_count"] = self.direct_build_dependency_count
+        d["direct_optional_dependency_count"] = self.direct_optional_dependency_count
+        d["direct_peer_dependency_count"] = self.direct_peer_dependency_count
+        d["direct_unknown_dependency_count"] = self.direct_unknown_dependency_count
+        d["direct_total_dependency_count"] = self.direct_total_dependency_count
+        d["scope_counts_are_direct_only"] = self.scope_counts_are_direct_only
+        d["scope_classification_label"] = self.scope_classification_label
+        d["scope_note"] = self.scope_note
         return d
 
 

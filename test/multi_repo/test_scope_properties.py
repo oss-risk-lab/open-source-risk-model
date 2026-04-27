@@ -372,47 +372,45 @@ class TestDependencyResolutionProperties:
 
 
 # ---------------------------------------------------------------------------
-# Property 8: Top risk drivers sorting
-# **Validates: Requirements 5.4**
+# Property 8: Top risk drivers — signal-based
+# **Validates: Requirements 4.1 (updated for signal-based drivers)**
 # ---------------------------------------------------------------------------
 
 class TestTopRiskDriversProperties:
-    """Property 8: Top risk drivers sorting."""
+    """Property 8: Top risk drivers return valid signal objects."""
 
     @given(results=st.lists(per_repo_result_st(), min_size=0, max_size=12))
     @settings(max_examples=50)
-    def test_sorted_descending_by_risk_score(self, results):
-        """Top risk drivers are sorted descending by risk_score."""
-        drivers = get_top_risk_drivers(results)
-        scores = [d["risk_score"] for d in drivers]
-        assert scores == sorted(scores, reverse=True)
-
-    @given(results=st.lists(per_repo_result_st(), min_size=0, max_size=12))
-    @settings(max_examples=50)
-    def test_limited_to_five(self, results):
-        """Limited to 5 items."""
-        drivers = get_top_risk_drivers(results)
-        assert len(drivers) <= 5
-
-    @given(results=st.lists(per_repo_result_st(), min_size=0, max_size=12))
-    @settings(max_examples=50)
-    def test_excludes_error_results(self, results):
-        """Only non-error results appear in drivers."""
-        drivers = get_top_risk_drivers(results)
+    def test_returns_signal_objects(self, results):
+        """Top risk drivers return signal objects with required fields."""
+        merged_graph = {"nodes": [], "edges": []}
+        drivers = get_top_risk_drivers(results, merged_graph)
         for d in drivers:
-            # Each driver should correspond to a non-error input
-            matching = [r for r in results if r.get("repo") == d["repo"] and r.get("error") is None]
-            assert len(matching) >= 1
+            assert "signal" in d
+            assert "category" in d
+            assert "severity" in d
+            assert isinstance(d["signal"], str) and len(d["signal"]) > 0
+            assert d["category"] in ("vulnerability", "maintenance", "dependency")
+            assert d["severity"] in ("info", "low", "medium", "high")
 
     @given(results=st.lists(per_repo_result_st(), min_size=0, max_size=12))
     @settings(max_examples=50)
-    def test_required_fields(self, results):
-        """Each driver has repo, risk_score, risk_label."""
-        drivers = get_top_risk_drivers(results)
-        for d in drivers:
-            assert "repo" in d
-            assert "risk_score" in d
-            assert "risk_label" in d
+    def test_at_least_one_signal(self, results):
+        """Always returns at least 1 signal."""
+        merged_graph = {"nodes": [], "edges": []}
+        drivers = get_top_risk_drivers(results, merged_graph)
+        assert len(drivers) >= 1
+
+    @given(results=st.lists(per_repo_result_st(), min_size=0, max_size=12))
+    @settings(max_examples=50)
+    def test_sorted_by_severity_then_category(self, results):
+        """Signals are sorted by severity (high first) then category."""
+        merged_graph = {"nodes": [], "edges": []}
+        drivers = get_top_risk_drivers(results, merged_graph)
+        severity_order = {"high": 0, "medium": 1, "low": 2, "info": 3}
+        category_order = {"vulnerability": 0, "maintenance": 1, "dependency": 2}
+        keys = [(severity_order[d["severity"]], category_order[d["category"]]) for d in drivers]
+        assert keys == sorted(keys)
 
 
 # ---------------------------------------------------------------------------

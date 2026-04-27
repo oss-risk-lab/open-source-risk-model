@@ -13,6 +13,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 
+from open_source_risk_model.dependencies.scope_classifier import classify
+
 logger = logging.getLogger(__name__)
 
 
@@ -26,6 +28,8 @@ class Dependency:
     dependency_group: str = "prod"
     is_optional: bool = False
     manifest_path: str = ""
+    dependency_scope: str = "unknown"
+    scope_confidence: str = "low"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage."""
@@ -37,6 +41,8 @@ class Dependency:
             'dependency_group': self.dependency_group,
             'is_optional': self.is_optional,
             'manifest_path': self.manifest_path,
+            'dependency_scope': self.dependency_scope,
+            'scope_confidence': self.scope_confidence,
         }
 
 
@@ -49,8 +55,14 @@ class DependencyParser(ABC):
         pass
     
     @abstractmethod
-    def parse(self, content: str) -> List[Dependency]:
-        """Parse dependencies from file content."""
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
+        """Parse dependencies from file content.
+        
+        Args:
+            content: Raw file content to parse.
+            source_file: Path to the manifest file, used for filename-based
+                classification (e.g. requirements-dev.txt).
+        """
         pass
 
 
@@ -61,7 +73,7 @@ class RequirementsTxtParser(DependencyParser):
         """Match any requirements file in any directory."""
         return bool(re.search(r'requirements.*\.txt$', file_path))
     
-    def parse(self, content: str) -> List[Dependency]:
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
         """
         Parse requirements.txt content.
         
@@ -71,6 +83,11 @@ class RequirementsTxtParser(DependencyParser):
         - Extras: requests[security]>=2.0.0
         - Markers: requests>=2.0.0; python_version>='3.7'
         - Comments and blank lines
+        
+        Args:
+            content: Raw requirements.txt content.
+            source_file: Path to the requirements file, used for
+                filename-based scope classification.
         """
         dependencies = []
         
@@ -88,6 +105,14 @@ class RequirementsTxtParser(DependencyParser):
             # Parse requirement
             dep = self._parse_requirement(line)
             if dep:
+                scope, confidence = classify(
+                    ecosystem="pypi",
+                    manifest_type="requirements.txt",
+                    dependency_group=dep.dependency_group,
+                    source_file=source_file,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
                 dependencies.append(dep)
         
         return dependencies
@@ -150,7 +175,7 @@ class PyProjectTomlParser(DependencyParser):
         """Check if file is pyproject.toml."""
         return file_path.endswith('pyproject.toml')
     
-    def parse(self, content: str) -> List[Dependency]:
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
         """
         Parse pyproject.toml content.
         
@@ -189,6 +214,15 @@ class PyProjectTomlParser(DependencyParser):
         for dep_spec in project.get('dependencies', []):
             dep = self._parse_pep621_spec(dep_spec)
             if dep:
+                scope, confidence = classify(
+                    ecosystem="pypi",
+                    manifest_type="pyproject.toml",
+                    dependency_group="prod",
+                    source_file="",
+                    is_optional=False,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
                 dependencies.append(dep)
         
         # Optional dependencies (dev, test, etc.)
@@ -198,6 +232,15 @@ class PyProjectTomlParser(DependencyParser):
                 if dep:
                     dep.dependency_group = group
                     dep.is_optional = True
+                    scope, confidence = classify(
+                        ecosystem="pypi",
+                        manifest_type="pyproject.toml",
+                        dependency_group=group,
+                        source_file="",
+                        is_optional=True,
+                    )
+                    dep.dependency_scope = scope.value
+                    dep.scope_confidence = confidence.value
                     dependencies.append(dep)
         
         return dependencies
@@ -227,13 +270,23 @@ class PyProjectTomlParser(DependencyParser):
         dependencies = []
         poetry = data.get('tool', {}).get('poetry', {})
         
-        # Poetry dependencies
+        # Poetry dependencies (main/prod)
         for name, spec in poetry.get('dependencies', {}).items():
             if name == 'python':  # Skip Python version
                 continue
             
             dep = self._parse_poetry_spec(name, spec)
             if dep:
+                is_opt = dep.is_optional
+                scope, confidence = classify(
+                    ecosystem="pypi",
+                    manifest_type="pyproject.toml",
+                    dependency_group="prod",
+                    source_file="",
+                    is_optional=is_opt,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
                 dependencies.append(dep)
         
         # Poetry dev dependencies (legacy format)
@@ -241,6 +294,15 @@ class PyProjectTomlParser(DependencyParser):
             dep = self._parse_poetry_spec(name, spec)
             if dep:
                 dep.dependency_group = 'dev'
+                scope, confidence = classify(
+                    ecosystem="pypi",
+                    manifest_type="pyproject.toml",
+                    dependency_group="dev",
+                    source_file="",
+                    is_optional=False,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
                 dependencies.append(dep)
         
         # Poetry group dependencies (modern format)
@@ -249,6 +311,15 @@ class PyProjectTomlParser(DependencyParser):
                 dep = self._parse_poetry_spec(name, spec)
                 if dep:
                     dep.dependency_group = group_name
+                    scope, confidence = classify(
+                        ecosystem="pypi",
+                        manifest_type="pyproject.toml",
+                        dependency_group=group_name,
+                        source_file="",
+                        is_optional=False,
+                    )
+                    dep.dependency_scope = scope.value
+                    dep.scope_confidence = confidence.value
                     dependencies.append(dep)
         
         return dependencies
@@ -280,7 +351,7 @@ class PackageJsonParser(DependencyParser):
         """Check if file is package.json."""
         return file_path.endswith('package.json')
     
-    def parse(self, content: str) -> List[Dependency]:
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
         """
         Parse package.json content.
         
@@ -301,39 +372,75 @@ class PackageJsonParser(DependencyParser):
         
         # Production dependencies
         for name, version in data.get('dependencies', {}).items():
-            dependencies.append(Dependency(
+            dep = Dependency(
                 package_name=name,
                 specifier=version,
                 dependency_group="prod",
-                is_optional=False
-            ))
+                is_optional=False,
+            )
+            scope, confidence = classify(
+                ecosystem="npm",
+                manifest_type="package.json",
+                dependency_group="prod",
+                source_file="",
+            )
+            dep.dependency_scope = scope.value
+            dep.scope_confidence = confidence.value
+            dependencies.append(dep)
         
         # Dev dependencies
         for name, version in data.get('devDependencies', {}).items():
-            dependencies.append(Dependency(
+            dep = Dependency(
                 package_name=name,
                 specifier=version,
                 dependency_group="dev",
-                is_optional=False
-            ))
+                is_optional=False,
+            )
+            scope, confidence = classify(
+                ecosystem="npm",
+                manifest_type="package.json",
+                dependency_group="dev",
+                source_file="",
+            )
+            dep.dependency_scope = scope.value
+            dep.scope_confidence = confidence.value
+            dependencies.append(dep)
         
         # Peer dependencies
         for name, version in data.get('peerDependencies', {}).items():
-            dependencies.append(Dependency(
+            dep = Dependency(
                 package_name=name,
                 specifier=version,
                 dependency_group="peer",
-                is_optional=False
-            ))
+                is_optional=False,
+            )
+            scope, confidence = classify(
+                ecosystem="npm",
+                manifest_type="package.json",
+                dependency_group="peer",
+                source_file="",
+            )
+            dep.dependency_scope = scope.value
+            dep.scope_confidence = confidence.value
+            dependencies.append(dep)
         
         # Optional dependencies
         for name, version in data.get('optionalDependencies', {}).items():
-            dependencies.append(Dependency(
+            dep = Dependency(
                 package_name=name,
                 specifier=version,
                 dependency_group="optional",
-                is_optional=True
-            ))
+                is_optional=True,
+            )
+            scope, confidence = classify(
+                ecosystem="npm",
+                manifest_type="package.json",
+                dependency_group="optional",
+                source_file="",
+            )
+            dep.dependency_scope = scope.value
+            dep.scope_confidence = confidence.value
+            dependencies.append(dep)
         
         return dependencies
 
@@ -367,7 +474,7 @@ class DependencyParserRegistry:
         for parser in self.parsers:
             if parser.can_parse(file_path):
                 try:
-                    dependencies = parser.parse(content)
+                    dependencies = parser.parse(content, source_file=file_path)
                     logger.info(f"Parsed {len(dependencies)} dependencies from {file_path}")
                     
                     # Set manifest_path on each dependency

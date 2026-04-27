@@ -287,6 +287,8 @@ class TreeService:
             ecosystem=ecosystem,
             specifier=dep.get("specifier"),
             resolution_status="resolved",
+            dependency_scope=dep.get("dependency_scope"),
+            scope_confidence=dep.get("scope_confidence"),
         )
 
         # Cycle detection – stop recursion if we've seen this ID on this branch

@@ -939,6 +939,96 @@ def merge_graphs(graphs: List[Tuple[str, Graph]], unmapped_nodes: List[dict]) ->
     return {"nodes": list(merged_nodes.values()), "edges": merged_edges}
 
 
+def _generate_risk_explanation(aggregate_label: str, high_risk_repos: int,
+                               vulnerable_dependencies: int, high_risk_dependencies: int,
+                               total_repos: int) -> str:
+    """Generate a risk explanation following [Conclusion] + [because] + [Reason] pattern.
+
+    All text is data-derived — no generic fallback placeholders allowed.
+    """
+    conclusion = f"Your system shows {aggregate_label.lower()} risk"
+    if aggregate_label == "LOW":
+        reasons = []
+        if vulnerable_dependencies == 0:
+            reasons.append("no vulnerable dependencies were detected")
+        if high_risk_repos == 0:
+            reasons.append("no high-risk repositories were found")
+        if not reasons:
+            reasons.append("no significant risk factors were detected across repositories or dependencies")
+        return conclusion + " because " + " and ".join(reasons) + "."
+    else:  # MEDIUM or HIGH
+        reasons = []
+        if vulnerable_dependencies > 0:
+            reasons.append(f"{vulnerable_dependencies} vulnerable dependenc{'y was' if vulnerable_dependencies == 1 else 'ies were'} detected")
+        if high_risk_repos > 0:
+            reasons.append(f"{high_risk_repos} repositor{'y shows' if high_risk_repos == 1 else 'ies show'} high maintenance risk")
+        if high_risk_dependencies > 0 and vulnerable_dependencies == 0:
+            reasons.append(f"{high_risk_dependencies} high-risk dependenc{'y was' if high_risk_dependencies == 1 else 'ies were'} identified")
+        if not reasons:
+            reasons.append(f"maintenance risk scores across {total_repos} analyzed repositories exceed healthy thresholds")
+        return conclusion + " because " + " and ".join(reasons) + "."
+
+
+def _generate_key_factors(aggregate_label: str, high_risk_repos: int, medium_risk_repos: int,
+                          vulnerable_dependencies: int, high_risk_dependencies: int,
+                          total_unique_dependencies: int) -> List[str]:
+    """Return 1–5 short strings identifying primary factors that influenced the risk level.
+
+    All factors are data-derived — no generic placeholders allowed.
+    """
+    factors = []
+    if vulnerable_dependencies == 0:
+        factors.append("no vulnerable dependencies")
+    else:
+        factors.append(f"{vulnerable_dependencies} vulnerable dependenc{'y' if vulnerable_dependencies == 1 else 'ies'}")
+    if high_risk_repos == 0:
+        factors.append("no high-risk repositories")
+    else:
+        factors.append(f"{high_risk_repos} high-risk repositor{'y' if high_risk_repos == 1 else 'ies'}")
+    if medium_risk_repos > 0:
+        factors.append(f"{medium_risk_repos} medium-risk repositor{'y' if medium_risk_repos == 1 else 'ies'}")
+    if high_risk_dependencies > 0:
+        factors.append(f"{high_risk_dependencies} high-risk dependenc{'y' if high_risk_dependencies == 1 else 'ies'}")
+    if total_unique_dependencies > 0 and vulnerable_dependencies == 0 and high_risk_dependencies == 0:
+        factors.append(f"{total_unique_dependencies} dependencies analyzed")
+    # Guarantee 1–5 entries
+    if not factors:
+        factors.append("no significant risk factors detected across analyzed components")
+    return factors[:5]
+
+
+def _get_recommended_action(aggregate_label: str) -> str:
+    """Return the exact recommended action string for the given aggregate risk label."""
+    actions = {
+        "LOW": "No immediate action required.",
+        "MEDIUM": "Monitor dependencies and maintenance activity.",
+        "HIGH": "Review vulnerable dependencies and high-risk repositories immediately.",
+    }
+    return actions.get(aggregate_label, "Monitor dependencies and maintenance activity.")
+
+
+def _extract_primary_risk_factor(aggregate_label: str, vulnerable_dependencies: int,
+                                 high_risk_repos: int, high_risk_dependencies: int) -> str:
+    """Return a single dominant factor string identifying what drives the system's risk level.
+
+    Selection priority:
+    1. Vulnerable dependencies > 0
+    2. High-risk repos > 0
+    3. High-risk dependencies > 0
+    4. Aggregate is LOW
+    5. Fallback (still data-derived, never generic)
+    """
+    if vulnerable_dependencies > 0:
+        return f"{vulnerable_dependencies} vulnerable dependenc{'y' if vulnerable_dependencies == 1 else 'ies'} drive elevated system risk"
+    if high_risk_repos > 0:
+        return f"{high_risk_repos} high-risk repositor{'y' if high_risk_repos == 1 else 'ies'} contribute to elevated maintenance risk"
+    if high_risk_dependencies > 0:
+        return f"{high_risk_dependencies} high-risk dependenc{'y' if high_risk_dependencies == 1 else 'ies'} identified in the supply chain"
+    if aggregate_label == "LOW":
+        return "No vulnerable dependencies detected"
+    return "No significant risk factors were detected across repositories or dependencies"
+
+
 def compute_system_risk_summary(per_repo_results: List[dict], merged_graph: dict) -> dict:
     """Compute aggregated system risk summary from per-repo results and merged graph.
 
@@ -1014,6 +1104,21 @@ def compute_system_risk_summary(per_repo_results: List[dict], merged_graph: dict
         system_summary += " with " + " and ".join(detail_parts)
     system_summary += "."
 
+    # Generate new explanation fields from helpers
+    risk_explanation = _generate_risk_explanation(
+        aggregate_label, high_risk_repos, vulnerable_dependencies,
+        high_risk_dependencies, total_repos
+    )
+    key_factors = _generate_key_factors(
+        aggregate_label, high_risk_repos, medium_risk_repos,
+        vulnerable_dependencies, high_risk_dependencies, total_unique_dependencies
+    )
+    recommended_action = _get_recommended_action(aggregate_label)
+    primary_risk_factor = _extract_primary_risk_factor(
+        aggregate_label, vulnerable_dependencies, high_risk_repos,
+        high_risk_dependencies
+    )
+
     return {
         "total_repos": total_repos,
         "high_risk_repos": high_risk_repos,
@@ -1027,6 +1132,10 @@ def compute_system_risk_summary(per_repo_results: List[dict], merged_graph: dict
         "aggregate_label": aggregate_label,
         "system_summary": system_summary,
         "per_repo_results": per_repo_results,
+        "risk_explanation": risk_explanation,
+        "key_factors": key_factors,
+        "recommended_action": recommended_action,
+        "primary_risk_factor": primary_risk_factor,
     }
 
 
@@ -1071,6 +1180,21 @@ def compute_priority_risks(per_repo_results: List[dict], merged_graph: dict) -> 
                 "priority_score": score,
                 "used_by_repos": [],
             }
+        if label == "MEDIUM":
+            repo_name = r.get("repo", "")
+            severity = "medium"
+            usage_count = 0
+            cve_count = 0
+            score = SEVERITY_BASE[severity] + (usage_count * 0.5) + (cve_count * 1.0)
+            if repo_name not in candidates or score > candidates[repo_name]["priority_score"]:
+                candidates[repo_name] = {
+                    "name": repo_name,
+                    "type": "repo",
+                    "reason": "Medium-risk repository",
+                    "severity": severity,
+                    "priority_score": score,
+                    "used_by_repos": [],
+                }
 
     # Process dependency nodes from merged graph
     nodes = merged_graph.get("nodes", [])
@@ -1177,24 +1301,150 @@ def compute_scope_status(per_repo_results: List[dict]) -> str:
     return "partial"
 
 
-def get_top_risk_drivers(per_repo_results: List[dict]) -> List[dict]:
-    """Return the top 5 repos by descending risk score.
+def get_top_risk_drivers(per_repo_results: List[dict], merged_graph: dict) -> List[dict]:
+    """Return signal objects describing the top risk drivers.
 
-    Filters out error results, sorts by risk_score descending, and returns
-    at most 5 items each containing repo, risk_score, and risk_label.
+    Generates factual signal objects with signal, category, and severity
+    fields based on repo-level and dependency-level data.
 
     Args:
         per_repo_results: List of dicts with repo, risk_score, risk_label, error.
+        merged_graph: Merged dependency graph dict with nodes and edges.
 
     Returns:
-        List of dicts with repo, risk_score, risk_label (max 5).
+        List of signal dicts with signal, category, severity — sorted by
+        severity (high first) then category priority.
     """
+    # Handle empty per_repo_results
+    if not per_repo_results:
+        return [{"signal": "No repositories analyzed yet", "category": "maintenance", "severity": "info"}]
+
+    signals: List[dict] = []
     valid = [r for r in per_repo_results if r.get("error") is None]
-    valid.sort(key=lambda x: x.get("risk_score") or 0, reverse=True)
-    return [
-        {"repo": r["repo"], "risk_score": r.get("risk_score", 0), "risk_label": r.get("risk_label", "LOW")}
-        for r in valid[:5]
-    ]
+
+    # --- Vulnerability signals from merged_graph ---
+    vuln_count = 0
+    nodes = merged_graph.get("nodes", []) if merged_graph else []
+    for node in nodes:
+        node_type = node.get("type", "")
+        if node_type in ("package", "dependency"):
+            meta = node.get("metadata", {}) or {}
+            if (meta.get("cve_count") or 0) > 0:
+                vuln_count += 1
+
+    if vuln_count == 0:
+        signals.append({"signal": "No vulnerable dependencies detected", "category": "vulnerability", "severity": "info"})
+    else:
+        signals.append({"signal": f"{vuln_count} vulnerable dependencies detected", "category": "vulnerability", "severity": "high"})
+
+    # --- Maintenance signals from per_repo_results ---
+    high_risk_repos = [r for r in valid if r.get("risk_label") == "HIGH"]
+    medium_risk_repos = [r for r in valid if r.get("risk_label") == "MEDIUM"]
+    low_risk_repos = [r for r in valid if r.get("risk_label") == "LOW"]
+
+    if len(high_risk_repos) > 0:
+        signals.append({"signal": f"{len(high_risk_repos)} repositories show high maintenance risk", "category": "maintenance", "severity": "high"})
+
+    if len(medium_risk_repos) > 0:
+        signals.append({"signal": f"{len(medium_risk_repos)} repositories show moderate maintenance risk", "category": "maintenance", "severity": "medium"})
+
+    if len(valid) > 0 and len(low_risk_repos) == len(valid):
+        signals.append({"signal": "All repositories show low maintenance risk", "category": "maintenance", "severity": "info"})
+
+    # --- Dependency signals from merged_graph ---
+    dep_repo_counts: dict = {}
+    for node in nodes:
+        node_type = node.get("type", "")
+        if node_type in ("package", "dependency"):
+            meta = node.get("metadata", {}) or {}
+            source_repos = meta.get("source_repos", []) or []
+            if len(source_repos) > 1:
+                dep_repo_counts[node.get("id", "")] = len(source_repos)
+
+    shared_deps = len(dep_repo_counts)
+    if shared_deps > 0:
+        signals.append({"signal": f"{shared_deps} dependencies shared across multiple repositories", "category": "dependency", "severity": "medium"})
+
+    # --- Positive signal guarantee for LOW aggregate risk ---
+    all_low = len(valid) > 0 and all(r.get("risk_label") == "LOW" for r in valid) and vuln_count == 0
+    if all_low:
+        # Ensure at least 1 positive signal
+        has_positive = any(s["severity"] == "info" for s in signals)
+        if not has_positive:
+            signals.append({"signal": "All components show strong maintenance activity", "category": "maintenance", "severity": "info"})
+
+    # --- Sort signals by severity then category (Task 2.2) ---
+    severity_order = {"high": 0, "medium": 1, "low": 2, "info": 3}
+    category_order = {"vulnerability": 0, "maintenance": 1, "dependency": 2}
+    signals.sort(key=lambda s: (severity_order[s["severity"]], category_order[s["category"]]))
+
+    return signals
+
+
+def compute_insight_statements(
+    system_risk_summary: dict,
+    per_repo_results: List[dict],
+    merged_graph: dict
+) -> List[str]:
+    """Generate 1–6 interpretive insight statements about overall system posture.
+
+    These are distinct from Risk Driver signals:
+    - Risk Drivers = factual ("No vulnerable dependencies detected")
+    - Insight Statements = interpretive ("Your dependency supply chain appears clean and well-maintained")
+
+    Args:
+        system_risk_summary: Dict with vulnerable_dependencies, high_risk_repos, etc.
+        per_repo_results: List of per-repo result dicts.
+        merged_graph: Merged dependency graph dict with nodes and edges.
+
+    Returns:
+        List of 1–6 interpretive strings.
+    """
+    statements: List[str] = []
+
+    vulnerable_deps = system_risk_summary.get("vulnerable_dependencies", 0) or 0
+    high_risk_repos = system_risk_summary.get("high_risk_repos", 0) or 0
+    low_risk_repos = system_risk_summary.get("low_risk_repos", 0) or 0
+    total_repos = system_risk_summary.get("total_repos", 0) or 0
+    deps_shared = system_risk_summary.get("dependencies_used_by_multiple_repos", 0) or 0
+    high_risk_deps = system_risk_summary.get("high_risk_dependencies", 0) or 0
+    aggregate_label = system_risk_summary.get("aggregate_label", "LOW")
+
+    # No vulnerable deps → clean supply chain
+    if vulnerable_deps == 0:
+        statements.append("Your dependency supply chain appears clean and well-maintained.")
+
+    # All repos low maintenance risk
+    if total_repos > 0 and low_risk_repos == total_repos:
+        statements.append("Your repositories demonstrate consistent maintenance practices.")
+
+    # N high-risk repos exist
+    if high_risk_repos > 0:
+        statements.append(
+            f"{high_risk_repos} repositor{'y requires' if high_risk_repos == 1 else 'ies require'} "
+            f"attention due to elevated maintenance risk, which may impact long-term system stability."
+        )
+
+    # Deps used by multiple repos (>= 2)
+    if deps_shared >= 2:
+        statements.append(
+            f"{deps_shared} dependencies are shared across multiple repositories, "
+            f"creating concentration points worth monitoring."
+        )
+
+    # All repos + deps low risk
+    if total_repos > 0 and low_risk_repos == total_repos and vulnerable_deps == 0 and high_risk_deps == 0:
+        statements.append("Your system appears stable and well-maintained across all analyzed components.")
+
+    # High vulnerable deps (>= 3)
+    if vulnerable_deps >= 3:
+        statements.append("Multiple vulnerable dependencies suggest the dependency supply chain needs immediate review.")
+
+    # Guarantee: return between 1 and 6 statements
+    if not statements:
+        statements.append("System risk posture has been evaluated across all analyzed components.")
+
+    return statements[:6]
 
 
 def build_scope_response(
@@ -1207,6 +1457,7 @@ def build_scope_response(
     top_risky_dependencies: List[dict],
     graph: dict,
     errors: dict,
+    insight_statements: List[str] = None,
 ) -> dict:
     """Build the canonical scope response dict.
 
@@ -1215,7 +1466,7 @@ def build_scope_response(
 
     Returns:
         Dict with scope_id, name, status, system_risk_summary, priority_risks,
-        top_risk_drivers, top_risky_dependencies, graph, errors.
+        top_risk_drivers, top_risky_dependencies, graph, errors, insight_statements.
     """
     return {
         "scope_id": scope_id,
@@ -1227,6 +1478,7 @@ def build_scope_response(
         "top_risky_dependencies": top_risky_dependencies,
         "graph": graph,
         "errors": errors,
+        "insight_statements": insight_statements or [],
     }
 
 
@@ -2881,7 +3133,8 @@ def _process_scope(scope_id: str, name: str, normalized_repos: List[str], depend
         priority_risks = compute_priority_risks(per_repo_results, merged_graph)
         top_risky_deps = compute_top_risky_dependencies(merged_graph)
         status = compute_scope_status(per_repo_results)
-        top_drivers = get_top_risk_drivers(per_repo_results)
+        top_drivers = get_top_risk_drivers(per_repo_results, merged_graph)
+        insight_statements = compute_insight_statements(system_risk_summary, per_repo_results, merged_graph)
     except Exception as e:
         # If aggregation fails, still return a valid response with what we have
         logger.error(f"Aggregation error for scope {scope_id}: {e}")
@@ -2890,7 +3143,8 @@ def _process_scope(scope_id: str, name: str, normalized_repos: List[str], depend
         priority_risks = []
         top_risky_deps = []
         status = "failed" if not any(r.get("error") is None for r in per_repo_results) else "partial"
-        top_drivers = get_top_risk_drivers(per_repo_results)
+        top_drivers = get_top_risk_drivers(per_repo_results, merged_graph)
+        insight_statements = []
         errors["_aggregation"] = str(e)
 
     # --- Build and store response ---
@@ -2904,6 +3158,7 @@ def _process_scope(scope_id: str, name: str, normalized_repos: List[str], depend
         top_risky_dependencies=top_risky_deps,
         graph=merged_graph,
         errors=errors,
+        insight_statements=insight_statements,
     )
 
     SCOPE_STORE[scope_id] = {**response, "created_at": created_at}

@@ -1,4 +1,6 @@
-# Open Source Risk Model
+# Deep Signal — Open Source Risk Intelligence Platform
+
+**Live demo:** [https://deep-signal.onrender.com](https://deep-signal.onrender.com)
 
 A modular risk-scoring engine for evaluating open-source software repositories using GitHub metadata, with interactive supply chain graph visualization.
 
@@ -135,28 +137,45 @@ Each node and edge includes provenance metadata (source, timestamp, confidence) 
 
 ## Repository Structure
 
-- `src/open_source_risk_model/`  
-  Core library code (ingestion, mappings, scoring, utilities)
-
-- `data/baseline/`  
-  Baseline population distributions used for calibration and normalization
-
-- `test/`  
-  Unit tests and validation scripts for features, mappings, and scoring logic
-
-- `spikes/`  
-  Exploratory and evaluation scripts (non-library entry points)
-
-- `docs/`  
-  Project documentation, including a detailed file-by-file guide
+- `src/open_source_risk_model/` — Core library (ingestion, parsers, scoring, resolution, tree, insights, query)
+- `api/` — FastAPI application
+- `ui/` — Frontend HTML/JS pages
+- `test/` — Unit, integration, and property-based tests
+- `scripts/` — Operational scripts (ingestion, expansion, database management)
+- `config/` — Configuration files
+- `data/` — Baseline data and SQLite databases
+- `docs/` — Public documentation
+  - `docs/architecture/` — Architecture and design documents
+  - `docs/user-guides/` — Setup, usage, and how-to guides
+  - `docs/deployment/` — Deployment and server guides
+  - `docs/development/` — Contributing, git workflow, commit guidelines
+  - `docs/api/` — API reference
+  - `docs/data/` — Data guides
+- `internal/` — Internal planning, validation, and demo notes
+- `.kiro/specs/` — Feature specifications (requirements, design, tasks)
 
 ---
 
 ## Documentation
 
-A detailed description of every module, script, and configuration file is available here:
+### Getting Started
+- **[Setup Guide](docs/SETUP.md)** — Installation and local development
+- **[Quick Start](docs/user-guides/QUICK_START.md)** — Get up and running fast
 
-**`docs/File_Guide.docx`**
+### Guides
+- **[API Documentation](docs/API.md)** — REST API endpoints and usage
+- **[Supply Chain User Guide](docs/SUPPLY_CHAIN_USER_GUIDE.md)** — Interactive graph visualization
+- **[Data Guide](docs/DATA_GUIDE.md)** — Data directory structure and management
+- **[How Dependencies Work](docs/user-guides/HOW_DEPENDENCIES_WORK.md)** — Dependency parsing and resolution
+
+### Architecture
+- **[Design Philosophy](docs/model_design_philosophy.md)** — Scoring approach and principles
+- **[Features](docs/features.md)** — Feature definitions and calculations
+- **[Graph Visualization](docs/GRAPH_VISUALIZATION.md)** — Technical details on graph rendering
+
+### Development
+- **[Contributing](CONTRIBUTING.md)** — Development setup and guidelines
+- **[Commit Guidelines](docs/development/COMMIT_GUIDELINES.md)** — Commit message conventions
 
 ---
 
@@ -323,22 +342,7 @@ See the [Supply Chain User Guide](docs/SUPPLY_CHAIN_USER_GUIDE.md) for detailed 
 
 ---
 
-## Documentation
-
-### Core Documentation
-- **[API Documentation](docs/API.md)** - REST API endpoints and usage
-- **[Data Guide](docs/DATA_GUIDE.md)** - Data directory structure and management
-- **[File Guide](docs/File_Guide.docx)** - Detailed module descriptions
-- **[Features](docs/features.md)** - Feature definitions and calculations
-- **[Design Philosophy](docs/model_design_philosophy.md)** - Scoring approach and principles
-
-### Supply Chain Graph Documentation
-- **[Supply Chain User Guide](docs/SUPPLY_CHAIN_USER_GUIDE.md)** - Interactive graph visualization features
-- **[Graph Visualization Guide](docs/GRAPH_VISUALIZATION.md)** - Technical details on graph rendering
-- **[Logging and Monitoring](docs/LOGGING_AND_MONITORING.md)** - Performance metrics and observability
-
-### Development
-- **[Contributing](CONTRIBUTING.md)** - Development setup and guidelines
+See the [Documentation](#documentation) section above for all guides and references.
 
 ---
 

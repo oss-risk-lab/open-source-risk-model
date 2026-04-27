@@ -44,7 +44,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["test"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 markers = [
     "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
 ]

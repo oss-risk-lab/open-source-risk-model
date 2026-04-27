@@ -67,6 +67,37 @@ def _migrate_schema(conn: sqlite3.Connection, target_version: int) -> None:
                 CREATE INDEX idx_repo_dependencies_resolved 
                 ON repo_dependencies(resolved_repo)
             """)
+        
+        # Migration: Add scope classification columns if missing
+        # Re-fetch columns in case they were added above
+        cursor = conn.execute("PRAGMA table_info(repo_dependencies)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+        
+        scope_columns = {
+            'dependency_scope': "TEXT DEFAULT 'unknown'",
+            'scope_confidence': "TEXT DEFAULT 'low'",
+        }
+        
+        for column_name, column_def in scope_columns.items():
+            if column_name not in existing_columns:
+                logger.info(f"Adding column {column_name} to repo_dependencies")
+                conn.execute(f"""
+                    ALTER TABLE repo_dependencies 
+                    ADD COLUMN {column_name} {column_def}
+                """)
+        
+        # Add index for dependency_scope if it doesn't exist
+        cursor = conn.execute("""
+            SELECT name FROM sqlite_master 
+            WHERE type='index' AND name='idx_repo_dependencies_scope'
+        """)
+        
+        if not cursor.fetchone():
+            logger.info("Creating index idx_repo_dependencies_scope")
+            conn.execute("""
+                CREATE INDEX idx_repo_dependencies_scope 
+                ON repo_dependencies(dependency_scope)
+            """)
     
     # Check if repo_cves table exists before migrating it
     cursor = conn.execute("""
@@ -235,6 +266,8 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 resolved_repo TEXT,
                 resolution_confidence REAL,
                 resolution_method TEXT,
+                dependency_scope TEXT DEFAULT 'unknown',
+                scope_confidence TEXT DEFAULT 'low',
                 UNIQUE(repo_full_name, package_name, manifest_path)
             );
             
@@ -297,6 +330,9 @@ def init_database(db_path: str = "data/graphs.db") -> None:
             
             CREATE INDEX IF NOT EXISTS idx_repo_dependencies_resolved 
                 ON repo_dependencies(resolved_repo);
+            
+            CREATE INDEX IF NOT EXISTS idx_repo_dependencies_scope 
+                ON repo_dependencies(dependency_scope);
             
             CREATE INDEX IF NOT EXISTS idx_package_mappings_repo 
                 ON package_mappings(repo_full_name);

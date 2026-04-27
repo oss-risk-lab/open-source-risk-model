@@ -262,3 +262,6 @@ site/
 *.temp
 .tmp/
 .temp/
+
+# Database backups (generated locally)
+backups/

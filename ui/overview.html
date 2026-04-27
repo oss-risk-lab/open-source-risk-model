@@ -335,11 +335,99 @@
       font-size: 13px;
     }
 
+    /* Primary Risk Factor */
+    .primary-risk-factor{
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: var(--sp-12) auto 0;
+      max-width: 600px;
+    }
+
+    /* Risk Explanation */
+    .risk-explanation{
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: var(--sp-8) auto 0;
+    }
+
+    /* Key Factors Row */
+    .key-factors-row{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--sp-8);
+      margin: var(--sp-12) auto 0;
+      max-width: 600px;
+    }
+    .key-factor-tag{
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      background: var(--accent-muted);
+      color: var(--accent);
+    }
+
+    /* Recommended Action */
+    .recommended-action{
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: var(--sp-12) auto 0;
+      max-width: 600px;
+    }
+
+    /* Insight Statements Box */
+    .insight-statements-box{
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--sp-16);
+      margin: var(--sp-16) auto 0;
+      max-width: 600px;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Signal Card */
+    .signal-card{
+      display: flex;
+      align-items: center;
+      gap: var(--sp-12);
+      padding: var(--sp-12) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .signal-card:last-child{
+      border-bottom: none;
+    }
+    .signal-card-text{
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    /* Severity badge for info level */
+    .severity-info{ background: var(--accent-muted); color: var(--accent); }
+
+    /* Category badge types for signal cards */
+    .type-badge-vulnerability{ background: var(--status-high-bg); color: var(--status-high-text); }
+    .type-badge-maintenance{ background: rgba(234,88,12,0.12); color: #fb923c; }
+
     /* Responsive */
     @media (max-width: 700px){
       .kpi-row{ flex-direction: column; }
       .action-links{ flex-direction: column; }
       .risk-summary-section{ padding: var(--sp-24) var(--sp-16); }
+      .key-factors-row{ justify-content: center; }
     }
   </style>
 </head>
@@ -470,6 +558,59 @@ function renderRiskSummary(data) {
 
   var summaryText = summary.system_summary || "";
   document.getElementById("systemSummary").textContent = summaryText;
+
+  var container = document.querySelector(".risk-summary-section");
+
+  // Primary risk factor — bold text under the risk badge
+  if (summary.primary_risk_factor) {
+    var prfEl = document.createElement("div");
+    prfEl.className = "primary-risk-factor";
+    prfEl.textContent = summary.primary_risk_factor;
+    container.appendChild(prfEl);
+  }
+
+  // Risk explanation — paragraph below primary risk factor
+  if (summary.risk_explanation) {
+    var reEl = document.createElement("div");
+    reEl.className = "risk-explanation";
+    reEl.textContent = summary.risk_explanation;
+    container.appendChild(reEl);
+  }
+
+  // Key factors — row of small tag/chip elements
+  if (summary.key_factors && summary.key_factors.length > 0) {
+    var kfRow = document.createElement("div");
+    kfRow.className = "key-factors-row";
+    for (var i = 0; i < summary.key_factors.length; i++) {
+      var tag = document.createElement("span");
+      tag.className = "type-badge key-factor-tag";
+      tag.textContent = summary.key_factors[i];
+      kfRow.appendChild(tag);
+    }
+    container.appendChild(kfRow);
+  }
+
+  // Recommended action — call-to-action line
+  if (summary.recommended_action) {
+    var raEl = document.createElement("div");
+    raEl.className = "recommended-action";
+    raEl.textContent = summary.recommended_action;
+    container.appendChild(raEl);
+  }
+
+  // Insight statements — light background box with italic text
+  var statements = data.insight_statements || [];
+  if (statements.length > 0) {
+    var isBox = document.createElement("div");
+    isBox.className = "insight-statements-box";
+    for (var j = 0; j < statements.length; j++) {
+      var p = document.createElement("p");
+      p.style.margin = j === 0 ? "0" : "var(--sp-8) 0 0";
+      p.textContent = statements[j];
+      isBox.appendChild(p);
+    }
+    container.appendChild(isBox);
+  }
 }
 
 /* ── Task 7.3: KPI Cards ── */
@@ -509,7 +650,18 @@ function renderPriorityRisks(data) {
   container.innerHTML = "";
 
   if (risks.length === 0) {
-    container.innerHTML = '<div class="empty-section">No priority risks identified.</div>';
+    var aggregateLabel = ((data.system_risk_summary || {}).aggregate_label || "").toUpperCase();
+    var emptyMsg;
+    if (aggregateLabel === "LOW") {
+      emptyMsg = "No priority risks found \u2014 your system shows low risk across all analyzed components.";
+    } else if (aggregateLabel === "MEDIUM") {
+      emptyMsg = "No critical risks identified, but your system shows moderate risk that warrants monitoring.";
+    } else if (aggregateLabel === "HIGH") {
+      emptyMsg = "Risk data is being evaluated. Review individual repository insights for detailed analysis.";
+    } else {
+      emptyMsg = "No priority risks identified.";
+    }
+    container.innerHTML = '<div class="empty-section">' + emptyMsg + '</div>';
     return;
   }
 
@@ -575,27 +727,53 @@ function renderRiskDrivers(data) {
 
   for (var i = 0; i < drivers.length; i++) {
     var d = drivers[i];
-    var item = document.createElement("div");
-    item.className = "risk-driver-item";
 
-    var nameLink = document.createElement("a");
-    nameLink.className = "risk-driver-name";
-    nameLink.textContent = d.repo || "";
-    nameLink.href = buildPageUrl("insights.html", d.repo, scopeId);
-    item.appendChild(nameLink);
+    // Check for signal field — if absent, fall back to old repo-list rendering (backward compatibility)
+    if (!d.signal) {
+      var item = document.createElement("div");
+      item.className = "risk-driver-item";
 
-    var labelBadge = document.createElement("span");
-    var riskLabel = (d.risk_label || "LOW").toUpperCase();
-    labelBadge.className = "risk-driver-label risk-driver-label-" + riskLabel.toLowerCase();
-    labelBadge.textContent = riskLabel;
-    item.appendChild(labelBadge);
+      var nameLink = document.createElement("a");
+      nameLink.className = "risk-driver-name";
+      nameLink.textContent = d.repo || "";
+      nameLink.href = buildPageUrl("insights.html", d.repo, scopeId);
+      item.appendChild(nameLink);
 
-    var scoreEl = document.createElement("span");
-    scoreEl.className = "risk-driver-score";
-    scoreEl.textContent = d.risk_score != null ? d.risk_score.toFixed(2) : "N/A";
-    item.appendChild(scoreEl);
+      var labelBadge = document.createElement("span");
+      var riskLabel = (d.risk_label || "LOW").toUpperCase();
+      labelBadge.className = "risk-driver-label risk-driver-label-" + riskLabel.toLowerCase();
+      labelBadge.textContent = riskLabel;
+      item.appendChild(labelBadge);
 
-    container.appendChild(item);
+      var scoreEl = document.createElement("span");
+      scoreEl.className = "risk-driver-score";
+      scoreEl.textContent = d.risk_score != null ? d.risk_score.toFixed(2) : "N/A";
+      item.appendChild(scoreEl);
+
+      container.appendChild(item);
+      continue;
+    }
+
+    // Signal card rendering
+    var card = document.createElement("div");
+    card.className = "signal-card";
+
+    var catBadge = document.createElement("span");
+    catBadge.className = "type-badge type-badge-" + (d.category || "maintenance");
+    catBadge.textContent = d.category || "maintenance";
+    card.appendChild(catBadge);
+
+    var textEl = document.createElement("span");
+    textEl.className = "signal-card-text";
+    textEl.textContent = d.signal;
+    card.appendChild(textEl);
+
+    var sevBadge = document.createElement("span");
+    sevBadge.className = "severity-badge severity-" + (d.severity || "info");
+    sevBadge.textContent = d.severity || "info";
+    card.appendChild(sevBadge);
+
+    container.appendChild(card);
   }
 }
 
@@ -607,7 +785,20 @@ function renderRiskyDeps(data) {
   container.innerHTML = "";
 
   if (deps.length === 0) {
-    container.innerHTML = '<div class="empty-section">No risky dependencies identified.</div>';
+    container.innerHTML = '<div class="empty-section">No risky dependencies identified across your analyzed components.</div>';
+    return;
+  }
+
+  // Check if all deps are low-risk
+  var allLow = true;
+  for (var k = 0; k < deps.length; k++) {
+    if (deps[k].risk_label && deps[k].risk_label.toUpperCase() !== "LOW") {
+      allLow = false;
+      break;
+    }
+  }
+  if (allLow) {
+    container.innerHTML = '<div class="empty-section">All analyzed dependencies show low risk \u2014 no immediate concerns.</div>';
     return;
   }
 

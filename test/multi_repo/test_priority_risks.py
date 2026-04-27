@@ -156,14 +156,18 @@ class TestComputePriorityRisks:
         result = compute_priority_risks([], graph)
         assert result == []
 
-    def test_low_and_medium_repos_excluded(self):
-        """Only HIGH-risk repos become candidates, not LOW or MEDIUM."""
+    def test_low_repos_excluded_medium_included(self):
+        """LOW-risk repos are excluded; MEDIUM-risk repos are included as candidates (Requirement 3.4)."""
         per_repo = [
             {"repo": "org/low", "risk_score": 0.1, "risk_label": "LOW", "error": None},
             {"repo": "org/med", "risk_score": 0.4, "risk_label": "MEDIUM", "error": None},
         ]
         result = compute_priority_risks(per_repo, {"nodes": [], "edges": []})
-        assert result == []
+        names = [r["name"] for r in result]
+        assert "org/low" not in names
+        assert "org/med" in names
+        med_item = [r for r in result if r["name"] == "org/med"][0]
+        assert med_item["severity"] == "medium"
 
     def test_priority_score_formula(self):
         """Verify the exact priority_score formula."""

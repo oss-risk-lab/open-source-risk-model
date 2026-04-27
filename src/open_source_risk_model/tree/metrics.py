@@ -2,10 +2,23 @@
 
 from __future__ import annotations
 
+import sqlite3
+from collections import Counter
 from typing import Any, Dict, List, Optional
 
 from open_source_risk_model.tree.models import SummaryMetrics, TreeNode
 from open_source_risk_model.tree.tree_utils import walk_tree
+
+# Mapping from dependency_scope DB values to SummaryMetrics field names
+_SCOPE_TO_FIELD = {
+    "runtime": "direct_runtime_dependency_count",
+    "dev": "direct_dev_dependency_count",
+    "test": "direct_test_dependency_count",
+    "build": "direct_build_dependency_count",
+    "optional": "direct_optional_dependency_count",
+    "peer": "direct_peer_dependency_count",
+    "unknown": "direct_unknown_dependency_count",
+}
 
 
 class SummaryMetricsCalculator:
@@ -17,16 +30,23 @@ class SummaryMetricsCalculator:
     satisfy those criteria.
     """
 
+    def __init__(self, db_path: str = "data/graphs.db") -> None:
+        self.db_path = db_path
+
     def calculate_metrics(
         self,
         tree_root: TreeNode,
         filters_applied: List[str],
+        repo_full_name: Optional[str] = None,
     ) -> SummaryMetrics:
         """Calculate summary metrics for the given tree.
 
         Args:
             tree_root: Root node of the (possibly filtered) tree.
             filters_applied: List of filter names that were applied.
+            repo_full_name: Optional repo identifier. When provided, scope
+                breakdown counts are computed directly from the
+                ``repo_dependencies`` table (not from tree nodes).
 
         Returns:
             SummaryMetrics with aggregate statistics.
@@ -68,6 +88,11 @@ class SummaryMetricsCalculator:
         total = direct + transitive
         riskiest_branch = self._find_riskiest_branch(tree_root)
 
+        # Compute scope breakdown counts from repo_dependencies table
+        scope_kwargs: Dict[str, Any] = {}
+        if repo_full_name is not None:
+            scope_kwargs = self._compute_scope_counts(repo_full_name)
+
         return SummaryMetrics(
             total_dependencies=total,
             direct_dependencies=direct,
@@ -77,6 +102,7 @@ class SummaryMetricsCalculator:
             max_depth=max_depth,
             riskiest_branch=riskiest_branch,
             filters_applied=list(filters_applied),
+            **scope_kwargs,
         )
 
     def _find_riskiest_branch(
@@ -122,3 +148,46 @@ class SummaryMetricsCalculator:
         dfs(root, [root.id], root_risk)
 
         return {"path": best_path, "cumulative_risk": best_score}
+
+    # ------------------------------------------------------------------
+    # Scope breakdown counts (Phase 1 — direct dependencies only)
+    # ------------------------------------------------------------------
+
+    def _compute_scope_counts(self, repo_full_name: str) -> Dict[str, Any]:
+        """Query ``repo_dependencies`` for *repo_full_name* and return scope counts.
+
+        Counts are derived strictly from the ``repo_dependencies`` table
+        (``WHERE repo_full_name = ?``).  Each row is counted exactly once
+        toward its ``dependency_scope`` bucket.  No tree-node or
+        resolved-dependency logic is involved.
+
+        Returns a dict suitable for unpacking into the ``SummaryMetrics``
+        constructor (field-name → int).
+        """
+        counts: Counter[str] = Counter()
+
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.execute(
+                "SELECT dependency_scope FROM repo_dependencies "
+                "WHERE repo_full_name = ?",
+                (repo_full_name,),
+            )
+            for (scope_value,) in cursor:
+                # Normalise NULL / empty to "unknown"
+                scope_value = scope_value or "unknown"
+                counts[scope_value] += 1
+            conn.close()
+        except Exception:
+            # On any DB error, leave counts at zero (safe default)
+            pass
+
+        result: Dict[str, Any] = {}
+        total = 0
+        for scope, field_name in _SCOPE_TO_FIELD.items():
+            count = counts.get(scope, 0)
+            result[field_name] = count
+            total += count
+
+        result["direct_total_dependency_count"] = total
+        return result

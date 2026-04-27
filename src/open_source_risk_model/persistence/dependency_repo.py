@@ -101,8 +101,9 @@ class DependencyRepository:
                     INSERT OR REPLACE INTO repo_dependencies
                     (repo_full_name, package_name, registry_type, specifier,
                      extras, markers, dependency_group, is_direct, is_optional,
-                     manifest_path, confidence, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     manifest_path, confidence, created_at,
+                     dependency_scope, scope_confidence)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     repo_full_name,
                     dep['package_name'],
@@ -115,7 +116,9 @@ class DependencyRepository:
                     dep.get('is_optional', False),
                     dep['manifest_path'],
                     dep.get('confidence', 0.9),
-                    now
+                    now,
+                    dep.get('dependency_scope', 'unknown'),
+                    dep.get('scope_confidence', 'low'),
                 ))
             
             conn.execute("COMMIT")
