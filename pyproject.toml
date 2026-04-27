@@ -43,7 +43,7 @@ Repository = "https://github.com/oss-risk-lab/open-source-risk-model"
 where = ["src"]
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 pythonpath = ["src", "."]
 markers = [
     "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",

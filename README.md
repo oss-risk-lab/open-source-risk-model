@@ -140,7 +140,7 @@ Each node and edge includes provenance metadata (source, timestamp, confidence) 
 - `src/open_source_risk_model/` — Core library (ingestion, parsers, scoring, resolution, tree, insights, query)
 - `api/` — FastAPI application
 - `ui/` — Frontend HTML/JS pages
-- `test/` — Unit, integration, and property-based tests
+- `tests/` — Unit, integration, and property-based tests
 - `scripts/` — Operational scripts (ingestion, expansion, database management)
 - `config/` — Configuration files
 - `data/` — Baseline data and SQLite databases

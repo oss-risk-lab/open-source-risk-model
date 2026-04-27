@@ -1,6 +1,9 @@
 # macOS system files
 .DS_Store
 
+# Kiro IDE specs (internal development tooling)
+.kiro/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -265,3 +268,4 @@ site/
 
 # Database backups (generated locally)
 backups/
+internal/archive/backups/
