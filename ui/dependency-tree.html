@@ -167,6 +167,29 @@
     .badge.error-badge{ background:var(--status-high-bg); color:var(--status-high-text); border-color:var(--status-high-border); }
     .badge.ecosystem{ background:var(--bg-overlay); color:var(--text-tertiary); }
 
+    /* Scope badges — tiered visual weight */
+    .badge.scope-runtime {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    .badge.scope-dev {
+      background: var(--bg-overlay);
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+    .badge.scope-neutral {
+      background: var(--bg-overlay);
+      color: var(--text-tertiary);
+      border-color: var(--border);
+    }
+    .badge.scope-unknown {
+      background: transparent;
+      color: var(--text-tertiary);
+      border-color: var(--border-subtle);
+      border-style: dashed;
+    }
+
     .truncation-row{
       margin-left:38px; padding:var(--sp-4) var(--sp-8); font-size:12px;
       color:var(--text-tertiary); font-style:italic; cursor:default;
@@ -289,6 +312,18 @@
           <option value="10">10</option><option value="25">25</option><option value="50">50</option>
         </select>
       </div>
+      <div class="filter-group" id="scopeFilterGroup" style="display:none;">
+        <span>Scope:</span>
+        <select id="scopeFilter" aria-label="Filter by scope">
+          <option value="">All</option>
+          <option value="runtime-direct">Runtime only</option>
+          <option value="runtime-all">Runtime + transitive</option>
+          <option value="dev-test">Dev/Test</option>
+          <option value="build">Build</option>
+          <option value="optional-peer">Optional/Peer</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </div>
       <button id="expandAllBtn" class="btn btn-sm">Expand all</button>
       <button id="collapseAllBtn" class="btn btn-sm">Collapse all</button>
       <button id="resetBtn" class="btn btn-sm">Reset</button>
@@ -311,6 +346,11 @@
           <div class="icon" style="opacity:0.4;"><i data-lucide="package" style="width:36px;height:36px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
           <div class="msg">No dependencies found for this repository.</div>
           <div class="sub">This repo has zero declared dependencies.</div>
+        </div>
+        <div id="scopeFilterEmptyState" class="state-msg" style="display:none;">
+          <div class="icon" style="opacity:0.4;"><i data-lucide="filter" style="width:36px;height:36px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
+          <div class="msg">No dependencies match the selected scope filter.</div>
+          <div class="sub">Try selecting a different scope or choose "All" to see all dependencies.</div>
         </div>
         <div id="treeRoot" style="display:none;"></div>
       </div>
@@ -337,6 +377,46 @@
         <div id="treeSummaryContent">
           <div style="font-size:12px;color:var(--text-tertiary);">Load a tree to see summary</div>
         </div>
+      </div>
+
+      <!-- Scope Insight Card (Phase 4) -->
+      <div id="scopeInsightPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+        <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+          <h3 class="section-title" style="font-size:12px;">Scope-Weighted Risk</h3>
+        </div>
+        <div id="scopeInsightCard"></div>
+      </div>
+
+      <!-- What to Fix First (Phase 5) -->
+      <div id="fixFirstPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+              <h3 class="section-title" style="font-size:12px;">What to Fix First</h3>
+          </div>
+          <div id="fixFirstContent"></div>
+      </div>
+
+      <!-- Risk Breakdown (Phase 5) -->
+      <div id="riskBreakdownPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+              <h3 class="section-title" style="font-size:12px;">Risk Breakdown</h3>
+          </div>
+          <div id="riskBreakdownContent"></div>
+      </div>
+
+      <!-- Summary Narrative (Phase 5) -->
+      <div id="narrativePanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+              <h3 class="section-title" style="font-size:12px;">Summary</h3>
+          </div>
+          <div id="narrativeContent"></div>
+      </div>
+
+      <!-- Confidence Indicator (Phase 5) -->
+      <div id="confidencePanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+              <h3 class="section-title" style="font-size:12px;">Analysis Confidence</h3>
+          </div>
+          <div id="confidenceContent"></div>
       </div>
     </div>
   </div>

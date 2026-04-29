@@ -40,6 +40,130 @@ const directOnly      = $("directOnly");
 const sortBySelect    = $("sortBySelect");
 const truncateSelect  = $("truncateSelect");
 
+// ─── Scope constants ─────────────────────────────────────────────────
+const SCOPE_BADGE_CLASSES = {
+  runtime:  "scope-runtime",
+  dev:      "scope-dev",
+  test:     "scope-dev",
+  build:    "scope-dev",
+  optional: "scope-neutral",
+  peer:     "scope-neutral",
+  unknown:  "scope-unknown",
+};
+
+const SCOPE_TOOLTIPS = {
+  runtime:  "Runtime: loaded when your application runs",
+  dev:      "Dev: used only during development",
+  test:     "Test: used only during testing",
+  build:    "Build: used during compilation or build process",
+  optional: "Optional: not required for core functionality",
+  peer:     "Peer: expected to be provided by the consumer",
+  unknown:  "Unknown: scope could not be determined from manifests",
+};
+
+const SCOPE_FILTER_RULES = {
+  "runtime-direct": (node) => node.dependency_scope === "runtime" && node.depth === 1,
+  "runtime-all":    (node) => node.dependency_scope === "runtime",
+  "dev-test":       (node) => node.dependency_scope === "dev" || node.dependency_scope === "test",
+  "build":          (node) => node.dependency_scope === "build",
+  "optional-peer":  (node) => node.dependency_scope === "optional" || node.dependency_scope === "peer",
+  "unknown":        (node) => node.dependency_scope === "unknown",
+};
+
+// ─── Scope data detection helpers ────────────────────────────────────
+
+/**
+ * Check if the API response contains scope-related fields at all.
+ * Used to decide whether to render the scope summary section.
+ */
+function hasScopeFields(data) {
+  if (!data || !data.summary_metrics) return false;
+  const m = data.summary_metrics;
+  return m.direct_runtime_dependency_count != null
+      || m.direct_dev_dependency_count != null
+      || m.direct_total_dependency_count != null;
+}
+
+/**
+ * Recursively check if any tree node has a non-null dependency_scope.
+ */
+function treeHasAnyScope(node) {
+  if (!node) return false;
+  if (node.dependency_scope) return true;
+  if (node.children) {
+    return node.children.some(child => treeHasAnyScope(child));
+  }
+  return false;
+}
+
+/**
+ * Check if the API response contains meaningful (non-trivial) scope data.
+ * Returns true if at least one non-unknown scope count > 0,
+ * OR at least one tree node has a non-null dependency_scope.
+ * Used to decide whether to show the scope filter and full breakdown.
+ */
+function hasMeaningfulScopeData(data) {
+  if (!data || !data.summary_metrics) return false;
+  const m = data.summary_metrics;
+  if ((m.direct_runtime_dependency_count || 0) > 0
+      || (m.direct_dev_dependency_count || 0) > 0
+      || (m.direct_test_dependency_count || 0) > 0
+      || (m.direct_build_dependency_count || 0) > 0
+      || (m.direct_optional_dependency_count || 0) > 0
+      || (m.direct_peer_dependency_count || 0) > 0) {
+    return true;
+  }
+  if (data.tree) {
+    return treeHasAnyScope(data.tree);
+  }
+  return false;
+}
+
+// ─── Scope filtering ─────────────────────────────────────────────────
+
+/**
+ * Check if a node matches the active scope filter.
+ * Uses SCOPE_FILTER_RULES exclusively — no duplicated filter logic.
+ */
+function matchesScopeFilter(node, scopeFilter) {
+  if (!scopeFilter) return true; // "All" — no filtering
+  const rule = SCOPE_FILTER_RULES[scopeFilter];
+  return rule ? rule(node) : true;
+}
+
+/**
+ * Filter a tree by scope, preserving ancestor paths for matching nodes.
+ * Returns a new tree (immutable — does not modify the original).
+ * Preserved ancestors retain their original dependency_scope values.
+ */
+function filterTreeByScope(tree, scopeFilter) {
+  if (!scopeFilter) return tree; // "All" — return original tree
+
+  function cloneAndFilter(node) {
+    // Check if this node matches
+    const nodeMatches = matchesScopeFilter(node, scopeFilter);
+
+    // Recursively filter children
+    let filteredChildren = [];
+    if (node.children) {
+      for (const child of node.children) {
+        const result = cloneAndFilter(child);
+        if (result) filteredChildren.push(result);
+      }
+    }
+
+    // Include this node if it matches OR if any descendant matches (ancestor preservation)
+    if (nodeMatches || filteredChildren.length > 0) {
+      // Clone the node — preserve all original properties including dependency_scope
+      return Object.assign({}, node, { children: filteredChildren });
+    }
+
+    return null; // Exclude this subtree
+  }
+
+  return cloneAndFilter(tree) || Object.assign({}, tree, { children: [] });
+}
+
 // ─── Occurrence key generation ───────────────────────────────────────
 // Because the same canonical ID can appear in multiple branches,
 // we use a path-based key: parentKey/index:id
@@ -58,6 +182,7 @@ function readUrlState() {
     directOnly: params.get("directOnly") === "true",
     sortBy: params.get("sortBy") || "",
     truncateAfterChildren: params.get("truncateAfterChildren") || "",
+    scopeFilter: params.get("scopeFilter") || "",
   };
 }
 
@@ -71,6 +196,8 @@ function writeUrlState() {
   if (directOnly.checked) params.set("directOnly", "true");
   if (sortBySelect.value) params.set("sortBy", sortBySelect.value);
   if (truncateSelect.value) params.set("truncateAfterChildren", truncateSelect.value);
+  const scopeFilterEl = $("scopeFilter");
+  if (scopeFilterEl && scopeFilterEl.value) params.set("scopeFilter", scopeFilterEl.value);
   const qs = params.toString();
   const url = window.location.pathname + (qs ? "?" + qs : "");
   window.history.replaceState(null, "", url);
@@ -85,6 +212,8 @@ function applyUrlState() {
   directOnly.checked = s.directOnly;
   sortBySelect.value = s.sortBy;
   truncateSelect.value = s.truncateAfterChildren;
+  const scopeFilterEl = $("scopeFilter");
+  if (scopeFilterEl) scopeFilterEl.value = s.scopeFilter;
 }
 
 // ─── API client ──────────────────────────────────────────────────────
@@ -111,6 +240,71 @@ async function fetchTree(repo) {
     throw new Error(`HTTP ${res.status}: ${msg}`);
   }
   return body;
+}
+
+// ─── Rendering: Scope Summary ────────────────────────────────────────
+
+function scopeCard(label, count, isRuntime) {
+  const borderStyle = isRuntime ? "border-top:2px solid var(--accent);" : "";
+  return `<div class="stat-card ds-kpi" style="${borderStyle}">
+    <div class="ds-kpi-value">${count}</div>
+    <div class="ds-kpi-label">${label}</div>
+  </div>`;
+}
+
+function renderScopeSummary(data) {
+  if (!hasScopeFields(data)) return "";
+
+  if (!hasMeaningfulScopeData(data)) {
+    return `<div class="scope-summary-unavailable" style="margin-top:1rem;padding:0.75rem 1rem;background:var(--bg-overlay);border:1px solid var(--border);border-radius:8px;color:var(--text-secondary);font-size:0.85rem;">
+      Scope data is limited or unavailable for this repository.
+    </div>`;
+  }
+
+  const m = data.summary_metrics;
+  const runtime = m.direct_runtime_dependency_count || 0;
+  const devTest = (m.direct_dev_dependency_count || 0) + (m.direct_test_dependency_count || 0);
+  const build = m.direct_build_dependency_count || 0;
+  const optionalPeer = (m.direct_optional_dependency_count || 0) + (m.direct_peer_dependency_count || 0);
+  const unknown = m.direct_unknown_dependency_count || 0;
+  const transitiveRuntime = m.transitive_runtime_dependency_count || 0;
+
+  const label = m.scope_classification_label || "";
+  const note = m.scope_note || "";
+
+  let html = `<div class="scope-summary" style="margin-top:1rem;">`;
+  if (label) html += `<div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.5rem;">${label}</div>`;
+
+  // Direct dependencies section
+  html += `<div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:0.25rem;">Direct Dependencies</div>`;
+  html += `<div class="summary-grid" style="margin-bottom:0.75rem;">`;
+  html += scopeCard("Runtime", runtime, true);
+  html += scopeCard("Dev/Test", devTest, false);
+  html += scopeCard("Build", build, false);
+  html += scopeCard("Optional/Peer", optionalPeer, false);
+  html += scopeCard("Unknown", unknown, false);
+  html += `</div>`;
+
+  // Transitive dependencies section
+  html += `<div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:0.25rem;">Transitive Dependencies</div>`;
+  html += `<div class="summary-grid" style="margin-bottom:0.5rem;">`;
+  html += scopeCard("Runtime", transitiveRuntime, true);
+  html += `</div>`;
+
+  // Helper text
+  html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.5rem;">`;
+  html += `Dependency scope is classified from manifests and may not reflect actual runtime usage.`;
+  html += `</div>`;
+  html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.25rem;">`;
+  html += `Only runtime scope is currently tracked for transitive dependencies. Dev/test/build/optional/peer counts represent direct dependencies only.`;
+  html += `</div>`;
+
+  if (note) {
+    html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.25rem;">${note}</div>`;
+  }
+
+  html += `</div>`;
+  return html;
 }
 
 // ─── Rendering: Summary ──────────────────────────────────────────────
@@ -152,6 +346,9 @@ function renderSummary(data) {
       <div class="label ds-kpi-label">${s.label}</div>
     </div>`
   ).join("");
+
+  // Append scope summary after the existing stat cards
+  summaryGrid.innerHTML += renderScopeSummary(data);
 
   summarySection.style.display = "block";
 
@@ -383,6 +580,12 @@ function buildBadges(node) {
   if (node.resolution_status === "error") {
     parts.push(`<span class="badge error-badge">error</span>`);
   }
+  // Scope badge
+  if (node.dependency_scope) {
+    const scopeClass = SCOPE_BADGE_CLASSES[node.dependency_scope] || "scope-unknown";
+    const tooltip = SCOPE_TOOLTIPS[node.dependency_scope] || "";
+    parts.push(`<span class="badge ${scopeClass}" title="${tooltip}">${node.dependency_scope}</span>`);
+  }
   return parts.join("");
 }
 
@@ -522,6 +725,8 @@ function showState(state) {
   loadingState.style.display = state === "loading" ? "flex" : "none";
   emptyState.style.display = state === "empty" ? "flex" : "none";
   treeRoot.style.display = state === "tree" ? "block" : "none";
+  const scopeEmptyState = $("scopeFilterEmptyState");
+  if (scopeEmptyState) scopeEmptyState.style.display = "none";
 }
 
 function showError(msg) {
@@ -532,7 +737,203 @@ function showError(msg) {
 // ─── Rerender (UI state only, no fetch) ──────────────────────────────
 function rerender() {
   if (!currentResponse) return;
-  renderTree(currentResponse);
+  const scopeFilterEl = $("scopeFilter");
+  const scopeVal = scopeFilterEl ? scopeFilterEl.value : "";
+  const scopeEmptyState = $("scopeFilterEmptyState");
+
+  if (scopeVal) {
+    const filteredTree = filterTreeByScope(currentResponse.tree, scopeVal);
+    const hasChildren = filteredTree.children && filteredTree.children.length > 0;
+    if (!hasChildren && filteredTree.node_type === "repository") {
+      // No nodes match — show scope empty state
+      treeRoot.style.display = "none";
+      emptyState.style.display = "none";
+      if (scopeEmptyState) scopeEmptyState.style.display = "flex";
+    } else {
+      if (scopeEmptyState) scopeEmptyState.style.display = "none";
+      renderTree({ ...currentResponse, tree: filteredTree });
+    }
+  } else {
+    if (scopeEmptyState) scopeEmptyState.style.display = "none";
+    renderTree(currentResponse);
+  }
+  writeUrlState();
+}
+
+// ─── Scope Insight Card (Phase 4) ────────────────────────────────────
+
+/**
+ * Render the Scope Insight Card from /api/insights/{owner}/{repo} response.
+ * Shows score, label, runtime exposure, vulnerable runtime count, top drivers, and notes.
+ * Distinguishes between score=0.0 (valid low-risk) and missing data (unavailable).
+ */
+function renderScopeInsightCard(insightData) {
+  const container = $("scopeInsightCard");
+  const panel = $("scopeInsightPanel");
+  if (!container || !panel) return;
+
+  const swr = insightData?.scope_weighted_risk;
+
+  if (!swr || swr.scope_weighted_dependency_risk == null) {
+    // Unavailable state (Req 9.7, 9.9)
+    container.innerHTML = '<div style="font-size:12px;color:var(--text-tertiary);">Scope-weighted risk is not available for this repository.</div>';
+    panel.style.display = "";
+    return;
+  }
+
+  // Score = 0.0 with valid data → show "low" label (Req 9.9)
+  const score = swr.scope_weighted_dependency_risk;
+  const label = swr.risk_label;
+  const color = label === "high" ? "var(--status-high-text)" : label === "medium" ? "var(--status-medium-text)" : "var(--status-low-text)";
+
+  let html = '<div style="display:flex;align-items:baseline;gap:var(--sp-8);margin-bottom:var(--sp-8);">';
+  html += '<span style="font-size:18px;font-weight:700;font-family:var(--font-mono);color:' + color + ';">' + (score * 100).toFixed(1) + '%</span>';
+  html += '<span class="badge" style="color:' + color + ';">' + label + '</span>';
+  html += '</div>';
+
+  // Runtime exposure (Req 9.3)
+  const metrics = currentResponse?.summary_metrics;
+  if (metrics?.runtime_dependency_exposure != null) {
+    html += '<div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--sp-4);">Runtime exposure: ' + (metrics.runtime_dependency_exposure * 100).toFixed(0) + '%</div>';
+  }
+
+  // Vulnerable runtime count (Req 9.4)
+  if (metrics?.vulnerable_runtime_dependency_count != null) {
+    html += '<div style="font-size:12px;color:var(--text-secondary);margin-bottom:var(--sp-4);">Vulnerable runtime deps: ' + metrics.vulnerable_runtime_dependency_count + '</div>';
+  }
+
+  // Top drivers (Req 9.5)
+  if (swr.top_drivers?.length > 0) {
+    html += '<div style="margin-top:var(--sp-8);margin-bottom:var(--sp-4);font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Top Risk Drivers</div>';
+    for (const d of swr.top_drivers) {
+      const badgeClass = SCOPE_BADGE_CLASSES[d.scope] || "scope-unknown";
+      html += '<div style="display:flex;align-items:center;gap:var(--sp-4);font-size:12px;padding:var(--sp-4) 0;border-bottom:1px solid var(--border-subtle);">';
+      html += '<span style="font-weight:600;color:var(--text-primary);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + d.package + '</span>';
+      html += '<span class="badge ' + badgeClass + '" style="font-size:9px;">' + d.scope + '</span>';
+      html += '<span style="color:var(--text-tertiary);flex-shrink:0;">' + (d.contribution * 100).toFixed(1) + '%</span>';
+      html += '</div>';
+    }
+  }
+
+  // Notes (Req 9.6)
+  if (swr.scope_note) {
+    html += '<div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--sp-8);line-height:1.4;">' + swr.scope_note + '</div>';
+  }
+  if (swr.confidence_note) {
+    html += '<div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--sp-4);line-height:1.4;">' + swr.confidence_note + '</div>';
+  }
+
+  container.innerHTML = html;
+  panel.style.display = "";
+}
+
+// ─── Phase 5: Actionable Insight Panels ──────────────────────────────
+
+function renderFixFirst(insightData) {
+    const recs = insightData?.priority_recommendations;
+    const container = document.getElementById("fixFirstContent");
+    const panel = document.getElementById("fixFirstPanel");
+    if (!container || !panel) return;
+
+    if (!recs || recs.length === 0) {
+        container.innerHTML = '<div style="font-size:12px;color:var(--text-tertiary);">No high-priority issues found.</div>';
+        panel.style.display = "block";
+        return;
+    }
+
+    let html = '<div class="fix-first-list">';
+    recs.forEach((rec, i) => {
+        const scopeClass = SCOPE_BADGE_CLASSES[rec.dependency_scope] || "scope-unknown";
+        const pct = (rec.priority_score * 100).toFixed(1);
+        html += '<div style="padding:var(--sp-4) 0;border-bottom:1px solid var(--border-subtle);font-size:12px;">';
+        html += '<div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-2);">';
+        html += '<span style="font-weight:700;color:var(--text-tertiary);min-width:16px;">' + (i + 1) + '</span>';
+        html += '<span style="font-weight:600;color:var(--text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + rec.package_name + '</span>';
+        html += '<span class="badge ' + scopeClass + '" style="font-size:9px;">' + rec.dependency_scope + '</span>';
+        html += '<span style="color:var(--text-tertiary);flex-shrink:0;">Priority Score: ' + pct + '%</span>';
+        html += '</div>';
+        html += '<div style="color:var(--text-secondary);padding-left:20px;margin-bottom:var(--sp-2);">' + rec.reason + '</div>';
+        html += '<div style="color:var(--accent);padding-left:20px;font-weight:600;">' + rec.action + '</div>';
+        html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    panel.style.display = "block";
+}
+
+function renderRiskBreakdown(insightData) {
+    const clusters = insightData?.risk_clusters;
+    const container = document.getElementById("riskBreakdownContent");
+    const panel = document.getElementById("riskBreakdownPanel");
+    if (!container || !panel) return;
+    if (!clusters || clusters.length === 0) return;
+
+    let html = '';
+    clusters.forEach(cluster => {
+        const isMuted = cluster.count === 0;
+        const opacity = isMuted ? 'opacity:0.5;' : '';
+        const pct = (cluster.risk_contribution * 100).toFixed(1);
+        html += '<div style="padding:var(--sp-8);margin-bottom:var(--sp-4);border:1px solid var(--border-subtle);border-radius:6px;' + opacity + '">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-4);">';
+        html += '<span style="font-size:12px;font-weight:700;color:var(--text-primary);">' + cluster.cluster_name + '</span>';
+        html += '<span style="font-size:11px;color:var(--text-tertiary);">' + cluster.count + ' deps · ' + pct + '% risk</span>';
+        html += '</div>';
+        html += '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:var(--sp-4);">' + cluster.summary + '</div>';
+        if (cluster.example_packages && cluster.example_packages.length > 0) {
+            html += '<div style="font-size:11px;color:var(--text-tertiary);">Examples: ' + cluster.example_packages.join(', ') + '</div>';
+        }
+        html += '</div>';
+    });
+    container.innerHTML = html;
+    panel.style.display = "block";
+}
+
+function renderNarrative(insightData) {
+    const narrative = insightData?.risk_narrative;
+    const container = document.getElementById("narrativeContent");
+    const panel = document.getElementById("narrativePanel");
+    if (!container || !panel) return;
+    if (!narrative) return;
+
+    let html = '';
+    html += '<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--sp-8);line-height:1.5;">' + narrative.summary + '</div>';
+
+    if (narrative.key_findings && narrative.key_findings.length > 0) {
+        html += '<ul style="margin:0 0 var(--sp-8) 0;padding-left:16px;">';
+        narrative.key_findings.forEach(finding => {
+            html += '<li style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:var(--sp-2);">' + finding + '</li>';
+        });
+        html += '</ul>';
+    }
+
+    if (narrative.recommendation) {
+        html += '<div style="font-size:12px;font-weight:600;color:var(--accent);padding:var(--sp-4) var(--sp-8);background:var(--bg-overlay);border-radius:4px;border-left:3px solid var(--accent);">' + narrative.recommendation + '</div>';
+    }
+
+    container.innerHTML = html;
+    panel.style.display = "block";
+}
+
+function renderConfidence(insightData) {
+    const confidence = insightData?.overall_confidence;
+    const container = document.getElementById("confidenceContent");
+    const panel = document.getElementById("confidencePanel");
+    if (!container || !panel) return;
+    if (!confidence) return;
+
+    const colorMap = { high: "var(--green)", medium: "var(--yellow)", low: "var(--red)" };
+    const color = colorMap[confidence.label] || "var(--text-tertiary)";
+    const pct = (confidence.score * 100).toFixed(1);
+
+    let html = '';
+    html += '<div style="display:flex;align-items:center;gap:var(--sp-8);margin-bottom:var(--sp-8);">';
+    html += '<span style="font-size:18px;font-weight:700;font-family:var(--font-mono);color:' + color + ';">' + pct + '%</span>';
+    html += '<span class="badge" style="color:' + color + ';border-color:' + color + ';">' + confidence.label + '</span>';
+    html += '</div>';
+    html += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.5;">' + confidence.explanation + '</div>';
+
+    container.innerHTML = html;
+    panel.style.display = "block";
 }
 
 // ─── Main load flow ──────────────────────────────────────────────────
@@ -567,13 +968,36 @@ async function loadTree(isRefetch) {
     renderProvenance(data);
     filterSection.style.display = "block";
 
+    // Show/hide scope filter based on meaningful scope data
+    const scopeFilterGroup = $("scopeFilterGroup");
+    if (scopeFilterGroup) {
+      scopeFilterGroup.style.display = hasMeaningfulScopeData(data) ? "" : "none";
+    }
+
     if (data.tree.node_type === "repository" && (!data.tree.children || data.tree.children.length === 0)) {
       showState("empty");
     } else {
       showState("tree");
     }
-    renderTree(data);
+    rerender();
     renderDetailPanel(null);
+
+    // Fire-and-forget: fetch scope insight data (Phase 4)
+    if (repo.includes("/")) {
+      const [owner, repoName] = repo.split("/", 2);
+      fetch(API_BASE + "/api/insights/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repoName))
+        .then(r => r.ok ? r.json() : null)
+        .then(d => {
+            if (d) {
+                renderScopeInsightCard(d);
+                renderFixFirst(d);
+                renderRiskBreakdown(d);
+                renderNarrative(d);
+                renderConfidence(d);
+            }
+        })
+        .catch(() => {});
+    }
   } catch (e) {
     if (!isRefetch) showState("initial");
     showError(e.message);
@@ -597,6 +1021,8 @@ function resetFilters() {
   directOnly.checked = false;
   sortBySelect.value = "";
   truncateSelect.value = "";
+  const scopeFilterEl = $("scopeFilter");
+  if (scopeFilterEl) scopeFilterEl.value = "";
   refetch();
 }
 
@@ -615,6 +1041,10 @@ repoInput.addEventListener("keydown", (e) => { if (e.key === "Enter") loadTree(f
 $("expandAllBtn").addEventListener("click", expandAll);
 $("collapseAllBtn").addEventListener("click", collapseAll);
 $("resetBtn").addEventListener("click", resetFilters);
+
+// Scope filter triggers client-side re-render (no refetch)
+const scopeFilterEl = $("scopeFilter");
+if (scopeFilterEl) scopeFilterEl.addEventListener("change", rerender);
 
 // ─── Init from URL ───────────────────────────────────────────────────
 applyUrlState();

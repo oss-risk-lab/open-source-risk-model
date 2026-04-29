@@ -63,9 +63,18 @@ class RepoInsight:
     # Top risky dependencies
     top_risky_dependencies: list[DependencyRisk] = field(default_factory=list)
 
+    # Phase 4 — Scope-weighted risk (ExplainabilityPayload.to_dict())
+    scope_weighted_risk: Optional[dict] = None
+
+    # Phase 5 — Actionable Insights
+    priority_recommendations: list = field(default_factory=list)
+    risk_clusters: list = field(default_factory=list)
+    risk_narrative: Optional[Any] = None
+    overall_confidence: Optional[Any] = None
+
     def to_dict(self) -> dict[str, Any]:
         """Serialize to dict for API responses."""
-        return {
+        result = {
             "repo_full_name": self.repo_full_name,
             "base_maintenance_risk": self.base_maintenance_risk,
             "base_maintenance_label": self.base_maintenance_label,
@@ -93,3 +102,13 @@ class RepoInsight:
                 for d in self.top_risky_dependencies
             ],
         }
+        if self.scope_weighted_risk is not None:
+            result["scope_weighted_risk"] = self.scope_weighted_risk
+
+        # Phase 5 — Actionable Insights
+        result["priority_recommendations"] = [r.to_dict() for r in self.priority_recommendations]
+        result["risk_clusters"] = [c.to_dict() for c in self.risk_clusters]
+        result["risk_narrative"] = self.risk_narrative.to_dict() if self.risk_narrative else None
+        result["overall_confidence"] = self.overall_confidence.to_dict() if self.overall_confidence else None
+
+        return result
