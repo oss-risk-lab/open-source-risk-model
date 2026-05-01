@@ -328,6 +328,9 @@
       <button id="collapseAllBtn" class="btn btn-sm">Collapse all</button>
       <button id="resetBtn" class="btn btn-sm">Reset</button>
     </div>
+    <div id="scopeLegend" style="font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-4);line-height:1.5;display:none;">
+      runtime = likely production exposure · transitive = indirect dependency · unknown = scope not inferred from manifests
+    </div>
   </div>
 
   <!-- Main content: tree + sidebar -->
@@ -337,6 +340,9 @@
         <div class="state-msg" id="initialState">
           <div class="icon" style="opacity:0.4;"><i data-lucide="network" style="width:36px;height:36px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
           <div class="msg">Enter a repository above to explore its dependency tree</div>
+          <div style="margin-top:16px;">
+            <a href="?repo=psf%2Frequests" style="display:inline-block;padding:8px 16px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">Try demo: psf/requests</a>
+          </div>
         </div>
         <div class="state-msg" id="loadingState" style="display:none;">
           <div class="ds-spinner" style="width:32px;height:32px;border-width:4px;"></div>
@@ -379,6 +385,14 @@
         </div>
       </div>
 
+      <!-- Demo Interpretation (Phase 5) -->
+      <div id="demoInterpretationPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+        <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+          <h3 class="section-title" style="font-size:12px;">How Deep Signal Works</h3>
+        </div>
+        <div id="demoInterpretationContent"></div>
+      </div>
+
       <!-- Scope Insight Card (Phase 4) -->
       <div id="scopeInsightPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
         <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
@@ -395,20 +409,20 @@
           <div id="fixFirstContent"></div>
       </div>
 
-      <!-- Risk Breakdown (Phase 5) -->
-      <div id="riskBreakdownPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-              <h3 class="section-title" style="font-size:12px;">Risk Breakdown</h3>
-          </div>
-          <div id="riskBreakdownContent"></div>
-      </div>
-
       <!-- Summary Narrative (Phase 5) -->
       <div id="narrativePanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
           <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
               <h3 class="section-title" style="font-size:12px;">Summary</h3>
           </div>
           <div id="narrativeContent"></div>
+      </div>
+
+      <!-- Risk Breakdown (Phase 5) -->
+      <div id="riskBreakdownPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
+          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
+              <h3 class="section-title" style="font-size:12px;">Risk Breakdown</h3>
+          </div>
+          <div id="riskBreakdownContent"></div>
       </div>
 
       <!-- Confidence Indicator (Phase 5) -->

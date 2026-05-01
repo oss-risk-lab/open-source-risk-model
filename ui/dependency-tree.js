@@ -823,6 +823,19 @@ function renderScopeInsightCard(insightData) {
     html += '<div style="font-size:11px;color:var(--text-tertiary);margin-top:var(--sp-4);line-height:1.4;">' + swr.confidence_note + '</div>';
   }
 
+  // Interpretation based on risk label
+  const interpretations = {
+    low: "Low overall dependency risk, but runtime-scoped packages still deserve review.",
+    medium: "Moderate dependency risk — prioritize runtime-scoped packages with vulnerabilities.",
+    high: "Significant dependency risk — immediate attention recommended for runtime dependencies."
+  };
+  if (interpretations[label]) {
+    html += '<div style="font-size:11px;color:var(--text-primary);margin-top:var(--sp-8);line-height:1.4;font-weight:600;">' + interpretations[label] + '</div>';
+  }
+
+  // Footnote
+  html += '<div style="font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-8);line-height:1.3;border-top:1px solid var(--border-subtle);padding-top:var(--sp-4);">Scope-weighted risk is separate from repository maintenance risk.</div>';
+
   container.innerHTML = html;
   panel.style.display = "";
 }
@@ -845,15 +858,26 @@ function renderFixFirst(insightData) {
     recs.forEach((rec, i) => {
         const scopeClass = SCOPE_BADGE_CLASSES[rec.dependency_scope] || "scope-unknown";
         const pct = (rec.priority_score * 100).toFixed(1);
-        html += '<div style="padding:var(--sp-4) 0;border-bottom:1px solid var(--border-subtle);font-size:12px;">';
-        html += '<div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-2);">';
-        html += '<span style="font-weight:700;color:var(--text-tertiary);min-width:16px;">' + (i + 1) + '</span>';
+        const barWidth = Math.max(4, rec.priority_score * 100);
+        const isLast = i === recs.length - 1;
+        html += '<div style="padding:var(--sp-8) 0;' + (isLast ? '' : 'border-bottom:1px solid var(--border-subtle);') + 'font-size:12px;">';
+        // Header row: rank, name, scope badge
+        html += '<div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-4);">';
+        html += '<span style="font-weight:700;color:var(--text-tertiary);min-width:16px;font-size:11px;">' + (i + 1) + '</span>';
         html += '<span style="font-weight:600;color:var(--text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + rec.package_name + '</span>';
         html += '<span class="badge ' + scopeClass + '" style="font-size:9px;">' + rec.dependency_scope + '</span>';
-        html += '<span style="color:var(--text-tertiary);flex-shrink:0;">Priority Score: ' + pct + '%</span>';
         html += '</div>';
-        html += '<div style="color:var(--text-secondary);padding-left:20px;margin-bottom:var(--sp-2);">' + rec.reason + '</div>';
-        html += '<div style="color:var(--accent);padding-left:20px;font-weight:600;">' + rec.action + '</div>';
+        // Action text — prominent
+        html += '<div style="color:var(--accent);padding-left:20px;font-weight:700;font-size:12px;margin-bottom:var(--sp-4);">' + rec.action + '</div>';
+        // Reason — supporting context
+        html += '<div style="color:var(--text-tertiary);padding-left:20px;font-size:11px;line-height:1.4;margin-bottom:var(--sp-4);">' + rec.reason + '</div>';
+        // Priority score as mini progress bar
+        html += '<div style="padding-left:20px;display:flex;align-items:center;gap:var(--sp-8);">';
+        html += '<div style="flex:1;height:4px;background:var(--bg-overlay);border-radius:2px;overflow:hidden;">';
+        html += '<div style="width:' + barWidth + '%;height:100%;background:var(--accent);border-radius:2px;"></div>';
+        html += '</div>';
+        html += '<span style="font-size:10px;color:var(--text-tertiary);font-family:var(--font-mono);flex-shrink:0;">' + pct + '%</span>';
+        html += '</div>';
         html += '</div>';
     });
     html += '</div>';
@@ -871,16 +895,25 @@ function renderRiskBreakdown(insightData) {
     let html = '';
     clusters.forEach(cluster => {
         const isMuted = cluster.count === 0;
-        const opacity = isMuted ? 'opacity:0.5;' : '';
         const pct = (cluster.risk_contribution * 100).toFixed(1);
-        html += '<div style="padding:var(--sp-8);margin-bottom:var(--sp-4);border:1px solid var(--border-subtle);border-radius:6px;' + opacity + '">';
+        html += '<div style="padding:var(--sp-8);margin-bottom:var(--sp-4);border:1px solid var(--border-subtle);border-radius:6px;' + (isMuted ? 'opacity:0.45;' : '') + '">';
         html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-4);">';
         html += '<span style="font-size:12px;font-weight:700;color:var(--text-primary);">' + cluster.cluster_name + '</span>';
-        html += '<span style="font-size:11px;color:var(--text-tertiary);">' + cluster.count + ' deps · ' + pct + '% risk</span>';
+        if (!isMuted) {
+            html += '<span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono);">' + cluster.count + ' deps · ' + pct + '%</span>';
+        }
         html += '</div>';
-        html += '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:var(--sp-4);">' + cluster.summary + '</div>';
-        if (cluster.example_packages && cluster.example_packages.length > 0) {
-            html += '<div style="font-size:11px;color:var(--text-tertiary);">Examples: ' + cluster.example_packages.join(', ') + '</div>';
+        if (isMuted) {
+            html += '<div style="font-size:11px;color:var(--text-tertiary);font-style:italic;">No dependencies in this cluster.</div>';
+        } else {
+            html += '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:var(--sp-4);line-height:1.4;">' + cluster.summary + '</div>';
+            // Risk contribution mini bar
+            html += '<div style="height:3px;background:var(--bg-overlay);border-radius:2px;overflow:hidden;margin-bottom:var(--sp-4);">';
+            html += '<div style="width:' + Math.max(2, cluster.risk_contribution * 100) + '%;height:100%;background:var(--accent);border-radius:2px;"></div>';
+            html += '</div>';
+            if (cluster.example_packages && cluster.example_packages.length > 0) {
+                html += '<div style="font-size:10px;color:var(--text-tertiary);">e.g. ' + cluster.example_packages.join(', ') + '</div>';
+            }
         }
         html += '</div>';
     });
@@ -899,15 +932,16 @@ function renderNarrative(insightData) {
     html += '<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:var(--sp-8);line-height:1.5;">' + narrative.summary + '</div>';
 
     if (narrative.key_findings && narrative.key_findings.length > 0) {
+        html += '<div style="font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:var(--sp-4);">Key Insights</div>';
         html += '<ul style="margin:0 0 var(--sp-8) 0;padding-left:16px;">';
         narrative.key_findings.forEach(finding => {
-            html += '<li style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:var(--sp-2);">' + finding + '</li>';
+            html += '<li style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:var(--sp-4);">' + finding + '</li>';
         });
         html += '</ul>';
     }
 
     if (narrative.recommendation) {
-        html += '<div style="font-size:12px;font-weight:600;color:var(--accent);padding:var(--sp-4) var(--sp-8);background:var(--bg-overlay);border-radius:4px;border-left:3px solid var(--accent);">' + narrative.recommendation + '</div>';
+        html += '<div style="font-size:12px;font-weight:700;color:var(--accent);padding:var(--sp-8) var(--sp-12);background:var(--accent-muted);border-radius:6px;border-left:3px solid var(--accent);line-height:1.5;">' + narrative.recommendation + '</div>';
     }
 
     container.innerHTML = html;
@@ -926,13 +960,27 @@ function renderConfidence(insightData) {
     const pct = (confidence.score * 100).toFixed(1);
 
     let html = '';
-    html += '<div style="display:flex;align-items:center;gap:var(--sp-8);margin-bottom:var(--sp-8);">';
+    html += '<div style="display:flex;align-items:center;gap:var(--sp-8);margin-bottom:var(--sp-4);">';
     html += '<span style="font-size:18px;font-weight:700;font-family:var(--font-mono);color:' + color + ';">' + pct + '%</span>';
     html += '<span class="badge" style="color:' + color + ';border-color:' + color + ';">' + confidence.label + '</span>';
     html += '</div>';
+    html += '<div style="font-size:10px;color:var(--text-tertiary);margin-bottom:var(--sp-8);line-height:1.4;">Confidence reflects data quality and scope coverage, not risk level.</div>';
     html += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.5;">' + confidence.explanation + '</div>';
 
     container.innerHTML = html;
+    panel.style.display = "block";
+}
+
+function renderDemoInterpretation(insightData) {
+    const container = document.getElementById("demoInterpretationContent");
+    const panel = document.getElementById("demoInterpretationPanel");
+    if (!container || !panel) return;
+    if (!insightData?.scope_weighted_risk) return;
+
+    container.innerHTML = '<div style="font-size:11px;color:var(--text-secondary);line-height:1.6;">' +
+        'Deep Signal prioritizes dependencies based on runtime exposure, vulnerability signals, and scope confidence. ' +
+        'Runtime dependencies generally matter more because they are more likely to affect production behavior.' +
+        '</div>';
     panel.style.display = "block";
 }
 
@@ -970,8 +1018,11 @@ async function loadTree(isRefetch) {
 
     // Show/hide scope filter based on meaningful scope data
     const scopeFilterGroup = $("scopeFilterGroup");
+    const scopeLegend = $("scopeLegend");
     if (scopeFilterGroup) {
-      scopeFilterGroup.style.display = hasMeaningfulScopeData(data) ? "" : "none";
+      const showScope = hasMeaningfulScopeData(data);
+      scopeFilterGroup.style.display = showScope ? "" : "none";
+      if (scopeLegend) scopeLegend.style.display = showScope ? "" : "none";
     }
 
     if (data.tree.node_type === "repository" && (!data.tree.children || data.tree.children.length === 0)) {
@@ -989,6 +1040,7 @@ async function loadTree(isRefetch) {
         .then(r => r.ok ? r.json() : null)
         .then(d => {
             if (d) {
+                renderDemoInterpretation(d);
                 renderScopeInsightCard(d);
                 renderFixFirst(d);
                 renderRiskBreakdown(d);
