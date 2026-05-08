@@ -971,19 +971,6 @@ function renderConfidence(insightData) {
     panel.style.display = "block";
 }
 
-function renderDemoInterpretation(insightData) {
-    const container = document.getElementById("demoInterpretationContent");
-    const panel = document.getElementById("demoInterpretationPanel");
-    if (!container || !panel) return;
-    if (!insightData?.scope_weighted_risk) return;
-
-    container.innerHTML = '<div style="font-size:11px;color:var(--text-secondary);line-height:1.6;">' +
-        'Deep Signal prioritizes dependencies based on runtime exposure, vulnerability signals, and scope confidence. ' +
-        'Runtime dependencies generally matter more because they are more likely to affect production behavior.' +
-        '</div>';
-    panel.style.display = "block";
-}
-
 // ─── Main load flow ──────────────────────────────────────────────────
 async function loadTree(isRefetch) {
   const repo = repoInput.value.trim();
@@ -1040,11 +1027,10 @@ async function loadTree(isRefetch) {
         .then(r => r.ok ? r.json() : null)
         .then(d => {
             if (d) {
-                renderDemoInterpretation(d);
                 renderScopeInsightCard(d);
                 renderFixFirst(d);
-                renderRiskBreakdown(d);
                 renderNarrative(d);
+                renderRiskBreakdown(d);
                 renderConfidence(d);
             }
         })
