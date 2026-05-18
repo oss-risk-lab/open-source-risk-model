@@ -289,6 +289,7 @@
       <input id="repoInput" type="text" placeholder="numpy/numpy" aria-label="Repository name" />
       <button id="analyzeBtn" class="btn-primary ds-btn-primary">Scan a Repository</button>
     </div>
+    <div id="analyzeErr" style="display:none;font-size:12px;color:var(--status-high-text);margin-top:var(--sp-8);text-align:center;"></div>
     <div class="multi-repo-group" id="multiRepoGroup">
       <label for="scopeNameInput">Scope Name</label>
       <input id="scopeNameInput" type="text" placeholder="My Project Stack" aria-label="Scope name" />
@@ -419,8 +420,17 @@
 renderNav(getCurrentPageId(), getRepoFromUrl());
 
 function goAnalyze() {
+  var errEl = document.getElementById("analyzeErr");
+  errEl.style.display = "none";
   var repo = document.getElementById("repoInput").value.trim();
   if (!repo) { document.getElementById("repoInput").focus(); return; }
+  var slashIdx = repo.indexOf("/");
+  if (slashIdx <= 0 || slashIdx === repo.length - 1 || repo.indexOf("/", slashIdx + 1) !== -1) {
+    errEl.textContent = "Use owner/repo format — e.g. numpy/numpy";
+    errEl.style.display = "block";
+    document.getElementById("repoInput").focus();
+    return;
+  }
   window.location.href = buildPageUrl("insights.html", repo);
 }
 document.getElementById("analyzeBtn").addEventListener("click", goAnalyze);

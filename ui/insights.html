@@ -1168,7 +1168,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       return await response.json();
     }
     if (response.status === 404) {
-      throw new Error("Repository not found");
+      throw new Error(owner + "/" + repo + " hasn’t been analyzed yet.");
     }
     var responseText = await response.text();
     throw new Error(formatErrorMessage(response.status, responseText));
