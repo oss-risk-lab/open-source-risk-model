@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Insights Dashboard</title>
+  <title>Insights Dashboard — Deep Signal</title>
   <link rel="stylesheet" href="/ui/design-system.css">
   <style>
     body{
@@ -20,18 +20,12 @@
       margin: var(--sp-32) auto;
       padding: 0 var(--sp-16);
     }
-    .topbar{
-      display:flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--sp-16);
-      margin-bottom: var(--sp-16);
+    .graph-page-header{
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--sp-12); margin-bottom: var(--sp-16);
     }
-    .title{
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: .2px;
-    }
+    .graph-page-header .page-title{ font-size: 22px; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.2; }
+    .graph-page-header .page-subtitle{ font-size: 13px; color: var(--text-tertiary); margin: var(--sp-4) 0 0; }
 
     /* Panel */
     .panel{
@@ -450,9 +444,12 @@
 
 <body>
   <div class="wrap">
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="title">Insights Dashboard</div>
+    <!-- Page Header -->
+    <div class="graph-page-header">
+      <div>
+        <h1 class="page-title">Insights Dashboard</h1>
+        <p class="page-subtitle">Monitor risk scores and signals across all ingested repositories</p>
+      </div>
     </div>
 
     <!-- Hero Section -->

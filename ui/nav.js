@@ -120,9 +120,10 @@ function renderNav(currentPageId, repo, scopeId) {
   nav.className = "ds-nav";
   nav.setAttribute("aria-label", "Main navigation");
 
-  var brand = document.createElement("span");
+  var brand = document.createElement("a");
   brand.className = "ds-nav-brand";
   brand.textContent = "Deep Signal";
+  brand.href = "/";
   nav.appendChild(brand);
 
   var linksDiv = document.createElement("div");
