@@ -506,8 +506,8 @@
         <label>
           Sort by
           <select id="sortBySelect" aria-label="Sort by field">
-            <option value="score">Score</option>
-            <option value="base_risk">Base Risk</option>
+            <option value="base_risk">Maint. Risk</option>
+            <option value="score">Graph Signal</option>
             <option value="cve_count">CVE Count</option>
             <option value="maintainer_fraction">Maintainer Fraction</option>
             <option value="release_staleness">Release Staleness</option>
@@ -537,15 +537,15 @@
     <div id="tableContainer" class="panel" style="display:none;">
       <div class="panel-header">
         <h3 class="section-title">Repositories by Risk</h3>
-        <span class="panel-subtitle">Sorted by score, descending</span>
+        <span class="panel-subtitle">Sorted by maintenance risk, descending</span>
       </div>
       <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th scope="col">Repository</th>
-            <th scope="col">Score</th>
-            <th scope="col">Label</th>
+            <th scope="col">Maint. Risk</th>
+            <th scope="col">Signal</th>
             <th scope="col">Reasons</th>
             <th scope="col">Signals</th>
           </tr>
@@ -597,7 +597,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       has_stale_release: null,
       min_score: null
     },
-    sort_by: "score",
+    sort_by: "base_risk",
     order: "desc",
     limit: 25,
     offset: 0,
@@ -929,7 +929,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       var tr = document.createElement("tr");
 
       // Add row-high class for HIGH risk items
-      if ((item.graph_signal_label || "").toUpperCase() === "HIGH") {
+      if ((item.base_maintenance_label || "").toUpperCase() === "HIGH") {
         tr.className = "row-high";
       }
 
@@ -943,13 +943,13 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       tdRepo.appendChild(repoLink);
       tr.appendChild(tdRepo);
 
-      // Score cell
+      // Maint. Risk cell
       var tdScore = document.createElement("td");
       tdScore.className = "score-cell";
-      tdScore.textContent = item.graph_signal_score.toFixed(3);
+      tdScore.textContent = item.base_maintenance_risk != null ? item.base_maintenance_risk.toFixed(3) : "N/A";
       tr.appendChild(tdScore);
 
-      // Label cell
+      // Signal cell (graph signal label)
       var tdLabel = document.createElement("td");
       var labelSpan = document.createElement("span");
       labelSpan.className = "label-indicator " + labelColorClass(item.graph_signal_label);
@@ -1236,12 +1236,13 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
 
     // Build subtitle
     var subtitleText = "";
-    if (detail.graph_signal_label === "HIGH") {
-      subtitleText = "High risk \u2014 requires attention";
-    } else if (detail.graph_signal_label === "MEDIUM") {
-      subtitleText = "Moderate risk based on graph signals";
+    var primaryLabel = detail.base_maintenance_label || detail.graph_signal_label;
+    if (primaryLabel === "HIGH") {
+      subtitleText = "High maintenance risk \u2014 requires attention";
+    } else if (primaryLabel === "MEDIUM") {
+      subtitleText = "Moderate maintenance risk \u2014 monitor closely";
     } else {
-      subtitleText = "Low current risk \u2014 no immediate concerns";
+      subtitleText = "Low maintenance risk \u2014 no immediate concerns";
     }
     if (detail.reasons && detail.reasons.length > 0) {
       subtitleText += " \u00b7 " + detail.reasons.length + " contributing factor" + (detail.reasons.length !== 1 ? "s" : "");
@@ -1262,15 +1263,17 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     var graphScore = detail.graph_signal_score.toFixed(3);
     var graphLabel = detail.graph_signal_label;
 
-    html += "<div class=\"risk-summary-block\" style=\"display:flex;gap:var(--sp-12);margin-bottom:var(--sp-16);\">" +
-      "<div class=\"ds-card ds-kpi\" style=\"flex:1;padding:var(--sp-16);\">" +
-        "<div class=\"ds-kpi-value\">" + maintRisk + "</div>" +
+    html += "<div class=\"risk-summary-block\" style=\"display:flex;gap:var(--sp-12);margin-bottom:var(--sp-16);align-items:stretch;\">" +
+      "<div class=\"ds-card ds-kpi\" style=\"flex:3;padding:var(--sp-24) var(--sp-32);background:var(--bg-overlay);box-shadow:var(--shadow-sm);\">" +
+        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Primary Score</div>" +
+        "<div class=\"ds-kpi-value\" style=\"font-size:32px;\">" + maintRisk + "</div>" +
         "<div class=\"ds-kpi-label\">Maintenance Risk</div>" +
         "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + maintLabel.toLowerCase() + "\">" + maintLabel + "</span></div>" +
       "</div>" +
-      "<div class=\"ds-card ds-kpi\" style=\"flex:1;padding:var(--sp-16);\">" +
+      "<div class=\"ds-card ds-kpi\" style=\"flex:2;padding:var(--sp-16);\">" +
+        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Supply Chain Signal</div>" +
         "<div class=\"ds-kpi-value\">" + graphScore + "</div>" +
-        "<div class=\"ds-kpi-label\">Graph Signal Risk</div>" +
+        "<div class=\"ds-kpi-label\">Graph Signal Score</div>" +
         "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + graphLabel.toLowerCase() + "\">" + graphLabel + "</span></div>" +
       "</div>" +
     "</div>";
