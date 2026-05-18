@@ -1296,6 +1296,52 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       html += "</ul></div>";
     }
 
+    // Risk Narrative
+    if (detail.risk_narrative) {
+      var rn = detail.risk_narrative;
+      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
+        "<div class=\"panel-header\"><h3 class=\"section-title\">Risk Narrative</h3></div>" +
+        "<div style=\"padding:var(--sp-12) var(--sp-16);\">";
+      if (rn.summary) {
+        html += "<p style=\"font-size:14px;color:var(--text-primary);margin:0 0 var(--sp-12) 0;line-height:1.6;\">" + rn.summary + "</p>";
+      }
+      if (rn.key_findings && rn.key_findings.length > 0) {
+        html += "<ul style=\"list-style:disc;padding-left:var(--sp-24);margin:0 0 var(--sp-12) 0;\">";
+        for (var kf = 0; kf < rn.key_findings.length; kf++) {
+          html += "<li style=\"color:var(--text-secondary);font-size:13px;margin-bottom:var(--sp-4);line-height:1.5;\">" + rn.key_findings[kf] + "</li>";
+        }
+        html += "</ul>";
+      }
+      if (rn.recommendation) {
+        html += "<div style=\"font-size:13px;color:var(--text-primary);padding:var(--sp-8) var(--sp-12);background:var(--bg-overlay);border-radius:var(--radius-sm);border-left:3px solid var(--border-emphasis);\">" + rn.recommendation + "</div>";
+      }
+      html += "</div></div>";
+    }
+
+    // Priority Recommendations
+    if (detail.priority_recommendations && detail.priority_recommendations.length > 0) {
+      var recs = detail.priority_recommendations.slice(0, 5);
+      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
+        "<div class=\"panel-header\"><h3 class=\"section-title\">Priority Recommendations</h3></div>" +
+        "<table class=\"signals-table\">" +
+        "<thead><tr>" +
+          "<th scope=\"col\">Package</th>" +
+          "<th scope=\"col\">Scope</th>" +
+          "<th scope=\"col\">Action</th>" +
+          "<th scope=\"col\">Priority</th>" +
+        "</tr></thead><tbody>";
+      for (var pr = 0; pr < recs.length; pr++) {
+        var rec = recs[pr];
+        html += "<tr>" +
+          "<td style=\"font-family:var(--font-mono);font-size:12px;\">" + rec.package_name + "</td>" +
+          "<td><span style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.4px;color:var(--text-tertiary);\">" + rec.dependency_scope + "</span></td>" +
+          "<td style=\"font-size:13px;\">" + rec.action + "</td>" +
+          "<td style=\"font-family:var(--font-mono);\">" + rec.priority_score.toFixed(3) + "</td>" +
+        "</tr>";
+      }
+      html += "</tbody></table></div>";
+    }
+
     // Task 7.3: Grouped Insight Sections
     var categorySignals = {};
     var categoryNames = Object.keys(SIGNAL_CATEGORIES);
