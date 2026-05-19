@@ -32,8 +32,8 @@
     /* Panel */
     .panel{
       background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
-      padding: var(--sp-24); margin-bottom: var(--sp-16);
+      border-radius: var(--radius-md);
+      padding: var(--sp-16); margin-bottom: var(--sp-16);
       transition: border-color 0.15s ease;
     }
     .panel:hover{ border-color: var(--border-emphasis); }
@@ -77,14 +77,15 @@
     .filter-group{ display:flex; align-items:center; gap:var(--sp-4); }
     .filter-group span{ font-size:11px; color:var(--text-tertiary); }
 
-    /* Summary stats — compact, secondary */
-    .summary-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(85px,1fr)); gap:var(--sp-4); margin-bottom:var(--sp-8); }
+    /* Summary stats — single connected bar */
+    .summary-grid{ display:flex; gap:0; margin-bottom:var(--sp-8); border:1px solid var(--border); border-radius:var(--radius-md); background:var(--bg-elevated); overflow:hidden; }
     .stat-card{
-      padding:var(--sp-8); border-radius:var(--radius-md); border:1px solid var(--border);
-      background:var(--bg-surface); text-align:center; transition: border-color 0.15s ease;
+      flex:1; padding:var(--sp-8) var(--sp-12); border-right:1px solid var(--border);
+      background:transparent; text-align:center; transition: background 0.12s ease;
     }
-    .stat-card:hover{ border-color: var(--border-emphasis); }
-    .stat-card .num{ font-size:16px; font-weight:700; font-family:var(--font-mono); color:var(--text-primary); }
+    .stat-card:last-child{ border-right:none; }
+    .stat-card:hover{ background:var(--bg-overlay); }
+    .stat-card .num{ font-size:15px; font-weight:700; font-family:var(--font-mono); color:var(--text-primary); }
     .stat-card .label{ font-size:10px; color:var(--text-tertiary); margin-top:2px; text-transform:uppercase; letter-spacing:.5px; }
 
     /* Main layout */
