@@ -669,7 +669,7 @@ function renderDetailPanel(node) {
     if (rm.risk_score != null) {
       const color = riskColor(rm.risk_score);
       html += detailItem("Risk score", `${rm.risk_score.toFixed(1)} / 100`);
-      html += `<div class="risk-bar-container"><div class="risk-bar"><div class="risk-bar-fill" style="width:${rm.risk_score}%; background:${color};"></div></div></div>`;
+      html += `<div class="risk-bar-container"><div class="risk-bar"><div class="risk-bar-fill" style="width:${rm.risk_score}%; background:${color};"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:3px;"><span>LOW</span><span style="color:${color};font-weight:700;">${rm.risk_score.toFixed(0)}%</span><span>HIGH</span></div></div>`;
     }
     if (rm.risk_level) html += detailItem("Risk level", rm.risk_level);
     html += detailItem("Vulnerabilities", rm.vulnerability_count != null ? rm.vulnerability_count : "—");

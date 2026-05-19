@@ -375,54 +375,39 @@
         </div>
       </div>
 
-      <!-- Tree Summary (secondary) -->
-      <div id="treeSummaryPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;opacity:0.7;">
-        <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-          <h3 class="section-title" style="font-size:12px;">Analysis</h3>
-        </div>
-        <div id="treeSummaryContent">
-          <div style="font-size:12px;color:var(--text-tertiary);">Load a tree to see summary</div>
-        </div>
-      </div>
-
-      <!-- Scope Insight Card (Phase 4) -->
-      <div id="scopeInsightPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-        <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-          <h3 class="section-title" style="font-size:12px;">Scope-Weighted Risk</h3>
-        </div>
-        <div id="scopeInsightCard"></div>
-      </div>
-
-      <!-- What to Fix First (Phase 5) -->
-      <div id="fixFirstPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-              <h3 class="section-title" style="font-size:12px;">What to Fix First</h3>
+      <!-- Analysis (consolidated secondary panel) -->
+      <div class="panel" style="padding:var(--sp-12) var(--sp-16);margin-bottom:0;">
+        <div id="treeSummaryPanel" style="margin-bottom:var(--sp-12);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);">Analysis</div>
+          <div id="treeSummaryContent">
+            <div style="font-size:12px;color:var(--text-tertiary);">Load a tree to see summary</div>
           </div>
+        </div>
+
+        <div id="scopeInsightPanel" style="display:none;margin-bottom:var(--sp-12);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid var(--border-subtle);">Scope-Weighted Risk</div>
+          <div id="scopeInsightCard"></div>
+        </div>
+
+        <div id="fixFirstPanel" style="display:none;margin-bottom:var(--sp-12);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid var(--border-subtle);">What to Fix First</div>
           <div id="fixFirstContent"></div>
-      </div>
+        </div>
 
-      <!-- Summary Narrative (Phase 5) -->
-      <div id="narrativePanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-              <h3 class="section-title" style="font-size:12px;">Summary</h3>
-          </div>
+        <div id="narrativePanel" style="display:none;margin-bottom:var(--sp-12);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid var(--border-subtle);">Summary</div>
           <div id="narrativeContent"></div>
-      </div>
+        </div>
 
-      <!-- Risk Breakdown (Phase 5) -->
-      <div id="riskBreakdownPanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-              <h3 class="section-title" style="font-size:12px;">Risk Breakdown</h3>
-          </div>
+        <div id="riskBreakdownPanel" style="display:none;margin-bottom:var(--sp-12);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid var(--border-subtle);">Risk Breakdown</div>
           <div id="riskBreakdownContent"></div>
-      </div>
+        </div>
 
-      <!-- Confidence Indicator (Phase 5) -->
-      <div id="confidencePanel" class="panel" style="padding:var(--sp-8) var(--sp-16);margin-bottom:0;display:none;">
-          <div class="panel-header" style="margin-bottom:var(--sp-8);padding-bottom:var(--sp-4);">
-              <h3 class="section-title" style="font-size:12px;">Analysis Confidence</h3>
-          </div>
+        <div id="confidencePanel" style="display:none;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);padding-top:var(--sp-8);border-top:1px solid var(--border-subtle);">Analysis Confidence</div>
           <div id="confidenceContent"></div>
+        </div>
       </div>
     </div>
   </div>

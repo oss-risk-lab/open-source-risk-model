@@ -537,7 +537,10 @@
     <div id="tableContainer" class="panel" style="display:none;">
       <div class="panel-header">
         <h3 class="section-title">Repositories by Risk</h3>
-        <span class="panel-subtitle">Sorted by maintenance risk, descending</span>
+        <div style="display:flex;align-items:center;gap:var(--sp-8);">
+          <span class="panel-subtitle">Sorted by maintenance risk, descending</span>
+          <button id="downloadCsvBtn" class="btn-subtle" style="font-size:11px;" title="Export current page as CSV">↓ CSV</button>
+        </div>
       </div>
       <div class="table-wrap">
       <table>
@@ -954,6 +957,15 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       var labelSpan = document.createElement("span");
       labelSpan.className = "label-indicator " + labelColorClass(item.graph_signal_label);
       labelSpan.textContent = item.graph_signal_label;
+      var labelTooltips = {
+        HIGH: "Maintenance risk ≥ 0.8 — significant indicators of abandonment or security risk. Requires attention.",
+        MEDIUM: "Maintenance risk 0.5–0.8 — moderate signals detected. Monitor closely.",
+        LOW: "Maintenance risk < 0.5 — generally healthy maintenance indicators."
+      };
+      if (labelTooltips[item.graph_signal_label]) {
+        labelSpan.title = labelTooltips[item.graph_signal_label];
+        labelSpan.style.cursor = "help";
+      }
       tdLabel.appendChild(labelSpan);
       tr.appendChild(tdLabel);
 
@@ -1144,7 +1156,42 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     fetchAndRender();
   }
 
+  /* ── CSV Export ── */
+
+  /**
+   * downloadCsv()
+   * Exports the current page's insight items as a CSV file.
+   */
+  function downloadCsv() {
+    var items = appState.items;
+    if (!items || items.length === 0) return;
+    var rows = [["Repository", "Maintenance Risk", "Label", "Graph Signal Score", "Graph Signal Label", "Reasons"]];
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var reasons = (item.reasons || []).join("; ").replace(/"/g, '""');
+      rows.push([
+        item.repo_full_name,
+        item.base_maintenance_risk != null ? item.base_maintenance_risk.toFixed(3) : "",
+        item.base_maintenance_label || "",
+        item.graph_signal_score != null ? item.graph_signal_score.toFixed(3) : "",
+        item.graph_signal_label || "",
+        '"' + reasons + '"'
+      ]);
+    }
+    var csv = rows.map(function(r) { return r.join(","); }).join("\n");
+    var blob = new Blob([csv], { type: "text/csv" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "deep-signal-insights.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   /* ── Wire Event Listeners ── */
+  document.getElementById("downloadCsvBtn").addEventListener("click", downloadCsv);
   document.getElementById("labelFilter").addEventListener("change", onFilterChange);
   document.getElementById("hasCvesFilter").addEventListener("change", onFilterChange);
   document.getElementById("hasMaintainerRiskFilter").addEventListener("change", onFilterChange);
@@ -1273,9 +1320,19 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     var graphScore = detail.graph_signal_score.toFixed(3);
     var graphLabel = detail.graph_signal_label;
 
+    var analyzedAtText = "";
+    if (detail.analyzed_at) {
+      try {
+        var d = new Date(detail.analyzed_at);
+        analyzedAtText = d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      } catch (e) {
+        analyzedAtText = detail.analyzed_at.substring(0, 10);
+      }
+    }
+
     html += "<div class=\"risk-summary-block\" style=\"display:flex;gap:var(--sp-12);margin-bottom:var(--sp-16);align-items:stretch;\">" +
       "<div class=\"ds-card ds-kpi\" style=\"flex:3;padding:var(--sp-24) var(--sp-32);background:var(--bg-overlay);box-shadow:var(--shadow-sm);\">" +
-        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Primary Score</div>" +
+        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Primary Score <span title=\"0 = no maintenance risk · 1 = max risk. Computed from 16 GitHub signals including commit activity, contributor count, and release cadence.\" style=\"cursor:help;\">ⓘ</span></div>" +
         "<div class=\"ds-kpi-value\" style=\"font-size:32px;\">" + maintRisk + "</div>" +
         "<div class=\"ds-kpi-label\">Maintenance Risk</div>" +
         "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + maintLabel.toLowerCase() + "\">" + maintLabel + "</span></div>" +
@@ -1285,28 +1342,11 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
         "<div class=\"ds-kpi-value\">" + graphScore + "</div>" +
         "<div class=\"ds-kpi-label\">Graph Signal Score</div>" +
         "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + graphLabel.toLowerCase() + "\">" + graphLabel + "</span></div>" +
+        (analyzedAtText ? "<div style=\"font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-8);\">Last analyzed " + analyzedAtText + "</div>" : "") +
       "</div>" +
     "</div>";
 
-    // Risk insight sentence from reasons[0]
-    if (detail.reasons && detail.reasons.length > 0) {
-      html += "<div class=\"risk-insight\" style=\"font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-16);padding:var(--sp-8) var(--sp-12);border-left:3px solid var(--border);line-height:1.5;\">" + detail.reasons[0] + "</div>";
-    }
-
-    // Task 7.2: Top Risk Drivers
-    if (detail.reasons && detail.reasons.length > 0) {
-      var driverCount = Math.min(detail.reasons.length, 5);
-      if (driverCount < 3) driverCount = Math.min(detail.reasons.length, 3);
-      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
-        "<div class=\"panel-header\"><h3 class=\"section-title\">Top Risk Drivers</h3></div>" +
-        "<ul style=\"list-style:disc;padding-left:var(--sp-24);margin:0;\">";
-      for (var r = 0; r < driverCount; r++) {
-        html += "<li style=\"color:var(--text-secondary);font-size:13px;margin-bottom:var(--sp-4);line-height:1.5;\">" + detail.reasons[r] + "</li>";
-      }
-      html += "</ul></div>";
-    }
-
-    // Risk Narrative
+    // Risk Narrative (before Top Risk Drivers)
     if (detail.risk_narrative) {
       var rn = detail.risk_narrative;
       html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
@@ -1328,9 +1368,9 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       html += "</div></div>";
     }
 
-    // Priority Recommendations
+    // Priority Recommendations (top 3, before Top Risk Drivers)
     if (detail.priority_recommendations && detail.priority_recommendations.length > 0) {
-      var recs = detail.priority_recommendations.slice(0, 5);
+      var recs = detail.priority_recommendations.slice(0, 3);
       html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
         "<div class=\"panel-header\"><h3 class=\"section-title\">Priority Recommendations</h3></div>" +
         "<table class=\"signals-table\">" +
@@ -1338,7 +1378,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
           "<th scope=\"col\">Package</th>" +
           "<th scope=\"col\">Scope</th>" +
           "<th scope=\"col\">Action</th>" +
-          "<th scope=\"col\">Priority</th>" +
+          "<th scope=\"col\">Risk Score</th>" +
         "</tr></thead><tbody>";
       for (var pr = 0; pr < recs.length; pr++) {
         var rec = recs[pr];
@@ -1346,10 +1386,22 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
           "<td style=\"font-family:var(--font-mono);font-size:12px;\">" + rec.package_name + "</td>" +
           "<td><span style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.4px;color:var(--text-tertiary);\">" + rec.dependency_scope + "</span></td>" +
           "<td style=\"font-size:13px;\">" + rec.action + "</td>" +
-          "<td style=\"font-family:var(--font-mono);\">" + rec.priority_score.toFixed(3) + "</td>" +
+          "<td style=\"font-family:var(--font-mono);\">" + Math.round(rec.priority_score * 100) + "%</td>" +
         "</tr>";
       }
       html += "</tbody></table></div>";
+    }
+
+    // Top Risk Drivers (collapsible, after Narrative and Recommendations)
+    if (detail.reasons && detail.reasons.length > 0) {
+      var driverCount = Math.min(detail.reasons.length, 5);
+      html += "<details class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
+        "<summary class=\"panel-header\" style=\"cursor:pointer;list-style:none;\"><h3 class=\"section-title\">Top Risk Drivers</h3></summary>" +
+        "<ul style=\"list-style:disc;padding-left:var(--sp-24);margin:0;\">";
+      for (var r = 0; r < driverCount; r++) {
+        html += "<li style=\"color:var(--text-secondary);font-size:13px;margin-bottom:var(--sp-4);line-height:1.5;\">" + detail.reasons[r] + "</li>";
+      }
+      html += "</ul></details>";
     }
 
     // Task 7.3: Grouped Insight Sections

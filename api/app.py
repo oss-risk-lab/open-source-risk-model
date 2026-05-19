@@ -2845,7 +2845,21 @@ def get_repo_insights(owner: str, repo: str):
             )
 
         insight = compute_repo_insight(repo_full_name, graph_repo)
-        return insight.to_dict()
+        result = insight.to_dict()
+
+        # Attach last-analysis timestamp from graph metadata
+        try:
+            with sqlite3.connect(db_path) as _conn:
+                row = _conn.execute(
+                    "SELECT updated_at FROM repo_graphs WHERE repo_full_name = ?",
+                    (repo_full_name,),
+                ).fetchone()
+                if row and row[0]:
+                    result["analyzed_at"] = row[0]
+        except Exception:
+            pass
+
+        return result
 
     except HTTPException:
         raise

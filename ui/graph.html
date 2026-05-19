@@ -799,6 +799,9 @@
           <div class="empty-state">
             <div class="empty-state-icon" style="font-size:24px;opacity:0.4;"><i data-lucide="share-2" style="width:48px;height:48px;stroke-width:1.25;color:var(--text-tertiary);"></i></div>
             <div>Enter a repository and click "Load Graph" to visualize the supply chain</div>
+            <div style="margin-top:16px;">
+              <a href="?repo=psf%2Frequests" style="display:inline-block;padding:8px 16px;background:var(--accent);color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">Try demo: psf/requests</a>
+            </div>
           </div>
         </div>
       </div>
@@ -897,11 +900,16 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
         }
         var data = await response.json();
 
-        // Build label indicator
+        // Build label indicators
         var labelClass = "";
         if (data.graph_signal_label === "HIGH") labelClass = "label-high";
         else if (data.graph_signal_label === "MEDIUM") labelClass = "label-medium";
         else if (data.graph_signal_label === "LOW") labelClass = "label-low";
+
+        var maintLabelClass = "";
+        if (data.base_maintenance_label === "HIGH") maintLabelClass = "label-high";
+        else if (data.base_maintenance_label === "MEDIUM") maintLabelClass = "label-medium";
+        else if (data.base_maintenance_label === "LOW") maintLabelClass = "label-low";
 
         // Build reasons HTML
         var reasonsHtml = "";
@@ -930,12 +938,15 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
           }
         }
 
+        var maintRisk = (data.base_maintenance_risk != null) ? data.base_maintenance_risk.toFixed(3) : "N/A";
         content.innerHTML =
-          "<div style=\"display:flex;align-items:center;gap:10px;flex-wrap:wrap;\">" +
-            "<span style=\"font-family:var(--mono);font-size:15px;font-weight:800;\">" + data.graph_signal_score.toFixed(3) + "</span>" +
-            "<span class=\"label-indicator " + labelClass + "\">" + data.graph_signal_label + "</span>" +
-            badgesHtml +
+          "<div style=\"display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;\">" +
+            "<span style=\"font-family:var(--font-mono);font-size:15px;font-weight:800;\">" + maintRisk + "</span>" +
+            "<span class=\"label-indicator " + maintLabelClass + "\">" + (data.base_maintenance_label || "N/A") + "</span>" +
+            "<span style=\"font-size:11px;color:var(--text-tertiary);\">Maintenance Risk</span>" +
           "</div>" +
+          (badgesHtml ? "<div style=\"margin-bottom:6px;\">" + badgesHtml + "</div>" : "") +
+          "<div style=\"font-size:11px;color:var(--text-tertiary);margin-bottom:4px;\">Graph Signal: " + data.graph_signal_score.toFixed(3) + " <span class=\"label-indicator " + labelClass + "\" style=\"font-size:10px;padding:1px 6px;\">" + data.graph_signal_label + "</span></div>" +
           reasonsHtml;
 
         panel.setAttribute("aria-label", "Insight summary for " + data.repo_full_name);

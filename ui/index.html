@@ -551,9 +551,13 @@ function renderRepoChips(containerId, repos) {
     var a = document.createElement("a");
     a.className = "repo-chip";
     a.href = buildPageUrl("insights.html", r.repo);
+    var riskTagHtml = (r.risk_label === "HIGH" || r.risk_label === "MEDIUM")
+      ? '<span class="ds-risk-tag ds-risk-tag--' + r.risk_label.toLowerCase() + '" style="font-size:9px;padding:1px 5px;">' + r.risk_label + '</span>'
+      : '';
     a.innerHTML = '<span class="risk-dot ' + riskDotClass(r.risk_label) + '"></span>' +
-      r.name +
-      '<span style="color:var(--text-tertiary);font-size:11px;margin-left:auto;">' + r.owner + '</span>';
+      r.name + (riskTagHtml ? ' ' + riskTagHtml : '') +
+      '<span style="color:var(--text-tertiary);font-size:11px;margin-left:auto;">' + r.owner + '</span>' +
+      '<span style="color:var(--accent);font-size:12px;flex-shrink:0;margin-left:4px;">→</span>';
     container.appendChild(a);
   }
 }
