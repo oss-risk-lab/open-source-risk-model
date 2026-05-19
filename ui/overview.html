@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>System Risk Overview</title>
+  <title>System Overview — Deep Signal</title>
   <link rel="stylesheet" href="/ui/design-system.css">
   <style>
     body{
@@ -505,7 +505,7 @@ function loadScopeData(id) {
   fetch(apiBase + "/api/scope/" + encodeURIComponent(id), { signal: controller.signal })
     .then(function(res) {
       clearTimeout(timeoutId);
-      if (res.status === 404) throw new Error("Scope not found. The analysis may have expired — scopes are stored in memory and lost on server restart.");
+      if (res.status === 404) throw new Error("This analysis link has expired. Return to the homepage to run a new analysis.");
       if (!res.ok) throw new Error("Failed to load scope data (status " + res.status + ")");
       return res.json();
     })
@@ -859,12 +859,12 @@ function renderActionLinks(data) {
 
   var graphLink = document.createElement("a");
   graphLink.href = buildPageUrl("graph.html", null, id);
-  graphLink.textContent = "\u{1F4CA} Open Graph";
+  graphLink.textContent = "Open Graph View";
   container.appendChild(graphLink);
 
   var treeLink = document.createElement("a");
   treeLink.href = buildPageUrl("dependency-tree.html", null, id);
-  treeLink.textContent = "\u{1F333} Open Dependency Tree";
+  treeLink.textContent = "Open Dependency Tree";
   container.appendChild(treeLink);
 }
 

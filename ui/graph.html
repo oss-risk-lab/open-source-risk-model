@@ -673,7 +673,7 @@
       <div class="controls">
         <input id="repoInput" type="text" placeholder="e.g. numpy/numpy or https://github.com/numpy/numpy" />
         <button id="loadBtn" class="btn">Load Graph</button>
-        <button id="refreshBtn" class="btn">Force Refresh</button>
+        <button id="refreshBtn" class="btn">Reload</button>
       </div>
       <div id="err" class="err"></div>
       <div id="crossLinks" style="display:none; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
@@ -923,10 +923,8 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
               if (sig.severity === "high" || sig.severity === "medium" || sig.severity === "mild") {
                 badgeClass += " signal-" + sig.severity;
               }
-              var badgeText = sig.signal_name;
-              if (sig.signal_name === "cve_risk") badgeText = "CVE";
-              else if (sig.signal_name === "maintainer_concentration") badgeText = "Maintainer";
-              else if (sig.signal_name === "release_staleness") badgeText = "Stale release";
+              var SIGNAL_DISPLAY_NAMES = { "cve_risk": "CVE Exposure", "maintainer_concentration": "Maintainer Concentration", "release_staleness": "Release Staleness" };
+              var badgeText = SIGNAL_DISPLAY_NAMES[sig.signal_name] || sig.signal_name;
               badgesHtml += " <span class=\"" + badgeClass + "\">" + badgeText + "</span>";
             }
           }

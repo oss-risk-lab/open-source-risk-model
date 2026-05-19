@@ -291,8 +291,8 @@
     </div>
     <div id="analyzeErr" style="display:none;font-size:12px;color:var(--status-high-text);margin-top:var(--sp-8);text-align:center;"></div>
     <div class="multi-repo-group" id="multiRepoGroup">
-      <label for="scopeNameInput">Scope Name</label>
-      <input id="scopeNameInput" type="text" placeholder="My Project Stack" aria-label="Scope name" />
+      <label for="scopeNameInput">Project Name</label>
+      <input id="scopeNameInput" type="text" placeholder="My Project Stack" aria-label="Project name" />
       <label for="multiRepoInput">Repositories (one per line)</label>
       <textarea id="multiRepoInput" rows="4" placeholder="numpy/numpy&#10;pandas-dev/pandas" aria-label="Repository list"></textarea>
       <label for="multiDepsInput">Dependencies — optional (one per line)</label>
@@ -371,11 +371,11 @@
       </div>
       <div class="kpi-card">
         <div class="kpi-num" id="kpiDeps">&mdash;</div>
-        <div class="kpi-label">Dependencies Mapped</div>
+        <div class="kpi-label">Fully Analyzed</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-num" id="kpiPackages">&mdash;</div>
-        <div class="kpi-label">Packages Evaluated</div>
+        <div class="kpi-num" id="kpiCoverage">&mdash;</div>
+        <div class="kpi-label">Analysis Coverage</div>
       </div>
     </div>
   </div>
@@ -592,14 +592,14 @@ var apiBase = window.DS_API_BASE || "";
 fetch(apiBase + "/api/stats")
   .then(function(res) { return res.ok ? res.json() : Promise.reject("stats-failed"); })
   .then(function(data) {
-    document.getElementById("kpiRepos").textContent = (data.total_repos || 0) + "+";
-    document.getElementById("kpiDeps").textContent = (data.fully_analyzed_repos || 0) + "+";
-    document.getElementById("kpiPackages").textContent = ((data.total_repos || 0) * 10) + "+";
+    document.getElementById("kpiRepos").textContent = data.total_repos || 0;
+    document.getElementById("kpiDeps").textContent = data.fully_analyzed_repos || 0;
+    document.getElementById("kpiCoverage").textContent = data.coverage_ratio != null
+      ? Math.round(data.coverage_ratio * 100) + "%"
+      : "—";
   })
   .catch(function() {
-    document.getElementById("kpiRepos").textContent = "100+";
-    document.getElementById("kpiDeps").textContent = "500+";
-    document.getElementById("kpiPackages").textContent = "1000+";
+    document.getElementById("credibilitySection").style.display = "none";
   });
 
 fetch(apiBase + "/api/demo-repos")

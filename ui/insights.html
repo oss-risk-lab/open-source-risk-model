@@ -448,7 +448,7 @@
     <div class="graph-page-header">
       <div>
         <h1 class="page-title">Insights Dashboard</h1>
-        <p class="page-subtitle">Monitor risk scores and signals across all ingested repositories</p>
+        <p class="page-subtitle">Risk scores and signals for all analyzed repositories</p>
       </div>
     </div>
 
@@ -456,7 +456,7 @@
     <div id="heroSection" class="hero" style="display:none;">
       <div class="hero-left">
         <div class="hero-value" id="heroValue"></div>
-        <div class="hero-label">Repositories Monitored</div>
+        <div class="hero-label">Repositories Analyzed</div>
       </div>
       <div class="hero-right">
         <div class="hero-insight" id="heroInsight"></div>
@@ -469,7 +469,7 @@
     <!-- Filter / Sort Controls -->
     <div class="panel">
       <div class="panel-header">
-        <h3 class="section-title">Filters &amp; Sorting</h3>
+        <h3 class="section-title">Filters</h3>
       </div>
       <div class="filter-bar">
         <label>
@@ -1174,6 +1174,16 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     throw new Error(formatErrorMessage(response.status, responseText));
   }
 
+  /* ── Signal display name map ── */
+  var SIGNAL_DISPLAY_NAMES = {
+    "cve_risk": "CVE Exposure",
+    "maintainer_concentration": "Maintainer Concentration",
+    "release_staleness": "Release Staleness"
+  };
+  function signalDisplayName(name) {
+    return SIGNAL_DISPLAY_NAMES[name] || name;
+  }
+
   /* ── Signal Category Mapping (Task 7.3) ── */
 
   var SIGNAL_CATEGORIES = {
@@ -1386,7 +1396,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
             badgeClass += " signal-" + sigItem.severity;
           }
           html += "<tr>" +
-            "<td>" + sigItem.signal_name + "</td>" +
+            "<td>" + signalDisplayName(sigItem.signal_name) + "</td>" +
             "<td><span class=\"" + badgeClass + "\">" + sigItem.severity + "</span></td>" +
             "<td style=\"font-family:var(--font-mono);\">" + sigItem.score_contribution.toFixed(3) + "</td>" +
             "<td>" + sigItem.reason + "</td>" +

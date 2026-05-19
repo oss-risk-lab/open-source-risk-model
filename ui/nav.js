@@ -134,6 +134,7 @@ function renderNav(currentPageId, repo, scopeId) {
 
   for (var i = 0; i < NAV_PAGES.length; i++) {
     var page = NAV_PAGES[i];
+    if (page.pageId === "overview" && !scopeId && currentPageId !== "overview") continue;
     var a = document.createElement("a");
     var linkScopeId = (scopeId && scopePages[page.pageId]) ? scopeId : null;
     a.href = buildPageUrl(page.file, repo, linkScopeId);
