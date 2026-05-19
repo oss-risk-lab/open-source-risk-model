@@ -8,6 +8,11 @@ from typing import Any, Dict, List, Optional
 
 from open_source_risk_model.tree.models import SummaryMetrics, TreeNode
 from open_source_risk_model.tree.tree_utils import walk_tree
+from open_source_risk_model.tree.scope_risk import (
+    DependencyInput,
+    compute_scope_exposure_metrics,
+)
+from open_source_risk_model.dependencies.scope_classifier import aggregate_node_scope
 
 # Mapping from dependency_scope DB values to SummaryMetrics field names
 _SCOPE_TO_FIELD = {
@@ -38,6 +43,7 @@ class SummaryMetricsCalculator:
         tree_root: TreeNode,
         filters_applied: List[str],
         repo_full_name: Optional[str] = None,
+        resolved_edges: Optional[List] = None,
     ) -> SummaryMetrics:
         """Calculate summary metrics for the given tree.
 
@@ -47,6 +53,8 @@ class SummaryMetricsCalculator:
             repo_full_name: Optional repo identifier. When provided, scope
                 breakdown counts are computed directly from the
                 ``repo_dependencies`` table (not from tree nodes).
+            resolved_edges: Optional list of ResolutionEdge objects. When
+                provided, transitive runtime count and scope flag are computed.
 
         Returns:
             SummaryMetrics with aggregate statistics.
@@ -93,6 +101,58 @@ class SummaryMetricsCalculator:
         if repo_full_name is not None:
             scope_kwargs = self._compute_scope_counts(repo_full_name)
 
+        # Compute transitive runtime count and scope flag from resolved edges
+        transitive_runtime_count = 0
+        scope_counts_are_direct_only = True
+        if resolved_edges is not None:
+            transitive_runtime_count = self._compute_transitive_runtime_count(resolved_edges)
+            # Flip flag when transitive scope data is available
+            # (resolved edges exist with non-unknown scopes)
+            has_transitive_scope = any(
+                e.dependency_scope != "unknown"
+                for e in resolved_edges
+                if e.depth > 1
+            )
+            if has_transitive_scope:
+                scope_counts_are_direct_only = False
+            scope_kwargs["scope_counts_are_direct_only"] = scope_counts_are_direct_only
+            scope_kwargs["transitive_runtime_dependency_count"] = transitive_runtime_count
+
+        # Phase 4 — Build DependencyInput list from tree nodes for exposure metrics
+        dep_inputs: List[DependencyInput] = []
+        for node in walk_tree(tree_root):
+            if node.depth == 0:
+                continue
+            dep_scope = getattr(node, "dependency_scope", None) or "unknown"
+            dep_confidence = getattr(node, "scope_confidence", None) or "low"
+            dep_type = "direct" if node.depth == 1 else "transitive"
+            vuln_count = 0
+            risk_sc = None
+            if node.risk_metadata is not None:
+                vuln_count = node.risk_metadata.vulnerability_count
+                risk_sc = node.risk_metadata.risk_score
+            dep_inputs.append(
+                DependencyInput(
+                    package_name=node.name,
+                    dependency_scope=dep_scope,
+                    scope_confidence=dep_confidence,
+                    vulnerability_count=vuln_count,
+                    risk_score=risk_sc,
+                    dependency_type=dep_type,
+                )
+            )
+
+        exposure = compute_scope_exposure_metrics(dep_inputs)
+        exposure_kwargs: Dict[str, Any] = {
+            "runtime_dependency_exposure": exposure.runtime_dependency_exposure,
+            "transitive_runtime_dependency_exposure": exposure.transitive_runtime_dependency_exposure,
+            "scope_weighted_dependency_exposure": exposure.scope_weighted_dependency_exposure,
+            "vulnerable_runtime_dependency_count": exposure.vulnerable_runtime_dependency_count,
+            "vulnerable_transitive_runtime_dependency_count": exposure.vulnerable_transitive_runtime_dependency_count,
+            "high_risk_runtime_dependency_count": exposure.high_risk_runtime_dependency_count,
+            "unknown_scope_dependency_ratio": exposure.unknown_scope_dependency_ratio,
+        }
+
         return SummaryMetrics(
             total_dependencies=total,
             direct_dependencies=direct,
@@ -103,6 +163,7 @@ class SummaryMetricsCalculator:
             riskiest_branch=riskiest_branch,
             filters_applied=list(filters_applied),
             **scope_kwargs,
+            **exposure_kwargs,
         )
 
     def _find_riskiest_branch(
@@ -191,3 +252,42 @@ class SummaryMetricsCalculator:
 
         result["direct_total_dependency_count"] = total
         return result
+
+    # ------------------------------------------------------------------
+    # Transitive runtime count (Phase 2)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _compute_transitive_runtime_count(resolved_edges: List) -> int:
+        """Count unique transitive child packages with aggregated runtime scope.
+
+        Groups edges by (ecosystem, package_name). For each unique child where
+        min depth > 1 AND at least one edge has resolution_status == "resolved",
+        aggregates scope via aggregate_node_scope(). Counts those whose
+        aggregated scope is "runtime".
+        """
+        # Group edges by child identity: (ecosystem, package_name)
+        children: Dict[tuple, List] = {}
+        for edge in resolved_edges:
+            child_key = (edge.child_ecosystem, edge.child_package)
+            children.setdefault(child_key, []).append(edge)
+
+        count = 0
+        for child_key, child_edges in children.items():
+            # Min depth must be > 1 (transitive only)
+            min_depth = min(e.depth for e in child_edges)
+            if min_depth <= 1:
+                continue
+
+            # At least one edge must be resolved
+            has_resolved = any(e.resolution_status == "resolved" for e in child_edges)
+            if not has_resolved:
+                continue
+
+            # Aggregate scope across all edges to this child
+            scope_tuples = [(e.dependency_scope, e.scope_confidence) for e in child_edges]
+            agg_scope, _ = aggregate_node_scope(scope_tuples)
+            if agg_scope == "runtime":
+                count += 1
+
+        return count

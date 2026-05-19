@@ -61,6 +61,13 @@ class NormalizedPackageMetadata:
     fetched_at: str                       # ISO 8601 timestamp
 
 
+# Valid dependency scopes and confidence levels (Req 8.3, 14.1, 14.2)
+VALID_DEPENDENCY_SCOPES = frozenset({
+    "runtime", "dev", "test", "build", "optional", "peer", "unknown",
+})
+VALID_SCOPE_CONFIDENCES = frozenset({"high", "medium", "low"})
+
+
 @dataclass
 class ResolutionEdge:
     """A single parent→child edge in the resolved graph (Req 4.2, 7.2).
@@ -78,6 +85,21 @@ class ResolutionEdge:
     error_reason: Optional[str] = None
     source_registry: Optional[str] = None  # ecosystem name, e.g. "pypi"
     resolved_at: str = ""              # ISO 8601, set by resolver
+    dependency_scope: str = "unknown"      # Req 8.1 — scope inherited from parent
+    scope_confidence: str = "low"          # Req 8.2 — confidence inherited from parent
+
+    def __post_init__(self) -> None:
+        """Validate scope and confidence values (Req 8.3, 14.1, 14.2)."""
+        if self.dependency_scope not in VALID_DEPENDENCY_SCOPES:
+            raise ValueError(
+                f"Invalid dependency_scope: {self.dependency_scope!r}. "
+                f"Must be one of {sorted(VALID_DEPENDENCY_SCOPES)}"
+            )
+        if self.scope_confidence not in VALID_SCOPE_CONFIDENCES:
+            raise ValueError(
+                f"Invalid scope_confidence: {self.scope_confidence!r}. "
+                f"Must be one of {sorted(VALID_SCOPE_CONFIDENCES)}"
+            )
 
 
 @dataclass

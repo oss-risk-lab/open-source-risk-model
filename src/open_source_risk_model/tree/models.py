@@ -142,6 +142,16 @@ class SummaryMetrics:
     scope_counts_are_direct_only: bool = True
     scope_classification_label: str = "Direct dependencies, classified from manifests"
     scope_note: str = "Dependency scope is classified from manifests and may not reflect actual runtime usage."
+    transitive_runtime_dependency_count: int = 0
+
+    # Phase 4 — Scope exposure metrics
+    runtime_dependency_exposure: float = 0.0
+    transitive_runtime_dependency_exposure: float = 0.0
+    scope_weighted_dependency_exposure: float = 0.0
+    vulnerable_runtime_dependency_count: int = 0
+    vulnerable_transitive_runtime_dependency_count: int = 0
+    high_risk_runtime_dependency_count: int = 0
+    unknown_scope_dependency_ratio: float = 0.0
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dict."""
@@ -168,6 +178,15 @@ class SummaryMetrics:
         d["scope_counts_are_direct_only"] = self.scope_counts_are_direct_only
         d["scope_classification_label"] = self.scope_classification_label
         d["scope_note"] = self.scope_note
+        d["transitive_runtime_dependency_count"] = self.transitive_runtime_dependency_count
+        # Phase 4 — Scope exposure metrics
+        d["runtime_dependency_exposure"] = self.runtime_dependency_exposure
+        d["transitive_runtime_dependency_exposure"] = self.transitive_runtime_dependency_exposure
+        d["scope_weighted_dependency_exposure"] = self.scope_weighted_dependency_exposure
+        d["vulnerable_runtime_dependency_count"] = self.vulnerable_runtime_dependency_count
+        d["vulnerable_transitive_runtime_dependency_count"] = self.vulnerable_transitive_runtime_dependency_count
+        d["high_risk_runtime_dependency_count"] = self.high_risk_runtime_dependency_count
+        d["unknown_scope_dependency_ratio"] = self.unknown_scope_dependency_ratio
         return d
 
 

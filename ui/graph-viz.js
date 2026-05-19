@@ -593,6 +593,36 @@ function showNodeDetails(nodeId) {
     html += `</div>`;
   }
   
+  // Dependency Info section (scope, confidence, type)
+  if (node.metadata) {
+    const scope = node.metadata.dependency_scope;
+    const confidence = node.metadata.scope_confidence;
+    const depType = node.metadata.dependency_type;
+    
+    if (scope || depType) {
+      html += `<div class="detail-section"><h4>Dependency Info</h4>`;
+      if (depType) {
+        html += `<div class="detail-item">
+          <div class="label">Type</div>
+          <div class="value">${depType}</div>
+        </div>`;
+      }
+      if (scope) {
+        html += `<div class="detail-item">
+          <div class="label">Scope</div>
+          <div class="value">${scope}</div>
+        </div>`;
+      }
+      if (confidence) {
+        html += `<div class="detail-item">
+          <div class="label">Scope Confidence</div>
+          <div class="value">${getConfidenceBadge(confidence === "high" ? 0.95 : confidence === "medium" ? 0.85 : 0.6)}</div>
+        </div>`;
+      }
+      html += `</div>`;
+    }
+  }
+  
   // Provenance section (if enabled)
   if (showProvenance && node.provenance) {
     html += `<div class="detail-section"><h4>Provenance</h4>`;

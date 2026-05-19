@@ -36,6 +36,27 @@ class ResolvedDependencyStorage:
                 CREATE INDEX IF NOT EXISTS idx_resolved_deps_depth
                     ON resolved_dependencies(repo_full_name, depth);
             """)
+
+            # Migrate: add scope columns if missing (Req 1.1, 1.2, 1.3, 1.4)
+            cursor = conn.execute("PRAGMA table_info(resolved_dependencies)")
+            existing_columns = {row[1] for row in cursor.fetchall()}
+
+            if "dependency_scope" not in existing_columns:
+                conn.execute(
+                    "ALTER TABLE resolved_dependencies "
+                    "ADD COLUMN dependency_scope TEXT DEFAULT 'unknown'"
+                )
+            if "scope_confidence" not in existing_columns:
+                conn.execute(
+                    "ALTER TABLE resolved_dependencies "
+                    "ADD COLUMN scope_confidence TEXT DEFAULT 'low'"
+                )
+
+            conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_resolved_deps_scope "
+                "ON resolved_dependencies(dependency_scope)"
+            )
+
             conn.commit()
         finally:
             conn.close()
@@ -52,13 +73,15 @@ class ResolvedDependencyStorage:
                    (repo_full_name, parent_ecosystem, parent_package,
                     child_ecosystem, child_package, declared_specifier,
                     resolved_version, depth, resolution_status,
-                    error_reason, source_registry, resolved_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    error_reason, source_registry, resolved_at,
+                    dependency_scope, scope_confidence)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 [
                     (e.repo_full_name, e.parent_ecosystem, e.parent_package,
                      e.child_ecosystem, e.child_package, e.declared_specifier,
                      e.resolved_version, e.depth, e.resolution_status,
-                     e.error_reason, e.source_registry, e.resolved_at)
+                     e.error_reason, e.source_registry, e.resolved_at,
+                     e.dependency_scope, e.scope_confidence)
                     for e in edges
                 ],
             )
@@ -132,4 +155,6 @@ class ResolvedDependencyStorage:
             error_reason=row["error_reason"],
             source_registry=row["source_registry"],
             resolved_at=row["resolved_at"],
+            dependency_scope=row["dependency_scope"] or "unknown",
+            scope_confidence=row["scope_confidence"] or "low",
         )

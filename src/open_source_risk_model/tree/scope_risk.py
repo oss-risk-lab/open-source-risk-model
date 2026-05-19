@@ -195,10 +195,11 @@ def _deduplicate(
     When duplicates exist, keep the entry with the highest normalized_risk.
     Ties are broken deterministically by preferring higher scope_weight,
     then higher confidence_modifier, then higher raw risk_score, then
-    higher vulnerability_count — ensuring input-order independence.
+    higher vulnerability_count, then lexicographically greater scope string
+    — ensuring input-order independence.
     """
     best: dict[tuple[str, str], DependencyInput] = {}
-    best_key_val: dict[tuple[str, str], tuple[float, float, float, float, int]] = {}
+    best_key_val: dict[tuple[str, str], tuple[float, float, float, float, int, str]] = {}
     for dep in dependencies:
         key = (dep.package_name, dep.dependency_type)
         nr = _normalized_risk(dep)
@@ -206,7 +207,7 @@ def _deduplicate(
         sw = DEFAULT_SCOPE_WEIGHTS.get(scope, DEFAULT_SCOPE_WEIGHTS.get("unknown", 0.40))
         cm = CONFIDENCE_MODIFIERS.get(dep.scope_confidence, 0.5)
         rs = dep.risk_score if dep.risk_score is not None else -1.0
-        sort_val = (nr, sw, cm, rs, dep.vulnerability_count)
+        sort_val = (nr, sw, cm, rs, dep.vulnerability_count, scope)
         if key not in best or sort_val > best_key_val[key]:
             best[key] = dep
             best_key_val[key] = sort_val
@@ -263,10 +264,10 @@ def compute_scope_weighted_risk(
     risk_label = _classify_risk_label(score)
 
     # --- top drivers -------------------------------------------------------
-    # Sort: contribution desc, then package_name asc (stable)
+    # Sort: contribution desc, then package_name, dependency_type, scope asc (fully stable)
     sorted_records = sorted(
         records,
-        key=lambda r: (-r[3], r[0].package_name),
+        key=lambda r: (-r[3], r[0].package_name, r[0].dependency_type, r[1]),
     )
 
     top_drivers: list[TopDriver] = []

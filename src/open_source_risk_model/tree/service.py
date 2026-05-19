@@ -31,6 +31,7 @@ from open_source_risk_model.tree.tree_utils import clone_tree, walk_tree
 
 from open_source_risk_model.resolution.storage import ResolvedDependencyStorage
 from open_source_risk_model.resolution.models import ResolutionEdge, make_node_key
+from open_source_risk_model.dependencies.scope_classifier import aggregate_node_scope
 
 
 # Registry type → ecosystem mapping
@@ -87,7 +88,7 @@ class TreeService:
         start_time = time.monotonic()
 
         # Phase 1: Canonical Tree Assembly
-        canonical_tree, data_source = self._build_canonical_tree(repo_full_name)
+        canonical_tree, data_source, resolved_edges = self._build_canonical_tree(repo_full_name)
 
         # Phase 2: Response Transformation
         filters = FilterConfig(
@@ -103,6 +104,7 @@ class TreeService:
             sort_by=sort_by,
             truncate_after_children=truncate_after_children,
             start_time=start_time,
+            resolved_edges=resolved_edges,
         )
 
         # Timeout check after both phases complete
@@ -168,7 +170,7 @@ class TreeService:
 
     def _build_canonical_tree(
         self, repo_full_name: str
-    ) -> Tuple[TreeNode, str]:
+    ) -> Tuple[TreeNode, str, Optional[List[ResolutionEdge]]]:
         """Build the full canonical tree for *repo_full_name*.
 
         Steps:
@@ -179,7 +181,7 @@ class TreeService:
         4. Enrich all nodes with risk metadata.
 
         Returns:
-            (root_node, data_source)
+            (root_node, data_source, resolved_edges_or_None)
 
         Raises:
             RepositoryNotFoundError: repo not in database.
@@ -193,7 +195,7 @@ class TreeService:
                 root = self._build_tree_from_resolved(repo_full_name, edges)
                 all_nodes = list(walk_tree(root))
                 RiskMetadataEnricher.enrich_nodes(all_nodes, self.db_path)
-                return root, "database"
+                return root, "database", edges
         except Exception:
             pass  # Fall through to existing logic on any error
 
@@ -215,7 +217,7 @@ class TreeService:
             # Still enrich (no-op for root-only tree)
             all_nodes = list(walk_tree(root))
             RiskMetadataEnricher.enrich_nodes(all_nodes, self.db_path)
-            return root, data_source
+            return root, data_source, None
 
         # Organise deps: separate direct from transitive, index by parent
         direct_deps: List[Dict[str, Any]] = []
@@ -252,7 +254,7 @@ class TreeService:
         all_nodes = list(walk_tree(root))
         RiskMetadataEnricher.enrich_nodes(all_nodes, self.db_path)
 
-        return root, data_source
+        return root, data_source, None
 
     def _build_node(
         self,
@@ -364,10 +366,24 @@ class TreeService:
             key = make_node_key(edge.parent_ecosystem, edge.parent_package)
             children_by_parent.setdefault(key, []).append(edge)
 
+        # Build scope aggregation map: (ecosystem, package_name) → list of (scope, confidence)
+        scope_agg_map: dict[tuple, list[tuple[str, str]]] = {}
+        for edge in edges:
+            child_key = (edge.child_ecosystem, edge.child_package)
+            scope_agg_map.setdefault(child_key, []).append(
+                (edge.dependency_scope, edge.scope_confidence)
+            )
+
+        # Pre-compute aggregated scope per child using aggregate_node_scope()
+        aggregated_scopes: dict[tuple, tuple[str, str]] = {}
+        for child_key, scope_tuples in scope_agg_map.items():
+            aggregated_scopes[child_key] = aggregate_node_scope(scope_tuples)
+
         # Direct children: parent is repo (ecosystem=None, package=repo_full_name)
         direct_edges = children_by_parent.get(make_node_key(None, repo_full_name), [])
         for edge in sorted(direct_edges, key=lambda e: e.child_package):
-            child = self._edge_to_node(edge, children_by_parent, branch_visited=set())
+            child = self._edge_to_node(edge, children_by_parent, branch_visited=set(),
+                                       aggregated_scopes=aggregated_scopes)
             root.children.append(child)
 
         return root
@@ -377,6 +393,7 @@ class TreeService:
         edge: ResolutionEdge,
         children_by_parent: dict[tuple, list[ResolutionEdge]],
         branch_visited: set[tuple],
+        aggregated_scopes: dict[tuple, tuple[str, str]] | None = None,
     ) -> TreeNode:
         """Convert a ResolutionEdge to a TreeNode, recursively attaching children."""
         canonical_id = _make_canonical_id(
@@ -385,6 +402,14 @@ class TreeService:
 
         node_status, error_reason = self._map_resolution_status(edge)
         dep_type = "direct" if edge.depth == 1 else "transitive"
+
+        # Apply aggregated scope from pre-computed map (Req 9.1)
+        agg_scope: str | None = None
+        agg_confidence: str | None = None
+        if aggregated_scopes is not None:
+            child_key = (edge.child_ecosystem, edge.child_package)
+            if child_key in aggregated_scopes:
+                agg_scope, agg_confidence = aggregated_scopes[child_key]
 
         node = TreeNode(
             id=canonical_id,
@@ -397,6 +422,8 @@ class TreeService:
             specifier=edge.declared_specifier,
             resolution_status=node_status,
             error_reason=error_reason,
+            dependency_scope=agg_scope,
+            scope_confidence=agg_confidence,
         )
 
         # Terminal statuses: no children
@@ -416,7 +443,8 @@ class TreeService:
         child_key = make_node_key(edge.child_ecosystem, edge.child_package)
         child_edges = children_by_parent.get(child_key, [])
         for child_edge in sorted(child_edges, key=lambda e: e.child_package):
-            child_node = self._edge_to_node(child_edge, children_by_parent, new_visited)
+            child_node = self._edge_to_node(child_edge, children_by_parent, new_visited,
+                                            aggregated_scopes=aggregated_scopes)
             node.children.append(child_node)
 
         return node
@@ -454,6 +482,7 @@ class TreeService:
         sort_by: Optional[str] = None,
         truncate_after_children: Optional[int] = None,
         start_time: Optional[float] = None,
+        resolved_edges: Optional[List[ResolutionEdge]] = None,
     ) -> DependencyTreeResponse:
         """Phase 2: Transform the canonical tree for the API response.
 
@@ -498,8 +527,13 @@ class TreeService:
             self._truncate_children(tree, truncate_after_children)
 
         # Step 7: Calculate summary metrics
-        calculator = SummaryMetricsCalculator()
-        summary_metrics = calculator.calculate_metrics(tree, filters_applied)
+        calculator = SummaryMetricsCalculator(db_path=self.db_path)
+        repo_full_name = canonical_tree.id if canonical_tree else None
+        summary_metrics = calculator.calculate_metrics(
+            tree, filters_applied,
+            repo_full_name=repo_full_name,
+            resolved_edges=resolved_edges,
+        )
 
         # Step 8: Assemble provenance
         provenance = self._assemble_provenance(tree, data_source, start_time=start_time)

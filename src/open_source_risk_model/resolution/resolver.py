@@ -38,6 +38,9 @@ class TransitiveResolver:
             ecosystem = dep.get("registry_type") or dep.get("ecosystem") or "unknown"
             if self.ecosystem_filter and ecosystem not in self.ecosystem_filter:
                 continue
+            # Read direct dep scope from repo_dependencies (Req 6.3, 6.4)
+            parent_scope = dep.get("dependency_scope") or "unknown"
+            parent_scope_confidence = dep.get("scope_confidence") or "low"
             branch_path: set[tuple] = set()
             self._resolve_recursive(
                 repo_full_name=repo_full_name,
@@ -49,6 +52,8 @@ class TransitiveResolver:
                 depth=1,
                 branch_path=branch_path,
                 edges=edges,
+                parent_scope=parent_scope,
+                parent_scope_confidence=parent_scope_confidence,
             )
 
         elapsed = time.monotonic() - start
@@ -69,6 +74,8 @@ class TransitiveResolver:
         depth: int,
         branch_path: set[tuple],
         edges: list[ResolutionEdge],
+        parent_scope: str = "unknown",
+        parent_scope_confidence: str = "low",
     ) -> None:
         now = datetime.now(timezone.utc).isoformat()
         child_key = make_node_key(child_ecosystem, child_name)
@@ -79,6 +86,7 @@ class TransitiveResolver:
                 repo_full_name, parent_ecosystem, parent_package,
                 child_ecosystem, child_name, declared_specifier,
                 None, depth, "max_depth_reached", None, None, now,
+                parent_scope, parent_scope_confidence,
             ))
             return
 
@@ -88,6 +96,7 @@ class TransitiveResolver:
                 repo_full_name, parent_ecosystem, parent_package,
                 child_ecosystem, child_name, declared_specifier,
                 None, depth, "cycle_detected", None, None, now,
+                parent_scope, parent_scope_confidence,
             ))
             return
 
@@ -98,6 +107,7 @@ class TransitiveResolver:
                 repo_full_name, parent_ecosystem, parent_package,
                 child_ecosystem, child_name, declared_specifier,
                 None, depth, "unsupported_ecosystem", None, None, now,
+                parent_scope, parent_scope_confidence,
             ))
             return
 
@@ -113,6 +123,7 @@ class TransitiveResolver:
                     child_ecosystem, child_name, declared_specifier,
                     None, depth, "budget_exhausted", None,
                     child_ecosystem, now,
+                    parent_scope, parent_scope_confidence,
                 ))
                 return
 
@@ -129,6 +140,7 @@ class TransitiveResolver:
                 child_ecosystem, child_name, declared_specifier,
                 None, depth, "error", "Package not found in registry",
                 child_ecosystem, now,
+                parent_scope, parent_scope_confidence,
             ))
             return
 
@@ -138,9 +150,10 @@ class TransitiveResolver:
             child_ecosystem, child_name, declared_specifier,
             metadata.version, depth, "resolved", None,
             child_ecosystem, now,
+            parent_scope, parent_scope_confidence,
         ))
 
-        # Recurse into sub-dependencies
+        # Recurse into sub-dependencies — thread same scope (Req 3.1)
         new_branch_path = branch_path | {child_key}
         for sub_dep in sorted(metadata.dependencies, key=lambda d: d.name):
             self._resolve_recursive(
@@ -153,11 +166,14 @@ class TransitiveResolver:
                 depth=depth + 1,
                 branch_path=new_branch_path,
                 edges=edges,
+                parent_scope=parent_scope,
+                parent_scope_confidence=parent_scope_confidence,
             )
 
     @staticmethod
     def _make_edge(repo, p_eco, p_pkg, c_eco, c_pkg, spec, ver,
-                   depth, status, err, src, ts) -> ResolutionEdge:
+                   depth, status, err, src, ts,
+                   scope="unknown", confidence="low") -> ResolutionEdge:
         return ResolutionEdge(
             repo_full_name=repo, parent_ecosystem=p_eco,
             parent_package=p_pkg, child_ecosystem=c_eco,
@@ -165,6 +181,7 @@ class TransitiveResolver:
             resolved_version=ver, depth=depth,
             resolution_status=status, error_reason=err,
             source_registry=src, resolved_at=ts,
+            dependency_scope=scope, scope_confidence=confidence,
         )
 
     def _get_direct_deps(self, repo_full_name: str) -> list[dict]:

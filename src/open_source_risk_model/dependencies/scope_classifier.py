@@ -7,7 +7,7 @@ to the (unknown, low) default.
 """
 
 from enum import Enum
-from typing import Tuple
+from typing import List, Tuple
 
 
 class DependencyScope(str, Enum):
@@ -171,3 +171,80 @@ def _classify_cargo(group: str) -> Tuple[DependencyScope, ScopeConfidence]:
     if group == "build":
         return DependencyScope.BUILD, ScopeConfidence.HIGH
     return DependencyScope.UNKNOWN, ScopeConfidence.LOW
+
+
+# ---------------------------------------------------------------------------
+# Scope priority model for transitive propagation (Phase 2)
+# ---------------------------------------------------------------------------
+
+SCOPE_PRIORITY: dict[str, int] = {
+    "runtime": 7,
+    "optional": 6,
+    "peer": 5,
+    "build": 4,
+    "test": 3,
+    "dev": 2,
+    "unknown": 1,
+}
+
+CONFIDENCE_PRIORITY: dict[str, int] = {
+    "high": 3,
+    "medium": 2,
+    "low": 1,
+}
+
+
+def resolve_scope(
+    scope_a: Tuple[str, str],
+    scope_b: Tuple[str, str],
+) -> Tuple[str, str]:
+    """Return the (scope, confidence) tuple with higher priority.
+
+    Pure function. No side effects. No database access.
+
+    Args:
+        scope_a: (dependency_scope, scope_confidence)
+        scope_b: (dependency_scope, scope_confidence)
+
+    Returns:
+        The tuple with higher SCOPE_PRIORITY. On tie, higher
+        CONFIDENCE_PRIORITY wins. Unrecognized scope/confidence
+        strings get priority 0 (defense-in-depth).
+    """
+    pri_a = SCOPE_PRIORITY.get(scope_a[0], 0)
+    pri_b = SCOPE_PRIORITY.get(scope_b[0], 0)
+
+    if pri_a > pri_b:
+        return scope_a
+    if pri_b > pri_a:
+        return scope_b
+
+    # Scope priorities tied — break by confidence
+    conf_a = CONFIDENCE_PRIORITY.get(scope_a[1], 0)
+    conf_b = CONFIDENCE_PRIORITY.get(scope_b[1], 0)
+
+    if conf_a >= conf_b:
+        return scope_a
+    return scope_b
+
+
+def aggregate_node_scope(
+    edges: List[Tuple[str, str]],
+) -> Tuple[str, str]:
+    """Aggregate multiple (scope, confidence) tuples into one via resolve_scope.
+
+    Reduces pairwise. Returns ("unknown", "low") for empty input.
+
+    Args:
+        edges: List of (dependency_scope, scope_confidence) tuples.
+
+    Returns:
+        The aggregated (scope, confidence) with highest priority.
+    """
+    if not edges:
+        return ("unknown", "low")
+
+    result = edges[0]
+    for edge in edges[1:]:
+        result = resolve_scope(result, edge)
+    return result
