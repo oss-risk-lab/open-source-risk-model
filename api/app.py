@@ -31,7 +31,7 @@ from open_source_risk_model.persistence.job_repo import JobRepository
 from open_source_risk_model.persistence.index_repo import IndexRepository
 from open_source_risk_model.persistence.worker import IngestionWorker
 from open_source_risk_model.persistence.errors import DatabaseError
-from open_source_risk_model.persistence.db import get_connection
+from open_source_risk_model.persistence.db import get_connection, init_database
 from open_source_risk_model.insights.compute import compute_repo_insight
 from open_source_risk_model.config.demo_repos import load_demo_repos, validate_demo_repos
 
@@ -146,6 +146,12 @@ async def startup_event():
     # Ensure data directory exists (critical for fresh deployments like Render)
     data_dir = Path(db_path).parent
     data_dir.mkdir(parents=True, exist_ok=True)
+
+    # Run schema migrations (idempotent — safe to call every startup)
+    try:
+        init_database(db_path)
+    except Exception as e:
+        logger.warning(f"Schema migration warning: {e}")
     
     # Check if database persistence is enabled
     db_enabled = os.getenv("GRAPH_DB_ENABLED", "true").lower() == "true"
@@ -278,6 +284,58 @@ def health():
             "total_errors": metrics_data["errors"]["total"],
         },
         "uptime_seconds": metrics_data["uptime_seconds"],
+    }
+
+
+@app.get("/api/admin/ingestion-health")
+def ingestion_health():
+    """
+    Ingestion data quality report.
+
+    Classifies every ingested repo by health status using the ingestion_health view:
+      - parse_failure   manifests found but 0 deps parsed (language parser gap)
+      - persistence_gap deps parsed but <70% reached the database (schema/bug)
+      - stale_90d       last successful ingestion >90 days ago
+      - stale_30d       last successful ingestion 30–90 days ago
+      - ok              ingested within the last 30 days with good coverage
+
+    Returns repos grouped by health status plus a summary count.
+    """
+    db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
+    try:
+        with get_connection(db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute("""
+                SELECT repo_full_name, last_run_at, manifests_discovered,
+                       dependencies_found, rows_in_db, age_days, health
+                FROM ingestion_health
+                ORDER BY health, age_days DESC
+            """).fetchall()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {e}")
+
+    grouped: Dict[str, list] = {
+        "parse_failure": [],
+        "persistence_gap": [],
+        "stale_90d": [],
+        "stale_30d": [],
+        "ok": [],
+    }
+    for row in rows:
+        entry = {
+            "repo": row["repo_full_name"],
+            "last_run_at": row["last_run_at"],
+            "manifests_discovered": row["manifests_discovered"],
+            "dependencies_found": row["dependencies_found"],
+            "rows_in_db": row["rows_in_db"],
+            "age_days": row["age_days"],
+        }
+        grouped[row["health"]].append(entry)
+
+    return {
+        "summary": {h: len(v) for h, v in grouped.items()},
+        "stale_threshold_days": {"warning": 30, "critical": 90},
+        "repos": grouped,
     }
 
 

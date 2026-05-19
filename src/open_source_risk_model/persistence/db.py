@@ -341,12 +341,55 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 ON package_mappings(confidence);
         """)
         
+        # Ingestion health view — classifies every ingested repo by data quality
+        conn.executescript("""
+            DROP VIEW IF EXISTS ingestion_health;
+            CREATE VIEW ingestion_health AS
+            WITH last_run AS (
+                SELECT
+                    repo_full_name,
+                    MAX(completed_at)        AS last_run_at,
+                    manifests_discovered,
+                    dependencies_found,
+                    status
+                FROM repo_ingestion_runs
+                WHERE status = 'success'
+                GROUP BY repo_full_name
+            ),
+            dep_counts AS (
+                SELECT repo_full_name, COUNT(*) AS rows_in_db
+                FROM repo_dependencies
+                GROUP BY repo_full_name
+            )
+            SELECT
+                r.repo_full_name,
+                r.last_run_at,
+                r.manifests_discovered,
+                r.dependencies_found,
+                COALESCE(d.rows_in_db, 0) AS rows_in_db,
+                CAST(julianday('now') - julianday(r.last_run_at) AS INTEGER) AS age_days,
+                CASE
+                    WHEN r.dependencies_found = 0 AND r.manifests_discovered > 0
+                        THEN 'parse_failure'
+                    WHEN r.dependencies_found > 5
+                         AND COALESCE(d.rows_in_db, 0) < r.dependencies_found * 0.7
+                        THEN 'persistence_gap'
+                    WHEN julianday('now') - julianday(r.last_run_at) > 90
+                        THEN 'stale_90d'
+                    WHEN julianday('now') - julianday(r.last_run_at) > 30
+                        THEN 'stale_30d'
+                    ELSE 'ok'
+                END AS health
+            FROM last_run r
+            LEFT JOIN dep_counts d ON d.repo_full_name = r.repo_full_name;
+        """)
+
         # Insert schema version (idempotent with INSERT OR IGNORE)
         conn.execute("""
             INSERT OR IGNORE INTO schema_version (version, applied_at)
             VALUES (?, datetime('now'))
         """, (SCHEMA_VERSION,))
-        
+
         conn.commit()
         conn.close()
         
