@@ -244,67 +244,52 @@ async function fetchTree(repo) {
 
 // ─── Rendering: Scope Summary ────────────────────────────────────────
 
-function scopeCard(label, count, isRuntime) {
-  const borderStyle = isRuntime ? "border-top:2px solid var(--accent);" : "";
-  return `<div class="stat-card ds-kpi" style="${borderStyle}">
-    <div class="ds-kpi-value">${count}</div>
-    <div class="ds-kpi-label">${label}</div>
-  </div>`;
-}
+function renderScopeSummaryCompact(data) {
+  const section = document.getElementById("scopeSummarySection");
+  if (!section) return;
 
-function renderScopeSummary(data) {
-  if (!hasScopeFields(data)) return "";
-
-  if (!hasMeaningfulScopeData(data)) {
-    return `<div class="scope-summary-unavailable" style="margin-top:1rem;padding:0.75rem 1rem;background:var(--bg-overlay);border:1px solid var(--border);border-radius:8px;color:var(--text-secondary);font-size:0.85rem;">
-      Scope data is limited or unavailable for this repository.
-    </div>`;
+  if (!hasScopeFields(data) || !hasMeaningfulScopeData(data)) {
+    section.style.display = "none";
+    return;
   }
 
   const m = data.summary_metrics;
   const runtime = m.direct_runtime_dependency_count || 0;
   const devTest = (m.direct_dev_dependency_count || 0) + (m.direct_test_dependency_count || 0);
   const build = m.direct_build_dependency_count || 0;
-  const optionalPeer = (m.direct_optional_dependency_count || 0) + (m.direct_peer_dependency_count || 0);
+  const optPeer = (m.direct_optional_dependency_count || 0) + (m.direct_peer_dependency_count || 0);
   const unknown = m.direct_unknown_dependency_count || 0;
   const transitiveRuntime = m.transitive_runtime_dependency_count || 0;
 
-  const label = m.scope_classification_label || "";
-  const note = m.scope_note || "";
+  const sep = `<span style="color:var(--text-tertiary);margin:0 4px;">·</span>`;
+  const directParts = [];
+  if (runtime > 0) directParts.push(`<span style="color:var(--accent);font-weight:600;">${runtime} runtime</span>`);
+  if (devTest > 0) directParts.push(`<span>${devTest} dev/test</span>`);
+  if (build > 0) directParts.push(`<span>${build} build</span>`);
+  if (optPeer > 0) directParts.push(`<span>${optPeer} optional/peer</span>`);
+  if (unknown > 0) directParts.push(`<span style="color:var(--text-tertiary);">${unknown} unknown</span>`);
 
-  let html = `<div class="scope-summary" style="margin-top:1rem;">`;
-  if (label) html += `<div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.5rem;">${label}</div>`;
+  if (directParts.length === 0 && transitiveRuntime === 0) {
+    section.style.display = "none";
+    return;
+  }
 
-  // Direct dependencies section
-  html += `<div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:0.25rem;">Direct Dependencies</div>`;
-  html += `<div class="summary-grid" style="margin-bottom:0.75rem;">`;
-  html += scopeCard("Runtime", runtime, true);
-  html += scopeCard("Dev/Test", devTest, false);
-  html += scopeCard("Build", build, false);
-  html += scopeCard("Optional/Peer", optionalPeer, false);
-  html += scopeCard("Unknown", unknown, false);
-  html += `</div>`;
+  let html = `<div style="padding:var(--sp-8) var(--sp-12);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);font-size:12px;color:var(--text-secondary);">`;
+  html += `<div style="display:flex;gap:var(--sp-24);align-items:baseline;flex-wrap:wrap;margin-bottom:var(--sp-4);">`;
 
-  // Transitive dependencies section
-  html += `<div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:0.25rem;">Transitive Dependencies</div>`;
-  html += `<div class="summary-grid" style="margin-bottom:0.5rem;">`;
-  html += scopeCard("Runtime", transitiveRuntime, true);
-  html += `</div>`;
-
-  // Helper text
-  html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.5rem;">`;
-  html += `Dependency scope is classified from manifests and may not reflect actual runtime usage.`;
-  html += `</div>`;
-  html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.25rem;">`;
-  html += `Only runtime scope is currently tracked for transitive dependencies. Dev/test/build/optional/peer counts represent direct dependencies only.`;
-  html += `</div>`;
-
-  if (note) {
-    html += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:0.25rem;">${note}</div>`;
+  if (directParts.length > 0) {
+    html += `<span><span style="color:var(--text-tertiary);font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-right:6px;">Direct</span>${directParts.join(sep)}</span>`;
+  }
+  if (transitiveRuntime > 0) {
+    html += `<span><span style="color:var(--text-tertiary);font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-right:6px;">Transitive</span><span style="color:var(--accent);font-weight:600;">${transitiveRuntime} runtime</span></span>`;
   }
 
   html += `</div>`;
-  return html;
+  html += `<div style="font-size:10px;color:var(--text-tertiary);line-height:1.4;opacity:0.8;">Scope coverage is based on manifest metadata. Direct dependency scope is inferred where available. Transitive scope may be unknown when package metadata does not expose runtime classification.</div>`;
+  html += `</div>`;
+
+  section.innerHTML = html;
+  section.style.display = "block";
 }
 
 // ─── Rendering: Summary ──────────────────────────────────────────────
@@ -347,10 +332,8 @@ function renderSummary(data) {
     </div>`
   ).join("");
 
-  // Append scope summary after the existing stat cards
-  summaryGrid.innerHTML += renderScopeSummary(data);
-
   summarySection.style.display = "block";
+  renderScopeSummaryCompact(data);
 
   // Populate sidebar tree summary with interpretive statements + breakdowns
   const sidebarSummary = $("treeSummaryContent");
@@ -386,6 +369,18 @@ function renderSummary(data) {
       lines.push("Dependency depth is moderate (max " + m.max_depth + ").");
     } else {
       lines.push("Dependency tree is deep (max " + m.max_depth + ").");
+    }
+
+    // Missing metadata
+    const missingMeta = data.provenance && data.provenance.nodes_with_missing_risk;
+    if (missingMeta > 0) {
+      lines.push(`<span style="color:var(--text-tertiary);">${missingMeta} deps</span> missing risk metadata.`);
+    }
+
+    // Scope coverage
+    if (hasMeaningfulScopeData(data)) {
+      const runtimeTotal = (m.direct_runtime_dependency_count || 0) + (m.transitive_runtime_dependency_count || 0);
+      if (runtimeTotal > 0) lines.push(`${runtimeTotal} runtime-scoped dependencies identified.`);
     }
 
     let html = lines.map(l =>
@@ -427,35 +422,30 @@ function renderProvenance(data) {
   const p = data.provenance;
   if (!p) { provenanceBanner.style.display = "none"; return; }
 
-  const messages = [];
-  const badges = [];
-
-  badges.push(`<span class="prov-badge">${p.data_source}</span>`);
-  badges.push(`<span class="prov-badge">${p.data_completeness}</span>`);
-
-  if (p.data_completeness === "partial") {
-    if (p.nodes_with_missing_risk > 0)
-      messages.push(`${p.nodes_with_missing_risk} node(s) missing risk metadata.`);
-    if (p.nodes_with_errors > 0)
-      messages.push(`${p.nodes_with_errors} node(s) failed to resolve.`);
-  }
+  const details = [];
+  if (p.nodes_with_missing_risk > 0)
+    details.push(`${p.nodes_with_missing_risk} dependencies missing risk metadata`);
+  if (p.nodes_with_errors > 0)
+    details.push(`${p.nodes_with_errors} failed to resolve`);
   if (p.data_source === "mixed")
-    messages.push("Some nodes were fetched live.");
+    details.push("some nodes fetched live");
   if (p.data_source === "live")
-    messages.push("All data was fetched live (not from database).");
-
-  // Check for any truncated nodes in the tree
+    details.push("all data fetched live");
   if (hasAnyTruncation(data.tree))
-    messages.push("Some branches are truncated based on current child limit.");
+    details.push("some branches truncated");
 
-  if (messages.length === 0 && p.data_completeness === "full") {
+  if (details.length === 0 && p.data_completeness === "full") {
     provenanceBanner.style.display = "none";
     return;
   }
 
-  const isWarn = p.data_completeness === "partial" || p.nodes_with_errors > 0;
-  provenanceBanner.className = `provenance-banner ${isWarn ? "warn" : "info"}`;
-  provenanceBanner.innerHTML = badges.join("") + " " + messages.join(" ");
+  let content = `Data quality: <span class="prov-badge">${p.data_completeness}</span>`;
+  if (details.length > 0) content += ` · ` + details.join(" · ");
+
+  // Only use warning color for actual resolution errors; partial data is expected
+  const hasErrors = p.nodes_with_errors > 0;
+  provenanceBanner.className = `provenance-banner ${hasErrors ? "warn" : "info"}`;
+  provenanceBanner.innerHTML = content;
   provenanceBanner.style.display = "flex";
 }
 
@@ -580,8 +570,8 @@ function buildBadges(node) {
   if (node.resolution_status === "error") {
     parts.push(`<span class="badge error-badge">error</span>`);
   }
-  // Scope badge
-  if (node.dependency_scope) {
+  // Scope badge — hide "unknown" on transitive nodes where it's almost always true and adds noise
+  if (node.dependency_scope && (node.dependency_scope !== "unknown" || node.depth === 1)) {
     const scopeClass = SCOPE_BADGE_CLASSES[node.dependency_scope] || "scope-unknown";
     const tooltip = SCOPE_TOOLTIPS[node.dependency_scope] || "";
     parts.push(`<span class="badge ${scopeClass}" title="${tooltip}">${node.dependency_scope}</span>`);
@@ -644,9 +634,18 @@ function selectNode(key, node) {
 
 function renderDetailPanel(node) {
   if (!node) {
-    detailContent.innerHTML = `<div class="state-msg" style="padding:30px 10px;">
-      <div class="msg">Click a node to inspect its metadata</div>
-    </div>`;
+    detailContent.innerHTML = `
+      <div style="padding:var(--sp-4) 0;">
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-12);">Select a package to inspect its metadata.</div>
+        <div style="font-size:11px;color:var(--text-tertiary);line-height:1.8;">
+          <div style="font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:var(--sp-4);">What you'll see</div>
+          <div>· Version &amp; ecosystem</div>
+          <div>· Dependency type (direct / transitive)</div>
+          <div>· Scope (runtime, dev, build)</div>
+          <div>· Risk score &amp; vulnerability count</div>
+          <div>· Child dependency count</div>
+        </div>
+      </div>`;
     return;
   }
 

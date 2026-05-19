@@ -278,6 +278,7 @@
       <div id="crossLinks" style="display:none; gap:var(--sp-8); margin-top:var(--sp-4); flex-wrap:wrap;"></div>
       <div class="summary-grid" id="summaryGrid"></div>
     </div>
+    <div id="scopeSummarySection" style="display:none;margin-bottom:var(--sp-4);"></div>
   </div>
 
   <!-- Provenance banner -->
@@ -296,7 +297,7 @@
       </div>
       <label><input type="checkbox" id="highRiskOnly" /> High-risk only</label>
       <label><input type="checkbox" id="vulnerableOnly" /> Vulnerable only</label>
-      <label><input type="checkbox" id="directOnly" /> Direct only</label>
+      <label><input type="checkbox" id="directOnly" /> Direct deps only</label>
       <div class="filter-group">
         <span>Sort:</span>
         <select id="sortBySelect" aria-label="Sort order">
@@ -307,9 +308,9 @@
         </select>
       </div>
       <div class="filter-group">
-        <span>Max children:</span>
+        <span>Children shown:</span>
         <select id="truncateSelect" aria-label="Truncate after children">
-          <option value="">None</option>
+          <option value="">All</option>
           <option value="10">10</option><option value="25">25</option><option value="50">50</option>
         </select>
       </div>
@@ -325,12 +326,14 @@
           <option value="unknown">Unknown scope</option>
         </select>
       </div>
-      <button id="expandAllBtn" class="btn btn-sm">Expand all</button>
-      <button id="collapseAllBtn" class="btn btn-sm">Collapse all</button>
-      <button id="resetBtn" class="btn btn-sm">Reset</button>
+      <div style="margin-left:auto;display:flex;gap:var(--sp-4);">
+        <button id="expandAllBtn" class="btn btn-sm">Expand all</button>
+        <button id="collapseAllBtn" class="btn btn-sm">Collapse all</button>
+        <button id="resetBtn" class="btn btn-sm">Reset</button>
+      </div>
     </div>
-    <div id="scopeLegend" style="font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-4);line-height:1.5;display:none;">
-      runtime = likely production exposure · transitive = indirect dependency · unknown = scope not inferred from manifests
+    <div id="scopeLegend" style="font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-4);line-height:1.5;display:none;opacity:0.7;">
+      Runtime = production exposure · Unknown = scope not inferred from manifests
     </div>
   </div>
 
@@ -370,8 +373,16 @@
           <h3 class="section-title">Selected Node</h3>
         </div>
         <div id="detailContent">
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
-            Select a dependency to inspect its metadata, risk level, and relationship context.
+          <div style="padding:var(--sp-4) 0;">
+            <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-12);">Select a package to inspect its metadata.</div>
+            <div style="font-size:11px;color:var(--text-tertiary);line-height:1.8;">
+              <div style="font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:var(--sp-4);">What you'll see</div>
+              <div>· Version &amp; ecosystem</div>
+              <div>· Dependency type (direct / transitive)</div>
+              <div>· Scope (runtime, dev, build)</div>
+              <div>· Risk score &amp; vulnerability count</div>
+              <div>· Child dependency count</div>
+            </div>
           </div>
         </div>
       </div>
@@ -381,7 +392,7 @@
         <div id="treeSummaryPanel" style="margin-bottom:var(--sp-12);">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-tertiary);margin-bottom:var(--sp-8);">Analysis</div>
           <div id="treeSummaryContent">
-            <div style="font-size:12px;color:var(--text-tertiary);">Load a tree to see summary</div>
+            <div style="font-size:12px;color:var(--text-tertiary);line-height:1.6;">Tree insights appear here after loading a repository.</div>
           </div>
         </div>
 
