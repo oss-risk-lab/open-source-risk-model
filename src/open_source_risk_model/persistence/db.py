@@ -271,6 +271,16 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 UNIQUE(repo_full_name, package_name, manifest_path)
             );
             
+            -- Scope sessions (persisted multi-repo analysis results)
+            CREATE TABLE IF NOT EXISTS scope_sessions (
+                scope_id TEXT PRIMARY KEY,
+                name TEXT,
+                status TEXT NOT NULL,
+                result_json TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
+
             -- Package-to-repo mappings cache (NEW for Step 2)
             CREATE TABLE IF NOT EXISTS package_mappings (
                 package_name TEXT NOT NULL,

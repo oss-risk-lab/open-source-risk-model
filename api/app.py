@@ -33,6 +33,7 @@ from open_source_risk_model.persistence.worker import IngestionWorker
 from open_source_risk_model.persistence.errors import DatabaseError
 from open_source_risk_model.persistence.db import get_connection, init_database
 from open_source_risk_model.persistence.dependency_repo import DependencyRepository
+from open_source_risk_model.persistence.scope_repo import ScopeRepository
 from open_source_risk_model.insights.compute import compute_repo_insight
 from open_source_risk_model.config.demo_repos import load_demo_repos, validate_demo_repos
 
@@ -72,6 +73,9 @@ worker_task = None
 # Initialize dependency repository (will be set in startup event)
 dependency_repo: DependencyRepository | None = None
 
+# Initialize scope repository (will be set in startup event)
+scope_repo: ScopeRepository | None = None
+
 # CORS: read allowed origins from env var (comma-separated), fall back to ["*"] for dev
 _cors_origins_raw = os.getenv("CORS_ALLOWED_ORIGINS", "")
 _cors_origins = [o.strip() for o in _cors_origins_raw.split(",") if o.strip()] if _cors_origins_raw else ["*"]
@@ -83,8 +87,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# In-memory scope store — module-level dict
-SCOPE_STORE: Dict[str, dict] = {}
 
 # Best-effort dependency-to-repo mapping (hardcoded for MVP)
 PACKAGE_TO_REPO: Dict[str, str] = {
@@ -127,7 +129,7 @@ app.mount("/static", StaticFiles(directory="ui"), name="static_ui")
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on application startup."""
-    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task, dependency_repo
+    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task, dependency_repo, scope_repo
 
     db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
 
@@ -177,6 +179,9 @@ async def startup_event():
             # Initialize DependencyRepository
             dependency_repo = DependencyRepository(db_path=db_path)
 
+            # Initialize ScopeRepository
+            scope_repo = ScopeRepository(db_path=db_path)
+
             # Mark interrupted jobs (jobs that were running when server stopped)
             interrupted_count = job_repo.mark_interrupted_jobs()
             if interrupted_count > 0:
@@ -225,6 +230,7 @@ async def startup_event():
             job_repo = None
             index_repo = None
             dependency_repo = None
+            scope_repo = None
             ingestion_worker = None
     else:
         logger.info("Database persistence disabled")
@@ -232,6 +238,7 @@ async def startup_event():
         job_repo = None
         index_repo = None
         dependency_repo = None
+        scope_repo = None
 
 
 @app.on_event("shutdown")
@@ -3071,14 +3078,15 @@ def ingest_scope(request: IngestScopeRequest):
     # --- Create scope ---
     scope_id = _generate_scope_id()
     created_at = datetime.now(timezone.utc).isoformat()
-    SCOPE_STORE[scope_id] = {
-        "scope_id": scope_id,
-        "name": request.name,
-        "repos": normalized_repos,
-        "dependencies": dependencies,
-        "status": "processing",
-        "created_at": created_at,
-    }
+    if scope_repo:
+        scope_repo.save(scope_id, {
+            "scope_id": scope_id,
+            "name": request.name,
+            "repos": normalized_repos,
+            "dependencies": dependencies,
+            "status": "processing",
+            "created_at": created_at,
+        })
 
     try:
         return _process_scope(scope_id, request.name, normalized_repos, dependencies, created_at)
@@ -3106,7 +3114,8 @@ def ingest_scope(request: IngestScopeRequest):
             graph={"nodes": [], "edges": []},
             errors={"_internal": str(e)},
         )
-        SCOPE_STORE[scope_id] = {**fallback, "created_at": created_at}
+        if scope_repo:
+            scope_repo.save(scope_id, {**fallback, "created_at": created_at})
         return fallback
 
 
@@ -3223,7 +3232,8 @@ def _process_scope(scope_id: str, name: str, normalized_repos: List[str], depend
         insight_statements=insight_statements,
     )
 
-    SCOPE_STORE[scope_id] = {**response, "created_at": created_at}
+    if scope_repo:
+        scope_repo.save(scope_id, {**response, "created_at": created_at})
 
     return response
 
@@ -3235,7 +3245,9 @@ def get_scope(scope_id: str):
     Returns the full scope object from the in-memory store.
     Returns 404 if the scope_id is not found.
     """
-    scope = SCOPE_STORE.get(scope_id)
+    if scope_repo is None:
+        raise HTTPException(status_code=503, detail="Scope service unavailable")
+    scope = scope_repo.get(scope_id)
     if scope is None:
         raise HTTPException(status_code=404, detail=f"Scope not found: {scope_id}")
     return scope
