@@ -505,7 +505,7 @@
         <label>
           Sort by
           <select id="sortBySelect" aria-label="Sort by field">
-            <option value="base_risk">Project Health</option>
+            <option value="base_risk">Maintenance Risk</option>
             <option value="score">Dependency Risk</option>
             <option value="cve_count">CVE Count</option>
             <option value="maintainer_fraction">Maintainer Fraction</option>
@@ -546,7 +546,7 @@
         <thead>
           <tr>
             <th scope="col">Repository</th>
-            <th scope="col">Project Health</th>
+            <th scope="col">Maintenance Risk</th>
             <th scope="col">Signal</th>
             <th scope="col">Reasons</th>
             <th scope="col">Signals</th>
@@ -1294,7 +1294,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     h += "<div style=\"display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-12);margin-bottom:var(--sp-16);\">" +
       "<span class=\"ds-risk-tag ds-risk-tag--" + maintLabel + "\">" + maintLabel.toUpperCase() + "</span>" +
       "<span style=\"font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-primary);\">" + maintRisk + "</span>" +
-      "<span style=\"font-size:13px;color:var(--text-secondary);\">Project Health</span>" +
+      "<span style=\"font-size:13px;color:var(--text-secondary);\">Maintenance Risk</span>" +
       "<span style=\"color:var(--border-emphasis);\">·</span>" +
       "<span style=\"font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text-primary);\">" + graphScore + "</span>" +
       "<span style=\"font-size:13px;color:var(--text-secondary);\">Dependency Risk</span>";
