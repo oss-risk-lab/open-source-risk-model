@@ -16,7 +16,6 @@ from fastapi.staticfiles import StaticFiles
 from open_source_risk_model.service.score_repo import score_repo
 from open_source_risk_model.graph.builder import build_graph
 from open_source_risk_model.graph.schema import Graph, GraphConfig
-from open_source_risk_model.graph.cache import GraphCache
 from open_source_risk_model.utils.logging_utils import (
     StructuredLogger,
     generate_request_id,
@@ -50,9 +49,6 @@ app = FastAPI(title="Deep Signal Security API", version="0.1.0")
 
 # Initialize structured logger
 logger = StructuredLogger(__name__)
-
-# Initialize graph cache (1 hour TTL)
-graph_cache = GraphCache(cache_dir="data/graphs", ttl_hours=1)
 
 # Initialize metrics collector
 metrics = get_metrics_collector()
@@ -608,76 +604,9 @@ def graph(
             except Exception as e:
                 logger.warning(f"Unexpected error reading from database for {repo_normalized}: {e}, falling back to dynamic generation")
         
-        # Check file-based cache (unless refresh is requested)
-        if not refresh:
-            try:
-                cached_graph = graph_cache.get(repo_normalized, max_releases, max_maintainers, include_cves, max_risk_factors)
-                if cached_graph:
-                    # Cache hit - return cached graph
-                    cache_hit = True
-                    graph_obj = cached_graph
-                    
-                    # Record cache hit
-                    metrics.record_cache_hit()
-                    
-                    # Log cache hit
-                    log_event(logger, LogEvent.CACHE_HIT, repo=repo_normalized)
-                    
-                    # Calculate generation time (minimal for cache hit)
-                    generation_time_ms = int((time.time() - start_time) * 1000)
-                    
-                    # Record API response time
-                    metrics.record_api_response(generation_time_ms)
-                    
-                    # Serialize graph to dict
-                    graph_dict = graph_obj.to_dict()
-                    
-                    # Collect data sources used
-                    data_sources = set()
-                    for node in graph_obj.nodes:
-                        if "source" in node.provenance:
-                            data_sources.add(node.provenance["source"])
-                    
-                    # Build response
-                    response = {
-                        "repo": repo_normalized,
-                        "schema_version": graph_obj.metadata.get("schema_version", "1.0"),
-                        "generated_at": graph_obj.metadata.get("generated_at"),
-                        "graph": {
-                            "nodes": graph_dict["nodes"],
-                            "edges": graph_dict["edges"],
-                        },
-                        "metadata": {
-                            "node_count": len(graph_obj.nodes),
-                            "edge_count": len(graph_obj.edges),
-                            "data_sources": sorted(list(data_sources)),
-                            "cache_hit": True,
-                            "generation_time_ms": generation_time_ms,
-                            "request_id": request_id,
-                        }
-                    }
-                    
-                    # Include warnings if any
-                    warnings = graph_obj.metadata.get("warnings", [])
-                    if warnings:
-                        response["metadata"]["warnings"] = warnings
-                    
-                    logger.info(
-                        "Graph API request completed (cache hit)",
-                        repo=repo_normalized,
-                        generation_time_ms=generation_time_ms,
-                    )
-                    
-                    return response
-                else:
-                    # Cache miss
-                    metrics.record_cache_miss()
-                    log_event(logger, LogEvent.CACHE_MISS, repo=repo_normalized)
-            except Exception as e:
-                # Cache read error - log and continue to build graph
-                logger.warning(f"Cache read error for {repo_normalized}: {e}, falling back to build")
-        
-        # Cache miss or refresh requested - build graph from scratch
+        # SQLite miss or refresh requested - build graph from scratch
+        metrics.record_cache_miss()
+        log_event(logger, LogEvent.CACHE_MISS, repo=repo_normalized)
         log_event(logger, LogEvent.GRAPH_GENERATION_STARTED, repo=repo_normalized)
         
         # Get score data first (this validates repo exists)
@@ -782,20 +711,6 @@ def graph(
                 logger.warning(f"Failed to save graph to database: {e}")
             except Exception as e:
                 logger.warning(f"Unexpected error saving graph to database: {e}")
-        
-        # Store graph in file-based cache for future requests
-        try:
-            graph_cache.set(repo_normalized, graph_obj, max_releases, max_maintainers, include_cves, max_risk_factors)
-            log_event(logger, LogEvent.CACHE_WRITE, repo=repo_normalized)
-        except Exception as e:
-            # Cache write error - log but don't fail the request
-            log_event(
-                logger,
-                LogEvent.CACHE_WRITE_FAILED,
-                level="warning",
-                repo=repo_normalized,
-                error=str(e),
-            )
         
         # Serialize graph to dict
         graph_dict = graph_obj.to_dict()
