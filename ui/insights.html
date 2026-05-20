@@ -1276,6 +1276,119 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     return best;
   }
 
+  function renderRiskAssessmentCard(detail) {
+    var maintRisk = (detail.base_maintenance_risk != null) ? detail.base_maintenance_risk.toFixed(3) : "N/A";
+    var maintLabel = ((detail.base_maintenance_label || detail.graph_signal_label || "low")).toLowerCase();
+    var graphScore = (detail.graph_signal_score != null) ? detail.graph_signal_score.toFixed(3) : "N/A";
+
+    var analyzedAtText = "";
+    if (detail.analyzed_at) {
+      try {
+        var d = new Date(detail.analyzed_at);
+        analyzedAtText = d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      } catch (e) { analyzedAtText = detail.analyzed_at.substring(0, 10); }
+    }
+
+    var h = "<div class=\"ds-card\" style=\"margin-bottom:var(--sp-16);padding:var(--sp-24);\">";
+
+    h += "<div style=\"display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-12);margin-bottom:var(--sp-16);\">" +
+      "<span class=\"ds-risk-tag ds-risk-tag--" + maintLabel + "\">" + maintLabel.toUpperCase() + "</span>" +
+      "<span style=\"font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-primary);\">" + maintRisk + "</span>" +
+      "<span style=\"font-size:13px;color:var(--text-secondary);\">Maintenance Risk</span>" +
+      "<span style=\"color:var(--border-emphasis);\">·</span>" +
+      "<span style=\"font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text-primary);\">" + graphScore + "</span>" +
+      "<span style=\"font-size:13px;color:var(--text-secondary);\">Supply Chain Signal</span>";
+    if (analyzedAtText) {
+      h += "<span style=\"margin-left:auto;font-size:11px;color:var(--text-tertiary);\">Last analyzed " + analyzedAtText + "</span>";
+    }
+    h += "</div>";
+
+    if (detail.risk_narrative && detail.risk_narrative.summary) {
+      h += "<p style=\"font-size:15px;color:var(--text-primary);margin:0 0 var(--sp-16) 0;line-height:1.6;\">" + detail.risk_narrative.summary + "</p>";
+    }
+
+    if (detail.priority_recommendations && detail.priority_recommendations.length > 0) {
+      var recs = detail.priority_recommendations.slice(0, 3);
+      h += "<div style=\"border-top:1px solid var(--border);padding-top:var(--sp-16);\">" +
+        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-12);\">Priority Actions</div>" +
+        "<div style=\"display:flex;flex-direction:column;gap:var(--sp-8);\">";
+      for (var i = 0; i < recs.length; i++) {
+        var rec = recs[i];
+        var recScore = rec.priority_score != null ? rec.priority_score : 0;
+        var recSev = recScore >= 0.7 ? "high" : recScore >= 0.4 ? "medium" : "low";
+        h += "<div style=\"display:flex;align-items:center;gap:var(--sp-12);\">" +
+          "<span style=\"font-size:12px;font-weight:700;color:var(--text-tertiary);min-width:16px;text-align:right;\">" + (i + 1) + ".</span>" +
+          "<span style=\"font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);\">" + rec.package_name + "</span>" +
+          "<span style=\"font-size:13px;color:var(--text-primary);flex:1;\">" + rec.action + "</span>" +
+          "<span class=\"ds-risk-tag ds-risk-tag--" + recSev + "\">" + Math.round(recScore * 100) + "%</span>" +
+        "</div>";
+      }
+      h += "</div></div>";
+    } else if (detail.risk_narrative && detail.risk_narrative.recommendation) {
+      h += "<div style=\"border-top:1px solid var(--border);padding-top:var(--sp-16);font-size:13px;color:var(--text-primary);padding:var(--sp-12);background:var(--bg-overlay);border-radius:var(--radius-sm);border-left:3px solid var(--border-emphasis);\">" + detail.risk_narrative.recommendation + "</div>";
+    }
+
+    h += "</div>";
+    return h;
+  }
+
+  function generateReportText(detail) {
+    var lines = [];
+    var today = new Date().toISOString().substring(0, 10);
+    var maintRisk = detail.base_maintenance_risk != null ? detail.base_maintenance_risk.toFixed(3) : "N/A";
+    var label = detail.graph_signal_label || (detail.base_maintenance_label || "").toUpperCase() || "UNKNOWN";
+
+    lines.push("# Risk Report: " + detail.repo_full_name);
+    lines.push("Risk Level: " + label + "  |  Score: " + maintRisk);
+    lines.push("Generated: " + today);
+    lines.push("");
+
+    if (detail.risk_narrative && detail.risk_narrative.summary) {
+      lines.push("## Summary");
+      lines.push(detail.risk_narrative.summary);
+      lines.push("");
+    }
+
+    if (detail.priority_recommendations && detail.priority_recommendations.length > 0) {
+      lines.push("## Priority Actions");
+      var recs = detail.priority_recommendations.slice(0, 3);
+      for (var i = 0; i < recs.length; i++) {
+        lines.push((i + 1) + ". " + recs[i].package_name + " — " + recs[i].action);
+      }
+      lines.push("");
+    }
+
+    var cveLines = [];
+    if (detail.top_risky_dependencies) {
+      for (var d = 0; d < detail.top_risky_dependencies.length; d++) {
+        var dep = detail.top_risky_dependencies[d];
+        if (dep.cve_count > 0) {
+          cveLines.push("- " + dep.package_name + " (" + dep.cve_count + " CVE" + (dep.cve_count !== 1 ? "s" : "") + ", risk: " + dep.risk_label + ")");
+        }
+      }
+    }
+    if (cveLines.length > 0) {
+      lines.push("## CVE Exposure");
+      for (var c = 0; c < cveLines.length; c++) { lines.push(cveLines[c]); }
+      lines.push("");
+    }
+
+    if (detail.reasons && detail.reasons.length > 0) {
+      lines.push("## Key Findings");
+      var max = Math.min(detail.reasons.length, 5);
+      for (var r = 0; r < max; r++) { lines.push("- " + detail.reasons[r]); }
+      lines.push("");
+    }
+
+    if (detail.risk_narrative && detail.risk_narrative.recommendation) {
+      lines.push("## Recommendation");
+      lines.push(detail.risk_narrative.recommendation);
+      lines.push("");
+    }
+
+    return lines.join("\n");
+  }
+
   /**
    * renderDetailView(detail)
    * Renders the full detail view for a single repo insight.
@@ -1289,6 +1402,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     for (var cl = 0; cl < crossLinks.length; cl++) {
       actionsHtml += "<a href=\"" + crossLinks[cl].href + "\" class=\"ds-btn-subtle\" style=\"text-decoration:none;display:inline-flex;align-items:center;\">" + crossLinks[cl].label + "</a>";
     }
+    actionsHtml += "<button class=\"ds-btn-subtle\" id=\"copyReportBtn\">Copy report</button>";
 
     // Build subtitle
     var subtitleText = "";
@@ -1313,85 +1427,9 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       "<div class=\"detail-actions\">" + actionsHtml + "</div>" +
     "</div>";
 
-    // Task 7.1: Risk Summary Block
-    var maintRisk = (detail.base_maintenance_risk != null) ? detail.base_maintenance_risk.toFixed(3) : "N/A";
-    var maintLabel = (detail.base_maintenance_label != null) ? detail.base_maintenance_label : "N/A";
-    var graphScore = detail.graph_signal_score.toFixed(3);
-    var graphLabel = detail.graph_signal_label;
+    html += renderRiskAssessmentCard(detail);
 
-    var analyzedAtText = "";
-    if (detail.analyzed_at) {
-      try {
-        var d = new Date(detail.analyzed_at);
-        analyzedAtText = d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-      } catch (e) {
-        analyzedAtText = detail.analyzed_at.substring(0, 10);
-      }
-    }
-
-    html += "<div class=\"risk-summary-block\" style=\"display:flex;gap:var(--sp-12);margin-bottom:var(--sp-16);align-items:stretch;\">" +
-      "<div class=\"ds-card ds-kpi\" style=\"flex:3;padding:var(--sp-24) var(--sp-32);background:var(--bg-overlay);box-shadow:var(--shadow-sm);\">" +
-        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Primary Score <span title=\"0 = no maintenance risk · 1 = max risk. Computed from 16 GitHub signals including commit activity, contributor count, and release cadence.\" style=\"cursor:help;\">ⓘ</span></div>" +
-        "<div class=\"ds-kpi-value\" style=\"font-size:32px;\">" + maintRisk + "</div>" +
-        "<div class=\"ds-kpi-label\">Maintenance Risk</div>" +
-        "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + maintLabel.toLowerCase() + "\">" + maintLabel + "</span></div>" +
-      "</div>" +
-      "<div class=\"ds-card ds-kpi\" style=\"flex:2;padding:var(--sp-16);\">" +
-        "<div style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-tertiary);margin-bottom:var(--sp-8);\">Supply Chain Signal</div>" +
-        "<div class=\"ds-kpi-value\">" + graphScore + "</div>" +
-        "<div class=\"ds-kpi-label\">Graph Signal Score</div>" +
-        "<div style=\"margin-top:var(--sp-8);\"><span class=\"ds-risk-tag ds-risk-tag--" + graphLabel.toLowerCase() + "\">" + graphLabel + "</span></div>" +
-        (analyzedAtText ? "<div style=\"font-size:10px;color:var(--text-tertiary);margin-top:var(--sp-8);\">Last analyzed " + analyzedAtText + "</div>" : "") +
-      "</div>" +
-    "</div>";
-
-    // Risk Narrative (before Top Risk Drivers)
-    if (detail.risk_narrative) {
-      var rn = detail.risk_narrative;
-      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
-        "<div class=\"panel-header\"><h3 class=\"section-title\">Risk Narrative</h3></div>" +
-        "<div style=\"padding:var(--sp-12) var(--sp-16);\">";
-      if (rn.summary) {
-        html += "<p style=\"font-size:14px;color:var(--text-primary);margin:0 0 var(--sp-12) 0;line-height:1.6;\">" + rn.summary + "</p>";
-      }
-      if (rn.key_findings && rn.key_findings.length > 0) {
-        html += "<ul style=\"list-style:disc;padding-left:var(--sp-24);margin:0 0 var(--sp-12) 0;\">";
-        for (var kf = 0; kf < rn.key_findings.length; kf++) {
-          html += "<li style=\"color:var(--text-secondary);font-size:13px;margin-bottom:var(--sp-4);line-height:1.5;\">" + rn.key_findings[kf] + "</li>";
-        }
-        html += "</ul>";
-      }
-      if (rn.recommendation) {
-        html += "<div style=\"font-size:13px;color:var(--text-primary);padding:var(--sp-8) var(--sp-12);background:var(--bg-overlay);border-radius:var(--radius-sm);border-left:3px solid var(--border-emphasis);\">" + rn.recommendation + "</div>";
-      }
-      html += "</div></div>";
-    }
-
-    // Priority Recommendations (top 3, before Top Risk Drivers)
-    if (detail.priority_recommendations && detail.priority_recommendations.length > 0) {
-      var recs = detail.priority_recommendations.slice(0, 3);
-      html += "<div class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
-        "<div class=\"panel-header\"><h3 class=\"section-title\">Priority Recommendations</h3></div>" +
-        "<table class=\"signals-table\">" +
-        "<thead><tr>" +
-          "<th scope=\"col\">Package</th>" +
-          "<th scope=\"col\">Scope</th>" +
-          "<th scope=\"col\">Action</th>" +
-          "<th scope=\"col\">Risk Score</th>" +
-        "</tr></thead><tbody>";
-      for (var pr = 0; pr < recs.length; pr++) {
-        var rec = recs[pr];
-        html += "<tr>" +
-          "<td style=\"font-family:var(--font-mono);font-size:12px;\">" + rec.package_name + "</td>" +
-          "<td><span style=\"font-size:11px;text-transform:uppercase;letter-spacing:0.4px;color:var(--text-tertiary);\">" + rec.dependency_scope + "</span></td>" +
-          "<td style=\"font-size:13px;\">" + rec.action + "</td>" +
-          "<td style=\"font-family:var(--font-mono);\">" + Math.round(rec.priority_score * 100) + "%</td>" +
-        "</tr>";
-      }
-      html += "</tbody></table></div>";
-    }
-
-    // Top Risk Drivers (collapsible, after Narrative and Recommendations)
+    // Top Risk Drivers (collapsible)
     if (detail.reasons && detail.reasons.length > 0) {
       var driverCount = Math.min(detail.reasons.length, 5);
       html += "<details class=\"panel\" style=\"margin-bottom:var(--sp-16);\">" +
@@ -1540,12 +1578,23 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     fetchAndRender();
   }
 
-  /* ── Event delegation for "Back to list" in detail view ── */
+  /* ── Event delegation for detail view buttons ── */
   document.getElementById("detailView").addEventListener("click", function(e) {
-    var target = e.target.closest("#backToList");
-    if (target) {
+    if (e.target.closest("#backToList")) {
       e.preventDefault();
       navigateToList();
+      return;
+    }
+    var copyBtn = e.target.closest("#copyReportBtn");
+    if (copyBtn && appState.detail) {
+      var text = generateReportText(appState.detail);
+      navigator.clipboard.writeText(text).then(function() {
+        copyBtn.textContent = "Copied!";
+        setTimeout(function() { copyBtn.textContent = "Copy report"; }, 2000);
+      }).catch(function() {
+        copyBtn.textContent = "Copy failed";
+        setTimeout(function() { copyBtn.textContent = "Copy report"; }, 2000);
+      });
     }
   });
 
