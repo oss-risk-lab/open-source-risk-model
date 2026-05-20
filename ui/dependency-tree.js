@@ -191,9 +191,9 @@ function writeUrlState() {
   const repo = repoInput.value.trim();
   if (repo) params.set("repo", repo);
   if (maxDepthSelect.value) params.set("maxDepth", maxDepthSelect.value);
-  if (highRiskOnly.checked) params.set("highRiskOnly", "true");
-  if (vulnerableOnly.checked) params.set("vulnerableOnly", "true");
-  if (directOnly.checked) params.set("directOnly", "true");
+  if (highRiskOnly.classList.contains("active")) params.set("highRiskOnly", "true");
+  if (vulnerableOnly.classList.contains("active")) params.set("vulnerableOnly", "true");
+  if (directOnly.classList.contains("active")) params.set("directOnly", "true");
   if (sortBySelect.value) params.set("sortBy", sortBySelect.value);
   if (truncateSelect.value) params.set("truncateAfterChildren", truncateSelect.value);
   const scopeFilterEl = $("scopeFilter");
@@ -207,9 +207,9 @@ function applyUrlState() {
   const s = readUrlState();
   if (s.repo) repoInput.value = s.repo;
   maxDepthSelect.value = s.maxDepth;
-  highRiskOnly.checked = s.highRiskOnly;
-  vulnerableOnly.checked = s.vulnerableOnly;
-  directOnly.checked = s.directOnly;
+  highRiskOnly.classList.toggle("active", s.highRiskOnly);
+  vulnerableOnly.classList.toggle("active", s.vulnerableOnly);
+  directOnly.classList.toggle("active", s.directOnly);
   sortBySelect.value = s.sortBy;
   truncateSelect.value = s.truncateAfterChildren;
   const scopeFilterEl = $("scopeFilter");
@@ -220,9 +220,9 @@ function applyUrlState() {
 function buildApiUrl(repo) {
   const url = new URL(`${API_BASE}/repos/${encodeURIComponent(repo)}/dependency-tree`, window.location.origin);
   if (maxDepthSelect.value) url.searchParams.set("max_depth", maxDepthSelect.value);
-  if (highRiskOnly.checked) url.searchParams.set("high_risk_only", "true");
-  if (vulnerableOnly.checked) url.searchParams.set("vulnerable_only", "true");
-  if (directOnly.checked) url.searchParams.set("direct_only", "true");
+  if (highRiskOnly.classList.contains("active")) url.searchParams.set("high_risk_only", "true");
+  if (vulnerableOnly.classList.contains("active")) url.searchParams.set("vulnerable_only", "true");
+  if (directOnly.classList.contains("active")) url.searchParams.set("direct_only", "true");
   if (sortBySelect.value) url.searchParams.set("sort_by", sortBySelect.value);
   if (truncateSelect.value) url.searchParams.set("truncate_after_children", truncateSelect.value);
   return url.toString();
@@ -1053,9 +1053,9 @@ function refetch() {
 // ─── Reset ───────────────────────────────────────────────────────────
 function resetFilters() {
   maxDepthSelect.value = "";
-  highRiskOnly.checked = false;
-  vulnerableOnly.checked = false;
-  directOnly.checked = false;
+  highRiskOnly.classList.remove("active");
+  vulnerableOnly.classList.remove("active");
+  directOnly.classList.remove("active");
   sortBySelect.value = "";
   truncateSelect.value = "";
   const scopeFilterEl = $("scopeFilter");
@@ -1072,7 +1072,10 @@ repoInput.addEventListener("keydown", (e) => { if (e.key === "Enter") loadTree(f
   el.addEventListener("change", refetch)
 );
 [highRiskOnly, vulnerableOnly, directOnly].forEach(el =>
-  el.addEventListener("change", refetch)
+  el.addEventListener("click", function() {
+    this.classList.toggle("active");
+    refetch();
+  })
 );
 
 $("expandAllBtn").addEventListener("click", expandAll);

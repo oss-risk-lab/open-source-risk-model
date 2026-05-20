@@ -198,24 +198,29 @@
     }
 
     .filter-checks{
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px var(--sp-4);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
     }
 
-    .filter-check{
-      display: flex;
+    .filter-pill {
+      display: inline-flex;
       align-items: center;
       gap: var(--sp-4);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-tertiary);
       font-size: 12px;
-      color: var(--text-primary);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
       user-select: none;
-      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
     }
-
-    .filter-check input[type="checkbox"]{
-      cursor: pointer;
-    }
+    .filter-pill:hover { background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-emphasis); }
+    .filter-pill.active { background: var(--accent-muted); color: var(--accent); border-color: rgba(59, 130, 246, 0.35); }
 
     .node-badge{
       display: inline-block;
@@ -277,7 +282,16 @@
       color: var(--text-primary);
       font-size: 13px;
       outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 32px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255%2C255%2C255%2C0.35)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      cursor: pointer;
+      transition: border-color 150ms ease;
     }
+    select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-muted); }
     select option{ background: var(--bg-elevated); color: var(--text-primary); }
 
     #graph-container{
@@ -829,10 +843,9 @@
               <div class="label">Edges</div>
             </div>
           </div>
-          <label class="provenance-toggle" id="provenanceToggle" style="display:none;margin-bottom:var(--sp-8);">
-            <input type="checkbox" id="showProvenance" />
-            <span>Show Provenance</span>
-          </label>
+          <div id="provenanceToggle" style="display:none;margin-bottom:var(--sp-8);">
+            <button class="filter-pill" id="showProvenance">Show Provenance</button>
+          </div>
           <div class="export-buttons" id="exportButtons" style="display:none;">
             <button class="export-btn" id="exportJson">Export JSON</button>
             <button class="export-btn" id="exportPng">Export PNG</button>

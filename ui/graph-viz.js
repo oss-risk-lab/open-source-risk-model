@@ -124,25 +124,21 @@ function initializeFilters() {
   });
   
   Object.entries(NODE_TYPES).forEach(([type, config]) => {
-    const label = document.createElement("label");
-    label.className = "filter-check";
-    label.innerHTML = `
-      <input type="checkbox" value="${type}" checked />
-      <span class="node-badge" style="background-color: ${config.color};"></span>
-      <span>${config.icon} ${config.label}</span>
-    `;
-    
-    const checkbox = label.querySelector("input");
-    checkbox.addEventListener("change", (e) => {
-      if (e.target.checked) {
+    const btn = document.createElement("button");
+    btn.className = "filter-pill active";
+    btn.innerHTML = `<span class="node-badge" style="background-color:${config.color};display:inline-block;width:8px;height:8px;border-radius:2px;border:1px solid rgba(255,255,255,.2);flex-shrink:0;"></span> ${config.label}`;
+
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("active");
+      if (btn.classList.contains("active")) {
         activeFilters.nodeTypes.add(type);
       } else {
         activeFilters.nodeTypes.delete(type);
       }
       applyFilters();
     });
-    
-    container.appendChild(label);
+
+    container.appendChild(btn);
   });
 }
 
@@ -537,7 +533,7 @@ function showNodeDetails(nodeId) {
   const node = allNodes.get(nodeId);
   if (!node) return;
   
-  const showProvenance = el("showProvenance").checked;
+  const showProvenance = el("showProvenance").classList.contains("active");
   
   // Helper to render risk-relevant values with ds-risk-tag
   function riskTag(label) {
@@ -724,7 +720,8 @@ function formatValue(value) {
 }
 
 // Provenance toggle
-el("showProvenance").addEventListener("change", () => {
+el("showProvenance").addEventListener("click", function() {
+  this.classList.toggle("active");
   // Re-render current node details if any
   if (network) {
     const selected = network.getSelectedNodes();

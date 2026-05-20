@@ -67,15 +67,29 @@
       padding:var(--sp-8) var(--sp-8); border-radius:var(--radius-md);
       border:1px solid var(--border); background:var(--bg-surface);
       color:var(--text-primary); font-size:13px; outline:none;
+      appearance:none; -webkit-appearance:none;
+      padding-right:28px;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255%2C255%2C255%2C0.35)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 8px center;
+      cursor:pointer; transition:border-color 150ms ease;
     }
+    select:focus{ border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-muted); }
     select option{ background:var(--bg-elevated); color:var(--text-primary); }
 
     /* Filter bar */
     .filter-bar{ display:flex; gap:var(--sp-8); align-items:center; flex-wrap:wrap; }
     .filter-bar label{ display:flex; align-items:center; gap:var(--sp-4); font-size:12px; color:var(--text-secondary); cursor:pointer; user-select:none; }
-    .filter-bar label input{ cursor:pointer; }
     .filter-group{ display:flex; align-items:center; gap:var(--sp-4); }
     .filter-group span{ font-size:11px; color:var(--text-tertiary); }
+    .filter-pill{
+      display:inline-flex; align-items:center; padding:4px 10px;
+      border-radius:var(--radius-pill); border:1px solid var(--border);
+      background:transparent; color:var(--text-tertiary);
+      font-size:12px; font-weight:500; cursor:pointer; white-space:nowrap; user-select:none;
+      transition:background 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+    .filter-pill:hover{ background:var(--bg-surface); color:var(--text-secondary); border-color:var(--border-emphasis); }
+    .filter-pill.active{ background:var(--accent-muted); color:var(--accent); border-color:rgba(59,130,246,0.35); }
 
     /* Summary stats — single connected bar */
     .summary-grid{ display:flex; gap:0; margin-bottom:var(--sp-8); border:1px solid var(--border); border-radius:var(--radius-md); background:var(--bg-elevated); overflow:hidden; }
@@ -295,9 +309,9 @@
           <option value="4">4</option><option value="5">5</option>
         </select>
       </div>
-      <label><input type="checkbox" id="highRiskOnly" /> High-risk only</label>
-      <label><input type="checkbox" id="vulnerableOnly" /> Vulnerable only</label>
-      <label><input type="checkbox" id="directOnly" /> Direct deps only</label>
+      <button class="filter-pill" id="highRiskOnly">High-risk only</button>
+      <button class="filter-pill" id="vulnerableOnly">Vulnerable only</button>
+      <button class="filter-pill" id="directOnly">Direct deps only</button>
       <div class="filter-group">
         <span>Sort:</span>
         <select id="sortBySelect" aria-label="Sort order">
