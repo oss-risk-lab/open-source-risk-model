@@ -162,7 +162,7 @@
     .kpi-card-high { border-top: 2px solid var(--status-high-border); }
 
     /* Form Controls */
-    select, input[type="number"]{
+    select, input[type="number"] {
       padding: var(--sp-8) var(--sp-12);
       border-radius: var(--radius-md);
       border: 1px solid var(--border);
@@ -170,16 +170,30 @@
       color: var(--text-primary);
       font-size: 13px;
       outline: none;
+      transition: border-color 150ms ease;
     }
-    select option{ background: var(--bg-elevated); color: var(--text-primary); }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 32px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255%2C255%2C255%2C0.35)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      cursor: pointer;
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-muted);
+    }
+    select option { background: var(--bg-elevated); color: var(--text-primary); }
 
-    .filter-bar{
+    .filter-bar {
       display: flex;
       flex-wrap: wrap;
       gap: var(--sp-12);
       align-items: center;
     }
-    .filter-bar label{
+    .filter-bar label {
       display: flex;
       align-items: center;
       gap: var(--sp-8);
@@ -188,8 +202,30 @@
       user-select: none;
       white-space: nowrap;
     }
-    .filter-bar input[type="checkbox"]{
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .filter-pill:hover {
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border-color: var(--border-emphasis);
+    }
+    .filter-pill.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border-color: rgba(59, 130, 246, 0.35);
     }
 
     /* Table */
@@ -481,20 +517,9 @@
           </select>
         </label>
 
-        <label>
-          <input type="checkbox" id="hasCvesFilter" aria-label="Filter repos with CVEs" />
-          Has CVEs
-        </label>
-
-        <label>
-          <input type="checkbox" id="hasMaintainerRiskFilter" aria-label="Filter repos with maintainer risk" />
-          Maintainer risk
-        </label>
-
-        <label>
-          <input type="checkbox" id="hasStaleReleaseFilter" aria-label="Filter repos with stale releases" />
-          Stale release
-        </label>
+        <button class="filter-pill" id="hasCvesFilter">Has CVEs</button>
+        <button class="filter-pill" id="hasMaintainerRiskFilter">Maintainer risk</button>
+        <button class="filter-pill" id="hasStaleReleaseFilter">Stale release</button>
 
         <label>
           Min score
@@ -1114,13 +1139,13 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
     var labelVal = document.getElementById("labelFilter").value;
     appState.filters.label = labelVal === "" ? null : labelVal;
 
-    var hasCves = document.getElementById("hasCvesFilter").checked;
+    var hasCves = document.getElementById("hasCvesFilter").classList.contains("active");
     appState.filters.has_cves = hasCves ? true : null;
 
-    var hasMaintainerRisk = document.getElementById("hasMaintainerRiskFilter").checked;
+    var hasMaintainerRisk = document.getElementById("hasMaintainerRiskFilter").classList.contains("active");
     appState.filters.has_maintainer_risk = hasMaintainerRisk ? true : null;
 
-    var hasStaleRelease = document.getElementById("hasStaleReleaseFilter").checked;
+    var hasStaleRelease = document.getElementById("hasStaleReleaseFilter").classList.contains("active");
     appState.filters.has_stale_release = hasStaleRelease ? true : null;
 
     var minScoreVal = document.getElementById("minScoreFilter").value;
@@ -1192,9 +1217,12 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
   /* ── Wire Event Listeners ── */
   document.getElementById("downloadCsvBtn").addEventListener("click", downloadCsv);
   document.getElementById("labelFilter").addEventListener("change", onFilterChange);
-  document.getElementById("hasCvesFilter").addEventListener("change", onFilterChange);
-  document.getElementById("hasMaintainerRiskFilter").addEventListener("change", onFilterChange);
-  document.getElementById("hasStaleReleaseFilter").addEventListener("change", onFilterChange);
+  ["hasCvesFilter", "hasMaintainerRiskFilter", "hasStaleReleaseFilter"].forEach(function(id) {
+    document.getElementById(id).addEventListener("click", function() {
+      this.classList.toggle("active");
+      onFilterChange();
+    });
+  });
   document.getElementById("minScoreFilter").addEventListener("change", onFilterChange);
   document.getElementById("sortBySelect").addEventListener("change", onSortChange);
   document.getElementById("orderSelect").addEventListener("change", onSortChange);
