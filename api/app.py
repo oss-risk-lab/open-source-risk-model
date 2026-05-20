@@ -32,6 +32,7 @@ from open_source_risk_model.persistence.index_repo import IndexRepository
 from open_source_risk_model.persistence.worker import IngestionWorker
 from open_source_risk_model.persistence.errors import DatabaseError
 from open_source_risk_model.persistence.db import get_connection, init_database
+from open_source_risk_model.persistence.dependency_repo import DependencyRepository
 from open_source_risk_model.insights.compute import compute_repo_insight
 from open_source_risk_model.config.demo_repos import load_demo_repos, validate_demo_repos
 
@@ -67,6 +68,9 @@ index_repo: IndexRepository | None = None
 # Initialize ingestion worker (will be set in startup event)
 ingestion_worker: IngestionWorker | None = None
 worker_task = None
+
+# Initialize dependency repository (will be set in startup event)
+dependency_repo: DependencyRepository | None = None
 
 # CORS: read allowed origins from env var (comma-separated), fall back to ["*"] for dev
 _cors_origins_raw = os.getenv("CORS_ALLOWED_ORIGINS", "")
@@ -123,7 +127,7 @@ app.mount("/static", StaticFiles(directory="ui"), name="static_ui")
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on application startup."""
-    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task
+    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task, dependency_repo
 
     db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
 
@@ -169,7 +173,10 @@ async def startup_event():
             
             # Initialize IndexRepository
             index_repo = IndexRepository(db_path=db_path)
-            
+
+            # Initialize DependencyRepository
+            dependency_repo = DependencyRepository(db_path=db_path)
+
             # Mark interrupted jobs (jobs that were running when server stopped)
             interrupted_count = job_repo.mark_interrupted_jobs()
             if interrupted_count > 0:
@@ -217,12 +224,14 @@ async def startup_event():
             graph_repo = None
             job_repo = None
             index_repo = None
+            dependency_repo = None
             ingestion_worker = None
     else:
         logger.info("Database persistence disabled")
         graph_repo = None
         job_repo = None
         index_repo = None
+        dependency_repo = None
 
 
 @app.on_event("shutdown")
@@ -2245,25 +2254,6 @@ async def delete_repo(repo_full_name: str):
 # ============================================================================
 # Dependency API Endpoints (Step 2: Dependency Graph)
 # ============================================================================
-
-# Initialize dependency repository (will be set in startup event)
-dependency_repo = None
-
-@app.on_event("startup")
-async def init_dependency_repo():
-    """Initialize dependency repository on startup."""
-    global dependency_repo
-    
-    db_enabled = os.getenv("GRAPH_DB_ENABLED", "true").lower() == "true"
-    
-    if db_enabled:
-        try:
-            from open_source_risk_model.persistence.dependency_repo import DependencyRepository
-            db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
-            dependency_repo = DependencyRepository(db_path=db_path)
-            logger.info("Dependency repository initialized")
-        except Exception as e:
-            logger.error(f"Failed to initialize dependency repository: {e}")
 
 
 @app.get("/api/repos/{owner}/{repo}/dependencies")
