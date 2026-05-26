@@ -1668,6 +1668,98 @@ async def create_ingestion_job(request: IngestRequest):
                 }
             }
         )
+@app.post("/api/webhooks/github", status_code=202)
+async def github_webhook(request: Request):
+    """
+    Receive GitHub webhook events and queue re-ingestion for the affected repo.
+
+    Validates the HMAC-SHA256 signature in X-Hub-Signature-256 using the
+    secret configured in GITHUB_WEBHOOK_SECRET. Responds 403 if the secret
+    is not configured or the signature is invalid.
+
+    Triggers re-ingestion on:
+    - push events (any branch — caller should restrict via GitHub's filter)
+    - release events with action "published"
+
+    Returns 202 immediately; actual ingestion happens in the background worker.
+    Returns 204 for unhandled event types (ping, etc.) with no action taken.
+    """
+    import hashlib
+    import hmac
+
+    secret = os.getenv("GITHUB_WEBHOOK_SECRET", "")
+    if not secret:
+        logger.warning("GitHub webhook received but GITHUB_WEBHOOK_SECRET is not set")
+        raise HTTPException(
+            status_code=403,
+            detail={"error": {"code": "WEBHOOK_NOT_CONFIGURED",
+                               "message": "GITHUB_WEBHOOK_SECRET is not set"}},
+        )
+
+    # Verify signature
+    body = await request.body()
+    sig_header = request.headers.get("X-Hub-Signature-256", "")
+    expected = "sha256=" + hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected, sig_header):
+        logger.warning("GitHub webhook signature mismatch")
+        raise HTTPException(
+            status_code=403,
+            detail={"error": {"code": "INVALID_SIGNATURE",
+                               "message": "Webhook signature verification failed"}},
+        )
+
+    event_type = request.headers.get("X-GitHub-Event", "")
+    delivery_id = request.headers.get("X-GitHub-Delivery", "unknown")
+
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail={"error": {"code": "INVALID_PAYLOAD",
+                                                                "message": "Could not parse JSON body"}})
+
+    repo_full_name = (payload.get("repository") or {}).get("full_name")
+
+    # ping — GitHub sends this when a webhook is first registered
+    if event_type == "ping":
+        logger.info("GitHub webhook ping received", delivery_id=delivery_id)
+        return {"status": "ok", "message": "pong"}
+
+    if not repo_full_name:
+        return {"status": "ignored", "reason": "no repository in payload"}
+
+    should_queue = False
+    if event_type == "push":
+        should_queue = True
+    elif event_type == "release" and payload.get("action") == "published":
+        should_queue = True
+
+    if not should_queue:
+        return {"status": "ignored", "event": event_type}
+
+    if job_repo is None:
+        raise HTTPException(
+            status_code=503,
+            detail={"error": {"code": "SERVICE_UNAVAILABLE",
+                               "message": "Ingestion service not available"}},
+        )
+
+    job_id = job_repo.create_job([repo_full_name])
+    logger.info(
+        "Webhook-triggered ingestion queued",
+        repo=repo_full_name,
+        event=event_type,
+        job_id=job_id,
+        delivery_id=delivery_id,
+    )
+
+    return {
+        "status": "queued",
+        "repo": repo_full_name,
+        "job_id": job_id,
+        "event": event_type,
+    }
+
+
 @app.get("/api/jobs/{job_id}")
 async def get_job_status(job_id: str):
     """
