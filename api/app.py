@@ -65,6 +65,7 @@ index_repo: IndexRepository | None = None
 # Initialize ingestion worker (will be set in startup event)
 ingestion_worker: IngestionWorker | None = None
 worker_task = None
+stale_refresh_task = None
 
 # Initialize dependency repository (will be set in startup event)
 dependency_repo: DependencyRepository | None = None
@@ -122,10 +123,61 @@ app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
 app.mount("/static", StaticFiles(directory="ui"), name="static_ui")
 
 
+async def _stale_refresh_loop(db_path: str, interval_hours: int) -> None:
+    """Periodically queue graph re-ingestion for stale repos.
+
+    Waits interval_hours before the first check so fresh-startup data
+    is not immediately re-queued. Skips the cycle if a job is already
+    pending or running to avoid stacking work.
+    """
+    import asyncio as _asyncio
+    from open_source_risk_model.persistence.job_repo import JobStatus as _JobStatus
+
+    interval_secs = interval_hours * 3600
+    logger.info(f"Stale refresh loop started (interval: {interval_hours}h)")
+
+    while True:
+        await _asyncio.sleep(interval_secs)
+        try:
+            if job_repo is None:
+                continue
+
+            # Skip if the worker already has queued or active work
+            busy = job_repo.list_jobs(status=_JobStatus.PENDING, limit=1) or \
+                   job_repo.list_jobs(status=_JobStatus.RUNNING, limit=1)
+            if busy:
+                logger.info("Stale refresh: worker busy, skipping this cycle")
+                continue
+
+            conn = get_connection(db_path)
+            try:
+                rows = conn.execute(
+                    "SELECT repo_full_name FROM ingestion_health "
+                    "WHERE health IN ('stale_30d', 'stale_90d')"
+                ).fetchall()
+            finally:
+                conn.close()
+
+            stale = [r[0] for r in rows]
+            if not stale:
+                logger.info("Stale refresh: nothing stale, skipping")
+                continue
+
+            job_id = job_repo.create_job(stale)
+            logger.info(
+                f"Stale refresh: queued {len(stale)} repos",
+                job_id=job_id,
+                count=len(stale),
+            )
+
+        except Exception as e:
+            logger.error(f"Stale refresh loop error: {e}", exc_info=True)
+
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on application startup."""
-    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task, dependency_repo, scope_repo
+    global graph_repo, job_repo, index_repo, ingestion_worker, worker_task, stale_refresh_task, dependency_repo, scope_repo
 
     db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
 
@@ -208,11 +260,23 @@ async def startup_event():
                 # Start worker in background
                 import asyncio
                 worker_task = asyncio.create_task(ingestion_worker.start())
-                
+
                 logger.info(
                     "Ingestion worker started",
                     poll_interval=poll_interval,
                 )
+
+                # Start stale-refresh scheduler
+                stale_refresh_enabled = os.getenv("STALE_REFRESH_ENABLED", "true").lower() == "true"
+                if stale_refresh_enabled:
+                    refresh_interval = int(os.getenv("STALE_REFRESH_INTERVAL_HOURS", "6"))
+                    stale_refresh_task = asyncio.create_task(
+                        _stale_refresh_loop(db_path, refresh_interval)
+                    )
+                    logger.info(
+                        "Stale refresh scheduler started",
+                        interval_hours=refresh_interval,
+                    )
             else:
                 logger.info("Ingestion worker disabled")
                 
@@ -244,11 +308,16 @@ async def shutdown_event():
     
     logger.info("Application shutting down")
     
+    # Stop stale refresh scheduler
+    if stale_refresh_task is not None:
+        stale_refresh_task.cancel()
+        logger.info("Stale refresh scheduler cancelled")
+
     # Stop ingestion worker if running
     if ingestion_worker is not None:
         logger.info("Stopping ingestion worker...")
         ingestion_worker.stop()
-        
+
         # Wait for worker to finish current job
         if worker_task is not None:
             try:
