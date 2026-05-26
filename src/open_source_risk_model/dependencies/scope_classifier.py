@@ -69,6 +69,12 @@ def classify(
     if eco == "cargo":
         return _classify_cargo(group)
 
+    if eco == "go":
+        return _classify_go(group)
+
+    if eco == "maven":
+        return _classify_maven(group)
+
     # Fallback for any unrecognized ecosystem / manifest
     return DependencyScope.UNKNOWN, ScopeConfidence.LOW
 
@@ -159,6 +165,28 @@ def _classify_requirements(source_file: str) -> Tuple[DependencyScope, ScopeConf
         return DependencyScope.BUILD, ScopeConfidence.MEDIUM
 
     # Unrecognized filename
+    return DependencyScope.UNKNOWN, ScopeConfidence.LOW
+
+
+def _classify_go(group: str) -> Tuple[DependencyScope, ScopeConfidence]:
+    """Classify a go.mod dependency by its group."""
+    if group == "prod":
+        return DependencyScope.RUNTIME, ScopeConfidence.HIGH
+    if group == "indirect":
+        return DependencyScope.RUNTIME, ScopeConfidence.MEDIUM
+    if "test" in group:
+        return DependencyScope.TEST, ScopeConfidence.HIGH
+    return DependencyScope.UNKNOWN, ScopeConfidence.LOW
+
+
+def _classify_maven(group: str) -> Tuple[DependencyScope, ScopeConfidence]:
+    """Classify a Maven/Gradle dependency by its normalized group."""
+    if group in ("prod", "runtime"):
+        return DependencyScope.RUNTIME, ScopeConfidence.HIGH
+    if group == "test":
+        return DependencyScope.TEST, ScopeConfidence.HIGH
+    if group == "dev":
+        return DependencyScope.DEV, ScopeConfidence.HIGH
     return DependencyScope.UNKNOWN, ScopeConfidence.LOW
 
 

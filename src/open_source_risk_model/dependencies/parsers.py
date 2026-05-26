@@ -445,15 +445,226 @@ class PackageJsonParser(DependencyParser):
         return dependencies
 
 
+class GoModParser(DependencyParser):
+    """Parser for go.mod files."""
+
+    def can_parse(self, file_path: str) -> bool:
+        return file_path.endswith("go.mod")
+
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
+        dependencies = []
+        in_require_block = False
+
+        for raw_line in content.splitlines():
+            line = raw_line.strip()
+
+            if line.startswith("require ("):
+                in_require_block = True
+                continue
+            if in_require_block and line == ")":
+                in_require_block = False
+                continue
+
+            if in_require_block or line.startswith("require "):
+                # Strip leading "require " for single-line form
+                if line.startswith("require "):
+                    line = line[len("require "):].strip()
+
+                # Strip inline comments
+                is_indirect = "// indirect" in line
+                line = line.split("//")[0].strip()
+
+                parts = line.split()
+                if len(parts) < 2:
+                    continue
+
+                module_path, version = parts[0], parts[1]
+                group = "indirect" if is_indirect else "prod"
+
+                dep = Dependency(
+                    package_name=module_path,
+                    specifier=version,
+                    dependency_group=group,
+                    is_optional=False,
+                )
+                scope, confidence = classify(
+                    ecosystem="go",
+                    manifest_type="go.mod",
+                    dependency_group=group,
+                    source_file=source_file,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
+                dependencies.append(dep)
+
+        return dependencies
+
+
+class MavenPomParser(DependencyParser):
+    """Parser for Maven pom.xml files."""
+
+    # Maven scope → dependency_group
+    _SCOPE_MAP = {
+        "compile":  "prod",
+        "runtime":  "runtime",
+        "test":     "test",
+        "provided": "dev",
+    }
+    # system and import scopes are infrastructure/BOM — skip them
+
+    def can_parse(self, file_path: str) -> bool:
+        return file_path.endswith("pom.xml")
+
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
+        try:
+            import xml.etree.ElementTree as ET
+            root = ET.fromstring(content)
+        except Exception as e:
+            logger.error(f"Failed to parse pom.xml: {e}")
+            return []
+
+        # Strip XML namespace prefix so tag matching works regardless of ns
+        ns_pattern = re.compile(r"\{[^}]+\}")
+
+        def tag(el: Any) -> str:
+            return ns_pattern.sub("", el.tag)
+
+        def find(parent: Any, child_tag: str) -> Optional[Any]:
+            for child in parent:
+                if tag(child) == child_tag:
+                    return child
+            return None
+
+        def text(el: Optional[Any]) -> str:
+            if el is None or el.text is None:
+                return ""
+            return el.text.strip()
+
+        dependencies = []
+
+        # Find all <dependencies> sections (top-level and inside <dependencyManagement>)
+        for deps_el in root.iter():
+            if tag(deps_el) != "dependencies":
+                continue
+            for dep_el in deps_el:
+                if tag(dep_el) != "dependency":
+                    continue
+
+                group_id  = text(find(dep_el, "groupId"))
+                artifact  = text(find(dep_el, "artifactId"))
+                version   = text(find(dep_el, "version"))
+                scope_str = text(find(dep_el, "scope")) or "compile"
+                optional  = text(find(dep_el, "optional")).lower() == "true"
+
+                if not group_id or not artifact:
+                    continue
+                if scope_str in ("system", "import"):
+                    continue
+
+                package_name = f"{group_id}:{artifact}"
+                group = self._SCOPE_MAP.get(scope_str, "prod")
+
+                dep = Dependency(
+                    package_name=package_name,
+                    specifier=version,
+                    dependency_group=group,
+                    is_optional=optional,
+                )
+                scope, confidence = classify(
+                    ecosystem="maven",
+                    manifest_type="pom.xml",
+                    dependency_group=group,
+                    source_file=source_file,
+                    is_optional=optional,
+                )
+                dep.dependency_scope = scope.value
+                dep.scope_confidence = confidence.value
+                dependencies.append(dep)
+
+        return dependencies
+
+
+class GradleParser(DependencyParser):
+    """Parser for build.gradle and build.gradle.kts files."""
+
+    # Gradle configuration → dependency_group
+    _CONFIG_MAP = {
+        "implementation":          "prod",
+        "api":                     "prod",
+        "runtimeOnly":             "runtime",
+        "compileOnly":             "dev",
+        "annotationProcessor":     "dev",
+        "kapt":                    "dev",
+        "testImplementation":      "test",
+        "testRuntimeOnly":         "test",
+        "testCompileOnly":         "test",
+        "androidTestImplementation": "test",
+        "debugImplementation":     "prod",
+        "releaseImplementation":   "prod",
+        "classpath":               "dev",
+    }
+
+    # Matches: config 'group:artifact:version' or config("group:artifact:version")
+    _DEP_RE = re.compile(
+        r"""^\s*(\w+)\s*[\("']([A-Za-z0-9._\-]+):([A-Za-z0-9._\-]+)(?::([A-Za-z0-9._\-\+]+))?["')\s]*""",
+        re.MULTILINE,
+    )
+
+    def can_parse(self, file_path: str) -> bool:
+        base = file_path.split("/")[-1]
+        return base in ("build.gradle", "build.gradle.kts")
+
+    def parse(self, content: str, source_file: str = "") -> List[Dependency]:
+        dependencies = []
+        seen: set = set()
+
+        for m in self._DEP_RE.finditer(content):
+            config    = m.group(1)
+            group_id  = m.group(2)
+            artifact  = m.group(3)
+            version   = m.group(4) or ""
+
+            if config not in self._CONFIG_MAP:
+                continue
+
+            package_name = f"{group_id}:{artifact}"
+            key = (package_name, config)
+            if key in seen:
+                continue
+            seen.add(key)
+
+            group = self._CONFIG_MAP[config]
+            dep = Dependency(
+                package_name=package_name,
+                specifier=version,
+                dependency_group=group,
+                is_optional=False,
+            )
+            scope, confidence = classify(
+                ecosystem="maven",
+                manifest_type="build.gradle",
+                dependency_group=group,
+                source_file=source_file,
+            )
+            dep.dependency_scope = scope.value
+            dep.scope_confidence = confidence.value
+            dependencies.append(dep)
+
+        return dependencies
+
+
 class DependencyParserRegistry:
     """Registry of dependency parsers."""
-    
+
     def __init__(self):
         """Initialize with default parsers."""
         self.parsers: List[DependencyParser] = [
             RequirementsTxtParser(),
             PyProjectTomlParser(),
             PackageJsonParser(),
+            GoModParser(),
+            MavenPomParser(),
+            GradleParser(),
         ]
     
     def register(self, parser: DependencyParser):
