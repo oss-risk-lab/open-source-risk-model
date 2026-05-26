@@ -97,17 +97,19 @@ class PackageResolver:
                 return None
             
             data = response.json()
-            info = data.get('info', {})
-            
-            # Try project_urls first (most reliable)
-            project_urls = info.get('project_urls', {})
-            
-            # Priority order for project_urls
-            url_keys = ['Source', 'Repository', 'Source Code', 'GitHub', 'Code']
-            
-            for key in url_keys:
-                if key in project_urls:
-                    github_url = project_urls[key]
+            info = data.get('info') or {}
+
+            # Try project_urls first (most reliable).
+            # Use `or {}` to handle explicit null values from PyPI API.
+            project_urls = info.get('project_urls') or {}
+
+            # Priority keys (case-insensitive match)
+            priority_keys = {'source', 'repository', 'source code', 'github', 'code', 'homepage'}
+            lowered = {k.lower(): (k, v) for k, v in project_urls.items() if v}
+
+            for lk in priority_keys:
+                if lk in lowered:
+                    orig_key, github_url = lowered[lk]
                     repo = self._extract_github_repo(github_url)
                     if repo:
                         return PackageResolution(
@@ -115,16 +117,35 @@ class PackageResolver:
                             registry_type='pypi',
                             repo_full_name=repo,
                             resolution_method='pypi_project_urls',
-                            confidence=0.95,  # High confidence
+                            confidence=0.95,
                             metadata={
-                                'url_key': key,
+                                'url_key': orig_key,
                                 'url': github_url,
                                 'package_version': info.get('version'),
                             }
                         )
-            
+
+            # Scan ALL project_urls values for any GitHub URL
+            for orig_key, url_val in project_urls.items():
+                if not url_val:
+                    continue
+                repo = self._extract_github_repo(url_val)
+                if repo:
+                    return PackageResolution(
+                        package_name=package_name,
+                        registry_type='pypi',
+                        repo_full_name=repo,
+                        resolution_method='pypi_project_urls_scan',
+                        confidence=0.80,
+                        metadata={
+                            'url_key': orig_key,
+                            'url': url_val,
+                            'package_version': info.get('version'),
+                        }
+                    )
+
             # Try home_page as fallback
-            home_page = info.get('home_page', '')
+            home_page = info.get('home_page') or ''
             if home_page:
                 repo = self._extract_github_repo(home_page)
                 if repo:
@@ -133,14 +154,13 @@ class PackageResolver:
                         registry_type='pypi',
                         repo_full_name=repo,
                         resolution_method='pypi_home_page',
-                        confidence=0.75,  # Lower confidence (might be docs site)
+                        confidence=0.75,
                         metadata={
                             'url': home_page,
                             'package_version': info.get('version'),
                         }
                     )
-            
-            # No GitHub URL found
+
             logger.debug(f"No GitHub URL found for PyPI package: {package_name}")
             return None
         
