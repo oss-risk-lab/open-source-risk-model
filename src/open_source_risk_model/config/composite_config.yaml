@@ -1,22 +1,25 @@
 maintenance_composite:
   feature_weights:
-    days_since_last_push: 0.19
-    days_since_last_release: 0.08
+    # Tier 1 — primary activity signals (equal weight)
+    days_since_last_push:    0.14
+    days_since_last_release: 0.14
+    contributors_last_12mo:  0.14
 
-    fraction_issues_closed_12mo: 0.15
-    fraction_open_issues_stale_180d: 0.0 #removed for now
+    # Tier 2 — concentration and responsiveness
+    top_contributor_fraction_12mo: 0.12
+    issues_per_contributor:        0.10
+    fraction_issues_closed_12mo:   0.10
 
-    issues_per_contributor: 0.11    
-    contributors_last_12mo: 0.12
-    top_contributor_fraction_12mo: 0.11
+    # Tier 3 — health indicators
+    fraction_open_issues_stale_180d: 0.08
+    archived:    0.08
+    stars_count: 0.04
 
-    archived: 0.08                 
-    stars_count: 0.05 
-
-    avg_time_to_first_maintainer_response_days: 0.02
-    fraction_unanswered_after_30d: 0.03
-    median_time_to_close_days: 0.02
-    open_issue_age_p90_days: 0.02
+    # Tier 4 — issue response quality
+    avg_time_to_first_maintainer_response_days: 0.03
+    fraction_unanswered_after_30d:              0.02
+    median_time_to_close_days:                  0.01
+    open_issue_age_p90_days:                    0.00
                 
 
   bands:

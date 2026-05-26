@@ -21,7 +21,7 @@ def evaluate_cve_risk(signal: CVESignal) -> SignalEvidence:
         return SignalEvidence(
             signal_name="cve_risk",
             severity="high",
-            score_contribution=0.4,
+            score_contribution=0.5,
             reason=f"{signal.total_count} CVE(s) found, including critical/high severity",
             metadata=meta,
         )

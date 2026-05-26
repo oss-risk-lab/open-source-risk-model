@@ -258,7 +258,7 @@ def compute_repo_insight(
     graph_signal_score = min(raw_score, 1.0)
 
     # Label (Req 7.5)
-    if graph_signal_score >= 0.6:
+    if graph_signal_score >= 0.5:
         graph_signal_label = "HIGH"
     elif graph_signal_score >= 0.3:
         graph_signal_label = "MEDIUM"
