@@ -8,6 +8,7 @@ This document explains the structure and purpose of files in the `data/` directo
 data/
 ├── baseline/              # Population distributions for risk normalization
 ├── issues/               # Cached issue data by repository
+├── universe/             # Repository universe files for snapshot collection
 └── raw_snapshots/        # Cached repository metadata snapshots
 ```
 
@@ -203,3 +204,17 @@ data/raw_snapshots/*.json
 2. **Periodic cleanup** - Remove old snapshots to save disk space
 3. **Backup baselines** - Keep baseline populations in version control
 4. **Document changes** - Note when baselines are regenerated
+
+---
+
+## Longitudinal Snapshots
+
+The temporal snapshot engine collects a weekly, immutable observation of every repository in the universe. These records are the foundation for survival analysis and package abandonment modeling.
+
+See [docs/data/SNAPSHOTS.md](data/SNAPSHOTS.md) for:
+
+- Full v1.0 schema reference (record fields, features, raw fields, manifest fields)
+- Observatory directory layout
+- pandas load example
+- Append-only and death-signal policies
+- How to run locally and trigger a manual workflow
