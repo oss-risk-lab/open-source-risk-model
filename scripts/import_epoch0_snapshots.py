@@ -30,6 +30,20 @@ logger = logging.getLogger(__name__)
 
 UNIVERSE_VERSION_EPOCH0 = "epoch0"
 
+_REPO_RE = __import__("re").compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
+
+
+def _raw_snapshot_filename_to_repo(name: str) -> str | None:
+    """Convert 'Owner__repo.json' to 'Owner/repo', None if not parseable."""
+    stem = name.removesuffix(".json")
+    if "__" not in stem:
+        return None
+    owner, _, rest = stem.partition("__")
+    if not owner or not rest:
+        return None
+    repo = f"{owner}/{rest}"
+    return repo if _REPO_RE.match(repo) else None
+
 
 def classify_fetch_status(feature_status: dict[str, str]) -> str:
     """Classify epoch0 fetch_status from the feature_status dict.
@@ -52,14 +66,27 @@ def _sha256_of_dir(path: Path) -> str:
 
 
 def load_raw_snapshots(raw_dir: Path) -> list[dict]:
-    """Read all .json files in raw_dir and return parsed records."""
+    """Read all .json files in raw_dir and return parsed records.
+
+    Supports two on-disk schemas:
+    - v1: top-level keys include ``full_name`` and ``fetched_at``
+    - v0: no ``full_name``; repo name is inferred from the filename
+          (``Owner__repo.json`` -> ``Owner/repo``)
+    """
     records = []
     for path in sorted(raw_dir.glob("*.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-            if "full_name" not in data or "fetched_at" not in data:
-                logger.warning("Skipping %s: missing full_name or fetched_at", path.name)
+            if "fetched_at" not in data:
+                logger.warning("Skipping %s: missing fetched_at", path.name)
                 continue
+            if "full_name" not in data:
+                repo = _raw_snapshot_filename_to_repo(path.name)
+                if not repo:
+                    logger.warning("Skipping %s: cannot infer full_name from filename", path.name)
+                    continue
+                data = dict(data, full_name=repo)
+                logger.debug("Inferred full_name=%s from filename %s", repo, path.name)
             records.append(data)
         except (json.JSONDecodeError, OSError) as exc:
             logger.warning("Skipping %s: %s", path.name, exc)
