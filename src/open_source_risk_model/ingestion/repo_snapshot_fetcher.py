@@ -6,7 +6,7 @@ adaptive batching that adjusts based on query costs and success/failure rates.
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from .config import IngestionConfig
@@ -297,7 +297,7 @@ class RepoSnapshotFetcher:
             is_archived=is_archived,
             license_info=license_info,
             open_issues_count=open_issues_count,
-            fetched_at=datetime.utcnow()
+            fetched_at=datetime.now(timezone.utc)
         )
         
         return snapshot

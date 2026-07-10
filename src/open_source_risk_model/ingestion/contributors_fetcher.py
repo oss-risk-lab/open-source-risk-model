@@ -5,7 +5,7 @@ Fetches contributor data using REST API endpoints.
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from .models import ContributorRecord, WeeklyActivity
@@ -89,7 +89,7 @@ class ContributorsFetcher:
 
         # Parse into ContributorRecord objects
         records = []
-        fetched_at = datetime.utcnow()
+        fetched_at = datetime.now(timezone.utc)
 
         for contributor in contributors_data:
             login = contributor.get("login")

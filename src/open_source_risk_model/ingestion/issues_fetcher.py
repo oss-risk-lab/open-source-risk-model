@@ -5,7 +5,7 @@ Fetches issue data using REST API endpoints with optional event enrichment.
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from .models import IssueRecord
@@ -91,7 +91,7 @@ class IssuesFetcher:
 
         # Parse into IssueRecord objects
         records = []
-        fetched_at = datetime.utcnow()
+        fetched_at = datetime.now(timezone.utc)
 
         for issue in issues_data:
             # Skip pull requests (they appear in issues endpoint)
@@ -113,7 +113,7 @@ class IssuesFetcher:
                 created_at = (
                     datetime.fromisoformat(created_at_str.replace("Z", "+00:00"))
                     if created_at_str
-                    else datetime.utcnow()
+                    else datetime.now(timezone.utc)
                 )
                 closed_at = (
                     datetime.fromisoformat(closed_at_str.replace("Z", "+00:00"))
@@ -123,7 +123,7 @@ class IssuesFetcher:
                 updated_at = (
                     datetime.fromisoformat(updated_at_str.replace("Z", "+00:00"))
                     if updated_at_str
-                    else datetime.utcnow()
+                    else datetime.now(timezone.utc)
                 )
 
                 comments = issue.get("comments", 0)
