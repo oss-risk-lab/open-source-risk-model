@@ -1,0 +1,189 @@
+# Weekly snapshot collector for the Deep Signal temporal dataset.
+#
+# Required secrets:
+#   SNAPSHOT_GITHUB_TOKEN  -- Personal access token used for GitHub API calls during
+#                             snapshot collection. Read-only scopes are sufficient
+#                             (public_repo, or repo for private repos). Rated at 5,000
+#                             req/hr under authenticated access.
+#   OBSERVATORY_PUSH_TOKEN -- Fine-grained PAT scoped to the deep-signal-observatory
+#                             repository only, with contents: write permission. Never
+#                             used for API calls; only for git push to the observatory.
+#
+# workflow_dispatch inputs:
+#   max_repos  (string, optional) -- Limit the run to the first N repos in the universe.
+#              Leave blank for a full production run. Use max_repos=10 to smoke-test a
+#              new universe file or collector change before trusting the Sunday cron.
+
+name: weekly-snapshot
+
+on:
+  schedule:
+    - cron: "0 6 * * 0"   # Sundays 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      max_repos:
+        description: "Limit to first N repos (leave blank for full run)"
+        required: false
+        default: ""
+
+concurrency:
+  group: weekly-snapshot
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+
+    steps:
+      # ------------------------------------------------------------------
+      # Set RUN_DATE once so every step uses the same date string.
+      # ------------------------------------------------------------------
+      - name: Set run date
+        run: echo "RUN_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+
+      # ------------------------------------------------------------------
+      # 1. Checkout product repo (uses default GITHUB_TOKEN, read-only)
+      # ------------------------------------------------------------------
+      - name: Checkout product repo
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------------------
+      # 2. Checkout observatory into observatory/ using push token
+      # ------------------------------------------------------------------
+      - name: Checkout deep-signal-observatory
+        uses: actions/checkout@v4
+        with:
+          repository: oss-risk-lab/deep-signal-observatory
+          token: ${{ secrets.OBSERVATORY_PUSH_TOKEN }}
+          path: observatory
+
+      # ------------------------------------------------------------------
+      # 3. Set up Python 3.11 with pip cache
+      # ------------------------------------------------------------------
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # ------------------------------------------------------------------
+      # 4. Install the package
+      # ------------------------------------------------------------------
+      - name: Install package
+        run: pip install -e .
+
+      # ------------------------------------------------------------------
+      # 5. Run snapshot CLI (two-phase batch collection)
+      # ------------------------------------------------------------------
+      - name: Run snapshot collector
+        env:
+          GITHUB_TOKEN: ${{ secrets.SNAPSHOT_GITHUB_TOKEN }}
+        run: |
+          MAX_REPOS_ARG=""
+          if [ -n "${{ github.event.inputs.max_repos }}" ]; then
+            MAX_REPOS_ARG="--max-repos ${{ github.event.inputs.max_repos }}"
+          fi
+          python -m open_source_risk_model.cli.snapshot \
+            --universe data/universe/universe_v1.txt \
+            --output-dir observatory/ \
+            $MAX_REPOS_ARG
+
+      # ------------------------------------------------------------------
+      # 6. Validate the generated snapshot and manifest
+      # ------------------------------------------------------------------
+      - name: Validate snapshot run
+        run: |
+          YEAR=$(date -u +%Y)
+          python scripts/validate_snapshot_run.py \
+            --snapshot-file "observatory/snapshots/${YEAR}/deep-signal-snapshot-${RUN_DATE}.jsonl.gz" \
+            --manifest-file "observatory/manifests/${RUN_DATE}.json"
+
+      # ------------------------------------------------------------------
+      # 7. Write observatory README (idempotent; overwrites each run so it
+      #    stays current and exists on the very first push)
+      # ------------------------------------------------------------------
+      - name: Write observatory README
+        run: |
+          cat > observatory/README.md << 'OBSEOF'
+          # Deep Signal Observatory
+
+          This repository stores the weekly temporal snapshots collected by the
+          [Deep Signal](https://github.com/oss-risk-lab/open-source-risk-model)
+          package abandonment observatory.
+
+          ## Layout
+
+          ```
+          snapshots/<year>/deep-signal-snapshot-<YYYY-MM-DD>.jsonl.gz
+          manifests/<YYYY-MM-DD>.json
+          ```
+
+          Each `.jsonl.gz` file contains one JSON record per repository in the universe.
+          Each `.json` manifest summarises the run that produced it.
+
+          ## Schema
+
+          See [docs/data/SNAPSHOTS.md](https://github.com/oss-risk-lab/open-source-risk-model/blob/main/docs/data/SNAPSHOTS.md)
+          in the product repo for the full v1.0 schema reference.
+
+          ## Policy
+
+          Snapshot files are append-only. Once committed they are never modified or deleted.
+          OBSEOF
+
+      # ------------------------------------------------------------------
+      # 8. Commit and push to observatory repo
+      # ------------------------------------------------------------------
+      - name: Commit and push to observatory
+        run: |
+          cd observatory
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add snapshots/ manifests/ README.md
+
+          MANIFEST="manifests/${RUN_DATE}.json"
+          if [ -f "${MANIFEST}" ]; then
+            SUCCESS=$(python3 -c "
+          import json, sys
+          m = json.load(open('${MANIFEST}'))
+          print(m['repos_success'] + m.get('repos_partial', 0))
+          " 2>/dev/null || echo "?")
+            TOTAL=$(python3 -c "
+          import json, sys
+          m = json.load(open('${MANIFEST}'))
+          print(m['repos_total'])
+          " 2>/dev/null || echo "?")
+          else
+            SUCCESS="?"
+            TOTAL="?"
+          fi
+
+          git commit -m "snapshot: ${RUN_DATE} (${SUCCESS}/${TOTAL} repos)"
+          git push
+
+      # ------------------------------------------------------------------
+      # 9. Upload manifest as workflow artifact
+      # ------------------------------------------------------------------
+      - name: Upload manifest artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snapshot-manifest-${{ env.RUN_DATE }}
+          path: observatory/manifests/
+          retention-days: 90
+
+      # ------------------------------------------------------------------
+      # Always: print manifest to job log for quick post-run inspection
+      # ------------------------------------------------------------------
+      - name: Print manifest summary
+        if: always()
+        run: |
+          MANIFEST="observatory/manifests/${RUN_DATE}.json"
+          if [ -f "${MANIFEST}" ]; then
+            echo "=== Manifest: ${MANIFEST} ==="
+            cat "${MANIFEST}"
+          else
+            echo "Manifest not found: ${MANIFEST}"
+          fi

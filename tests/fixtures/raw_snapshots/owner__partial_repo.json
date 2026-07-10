@@ -1,0 +1,33 @@
+{
+    "features": {
+        "__meta__": {
+            "feature_status": {
+                "contributors_count": "ok",
+                "days_since_last_release": "ok",
+                "fraction_issues_closed_12mo": "not_applicable",
+                "fraction_open_issues_stale_180d": "not_applicable",
+                "issues_per_contributor": "ok"
+            },
+            "has_issues": false
+        },
+        "__snapshot__": {
+            "issues_meta": {},
+            "schema_version": "1.1"
+        },
+        "archived": false,
+        "contributors_count": 3,
+        "contributors_last_12mo": 1,
+        "days_since_last_push": 90.0,
+        "days_since_last_release": null,
+        "fraction_issues_closed_12mo": null,
+        "fraction_open_issues_stale_180d": null,
+        "issues_per_contributor": null,
+        "license_spdx_id": "Apache-2.0",
+        "open_issues_count": 0,
+        "stargazers_count": 150,
+        "stars_count": 150,
+        "top_contributor_fraction_12mo": 0.9
+    },
+    "fetched_at": "2026-03-30T11:00:00+00:00",
+    "full_name": "owner/partial-repo"
+}
