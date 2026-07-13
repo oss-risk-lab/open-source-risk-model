@@ -36,17 +36,19 @@ Each line in a `.jsonl.gz` file is a JSON object with the following fields:
 | `error_message` | string or null | Present when `fetch_status` is not `success` |
 | `features` | object | 14 canonical feature keys; null for any that could not be computed |
 | `raw` | object | Absolute timestamps and repo metadata from the API |
-| `feature_coverage` | number | Fraction of non-null feature values (0.0 to 1.0) |
+| `feature_coverage` | number | Fraction of non-null values across all 14 feature keys (0.0 to 1.0). See modeling note below. |
 | `feature_status` | object | Per-feature pipeline status flags from the ingestion pipeline |
 
 ### fetch_status values
 
 | Value | Meaning |
 |---|---|
-| `success` | All data fetched; feature coverage >= 60% |
-| `partial` | Data fetched but feature coverage < 60% |
+| `success` | All data fetched; applicable feature coverage >= 60% |
+| `partial` | Data fetched but applicable feature coverage < 60% |
 | `not_found` | HTTP 404 or 451; repo was deleted, made private, or legally removed. This is a **death event** for survival analysis -- it must never be filtered out. |
 | `error` | Transient failure (rate limit, timeout, 5xx). Not a death event. |
+
+**Modeling note -- `partial` is confounded with repo size.** The `fetch_status` classifier uses `check_feature_coverage()`, which excludes inapplicable features from the denominator (for example, all 7 issue-related features are `not_applicable` when a repo has issues disabled). A healthy repo with `has_issues=False` can therefore be classified `success` while its stored `feature_coverage` field reads 0.50 (7 applicable features out of 14 total keys). Do not use `fetch_status=partial` as a model covariate without first checking `feature_status` to distinguish genuinely missing data from features that were not applicable. For Phase 2 survival modeling, use `feature_status` values directly rather than the aggregate `feature_coverage` scalar.
 
 ### features object: v1.0 canonical keys
 
@@ -170,3 +172,28 @@ python scripts/validate_snapshot_run.py \
 ## Triggering a Manual Workflow Run
 
 Navigate to **Actions > weekly-snapshot > Run workflow** in the GitHub UI. The `max_repos` input limits the run to the first N repos in the universe, which is useful for smoke-testing a new universe file before the next scheduled Sunday run. Leave `max_repos` blank for a full production run.
+
+---
+
+## Phase 2 Modeling Notes
+
+These notes document invariants and known asymmetries in the data that Phase 2 analysis must account for.
+
+### Survival model setup
+
+- **Death event**: the first `fetch_status = not_found` observation for a repo.
+- **Censored observations**: any record with `fetch_status = error`. Treat as missing data, not death. A rate-limit failure or transient timeout tells you nothing about whether the repo still exists.
+- **Entry time**: the `observed_at` timestamp of a repo's first record in the panel. Repos added to the universe later (e.g., a future Stratum D expansion) will have fewer observations than epoch0 repos -- survival models handle this as left truncation, not bias.
+
+### feature_coverage vs. feature_status
+
+The stored `feature_coverage` scalar is the fraction of all 14 feature keys that are non-null. It uses 14 as the denominator unconditionally. The classifier uses `check_feature_coverage()`, which excludes inapplicable features before computing the fraction. These two values differ for repos where some features are structurally unavailable:
+
+- Repos with `has_issues=False` (issues disabled): all 7 issue-related features are null in the record; `feature_coverage` = 0.50. The classifier treats them as `success` because applicable coverage is 7/7.
+- Repos with no releases: `days_since_last_release` is null; `feature_coverage` is reduced by 1/14.
+
+**Do not use `feature_coverage` as a covariate directly.** Use the individual feature values, treating null as missing, and check `feature_status` to distinguish `"not_applicable"` (structurally unavailable) from `"missing"` (failed to fetch) before imputing.
+
+### partial is not a reliable alive indicator by itself
+
+`fetch_status = partial` means the repo is accessible but some features could not be fetched. It is systematically correlated with small repos (few or no issues, no releases, single maintainer), which are also the population most likely to die. Using `partial` as a raw covariate will conflate data-availability effects with genuine risk signals.

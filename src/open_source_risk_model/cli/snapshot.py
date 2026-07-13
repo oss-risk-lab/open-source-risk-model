@@ -77,8 +77,9 @@ def classify_fetch_status(
     called by the mapper; the caller passes a pre-classified status to the mapper.
 
     Classification rules (evaluated in order):
-      1. "not found" (case-insensitive) in error  ->  not_found
-         Covers the GraphQL null-data case ("Repository not found: ...").
+      1. "not found" or "could not resolve" (case-insensitive) in error  ->  not_found
+         Covers "Repository not found: ..." and the GraphQL form
+         "Could not resolve to a Repository with the name '...'".
       2. "404" in error                            ->  not_found
          Covers REST 404 responses.
       3. "451" in error                            ->  not_found
@@ -91,7 +92,7 @@ def classify_fetch_status(
     """
     if error:
         err_lower = error.lower()
-        if "not found" in err_lower or "404" in error or "451" in error:
+        if "not found" in err_lower or "could not resolve" in err_lower or "404" in error or "451" in error:
             return "not_found"
         if "403" in error:
             return "error"

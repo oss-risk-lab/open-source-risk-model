@@ -125,6 +125,11 @@ class TestClassifyFetchStatus:
     def test_not_found_from_graphql_message(self) -> None:
         assert snapshot_cli.classify_fetch_status("Repository not found: owner/repo", False, 0.0) == "not_found"
 
+    def test_not_found_from_graphql_resolve_error(self) -> None:
+        # GraphQL form seen in production: "GraphQL errors: Could not resolve to a Repository with the name 'X'."
+        msg = "GraphQL query failed after 3 attempts: GraphQL errors: Could not resolve to a Repository with the name 'owner/repo'."
+        assert snapshot_cli.classify_fetch_status(msg, False, 0.0) == "not_found"
+
     def test_not_found_from_404_string(self) -> None:
         assert snapshot_cli.classify_fetch_status("HTTP 404 Not Found", False, 0.0) == "not_found"
 
