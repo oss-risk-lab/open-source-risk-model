@@ -175,6 +175,7 @@ def screen_candidates(
     min_stale_days: int,
     cap: int,
     _session: Optional[requests.Session] = None,
+    _now: Optional[datetime] = None,
 ) -> list[tuple[str, float]]:
     """
     Batch-query GitHub GraphQL for all candidates and return qualifying repos.
@@ -193,7 +194,7 @@ def screen_candidates(
       - days_since_last_push >= min_stale_days.
     """
     use_mock = not isinstance(token_or_client, str)
-    now = datetime.now(timezone.utc)
+    now = _now or datetime.now(timezone.utc)
     scored: list[tuple[str, float]] = []
     total_batches = (len(candidates) + GRAPHQL_BATCH_SIZE - 1) // GRAPHQL_BATCH_SIZE
     logger.info("Screening %d candidates in %d batches ...", len(candidates), total_batches)

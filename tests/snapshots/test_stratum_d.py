@@ -288,7 +288,7 @@ class TestScreenCandidates:
             index_to_repo, pushed_at_map, archived_map, stars_map, releases_map, missing
         )
         client = _mock_client([resp])
-        return stratum_d.screen_candidates(client, repos, min_stale_days, cap)
+        return stratum_d.screen_candidates(client, repos, min_stale_days, cap, _now=_NOW)
 
     def test_stale_repo_qualifies(self) -> None:
         repos = ["owner/stale"]
