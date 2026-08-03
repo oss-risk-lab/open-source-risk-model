@@ -1,4 +1,6 @@
 psycopg2-binary
+alembic
+SQLAlchemy>=2.0
 fastapi
 uvicorn[standard]
 requests
