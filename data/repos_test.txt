@@ -1,6 +1,0 @@
-# Test dataset for batch ingestion
-# Small set of repos for testing
-
-pallets/flask
-psf/requests
-fastapi/fastapi

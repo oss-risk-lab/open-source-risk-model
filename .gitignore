@@ -272,3 +272,9 @@ site/
 # Database backups (generated locally)
 backups/
 internal/archive/backups/
+
+# Post-split hygiene: stop tracking collected data going forward
+data/
+*.db
+*.db.backup*
+internal/archive/backups/

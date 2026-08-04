@@ -1,7 +1,0 @@
-realworld-apps/realworld
-jquery/jquery
-jgraph/drawio-desktop
-withastro/astro
-reduxjs/redux
-Eugeny/tabby
-Mintplex-Labs/anything-llm
