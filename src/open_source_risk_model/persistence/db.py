@@ -233,6 +233,8 @@ def init_database(db_path: str = "data/graphs.db") -> None:
                 severity TEXT NOT NULL,
                 cvss_score REAL,
                 affected_releases TEXT,
+                ghsa_id TEXT,
+                cve_aliases TEXT,
                 PRIMARY KEY (repo_full_name, cve_id),
                 FOREIGN KEY (repo_full_name) REFERENCES repo_graphs(repo_full_name) ON DELETE CASCADE
             );
