@@ -2952,11 +2952,64 @@ def _repo_exists_in_db(repo_full_name: str, db_path: str) -> bool:
         conn.close()
 
 
+def _ingest_repo_on_demand(repo_full_name: str) -> None:
+    """Build and persist a repository's graph on demand (scan-on-miss).
+
+    Mirrors the /api/graph cache-miss path (score_repo -> build_graph ->
+    save_graph) so that viewing insights for a repo not yet in the DB triggers
+    a real scan instead of 404ing. This is what makes "Scan a Repository" work
+    on fresh deploys (e.g. Render), where the DB is recreated on each deploy.
+
+    Raises:
+        HTTPException(404) if the repo does not exist on GitHub,
+        HTTPException(503) on external API failure, 500 on persistence failure.
+    """
+    if graph_repo is None:
+        raise HTTPException(status_code=503, detail="Database is not available")
+
+    try:
+        score_data = score_repo(repo_full_name, refresh=False, fetch_issues=False)
+    except ValueError as e:
+        msg = str(e)
+        if "not found" in msg.lower() or "does not exist" in msg.lower():
+            raise HTTPException(
+                status_code=404, detail=f"Repository {repo_full_name} not found"
+            )
+        raise HTTPException(status_code=400, detail=msg)
+
+    config = GraphConfig(
+        include_cves=os.getenv("GRAPH_INCLUDE_CVES", "true").lower() == "true",
+    )
+    try:
+        build_start = time.time()
+        graph_obj = build_graph(repo_full_name, score_data, config)
+        build_ms = int((time.time() - build_start) * 1000)
+    except Exception as e:
+        msg = str(e).lower()
+        if any(k in msg for k in ["timeout", "connection", "unavailable", "rate limit"]):
+            raise HTTPException(
+                status_code=503, detail="External API temporarily unavailable"
+            )
+        raise
+
+    try:
+        graph_repo.save_graph(repo_full_name, graph_obj, build_ms)
+        logger.info(f"On-demand ingest saved graph for {repo_full_name}")
+    except Exception as e:
+        logger.warning(
+            f"On-demand ingest failed to save graph for {repo_full_name}: {e}"
+        )
+        raise HTTPException(
+            status_code=500, detail="Failed to persist repository scan"
+        )
+
+
 @app.get("/api/insights/{owner}/{repo}")
 def get_repo_insights(owner: str, repo: str):
     """Return computed insight for a repository (Req 9.1-9.5).
 
-    Computes on demand. Does not persist results.
+    Computes on demand. If the repo is not yet in the DB, ingests it on demand
+    (scan-on-miss) so that "Scan a Repository" works on fresh deploys.
     """
     repo_full_name = f"{owner}/{repo}"
 
@@ -2970,10 +3023,13 @@ def get_repo_insights(owner: str, repo: str):
         db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
 
         if not _repo_exists_in_db(repo_full_name, db_path):
-            raise HTTPException(
-                status_code=404,
-                detail=f"Repository {repo_full_name} not found",
-            )
+            # Scan-on-miss: ingest the repo on demand, then compute below.
+            _ingest_repo_on_demand(repo_full_name)
+            if not _repo_exists_in_db(repo_full_name, db_path):
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Repository {repo_full_name} not found",
+                )
 
         insight = compute_repo_insight(repo_full_name, graph_repo)
         result = insight.to_dict()
