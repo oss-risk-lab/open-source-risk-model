@@ -205,6 +205,10 @@ def _seed_one_repo(repo_full_name: str) -> None:
     score_data = score_repo(repo_full_name, refresh=False, fetch_issues=False)
     config = GraphConfig(
         include_cves=os.getenv("GRAPH_INCLUDE_CVES", "true").lower() == "true",
+        # Seeding runs in the background with no user waiting on it, so parse
+        # dependencies here: this is what populates repo_dependencies and makes
+        # the homepage's analysis-coverage KPI non-zero.
+        parse_dependencies=os.getenv("SEED_PARSE_DEPENDENCIES", "true").lower() == "true",
     )
     graph_obj = build_graph(repo_full_name, score_data, config)
     graph_repo.save_graph(repo_full_name, graph_obj, 0)
@@ -3093,6 +3097,11 @@ def _ingest_repo_on_demand(repo_full_name: str) -> None:
 
     config = GraphConfig(
         include_cves=os.getenv("GRAPH_INCLUDE_CVES", "true").lower() == "true",
+        # Off by default: dependency parsing costs extra GitHub calls (manifest
+        # discovery + fetch + package resolution) on a request a user is waiting
+        # on. The background seed parses dependencies instead. Flip
+        # SCAN_PARSE_DEPENDENCIES=true to also populate them for ad-hoc scans.
+        parse_dependencies=os.getenv("SCAN_PARSE_DEPENDENCIES", "false").lower() == "true",
     )
     try:
         build_start = time.time()

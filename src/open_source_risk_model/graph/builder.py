@@ -1042,26 +1042,31 @@ class GraphBuilder:
                         mapping_repo.save_mapping(resolution)
                         self.rate_limiter.record_registry_call()
 
-                # If resolved, create RESOLVES_TO edge
+                # Normalize: get_mapping() returns a dict, resolver.resolve()
+                # returns a PackageResolution dataclass. Treat both as dicts.
+                if resolution is not None and not isinstance(resolution, dict):
+                    resolution = resolution.to_dict()
+
+                # If resolved, record the resolution ON THE PACKAGE NODE.
+                #
+                # We deliberately do NOT emit a RESOLVES_TO edge to
+                # "repo:<resolved_repo>": the schema requires exactly one REPO
+                # node per graph (see Graph.validate), so a second repo node is
+                # invalid and an edge without one is a dangling reference. Either
+                # way the graph fails validation and save_graph rejects it,
+                # which previously broke the whole scan. Keeping the resolution
+                # as node metadata preserves the information and keeps the
+                # graph valid.
                 if resolution and resolution.get('repo_full_name'):
                     resolved_repo = resolution['repo_full_name']
 
-                    # Create RESOLVES_TO edge from package to repo
-                    resolves_edge = Edge(
-                        source=package_id,
-                        target=f"repo:{resolved_repo}",
-                        relationship_type=EdgeType.RESOLVES_TO,
-                        metadata={
-                            "resolution_method": resolution.get('resolution_method', 'unknown'),
-                            "resolution_confidence": resolution.get('confidence', 0.0),
-                        },
-                        provenance={
-                            "source": "package_resolver",
-                            "established_at": resolution.get('updated_at'),
-                            "confidence": resolution.get('confidence', 0.0),
-                        }
+                    package_node.metadata["resolved_repo"] = resolved_repo
+                    package_node.metadata["resolution_method"] = resolution.get(
+                        'resolution_method', 'unknown'
                     )
-                    self.graph.add_edge(resolves_edge)
+                    package_node.metadata["resolution_confidence"] = resolution.get(
+                        'confidence', 0.0
+                    )
                     resolved_count += 1
 
                     logger.debug(f"Resolved {package_name} -> {resolved_repo}")
