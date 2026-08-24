@@ -177,6 +177,13 @@ async def _seed_startup_repos(db_path: str) -> None:
     db_file = os.getenv("GRAPH_DB_PATH", db_path)
     logger.info(f"Startup seed: ingesting up to {len(repos)} repos in background")
 
+    # Two passes, because the DB is ephemeral and a visitor may arrive during a
+    # cold start:
+    #   Pass 1 (fast, ~2-3s/repo) skips dependency parsing so the homepage's
+    #          Explore section fills in within seconds.
+    #   Pass 2 (slow, ~30s/repo) re-ingests with dependency parsing, which is
+    #          what populates repo_dependencies for the coverage KPI.
+    # save_graph is idempotent, so pass 2 simply enriches pass 1's rows.
     seeded = 0
     for repo in repos:
         try:
@@ -184,31 +191,60 @@ async def _seed_startup_repos(db_path: str) -> None:
                 continue
             # score_repo/build_graph/save_graph are blocking (network + sqlite);
             # run off the event loop so we never block the server.
-            await _asyncio.to_thread(_seed_one_repo, repo)
+            await _asyncio.to_thread(_seed_one_repo, repo, False)
             seeded += 1
             # Gentle spacing to stay well under GitHub rate limits.
-            await _asyncio.sleep(1.0)
+            await _asyncio.sleep(0.5)
         except Exception as e:
             logger.warning(f"Startup seed: failed to ingest {repo}: {e}")
 
-    logger.info(f"Startup seed complete: {seeded} repo(s) newly ingested")
+    logger.info(f"Startup seed pass 1 complete: {seeded} repo(s) ingested")
+
+    if os.getenv("SEED_PARSE_DEPENDENCIES", "true").lower() != "true":
+        return
+
+    enriched = 0
+    for repo in repos:
+        try:
+            if _repo_has_dependencies(repo, db_file):
+                continue
+            await _asyncio.to_thread(_seed_one_repo, repo, True)
+            enriched += 1
+            await _asyncio.sleep(0.5)
+        except Exception as e:
+            logger.warning(f"Startup seed: dependency pass failed for {repo}: {e}")
+
+    logger.info(f"Startup seed pass 2 complete: {enriched} repo(s) enriched")
 
 
-def _seed_one_repo(repo_full_name: str) -> None:
+def _repo_has_dependencies(repo_full_name: str, db_path: str) -> bool:
+    """True if the repo already has rows in repo_dependencies."""
+    try:
+        with sqlite3.connect(db_path) as conn:
+            row = conn.execute(
+                "SELECT 1 FROM repo_dependencies WHERE repo_full_name = ? LIMIT 1",
+                (repo_full_name,),
+            ).fetchone()
+            return row is not None
+    except Exception:
+        return False
+
+
+def _seed_one_repo(repo_full_name: str, parse_dependencies: bool = False) -> None:
     """Blocking ingest of a single repo for the startup seed (best effort).
 
     Mirrors _ingest_repo_on_demand but raises plain exceptions instead of
     HTTPException, so the seed loop can log-and-continue.
+
+    parse_dependencies=True is the slower pass that populates
+    repo_dependencies (the table /api/stats counts for coverage).
     """
     if graph_repo is None:
         return
     score_data = score_repo(repo_full_name, refresh=False, fetch_issues=False)
     config = GraphConfig(
         include_cves=os.getenv("GRAPH_INCLUDE_CVES", "true").lower() == "true",
-        # Seeding runs in the background with no user waiting on it, so parse
-        # dependencies here: this is what populates repo_dependencies and makes
-        # the homepage's analysis-coverage KPI non-zero.
-        parse_dependencies=os.getenv("SEED_PARSE_DEPENDENCIES", "true").lower() == "true",
+        parse_dependencies=parse_dependencies,
     )
     graph_obj = build_graph(repo_full_name, score_data, config)
     graph_repo.save_graph(repo_full_name, graph_obj, 0)
