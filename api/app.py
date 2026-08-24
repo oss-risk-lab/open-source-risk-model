@@ -2987,16 +2987,20 @@ def get_demo_repos():
         logger.error(f"Failed to load demo repos config: {e}", exc_info=True)
         return {"repos": []}
 
-    # Try to validate and enrich from DB
+    # Enrich from DB. For the homepage we only need repos that have a graph and
+    # a computable risk label — we intentionally do NOT require repo_dependencies
+    # rows here (that stricter gate lives in validate_demo_repos, used for QA).
+    # This lets the startup seed populate the Explore section even when
+    # dependency parsing was skipped.
     try:
-        validated = validate_demo_repos(db_path)
-
+        gr = GraphRepository(db_path=db_path)
         repos = []
-        for demo in validated:
+        for demo in config.repos:
+            if not _repo_exists_in_db(demo.repo, db_path):
+                continue
             owner, name = demo.repo.split("/", 1)
             risk_label = None
             try:
-                gr = GraphRepository(db_path=db_path)
                 insight = compute_repo_insight(demo.repo, gr)
                 if insight.graph_signal_score is not None:
                     risk_label = insight.graph_signal_label
