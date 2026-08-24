@@ -803,7 +803,21 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
    * and detail text.
    */
   function formatErrorMessage(status, detail) {
-    return "Error " + status + ": " + detail;
+    // Recruiter-facing: never surface a raw 500 / stack detail. Distinguish
+    // "your input" errors from "our backend is broken" errors.
+    if (status === 503) {
+      return "We’re temporarily unable to reach GitHub to analyze this repository. This is on our side — please try again in a moment.";
+    }
+    if (status === 429) {
+      return "GitHub’s rate limit was hit. Please wait a minute and try again.";
+    }
+    if (status === 400) {
+      return "That doesn’t look like a valid repository. Use the owner/repo format — e.g. psf/requests.";
+    }
+    if (status >= 500) {
+      return "Something went wrong on our end while analyzing this repository. Please try again shortly.";
+    }
+    return "Unable to analyze this repository (error " + status + "). Please try again.";
   }
 
   /**
@@ -1242,7 +1256,7 @@ renderNav(getCurrentPageId(), getRepoFromUrl());
       return await response.json();
     }
     if (response.status === 404) {
-      throw new Error(owner + "/" + repo + " hasn’t been analyzed yet.");
+      throw new Error("Repository “" + owner + "/" + repo + "” could not be found on GitHub. Check the owner/repo spelling and that it’s public.");
     }
     var responseText = await response.text();
     throw new Error(formatErrorMessage(response.status, responseText));

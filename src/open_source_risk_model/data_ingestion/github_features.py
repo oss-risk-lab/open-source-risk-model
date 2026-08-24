@@ -11,6 +11,65 @@ from collections import Counter
 GITHUB_API_URL = "https://api.github.com"
 
 
+class GitHubError(Exception):
+    """Base class for GitHub API failures surfaced to callers."""
+
+
+class GitHubAuthError(GitHubError):
+    """GitHub rejected our credentials (401, or 403 bad/expired token).
+
+    This means the backend is misconfigured (missing/expired GITHUB_TOKEN),
+    NOT that the repository is missing. Callers must not report this as a 404.
+    """
+
+
+class GitHubNotFoundError(GitHubError):
+    """The repository genuinely does not exist / is not accessible (404)."""
+
+
+class GitHubRateLimitError(GitHubError):
+    """GitHub rate limit exhausted (403/429 with rate-limit signal)."""
+
+
+def _raise_for_github_status(resp: "requests.Response", full_name: str) -> None:
+    """Translate a GitHub HTTP status into a typed, honest error.
+
+    Distinguishes auth failure (401 / 403 bad-credentials / 403 rate-limit)
+    from a genuine 404 so upstream layers never mask a broken token as
+    "repository not found".
+    """
+    status = resp.status_code
+    if status < 400:
+        return
+    if status == 404:
+        raise GitHubNotFoundError(f"Repository not found: {full_name}")
+    if status == 401:
+        raise GitHubAuthError(
+            f"GitHub authentication failed (401) for {full_name}: "
+            "the GITHUB_TOKEN is missing, invalid, or expired."
+        )
+    if status == 403:
+        # 403 is overloaded: rate limit vs. bad credentials / forbidden.
+        remaining = resp.headers.get("X-RateLimit-Remaining")
+        body = ""
+        try:
+            body = (resp.json().get("message") or "").lower()
+        except Exception:
+            body = (resp.text or "").lower()
+        if remaining == "0" or "rate limit" in body:
+            raise GitHubRateLimitError(
+                f"GitHub rate limit exceeded for {full_name}."
+            )
+        if "bad credentials" in body or "requires authentication" in body:
+            raise GitHubAuthError(
+                f"GitHub authentication failed (403) for {full_name}: "
+                "the GITHUB_TOKEN is invalid or expired."
+            )
+        raise GitHubError(f"GitHub returned 403 for {full_name}: {body or 'forbidden'}")
+    # Anything else: surface as a generic GitHub error rather than a bare HTTPError.
+    raise GitHubError(f"GitHub returned HTTP {status} for {full_name}")
+
+
 @dataclass
 class RepoFeatures:
     days_since_last_push: float
@@ -473,7 +532,7 @@ def fetch_repo_features(full_name: str, session: Optional[requests.Session] = No
         session = _github_session()
 
     repo_resp = session.get(f"{GITHUB_API_URL}/repos/{full_name}")
-    repo_resp.raise_for_status()
+    _raise_for_github_status(repo_resp, full_name)
     repo = repo_resp.json()
     has_issues = bool(repo.get("has_issues", True))
     feature_status: Dict[str, str] = {}

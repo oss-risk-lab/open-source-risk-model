@@ -14,6 +14,12 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from open_source_risk_model.service.score_repo import score_repo
+from open_source_risk_model.data_ingestion.github_features import (
+    GitHubError,
+    GitHubAuthError,
+    GitHubNotFoundError,
+    GitHubRateLimitError,
+)
 from open_source_risk_model.graph.builder import build_graph
 from open_source_risk_model.graph.schema import Graph, GraphConfig
 from open_source_risk_model.utils.logging_utils import (
@@ -545,6 +551,16 @@ def score(
     try:
         payload = score_repo(repo, refresh=refresh, fetch_issues=fetch_issues)
         return payload
+    except GitHubNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except (GitHubAuthError, GitHubRateLimitError, GitHubError) as e:
+        # Backend-side data-source failure (bad token, rate limit) — not the
+        # user's fault and not a 404. Surface as 503 so the UI can say so.
+        logger.error(f"GitHub data source error scoring {repo}: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail="GitHub data source is temporarily unavailable. Please try again shortly.",
+        )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
@@ -2969,6 +2985,16 @@ def _ingest_repo_on_demand(repo_full_name: str) -> None:
 
     try:
         score_data = score_repo(repo_full_name, refresh=False, fetch_issues=False)
+    except GitHubNotFoundError:
+        raise HTTPException(
+            status_code=404, detail=f"Repository {repo_full_name} not found"
+        )
+    except (GitHubAuthError, GitHubRateLimitError, GitHubError) as e:
+        logger.error(f"GitHub data source error ingesting {repo_full_name}: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail="GitHub data source is temporarily unavailable. Please try again shortly.",
+        )
     except ValueError as e:
         msg = str(e)
         if "not found" in msg.lower() or "does not exist" in msg.lower():

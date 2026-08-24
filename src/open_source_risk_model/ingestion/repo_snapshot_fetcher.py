@@ -162,7 +162,15 @@ class RepoSnapshotFetcher:
         response = self.client.execute_query(query, variables)
         
         # Parse response
-        repo_data = response.get("data", {}).get("repository")
+        # NOTE: an empty "data" can mean a genuine 404 OR an auth/other failure
+        # that execute_query did not already raise. Only call it "not found" when
+        # the response actually carried a data envelope (i.e. the query executed).
+        if "data" not in response:
+            raise Exception(
+                f"GitHub returned no data envelope for {repo_identifier} "
+                "(possible authentication failure — check GITHUB_TOKEN)"
+            )
+        repo_data = (response.get("data") or {}).get("repository")
         if not repo_data:
             raise Exception(f"Repository not found: {repo_identifier}")
         

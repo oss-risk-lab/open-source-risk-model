@@ -148,40 +148,68 @@ class GraphRepository:
                         node.metadata.get("commit_count", 0)
                     ))
         
-        # Extract and insert CVEs
+        # Extract and insert CVEs.
+        # The same CVE can appear on multiple release nodes (or the fallback
+        # id can collide), which would produce duplicate (repo_full_name,
+        # cve_id) primary keys. Aggregate by primary_cve_id first — unioning
+        # the affected releases — then upsert, so duplicates merge instead of
+        # raising UNIQUE constraint failures and rolling back the whole save.
+        cve_rows: dict[str, dict] = {}
         for node in graph.nodes:
             if node.type == NodeType.CVE:
                 cve_id = node.metadata.get("cve_id")
                 ghsa_id = node.metadata.get("ghsa_id")
                 cve_aliases = node.metadata.get("aliases", [])
-                
+
                 # Use cve_id if available, otherwise use ghsa_id, otherwise use node id
                 primary_cve_id = cve_id or ghsa_id or node.metadata.get("id")
-                
-                if primary_cve_id:
-                    # Find affected releases using node lookup dict (O(1) per edge)
-                    affected_releases = []
-                    for edge in graph.edges:
-                        if edge.target == node.id and edge.relationship_type == EdgeType.HAS_CVE:
-                            release_node = node_by_id.get(edge.source)
-                            if release_node and release_node.type == NodeType.RELEASE:
-                                tag_name = release_node.metadata.get("tag_name", "")
-                                if tag_name:
-                                    affected_releases.append(tag_name)
-                    
-                    conn.execute("""
-                        INSERT INTO repo_cves
-                        (repo_full_name, cve_id, severity, cvss_score, affected_releases, ghsa_id, cve_aliases)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        repo_full_name,
-                        primary_cve_id,
-                        node.metadata.get("severity", "UNKNOWN"),
-                        node.metadata.get("cvss_score"),
-                        json.dumps(affected_releases) if affected_releases else None,
-                        ghsa_id,
-                        json.dumps(cve_aliases) if cve_aliases else None
-                    ))
+                if not primary_cve_id:
+                    continue
+
+                # Find affected releases using node lookup dict (O(1) per edge)
+                affected_releases = []
+                for edge in graph.edges:
+                    if edge.target == node.id and edge.relationship_type == EdgeType.HAS_CVE:
+                        release_node = node_by_id.get(edge.source)
+                        if release_node and release_node.type == NodeType.RELEASE:
+                            tag_name = release_node.metadata.get("tag_name", "")
+                            if tag_name:
+                                affected_releases.append(tag_name)
+
+                existing = cve_rows.get(primary_cve_id)
+                if existing is None:
+                    cve_rows[primary_cve_id] = {
+                        "severity": node.metadata.get("severity", "UNKNOWN"),
+                        "cvss_score": node.metadata.get("cvss_score"),
+                        "affected_releases": list(dict.fromkeys(affected_releases)),
+                        "ghsa_id": ghsa_id,
+                        "cve_aliases": cve_aliases,
+                    }
+                else:
+                    # Merge: union affected releases, backfill missing fields.
+                    merged = list(dict.fromkeys(existing["affected_releases"] + affected_releases))
+                    existing["affected_releases"] = merged
+                    if existing["cvss_score"] is None:
+                        existing["cvss_score"] = node.metadata.get("cvss_score")
+                    if not existing["ghsa_id"]:
+                        existing["ghsa_id"] = ghsa_id
+                    if not existing["cve_aliases"]:
+                        existing["cve_aliases"] = cve_aliases
+
+        for primary_cve_id, row in cve_rows.items():
+            conn.execute("""
+                INSERT OR REPLACE INTO repo_cves
+                (repo_full_name, cve_id, severity, cvss_score, affected_releases, ghsa_id, cve_aliases)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                repo_full_name,
+                primary_cve_id,
+                row["severity"],
+                row["cvss_score"],
+                json.dumps(row["affected_releases"]) if row["affected_releases"] else None,
+                row["ghsa_id"],
+                json.dumps(row["cve_aliases"]) if row["cve_aliases"] else None,
+            ))
         
         # Extract and insert registries
         for node in graph.nodes:
