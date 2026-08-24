@@ -129,6 +129,87 @@ app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
 app.mount("/static", StaticFiles(directory="ui"), name="static_ui")
 
 
+async def _seed_startup_repos(db_path: str) -> None:
+    """Pre-ingest a small curated set of repos so the homepage isn't empty.
+
+    On free-tier deploys the SQLite DB is recreated on every deploy, so the
+    homepage "Explore" section and /api/stats start empty. This runs once, in
+    the background (never blocks startup or health), ingesting a handful of
+    curated demo repos. Each repo is best-effort: one failure never aborts the
+    rest, and repos already present are skipped so restarts are cheap.
+
+    Controlled by env:
+      SEED_ON_STARTUP   "true"/"false" (default "true")
+      SEED_MAX          max repos to seed (default 12)
+      SEED_REPOS        optional comma-separated override of the repo list
+    """
+    import asyncio as _asyncio
+
+    if os.getenv("SEED_ON_STARTUP", "true").lower() != "true":
+        logger.info("Startup seed disabled (SEED_ON_STARTUP != true)")
+        return
+
+    if graph_repo is None:
+        return
+
+    try:
+        seed_max = int(os.getenv("SEED_MAX", "12"))
+    except ValueError:
+        seed_max = 12
+
+    override = os.getenv("SEED_REPOS", "").strip()
+    if override:
+        repos = [r.strip() for r in override.split(",") if r.strip()]
+    else:
+        try:
+            cfg = load_demo_repos()
+            # Curated order already mixes well-maintained / popular / high-risk,
+            # which maps to the homepage's three groups. Take the first N.
+            repos = [entry.repo for entry in cfg.repos]
+        except Exception as e:
+            logger.warning(f"Startup seed: could not load demo repos: {e}")
+            return
+
+    repos = repos[:seed_max]
+    if not repos:
+        return
+
+    db_file = os.getenv("GRAPH_DB_PATH", db_path)
+    logger.info(f"Startup seed: ingesting up to {len(repos)} repos in background")
+
+    seeded = 0
+    for repo in repos:
+        try:
+            if _repo_exists_in_db(repo, db_file):
+                continue
+            # score_repo/build_graph/save_graph are blocking (network + sqlite);
+            # run off the event loop so we never block the server.
+            await _asyncio.to_thread(_seed_one_repo, repo)
+            seeded += 1
+            # Gentle spacing to stay well under GitHub rate limits.
+            await _asyncio.sleep(1.0)
+        except Exception as e:
+            logger.warning(f"Startup seed: failed to ingest {repo}: {e}")
+
+    logger.info(f"Startup seed complete: {seeded} repo(s) newly ingested")
+
+
+def _seed_one_repo(repo_full_name: str) -> None:
+    """Blocking ingest of a single repo for the startup seed (best effort).
+
+    Mirrors _ingest_repo_on_demand but raises plain exceptions instead of
+    HTTPException, so the seed loop can log-and-continue.
+    """
+    if graph_repo is None:
+        return
+    score_data = score_repo(repo_full_name, refresh=False, fetch_issues=False)
+    config = GraphConfig(
+        include_cves=os.getenv("GRAPH_INCLUDE_CVES", "true").lower() == "true",
+    )
+    graph_obj = build_graph(repo_full_name, score_data, config)
+    graph_repo.save_graph(repo_full_name, graph_obj, 0)
+
+
 async def _stale_refresh_loop(db_path: str, interval_hours: int) -> None:
     """Periodically queue graph re-ingestion for stale repos.
 
@@ -283,6 +364,9 @@ async def startup_event():
                         "Stale refresh scheduler started",
                         interval_hours=refresh_interval,
                     )
+
+                # Kick off the homepage seed in the background (non-blocking).
+                asyncio.create_task(_seed_startup_repos(db_path))
             else:
                 logger.info("Ingestion worker disabled")
                 
