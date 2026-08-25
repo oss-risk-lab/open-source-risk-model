@@ -39,6 +39,10 @@ class GraphBuilder:
         self.full_name = full_name
         self.score_data = score_data
         self.config = config or GraphConfig()
+        # Single source of truth for where the database lives. Honors
+        # GRAPH_DB_PATH so dependency data lands in the same file the API
+        # reads (critical once the DB is on a mounted disk).
+        self.db_path = os.getenv("GRAPH_DB_PATH", "data/graphs.db")
         self.graph = Graph(metadata={
             "schema_version": "1.0",
             "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -75,7 +79,12 @@ class GraphBuilder:
             self.manifest_cache = ManifestCache()
             self.rate_limiter = RateLimitTracker(github_token=github_token)
             self.dependency_config = DependencyIngestionConfig()
-            self.dependency_repo = DependencyRepository()
+            # Must honor GRAPH_DB_PATH: these repositories default to the
+            # hardcoded relative "data/graphs.db". When the DB lives on a
+            # mounted disk (GRAPH_DB_PATH=/var/data/graphs.db), defaulting
+            # writes dependencies to a different file than the one the API
+            # reads, so dependency coverage silently reads as 0.
+            self.dependency_repo = DependencyRepository(db_path=self.db_path)
         else:
             self.manifest_discovery = None
             self.parser_registry = None
@@ -958,7 +967,7 @@ class GraphBuilder:
         try:
             # Get dependencies from database
             from ..persistence.dependency_repo import DependencyRepository
-            dep_repo = DependencyRepository()
+            dep_repo = DependencyRepository(db_path=self.db_path)
 
             dependencies = dep_repo.get_dependencies(
                 repo_full_name=self.full_name,
@@ -977,7 +986,7 @@ class GraphBuilder:
             from ..persistence.dependency_repo import PackageMappingRepository
 
             resolver = PackageResolver(timeout_seconds=self.config.cve_timeout_seconds)
-            mapping_repo = PackageMappingRepository()
+            mapping_repo = PackageMappingRepository(db_path=self.db_path)
 
             resolved_count = 0
 

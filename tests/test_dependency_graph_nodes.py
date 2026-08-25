@@ -39,6 +39,7 @@ def _make_builder():
     builder = GraphBuilder.__new__(GraphBuilder)  # bypass network in __init__
     builder.full_name = "psf/requests"
     builder.config = GraphConfig(parse_dependencies=True)
+    builder.db_path = "data/graphs.db"  # normally set by __init__ from GRAPH_DB_PATH
     builder.rate_limiter = MagicMock()
     builder.dependency_repo = MagicMock()
 
